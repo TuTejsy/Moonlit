@@ -1,0 +1,247 @@
+{
+  "extends": ["react-app", "airbnb", "plugin:react-native-a11y/all"],
+  "parserOptions": {
+    "requireConfigFile": false
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    }
+  },
+  "plugins": [
+    "import",
+    "react-hooks",
+    "@typescript-eslint",
+    "react-native",
+    "require-explicit-generics",
+    "sort-destructure-keys",
+    "typescript-sort-keys",
+    "sort-keys-fix"
+  ],
+  "env": {
+    "amd": true,
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "worker": true,
+    "react-native/react-native": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts?(x)"],
+      "parser": "@typescript-eslint/parser",
+      "extends": [
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+      ],
+      "plugins": ["prettier"],
+      "rules": {
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "no-use-before-define": "off",
+        "curly": ["error", "all"],
+        "@typescript-eslint/no-use-before-define": ["off"],
+        "@typescript-eslint/no-explicit-any": "off",
+        "react/prop-types": "off",
+        "react/function-component-definition": "off",
+        "prettier/prettier": "error",
+        "react/no-unstable-nested-components": ["warn", { "allowAsProps": true }],
+        "react-native-a11y/has-valid-accessibility-ignores-invert-colors": "off"
+      }
+    },
+    {
+      "files": ["**/?(*.)+(test|spec).ts?(x)"],
+      "rules": {
+        "require-explicit-generics/require-explicit-generics": [
+          "off",
+          ["useNavigation", "useRoute"]
+        ]
+      }
+    }
+  ],
+  "rules": {
+    "react-native/no-unused-styles": 2,
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 2,
+    "react-native/no-color-literals": 2,
+    "react-native/no-raw-text": 0,
+    "react-native/no-single-element-style-arrays": 2,
+    "react/function-component-definition": "off",
+    "consistent-return": "off",
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+      }
+    ],
+    "linebreak-style": ["error", "unix"],
+    "template-curly-spacing": "off",
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": ["TemplateLiteral"]
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": 0,
+    "import/order": [
+      2,
+      {
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "builtin"
+          },
+          {
+            "pattern": "react-native",
+            "group": "builtin"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["internal"]
+      }
+    ],
+    "no-param-reassign": "off",
+    "no-shadow": "off",
+    "no-console": "off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "import/no-unresolved": [2, { "caseSensitive": false }],
+    "no-return-assign": ["error", "except-parens"],
+    "no-use-before-define": "off",
+    "jsx-quotes": ["error", "prefer-single"],
+    "arrow-body-style": "off",
+    "prefer-arrow-callback": "off",
+    "prefer-regex-literals": "off",
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-indent-props": ["error", 2],
+    "react/jsx-props-no-spreading": 0,
+    "react/state-in-constructor": 0,
+    "react/prop-types": 2,
+    "no-underscore-dangle": 0,
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+    "camelcase": 0,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/destructuring-assignment": ["off", { "ignoreClassFields": true }],
+    "react/forbid-prop-types": 0,
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": [
+      1,
+      {
+        "additionalHooks": "useBackHandler"
+      }
+    ], // Checks effect dependencies
+    "react/no-danger": [0],
+    "react/props-types": "off",
+    "react/require-default-props": "off",
+    "react-native-a11y/has-valid-accessibility-descriptors": "off",
+    "require-explicit-generics/require-explicit-generics": ["error", ["useNavigation", "useRoute"]],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "react-native",
+            "importNames": ["Text"],
+            "message": "Please use TextView from src/components"
+          }
+        ]
+      }
+    ],
+    "object-curly-newline": [
+      1,
+      {
+        "ObjectExpression": {
+          "multiline": true,
+          "minProperties": 1
+        },
+        "ObjectPattern": {
+          "consistent": true,
+          "multiline": true
+        },
+        "ImportDeclaration": {
+          "consistent": true,
+          "multiline": true
+        },
+        "ExportDeclaration": {
+          "consistent": true,
+          "multiline": true
+        }
+      }
+    ],
+    "sort-destructure-keys/sort-destructure-keys": [
+      1,
+      {
+        "caseSensitive": true
+      }
+    ],
+    "typescript-sort-keys/interface": [
+      1,
+      "asc",
+      {
+        "caseSensitive": true,
+        "natural": true,
+        "requiredFirst": true
+      }
+    ],
+    "typescript-sort-keys/string-enum": [
+      1,
+      "asc",
+      {
+        "caseSensitive": true,
+        "natural": true
+      }
+    ],
+    "react/jsx-sort-props": [
+      1,
+      {
+        "callbacksLast": true,
+        "shorthandFirst": true,
+        "shorthandLast": false,
+        "multiline": "last",
+        "ignoreCase": false,
+        "noSortAlphabetically": false,
+        "reservedFirst": true,
+        "locale": "auto"
+      }
+    ],
+    "sort-keys-fix/sort-keys-fix": [
+      1,
+      "asc",
+      {
+        "caseSensitive": true,
+        "natural": true
+      }
+    ]
+  }
+}
