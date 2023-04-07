@@ -1,117 +1,74 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useEffect } from 'react';
+import { SafeAreaView, StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useSharedValue } from 'react-native-reanimated';
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import VoiceWaveform from '@/components/VoiceWaveform/VoiceWaveform';
+import { useInitTheme } from '@/hooks/theme/useInitTheme';
+import { ThemeContext } from '@/hooks/theme/useTheme';
+import { SharedKeyboardHeightProvider } from '@/hooks/useSharedKeyboardHeight';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+const framesPowerValues = [8, 28, 8, 8, 24, 44, 24, 44, 24, 8, 8, 24, 8];
 
 function App(): JSX.Element {
+  const theme = useInitTheme();
+
   const isDarkMode = useColorScheme() === 'dark';
 
+  const voicePowerSharedValue = useSharedValue(4);
+
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: Colors.darker,
+    flex: 1,
   };
 
+  useEffect(() => {
+    let index = 0;
+    setInterval(() => {
+      voicePowerSharedValue.value = framesPowerValues[index];
+
+      if (index >= framesPowerValues.length - 1) {
+        index = 0;
+      } else {
+        index += 1;
+      }
+    }, 500);
+  }, []);
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <ThemeContext.Provider value={theme}>
+      <SharedKeyboardHeightProvider>
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+          <SafeAreaView style={backgroundStyle}>
+            <StatusBar
+              backgroundColor={backgroundStyle.backgroundColor}
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            />
+
+            <View style={styles.content}>
+              <VoiceWaveform
+                maxHeight={44}
+                minHeight={4}
+                numberOfFrames={20}
+                voicePowerSharedValue={voicePowerSharedValue}
+              />
+            </View>
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </SharedKeyboardHeightProvider>
+    </ThemeContext.Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  content: {
+    alignItems: 'center',
+    backgroundColor: Colors.darker,
+    flex: 1,
+    justifyItems: 'center',
+    paddingTop: 200,
   },
 });
 
