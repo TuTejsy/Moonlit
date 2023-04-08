@@ -431,6 +431,8 @@ PODS:
     - React-perflogger (= 0.71.5)
   - RealmJS (11.7.0):
     - React
+  - RNFS (2.20.0):
+    - React-Core
   - RNReanimated (2.12.0):
     - DoubleConversion
     - FBLazyVector
@@ -528,6 +530,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RealmJS (from `../node_modules/realm`)
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -627,6 +630,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RealmJS:
     :path: "../node_modules/realm"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNSVG:
@@ -687,6 +692,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 511f4301d85daf85abface9afb8d2df2d49f87d3
   ReactCommon: 4f43b72066f27bfe1f63838c61763f59e7112536
   RealmJS: 10958b8a9d1f3a981c1b50bdc1da8396002e75a4
+  RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNReanimated: dca939a830ba6101b6a9a21b1839b7362e28fd8f
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
