@@ -14,7 +14,7 @@ enum SANDBOX {
     case DOWNLOAD = "download"
     
     func directoryPath() -> URL? {
-      return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+      return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(self.rawValue, conformingTo: .directory)
     }
     
     func filePath(fileName: String?) -> URL? {

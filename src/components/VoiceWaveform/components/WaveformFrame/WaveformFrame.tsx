@@ -2,6 +2,7 @@ import React from 'react';
 
 import Animated, {
   SharedValue,
+  interpolate,
   useAnimatedStyle,
   withDelay,
   withTiming,
@@ -13,7 +14,7 @@ import { makeStyles } from './WaveformFrame.styles';
 
 interface WaveformFramePropTypes {
   color: string;
-  index: number;
+  delay: number;
   maxHeight: number;
   minHeight: number;
   voicePowerSharedValue: SharedValue<number>;
@@ -22,7 +23,7 @@ interface WaveformFramePropTypes {
 
 function WaveformFrame({
   color,
-  index,
+  delay,
   maxHeight,
   minHeight,
   opacity,
@@ -32,7 +33,10 @@ function WaveformFrame({
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      height: withDelay(index * 50, withTiming(voicePowerSharedValue.value)),
+      height: withDelay(
+        delay,
+        withTiming(interpolate(voicePowerSharedValue.value, [1, 6], [minHeight, maxHeight])),
+      ),
     };
   });
 
