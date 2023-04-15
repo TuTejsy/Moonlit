@@ -1,16 +1,32 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  Button,
+  EmitterSubscription,
+  NativeEventEmitter,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  useColorScheme,
+  View,
+} from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import RNFS from 'react-native-fs';
 import { useSharedValue } from 'react-native-reanimated';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 
 import VoiceWaveform from '@/components/VoiceWaveform/VoiceWaveform';
+import { SANDBOX } from '@/constants/common';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
 import { SharedKeyboardHeightProvider } from '@/hooks/useSharedKeyboardHeight';
+import { audioRecorder } from '@/native-modules/native-modules';
+import {
+  AUDIO_RECORDER_EMITTER_EVENT,
+  AUDIO_RECORDER_FILE,
+} from '@/native-modules/native-modules.types';
 
-const framesPowerValues = [8, 28, 8, 8, 24, 44, 24, 44, 24, 8, 8, 24, 8];
+const UPLOAD_PATH = 'http://localhost:8080/uploadFile';
 
 function App(): JSX.Element {
   const theme = useInitTheme();
@@ -24,17 +40,81 @@ function App(): JSX.Element {
     flex: 1,
   };
 
-  useEffect(() => {
-    let index = 0;
-    setInterval(() => {
-      voicePowerSharedValue.value = framesPowerValues[index];
+  const [isRecording, setIsRecording] = useState(false);
+  const [file, setFile] = useState<AUDIO_RECORDER_FILE | null>(null);
 
-      if (index >= framesPowerValues.length - 1) {
-        index = 0;
-      } else {
-        index += 1;
-      }
-    }, 500);
+  const handleRecordPress = useCallback(() => {
+    if (isRecording) {
+      audioRecorder.stopAudioRecording().then((file) => setFile(file));
+      setIsRecording(false);
+    } else {
+      audioRecorder.startAudioRecording();
+      setIsRecording(true);
+    }
+  }, [isRecording]);
+
+  const handleUploadFilePress = useCallback(() => {
+    if (!file) {
+      return;
+    }
+
+    const upload = (response) => {
+      const { jobId } = response;
+      console.log(`UPLOAD HAS BEGUN! JobId: ${jobId}`);
+    };
+
+    const uploadProgress = (response) => {
+      const percentage = Math.floor(
+        (response.totalBytesSent / response.totalBytesExpectedToSend) * 100,
+      );
+      console.log(`UPLOAD IS ${percentage}% DONE!`);
+    };
+
+    console.log(`${SANDBOX.DOCUMENTS.VOICE}/${file.cachedName}`);
+    // upload files
+    RNFS.uploadFiles({
+      files: [
+        {
+          filename: file.cachedName,
+          filepath: `${SANDBOX.DOCUMENTS.VOICE}/${file.cachedName}`,
+          filetype: file.mime,
+          name: `voice`,
+        },
+      ],
+      headers: {
+        Accept: 'application/json',
+      },
+      method: 'POST',
+      progress: uploadProgress,
+      toUrl: UPLOAD_PATH,
+    })
+      .promise.then((response) => {
+        if (response.statusCode === 200) {
+          console.log('FILES UPLOADED!'); // response.statusCode, response.headers, response.body
+        } else {
+          console.log('SERVER ERROR');
+        }
+      })
+      .catch((err) => {
+        if (err.description === 'cancelled') {
+          // cancelled by user
+        }
+        console.log(err);
+      });
+  }, [file]);
+
+  useEffect(() => {
+    const emitterManager = new NativeEventEmitter(audioRecorder);
+    const audioRecorderDidStartSubscription: EmitterSubscription = emitterManager.addListener(
+      AUDIO_RECORDER_EMITTER_EVENT.RECORDING_FRAME_POWER_UPDATE,
+      (framePower: number) => {
+        voicePowerSharedValue.value = framePower;
+      },
+    );
+
+    return () => {
+      audioRecorderDidStartSubscription?.remove();
+    };
   }, []);
 
   return (
@@ -42,18 +122,23 @@ function App(): JSX.Element {
       <SharedKeyboardHeightProvider>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <SafeAreaView style={backgroundStyle}>
-            <StatusBar
-              backgroundColor={backgroundStyle.backgroundColor}
-              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-            />
+            <StatusBar backgroundColor={backgroundStyle.backgroundColor} barStyle='light-content' />
 
             <View style={styles.content}>
               <VoiceWaveform
                 maxHeight={44}
-                minHeight={4}
+                minHeight={8}
                 numberOfFrames={20}
                 voicePowerSharedValue={voicePowerSharedValue}
               />
+
+              <View style={styles.buttons}>
+                <Button
+                  title={isRecording ? 'Stop Recording' : 'Record'}
+                  onPress={handleRecordPress}
+                />
+                <Button title='Upload File' onPress={handleUploadFilePress} />
+              </View>
             </View>
           </SafeAreaView>
         </SafeAreaProvider>
@@ -63,6 +148,9 @@ function App(): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  buttons: {
+    marginTop: 200,
+  },
   content: {
     alignItems: 'center',
     backgroundColor: Colors.darker,

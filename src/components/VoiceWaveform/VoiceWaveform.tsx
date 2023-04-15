@@ -32,15 +32,18 @@ function VoiceWaveform({
     <View style={styles.voiceWaveform}>
       {frames.map((value, index) => {
         const middle = numberOfFrames / 2;
-        const opacity = 1 - Math.abs(middle - index) * (2 / numberOfFrames);
+        const diffMiddle = Math.abs(middle - index);
+        const opacity = 1 - diffMiddle * (2 / numberOfFrames);
+        const frameDelay = 15 * diffMiddle;
+        const frameMaxHeight = maxHeight - maxHeight * Math.random();
 
         return (
           <WaveformFrame
             // eslint-disable-next-line react/no-array-index-key
             key={index}
             color={color}
-            index={index}
-            maxHeight={maxHeight}
+            delay={frameDelay}
+            maxHeight={frameMaxHeight > minHeight ? frameMaxHeight : minHeight}
             minHeight={minHeight}
             opacity={opacity}
             voicePowerSharedValue={voicePowerSharedValue}

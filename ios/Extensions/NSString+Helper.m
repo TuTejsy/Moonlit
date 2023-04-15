@@ -94,7 +94,7 @@
 
 + (NSString*)getPatternNameForType: (AssetType) type andDate: (NSDate*)date extension: (nullable NSString*)extension {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyyMMdd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyyMMddHHmmss"];
     
     switch (type) {
       case PHOTO:
