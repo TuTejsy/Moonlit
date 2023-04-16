@@ -1,24 +1,24 @@
 import { useCallback, useMemo, useState } from 'react';
 
 import { makeFonts } from '@/styles/fonts';
-import { lightTheme } from '@/styles/themes/light';
+import { darkTheme } from '@/styles/themes/dark';
 import { dh, dw } from '@/utils/sizes';
 
 import { ThemeValues } from './useTheme';
 
 export const useInitTheme = () => {
-  const [themeValue, setThemeValue] = useState(ThemeValues.Light);
+  const [themeValue, setThemeValue] = useState(ThemeValues.Dark);
 
   const onChangeTheme = useCallback((value: ThemeValues) => {
     setThemeValue(value);
   }, []);
 
   const theme = useMemo(() => {
-    if (ThemeValues.Light === themeValue) {
-      return lightTheme;
+    if (ThemeValues.Dark === themeValue) {
+      return darkTheme;
     }
 
-    return lightTheme;
+    return darkTheme;
   }, [themeValue]);
 
   return useMemo(
