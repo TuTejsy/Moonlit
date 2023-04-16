@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import { dw } from '@/utils/sizes';
-
 import { Fonts } from '@/constants/common';
 
 export const makeFonts = () =>
@@ -11,49 +9,49 @@ export const makeFonts = () =>
       textTransform: 'uppercase',
     },
     fontFamilyBold: {
-      fontFamily: Fonts.ArialBold,
+      fontFamily: Fonts.PoppinsSemiBold,
     },
     fontFamilyRegular: {
-      fontFamily: Fonts.ArialRegular,
+      fontFamily: Fonts.PoppinsRegular,
     },
     size_10: {
-      fontSize: dw(10),
-      lineHeight: dw(16),
+      fontSize: 10,
+      lineHeight: 16,
     },
     size_11: {
-      fontSize: dw(11),
-      lineHeight: dw(16),
+      fontSize: 11,
+      lineHeight: 16,
     },
     size_12: {
-      fontSize: dw(12),
-      lineHeight: dw(18),
+      fontSize: 12,
+      lineHeight: 18,
     },
     size_13: {
-      fontSize: dw(13),
-      lineHeight: dw(18),
+      fontSize: 13,
+      lineHeight: 18,
     },
     size_14: {
-      fontSize: dw(14),
-      lineHeight: dw(20),
+      fontSize: 14,
+      lineHeight: 20,
     },
     size_15: {
-      fontSize: dw(15),
-      lineHeight: dw(22),
+      fontSize: 15,
+      lineHeight: 22,
     },
     size_15_20: {
-      fontSize: dw(15),
-      lineHeight: dw(20),
+      fontSize: 15,
+      lineHeight: 20,
     },
     size_16: {
-      fontSize: dw(16),
-      lineHeight: dw(24),
+      fontSize: 16,
+      lineHeight: 24,
     },
     size_16_22: {
-      fontSize: dw(16),
-      lineHeight: dw(22),
+      fontSize: 16,
+      lineHeight: 22,
     },
     size_18: {
-      fontSize: dw(18),
-      lineHeight: dw(26),
+      fontSize: 18,
+      lineHeight: 26,
     },
   });
