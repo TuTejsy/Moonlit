@@ -4,11 +4,8 @@ import { commonColors } from './common';
 
 const darkColors = {
   dark: '#2D2D2D',
+  dark_grey: '#1A1A1A',
   orange: '#EC7748',
-
-  white: '#FFFFFF',
-  white_20: 'rgba(255, 255, 255, 0.2)',
-  white_50: 'rgba(255, 255, 255, 0.5)',
 };
 
 export const darkTheme = {
