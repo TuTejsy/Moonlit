@@ -8,6 +8,7 @@ const darkColors = {
 
   white: '#FFFFFF',
   white_20: 'rgba(255, 255, 255, 0.2)',
+  white_50: 'rgba(255, 255, 255, 0.5)',
 };
 
 export const darkTheme = {

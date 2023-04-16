@@ -166,6 +166,18 @@
     "react/require-default-props": "off",
     "react-native-a11y/has-valid-accessibility-descriptors": "off",
     "require-explicit-generics/require-explicit-generics": ["error", ["useNavigation", "useRoute"]],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "react-native",
+            "importNames": ["Text"],
+            "message": "Please use TextView from src/components"
+          }
+        ]
+      }
+    ],
     "object-curly-newline": [
       1,
       {

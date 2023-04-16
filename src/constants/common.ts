@@ -3,11 +3,10 @@ import { Platform } from 'react-native';
 import RNFS from 'react-native-fs';
 
 import { getApplicationEnv } from '@/utils/getEnv';
-import { platformSelect } from '@/utils/platformSelect';
 
 export const Fonts = Object.freeze({
-  ArialBold: platformSelect({ android: 'Arial-Bold', ios: 'Arial-BoldMT' }),
-  ArialRegular: platformSelect({ android: 'Arial', ios: 'ArialMT' }),
+  PoppinsRegular: 'Poppins-Regular',
+  PoppinsSemiBold: 'Poppins-SemiBold',
 });
 
 export const IS_IOS = Platform.OS === 'ios';

@@ -7,5 +7,5 @@ export const commonColors = {
   shadowDropOut: 'rgba(41, 44, 51, 0.08)',
 
   transparent: 'transparent',
-  white: '#FFF',
+  white: '#FFFFFF',
 };
