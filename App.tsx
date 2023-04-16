@@ -1,163 +1,51 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Button,
-  EmitterSubscription,
-  NativeEventEmitter,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  useColorScheme,
-  View,
-} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { StatusBar } from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import RNFS from 'react-native-fs';
-import { useSharedValue } from 'react-native-reanimated';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
+import { enableFreeze } from 'react-native-screens';
 
-import VoiceWaveform from '@/components/VoiceWaveform/VoiceWaveform';
-import { SANDBOX } from '@/constants/common';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
 import { SharedKeyboardHeightProvider } from '@/hooks/useSharedKeyboardHeight';
-import { audioRecorder } from '@/native-modules/native-modules';
-import {
-  AUDIO_RECORDER_EMITTER_EVENT,
-  AUDIO_RECORDER_FILE,
-} from '@/native-modules/native-modules.types';
+import { RootNavigator } from '@/navigation/RootNavigator/RootNavigator';
+import { navigationService } from '@/services/navigation/navigationService';
+import { lightNavTheme } from '@/styles/themes/dark';
 
-const UPLOAD_PATH = 'http://localhost:8080/uploadFile';
+if (!__DEV__) {
+  console.log = () => undefined;
+  console.warn = () => undefined;
+  console.error = () => undefined;
+}
+
+enableFreeze(true);
 
 function App(): JSX.Element {
   const theme = useInitTheme();
-
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const voicePowerSharedValue = useSharedValue(4);
-
-  const backgroundStyle = {
-    backgroundColor: Colors.darker,
-    flex: 1,
-  };
-
-  const [isRecording, setIsRecording] = useState(false);
-  const [file, setFile] = useState<AUDIO_RECORDER_FILE | null>(null);
-
-  const handleRecordPress = useCallback(() => {
-    if (isRecording) {
-      audioRecorder.stopAudioRecording().then((file) => setFile(file));
-      setIsRecording(false);
-    } else {
-      audioRecorder.startAudioRecording();
-      setIsRecording(true);
-    }
-  }, [isRecording]);
-
-  const handleUploadFilePress = useCallback(() => {
-    if (!file) {
-      return;
-    }
-
-    const upload = (response) => {
-      const { jobId } = response;
-      console.log(`UPLOAD HAS BEGUN! JobId: ${jobId}`);
-    };
-
-    const uploadProgress = (response) => {
-      const percentage = Math.floor(
-        (response.totalBytesSent / response.totalBytesExpectedToSend) * 100,
-      );
-      console.log(`UPLOAD IS ${percentage}% DONE!`);
-    };
-
-    console.log(`${SANDBOX.DOCUMENTS.VOICE}/${file.cachedName}`);
-    // upload files
-    RNFS.uploadFiles({
-      files: [
-        {
-          filename: file.cachedName,
-          filepath: `${SANDBOX.DOCUMENTS.VOICE}/${file.cachedName}`,
-          filetype: file.mime,
-          name: `voice`,
-        },
-      ],
-      headers: {
-        Accept: 'application/json',
-      },
-      method: 'POST',
-      progress: uploadProgress,
-      toUrl: UPLOAD_PATH,
-    })
-      .promise.then((response) => {
-        if (response.statusCode === 200) {
-          console.log('FILES UPLOADED!'); // response.statusCode, response.headers, response.body
-        } else {
-          console.log('SERVER ERROR');
-        }
-      })
-      .catch((err) => {
-        if (err.description === 'cancelled') {
-          // cancelled by user
-        }
-        console.log(err);
-      });
-  }, [file]);
-
-  useEffect(() => {
-    const emitterManager = new NativeEventEmitter(audioRecorder);
-    const audioRecorderDidStartSubscription: EmitterSubscription = emitterManager.addListener(
-      AUDIO_RECORDER_EMITTER_EVENT.RECORDING_FRAME_POWER_UPDATE,
-      (framePower: number) => {
-        voicePowerSharedValue.value = framePower;
-      },
-    );
-
-    return () => {
-      audioRecorderDidStartSubscription?.remove();
-    };
-  }, []);
 
   return (
     <ThemeContext.Provider value={theme}>
       <SharedKeyboardHeightProvider>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-          <SafeAreaView style={backgroundStyle}>
-            <StatusBar backgroundColor={backgroundStyle.backgroundColor} barStyle='light-content' />
-
-            <View style={styles.content}>
-              <VoiceWaveform
-                maxHeight={44}
-                minHeight={8}
-                numberOfFrames={20}
-                voicePowerSharedValue={voicePowerSharedValue}
-              />
-
-              <View style={styles.buttons}>
-                <Button
-                  title={isRecording ? 'Stop Recording' : 'Record'}
-                  onPress={handleRecordPress}
-                />
-                <Button title='Upload File' onPress={handleUploadFilePress} />
-              </View>
-            </View>
-          </SafeAreaView>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <StatusBar backgroundColor={theme.colors.white} barStyle='light-content' />
+            <NavigationContainer
+              ref={navigationService.setRef}
+              theme={lightNavTheme}
+              onStateChange={navigationService.onStateChange}
+            >
+              <BottomSheetModalProvider>
+                <RootNavigator />
+              </BottomSheetModalProvider>
+            </NavigationContainer>
+          </GestureHandlerRootView>
         </SafeAreaProvider>
       </SharedKeyboardHeightProvider>
     </ThemeContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  buttons: {
-    marginTop: 200,
-  },
-  content: {
-    alignItems: 'center',
-    backgroundColor: Colors.darker,
-    flex: 1,
-    justifyItems: 'center',
-    paddingTop: 200,
-  },
-});
 
 export default App;

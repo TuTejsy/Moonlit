@@ -2,17 +2,17 @@ import { createContext, useContext } from 'react';
 
 import { makeFonts } from '@/styles/fonts';
 import { relativeSizes } from '@/styles/sizes';
-import { lightTheme } from '@/styles/themes/light';
+import { darkTheme } from '@/styles/themes/dark';
 
 export enum ThemeValues {
-  Light = 'Light',
+  Dark = 'Dark',
 }
 
 export type ITheme = {
   fonts: ReturnType<typeof makeFonts>;
   onChangeTheme: (value: ThemeValues) => void;
   value: ThemeValues;
-} & typeof lightTheme &
+} & typeof darkTheme &
   typeof relativeSizes;
 
 export const ThemeContext = createContext<ITheme | null>(null);
