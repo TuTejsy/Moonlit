@@ -53,8 +53,8 @@ function StoryMeta({ storyPlayingSharedValue }: StoryMetaPropTypes) {
       <Animated.View style={animatedTextStyle}>
         <TextView style={styles.storyText}>
           Once upon a time, in a land far, far away, a young girl named Ella lived with her wicked
-          stepmother and two stepsisters. One day a royal invitation arrived, a young girl named
-          Ella lived with her wicked, announcing a grand ball at the palace...
+          stepmother and two stepsisters. One day, a royal invitation arrived, announcing a grand
+          ball at the palace...
         </TextView>
       </Animated.View>
     </View>

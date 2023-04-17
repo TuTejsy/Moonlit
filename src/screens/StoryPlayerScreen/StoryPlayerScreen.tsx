@@ -3,6 +3,7 @@ import { View } from 'react-native';
 
 import { noop } from 'lodash';
 import { GestureDetector } from 'react-native-gesture-handler';
+import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
 import Animated, { useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -20,6 +21,10 @@ import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
 import storyImage from './images/story/story.png';
 import { makeStyles } from './StoryPlayerScreen.styles';
 
+const AnimatedLinearGradient = Animated.createAnimatedComponent<
+  Omit<LinearGradientProps, 'colors'>
+>(LinearGradient as any);
+
 function StoryPlayerScreen() {
   const insets = useSafeAreaInsets();
   const storyContainerMinHeight =
@@ -29,10 +34,8 @@ function StoryPlayerScreen() {
 
   const storyPlayingSharedValue = useSharedValue(0);
 
-  const { coverAnimatedStyles, storyContainerAnimatedStyles } = useStoryCoverAnimation(
-    storyPlayingSharedValue,
-    storyContainerMinHeight,
-  );
+  const { coverAnimatedStyles, gradientAnimatedProps, storyContainerAnimatedStyles } =
+    useStoryCoverAnimation(storyPlayingSharedValue, storyContainerMinHeight);
 
   const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue);
 
@@ -57,6 +60,13 @@ function StoryPlayerScreen() {
               resizeMode='cover'
               source={storyImage}
               style={[styles.cover, coverAnimatedStyles]}
+            />
+
+            <AnimatedLinearGradient
+              angle={180}
+              animatedProps={gradientAnimatedProps}
+              pointerEvents='none'
+              style={styles.gradient}
             />
             <StoryActions storyPlayingSharedValue={storyPlayingSharedValue} />
           </View>

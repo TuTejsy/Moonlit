@@ -17,6 +17,13 @@ export const makeStyles = (
       minHeight: STORY_COVER_MIN_HEIGHT,
       minWidth: STORY_CONTAINER_MIN_WIDTH,
     },
+    gradient: {
+      height: '100%',
+      minHeight: storyContainerMinHeight,
+      minWidth: STORY_CONTAINER_MIN_WIDTH,
+      position: 'absolute',
+      width: '100%',
+    },
     header: {
       left: 0,
       position: 'absolute',
@@ -26,6 +33,8 @@ export const makeStyles = (
     },
     imageContainer: {
       alignItems: 'center',
+      minHeight: STORY_COVER_MIN_HEIGHT,
+      minWidth: STORY_CONTAINER_MIN_WIDTH,
       position: 'relative',
     },
     screen: {
@@ -36,7 +45,6 @@ export const makeStyles = (
     },
     storyContainer: {
       alignItems: 'center',
-      backgroundColor: colors.dark_grey,
       borderBottomLeftRadius: 32,
       borderBottomRightRadius: 32,
       borderTopLeftRadius: 24,

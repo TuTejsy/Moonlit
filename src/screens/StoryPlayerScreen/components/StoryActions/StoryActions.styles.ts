@@ -12,6 +12,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       paddingHorizontal: 16,
       position: 'absolute',
       width: WINDOW_WIDTH - 32,
+      zIndex: 10,
     },
     button: {
       alignItems: 'center',
