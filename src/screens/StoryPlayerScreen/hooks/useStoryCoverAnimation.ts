@@ -1,8 +1,16 @@
-import { SharedValue, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import {
+  SharedValue,
+  interpolate,
+  interpolateColor,
+  processColor,
+  useAnimatedProps,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import { useTheme } from '@/hooks/theme/useTheme';
 
 import {
   EXTROPOLATION_CONFIG,
@@ -15,9 +23,16 @@ function useStoryCoverAnimation(
   storyContainerMinHeight: number,
 ) {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   const storyContainerAnimatedStyles = useAnimatedStyle(() => {
     return {
+      backgroundColor: interpolateColor(
+        storyPlayingSharedValue.value,
+        [0, 1],
+        [colors.dark_grey, colors.black],
+        'RGB',
+      ),
       height: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
@@ -44,7 +59,7 @@ function useStoryCoverAnimation(
       height: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
-        [STORY_COVER_MIN_HEIGHT, SCREEN_HEIGHT],
+        [STORY_COVER_MIN_HEIGHT, SCREEN_HEIGHT - insets.bottom],
         EXTROPOLATION_CONFIG,
       ),
       width: interpolate(
@@ -56,8 +71,28 @@ function useStoryCoverAnimation(
     };
   });
 
+  const gradientAnimatedProps = useAnimatedProps(() => {
+    const color = interpolate(storyPlayingSharedValue.value, [0, 1], [26, 0], EXTROPOLATION_CONFIG);
+
+    const animatedLocation = interpolate(
+      storyPlayingSharedValue.value,
+      [0, 1],
+      [0.5319, 0.3723],
+      EXTROPOLATION_CONFIG,
+    );
+
+    return {
+      colors: [
+        processColor(`rgba(${color}, ${color}, ${color}, 0)`),
+        processColor(`rgba(${color}, ${color}, ${color}, 1)`),
+      ],
+      locations: [animatedLocation, 1],
+    };
+  });
+
   return {
     coverAnimatedStyles,
+    gradientAnimatedProps,
     storyContainerAnimatedStyles,
   };
 }

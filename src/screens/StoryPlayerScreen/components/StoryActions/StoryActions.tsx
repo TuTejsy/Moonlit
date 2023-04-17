@@ -43,7 +43,9 @@ function StoryActions({ storyPlayingSharedValue }: StoryActionsPropTyps) {
   });
 
   const handlePlayStoryPress = useCallback(() => {
-    storyPlayingSharedValue.value = withTiming(1);
+    storyPlayingSharedValue.value = withTiming(1, {
+      easing: Easing.bezier(0.76, 0, 0.84, 0.89),
+    });
   }, [storyPlayingSharedValue]);
 
   return (
