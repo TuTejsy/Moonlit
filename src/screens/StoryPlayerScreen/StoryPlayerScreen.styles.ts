@@ -19,8 +19,6 @@ export const makeStyles = (
     },
     gradient: {
       height: '100%',
-      minHeight: storyContainerMinHeight,
-      minWidth: STORY_CONTAINER_MIN_WIDTH,
       position: 'absolute',
       width: '100%',
     },
