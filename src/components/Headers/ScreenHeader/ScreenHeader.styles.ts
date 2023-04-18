@@ -26,7 +26,7 @@ export const makeStyles = (
     },
     subtitleText: {
       ...fonts.size_14,
-      color: colors.white_50,
+      color: colors.opacityWhite(0.5),
       textAlign: 'center',
     },
     title: {

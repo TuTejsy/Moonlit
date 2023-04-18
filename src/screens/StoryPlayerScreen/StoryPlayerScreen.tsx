@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
 import { noop } from 'lodash';
-import { GestureDetector } from 'react-native-gesture-handler';
+import { GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
-import Animated, { useSharedValue } from 'react-native-reanimated';
+import Animated, { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
@@ -15,6 +15,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import StoryActions from './components/StoryActions/StoryActions';
 import StoryMeta from './components/StoryMeta/StoryMeta';
+import StoryPlayer from './components/StoryPlayer/StoryPlayer';
 import VoiceSettingsButton from './components/VoiceSettingsButton/VoiceSettingsButton';
 import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
 import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
@@ -33,6 +34,8 @@ function StoryPlayerScreen() {
   const styles = useMakeStyles(makeStyles, { storyContainerMinHeight });
 
   const storyPlayingSharedValue = useSharedValue(0);
+
+  const isStoryPlaying = useDerivedValue(() => storyPlayingSharedValue.value > 0);
 
   const { coverAnimatedStyles, gradientAnimatedProps, storyContainerAnimatedStyles } =
     useStoryCoverAnimation(storyPlayingSharedValue, storyContainerMinHeight);
@@ -68,12 +71,19 @@ function StoryPlayerScreen() {
               pointerEvents='none'
               style={styles.gradient}
             />
-            <StoryActions storyPlayingSharedValue={storyPlayingSharedValue} />
+            <StoryActions
+              isStoryPlaying={isStoryPlaying}
+              storyPlayingSharedValue={storyPlayingSharedValue}
+            />
           </View>
           <StoryMeta storyPlayingSharedValue={storyPlayingSharedValue} />
         </Animated.View>
       </GestureDetector>
 
+      <StoryPlayer
+        isStoryPlaying={isStoryPlaying}
+        storyPlayingSharedValue={storyPlayingSharedValue}
+      />
       <VoiceSettingsButton />
     </View>
   );

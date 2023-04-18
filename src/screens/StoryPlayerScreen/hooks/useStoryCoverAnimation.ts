@@ -62,12 +62,6 @@ function useStoryCoverAnimation(
         [STORY_COVER_MIN_HEIGHT, SCREEN_HEIGHT - insets.bottom],
         EXTROPOLATION_CONFIG,
       ),
-      width: interpolate(
-        storyPlayingSharedValue.value,
-        [0, 1],
-        [STORY_CONTAINER_MIN_WIDTH, SCREEN_WIDTH],
-        EXTROPOLATION_CONFIG,
-      ),
     };
   });
 

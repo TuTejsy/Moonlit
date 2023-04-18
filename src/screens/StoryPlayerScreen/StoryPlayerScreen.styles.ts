@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
+import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { STORY_CONTAINER_MIN_WIDTH, STORY_COVER_MIN_HEIGHT } from './StoryPlayerScreen.constants';
@@ -16,6 +18,7 @@ export const makeStyles = (
     cover: {
       minHeight: STORY_COVER_MIN_HEIGHT,
       minWidth: STORY_CONTAINER_MIN_WIDTH,
+      width: '100%',
     },
     gradient: {
       height: '100%',
@@ -27,18 +30,21 @@ export const makeStyles = (
       position: 'absolute',
       top: 0,
       width: '100%',
-      zIndex: 100,
+      zIndex: 10,
     },
     imageContainer: {
       alignItems: 'center',
       minHeight: STORY_COVER_MIN_HEIGHT,
       minWidth: STORY_CONTAINER_MIN_WIDTH,
       position: 'relative',
+      width: '100%',
     },
     screen: {
       alignItems: 'center',
       backgroundColor: colors.black,
       flex: 1,
+      maxHeight: SCREEN_HEIGHT,
+      maxWidth: SCREEN_WIDTH,
       position: 'relative',
     },
     storyContainer: {
