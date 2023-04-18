@@ -9,8 +9,8 @@ export const Download = (props: SvgProps) => {
 
   return (
     <Svg
-      color={colors.white_80}
-      fill={colors.white_80}
+      color={colors.opacityWhite(0.8)}
+      fill={colors.opacityWhite(0.8)}
       height={24}
       viewBox='0 0 24 24'
       width={24}

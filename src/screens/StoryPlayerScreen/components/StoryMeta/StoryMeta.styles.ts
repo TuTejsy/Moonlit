@@ -11,7 +11,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     category: {
       alignItems: 'center',
-      borderColor: colors.white_10,
+      borderColor: colors.opacityWhite(0.1),
       borderRadius: 100,
       borderWidth: 1,
       height: 32,
@@ -28,7 +28,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     storyText: {
       ...fonts.size_14,
-      color: colors.white_70,
+      color: colors.opacityWhite(0.7),
       marginBottom: 16,
       minHeight: 311,
     },

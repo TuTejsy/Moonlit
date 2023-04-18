@@ -21,13 +21,14 @@ import { EXTROPOLATION_CONFIG } from '../../StoryPlayerScreen.constants';
 import { makeStyles } from './StoryActions.styles';
 
 interface StoryActionsPropTyps {
+  isStoryPlaying: SharedValue<boolean>;
   storyPlayingSharedValue: SharedValue<number>;
 }
 
-function StoryActions({ storyPlayingSharedValue }: StoryActionsPropTyps) {
+function StoryActions({ isStoryPlaying, storyPlayingSharedValue }: StoryActionsPropTyps) {
   const styles = useMakeStyles(makeStyles);
 
-  const areActionsDisabled = storyPlayingSharedValue.value !== 0;
+  const areActionsDisabled = isStoryPlaying.value;
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
@@ -43,9 +44,7 @@ function StoryActions({ storyPlayingSharedValue }: StoryActionsPropTyps) {
   });
 
   const handlePlayStoryPress = useCallback(() => {
-    storyPlayingSharedValue.value = withTiming(1, {
-      easing: Easing.inOut(Easing.ease),
-    });
+    storyPlayingSharedValue.value = withTiming(1);
   }, [storyPlayingSharedValue]);
 
   return (

@@ -7,7 +7,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     button: {
       alignItems: 'center',
-      backgroundColor: colors.white_20,
+      backgroundColor: colors.opacityWhite(0.2),
       borderRadius: 32,
       bottom: insets.bottom + 10,
       flexDirection: 'row',
