@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useRef, useMemo, useState, useCallback } from 'react';
 import { View, ViewProps } from 'react-native';
 
 import { GestureDetector } from 'react-native-gesture-handler';
@@ -81,24 +81,25 @@ function ProgressBar({ duration, isStoryPlaying, style }: ProgressBarPropTypes) 
     },
     (isPlaying, previousIsPlaying) => {
       if (isPlaying !== previousIsPlaying) {
+        progressSharedValue.value = (playedTime / duration) * 100;
+
         if (isPlaying) {
           progressSharedValue.value = withTiming(100, {
-            duration: (duration - playedTimeRef.current) * 1000,
+            duration: (duration - playedTime) * 1000,
           });
 
           runOnJS(startTimer)();
         } else {
           runOnJS(stopTimer)();
-          progressSharedValue.value = playedTimeRef.current / duration;
         }
       }
     },
-    [],
+    [playedTime],
   );
 
   return (
     <GestureDetector gesture={gestureHandler}>
-      <Animated.View style={[styles.progressBarContainer, style]}>
+      <View style={styles.progressBarContainer}>
         <View style={styles.progressBar}>
           <Animated.View style={[styles.progressBarValue, animatedProgressStyle]} />
         </View>
@@ -107,7 +108,7 @@ function ProgressBar({ duration, isStoryPlaying, style }: ProgressBarPropTypes) 
           <TextView style={styles.time}>{formattedPlayedTime}</TextView>
           <TextView style={styles.time}>{formattedRemainedTime}</TextView>
         </View>
-      </Animated.View>
+      </View>
     </GestureDetector>
   );
 }

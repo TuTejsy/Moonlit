@@ -1,6 +1,8 @@
 import { Gesture } from 'react-native-gesture-handler';
 import { SharedValue, interpolate, useSharedValue, withTiming } from 'react-native-reanimated';
 
+import { SCREEN_HEIGHT } from '@/constants/layout';
+
 import { EXTROPOLATION_CONFIG } from '../StoryPlayerScreen.constants';
 
 function useStoryCoverGestureHandler(storyPlayingSharedValue: SharedValue<number>) {
@@ -22,10 +24,11 @@ function useStoryCoverGestureHandler(storyPlayingSharedValue: SharedValue<number
         );
       }
     })
-    .onEnd(() => {
+    .onEnd((e) => {
       if (isGestureEnabled.value) {
         isGestureEnabled.value = false;
-        storyPlayingSharedValue.value = withTiming(0);
+
+        storyPlayingSharedValue.value = withTiming(e.translationY < -40 ? 0 : 1);
       }
     });
 

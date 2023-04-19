@@ -29,7 +29,7 @@ function StoryPlayer({ isStoryPlaying, storyPlayingSharedValue }: StoryPlayerPro
       bottom: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
-        [0, insets.bottom + 100],
+        [insets.bottom + 60, insets.bottom + 100],
         EXTROPOLATION_CONFIG,
       ),
 
@@ -37,15 +37,36 @@ function StoryPlayer({ isStoryPlaying, storyPlayingSharedValue }: StoryPlayerPro
     };
   });
 
+  const animatedActionsContainerStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: interpolate(
+            storyPlayingSharedValue.value,
+            [0, 1],
+            [-insets.bottom + 100, 0],
+            EXTROPOLATION_CONFIG,
+          ),
+        },
+      ],
+    };
+  });
+
   return (
     <Animated.View style={[styles.playerContainer, animatedContainerStyle]}>
+      <View style={styles.playerControllsContainer}>
+        <Icons.GoBack />
+        <Icons.PauseBig />
+        <Icons.GoForward />
+      </View>
+
       <ProgressBar duration={DURATION} isStoryPlaying={isStoryPlaying} />
 
-      <View style={styles.playerActionsContainer}>
+      <Animated.View style={[styles.playerActionsContainer, animatedActionsContainerStyle]}>
         <Icons.Clock />
         <Icons.DownloadRound />
         <Icons.Favorite />
-      </View>
+      </Animated.View>
     </Animated.View>
   );
 }
