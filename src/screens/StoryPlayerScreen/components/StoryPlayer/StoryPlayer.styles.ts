@@ -6,6 +6,7 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     playerActionsContainer: {
+      alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginTop: 34,
@@ -17,5 +18,12 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       paddingHorizontal: 16,
       position: 'absolute',
       width: WINDOW_WIDTH,
+    },
+    playerControllsContainer: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 48,
+      width: 216,
     },
   });
