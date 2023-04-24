@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 
+import { BlurView } from '@react-native-community/blur';
 import Animated, {
   SharedValue,
   useAnimatedStyle,
@@ -15,6 +16,7 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SCREEN_HEIGHT } from '@/constants/layout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useTheme } from '@/hooks/theme/useTheme';
 
 import { EXTROPOLATION_CONFIG } from '../../StoryPlayerScreen.constants';
 
@@ -27,6 +29,7 @@ interface StoryActionsPropTyps {
 
 function StoryActions({ isStoryPlaying, storyPlayingSharedValue }: StoryActionsPropTyps) {
   const styles = useMakeStyles(makeStyles);
+  const { colors } = useTheme();
 
   const areActionsDisabled = isStoryPlaying.value;
 
@@ -49,12 +52,22 @@ function StoryActions({ isStoryPlaying, storyPlayingSharedValue }: StoryActionsP
 
   return (
     <Animated.View style={[styles.actionsContainer, animatedContainerStyle]}>
-      <PressableView disabled={areActionsDisabled} style={styles.button}>
+      <BlurView
+        blurAmount={5}
+        blurType='light'
+        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+        style={styles.button}
+      >
         <Icons.Favorite />
-      </PressableView>
-      <PressableView disabled={areActionsDisabled} style={styles.button}>
+      </BlurView>
+      <BlurView
+        blurAmount={5}
+        blurType='light'
+        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+        style={styles.button}
+      >
         <Icons.Download />
-      </PressableView>
+      </BlurView>
       <PressableView
         disabled={areActionsDisabled}
         style={styles.listenButton}

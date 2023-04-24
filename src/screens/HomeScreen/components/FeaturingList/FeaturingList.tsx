@@ -29,6 +29,7 @@ function FeaturingList() {
   return (
     <FlatList
       horizontal
+      contentContainerStyle={styles.featuringListContent}
       data={STORIES}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}

@@ -2,8 +2,7 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { noop } from 'lodash';
-import { GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
 import Animated, { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -13,6 +12,7 @@ import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useTheme } from '@/hooks/theme/useTheme';
 
 import StoryActions from './components/StoryActions/StoryActions';
 import StoryMeta from './components/StoryMeta/StoryMeta';
@@ -32,17 +32,22 @@ function StoryPlayerScreen() {
   const storyContainerMinHeight =
     WINDOW_HEIGHT - DEFAULT_HEADER_HEIGHT - insets.top - insets.bottom - 90;
 
+  const styles = useMakeStyles(makeStyles, { storyContainerMinHeight });
+  const { colors } = useTheme();
+
   const navigation = useNavigation<NavigationType>();
   const route = useRoute<RouteType>();
   const { storyImageSource, storyTitle } = route.params;
 
-  const styles = useMakeStyles(makeStyles, { storyContainerMinHeight });
-
   const storyPlayingSharedValue = useSharedValue(0);
   const isStoryPlaying = useDerivedValue(() => storyPlayingSharedValue.value > 0);
 
-  const { coverAnimatedStyles, gradientAnimatedProps, storyContainerAnimatedStyles } =
-    useStoryCoverAnimation(storyPlayingSharedValue, storyContainerMinHeight);
+  const {
+    bottomGradientAnimatedProps,
+    coverAnimatedStyles,
+    storyContainerAnimatedStyles,
+    topGradientAnimatedProps,
+  } = useStoryCoverAnimation(storyPlayingSharedValue, storyContainerMinHeight);
 
   const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue);
 
@@ -51,7 +56,12 @@ function StoryPlayerScreen() {
   }, [navigation]);
 
   return (
-    <View style={styles.screen}>
+    <LinearGradient
+      angle={180}
+      colors={[colors.opacityGreen(0.3), colors.opacityGreen(0)]}
+      locations={[0, 1]}
+      style={styles.screen}
+    >
       <ScreenHeader
         renderRight={<Icons.Share />}
         style={styles.header}
@@ -71,9 +81,15 @@ function StoryPlayerScreen() {
 
             <AnimatedLinearGradient
               angle={180}
-              animatedProps={gradientAnimatedProps}
+              animatedProps={topGradientAnimatedProps}
               pointerEvents='none'
-              style={styles.gradient}
+              style={styles.topGradient}
+            />
+            <AnimatedLinearGradient
+              angle={180}
+              animatedProps={bottomGradientAnimatedProps}
+              pointerEvents='none'
+              style={styles.bottomGradient}
             />
             <StoryActions
               isStoryPlaying={isStoryPlaying}
@@ -89,7 +105,7 @@ function StoryPlayerScreen() {
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
       <VoiceSettingsButton />
-    </View>
+    </LinearGradient>
   );
 }
 

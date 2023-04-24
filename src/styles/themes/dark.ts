@@ -5,6 +5,9 @@ import { commonColors } from './common';
 const darkColors = {
   dark: '#2D2D2D',
   dark_grey: '#1A1A1A',
+  green: '#247F8A',
+  opacityGreen: (float: number) => `rgba(36, 127, 138, ${float})`,
+
   orange: '#EC7748',
 };
 

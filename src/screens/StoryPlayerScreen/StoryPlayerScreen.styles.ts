@@ -11,18 +11,18 @@ interface Context {
 }
 
 export const makeStyles = (
-  { colors, dw, insets }: MakeStylesProps,
+  { colors, insets }: MakeStylesProps,
   { storyContainerMinHeight }: Context,
 ) =>
   StyleSheet.create({
+    bottomGradient: {
+      height: '100%',
+      position: 'absolute',
+      width: '100%',
+    },
     cover: {
       minHeight: STORY_COVER_MIN_HEIGHT,
       minWidth: STORY_CONTAINER_MIN_WIDTH,
-      width: '100%',
-    },
-    gradient: {
-      height: '100%',
-      position: 'absolute',
       width: '100%',
     },
     header: {
@@ -56,5 +56,10 @@ export const makeStyles = (
       minHeight: storyContainerMinHeight,
       minWidth: STORY_CONTAINER_MIN_WIDTH,
       overflow: 'hidden',
+    },
+    topGradient: {
+      height: insets.top + DEFAULT_HEADER_HEIGHT + 30,
+      position: 'absolute',
+      width: '100%',
     },
   });
