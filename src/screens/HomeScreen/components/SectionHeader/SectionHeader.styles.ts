@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
@@ -10,6 +11,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       flexDirection: 'row',
       height: 34,
       justifyContent: 'space-between',
+      paddingHorizontal: HORIZONTAL_PADDING,
     },
     seeAllText: {
       ...fonts.size_12,

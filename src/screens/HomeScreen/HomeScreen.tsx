@@ -14,6 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
+import CategoriesList from './components/CategoriesList/CategoriesList';
 import FeaturingList from './components/FeaturingList/FeaturingList';
 import SectionHeader from './components/SectionHeader/SectionHeader';
 import { makeStyles } from './HomeScreen.styles';
@@ -33,6 +34,7 @@ function HomeScreen() {
         <SectionHeader title='Featuring tales' onSeeAllPress={noop} />
 
         <FeaturingList />
+        <CategoriesList />
 
         <SectionHeader title='Popular tales' onSeeAllPress={noop} />
 

@@ -12,7 +12,6 @@ export const makeStyles = (
 ) =>
   StyleSheet.create({
     content: {
-      paddingHorizontal: 16,
       paddingTop: insets.top,
     },
     screen: {

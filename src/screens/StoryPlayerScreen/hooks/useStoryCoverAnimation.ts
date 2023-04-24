@@ -65,7 +65,21 @@ function useStoryCoverAnimation(
     };
   });
 
-  const gradientAnimatedProps = useAnimatedProps(() => {
+  const topGradientAnimatedProps = useAnimatedProps(() => {
+    const colorOpacity = interpolate(
+      storyPlayingSharedValue.value,
+      [0, 0.7, 1],
+      [0, 0, 1],
+      EXTROPOLATION_CONFIG,
+    );
+
+    return {
+      colors: [processColor(`rgba(0, 0, 0, ${colorOpacity})`), processColor(`rgba(0, 0, 0, 0)`)],
+      locations: [0, 1],
+    };
+  });
+
+  const bottomGradientAnimatedProps = useAnimatedProps(() => {
     const color = interpolate(storyPlayingSharedValue.value, [0, 1], [26, 0], EXTROPOLATION_CONFIG);
 
     const animatedLocation = interpolate(
@@ -85,9 +99,10 @@ function useStoryCoverAnimation(
   });
 
   return {
+    bottomGradientAnimatedProps,
     coverAnimatedStyles,
-    gradientAnimatedProps,
     storyContainerAnimatedStyles,
+    topGradientAnimatedProps,
   };
 }
 
