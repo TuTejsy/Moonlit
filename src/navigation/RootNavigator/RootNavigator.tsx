@@ -3,10 +3,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { isSandbox } from '@/constants/common';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useInitApp } from '@/hooks/useInitApp';
-// import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
+import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
 import StoryPlayerScreen from '@/screens/StoryPlayerScreen/StoryPlayerScreen';
 
-import { rootOptions, tabOptions } from './RootNavigator.options';
+import { rootOptions, storyPlayerOptions, tabOptions } from './RootNavigator.options';
 import { RootRoutes } from './RootNavigator.routes';
 import { RootStackParams } from './RootNavigator.types';
 
@@ -22,11 +22,11 @@ export const RootNavigator = () => {
 
   return (
     <RootStack.Navigator initialRouteName={initialRouteName} screenOptions={rootOptions(theme)}>
-      {/* <RootStack.Screen component={TabNavigator} name={RootRoutes.TAB} options={tabOptions} /> */}
+      <RootStack.Screen component={TabNavigator} name={RootRoutes.TAB} options={tabOptions} />
       <RootStack.Screen
         component={StoryPlayerScreen}
         name={RootRoutes.STORY_PLAYER}
-        options={tabOptions}
+        options={storyPlayerOptions}
       />
     </RootStack.Navigator>
   );

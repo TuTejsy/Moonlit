@@ -16,10 +16,10 @@ export type TabScreenProps<T extends TabRoutes> = CompositeScreenProps<
   StackScreenProps<RootStackParams, RootRoutes>
 >;
 
-// export type SharedScreenProps<T extends SharedRoutes> = CompositeScreenProps<
-//   StackScreenProps<SharedStackParams, T>,
-//   CompositeScreenProps<
-//     StackScreenProps<RootStackParams, RootRoutes>,
-//     BottomTabScreenProps<TabStackParams, TabRoutes>
-//   >
-// >;
+export type SharedScreenProps<T extends SharedRoutes> = CompositeScreenProps<
+  StackScreenProps<SharedStackParams, T>,
+  CompositeScreenProps<
+    StackScreenProps<RootStackParams, RootRoutes>,
+    BottomTabScreenProps<TabStackParams, TabRoutes>
+  >
+>;

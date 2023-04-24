@@ -1,5 +1,5 @@
 export enum TabRoutes {
   FAVORITES = 'favoritesTab',
-  MAIN = 'mainTab',
+  HOME = 'homeTab',
   SEARCH = 'searchTab',
 }

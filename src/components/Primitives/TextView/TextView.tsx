@@ -16,6 +16,7 @@ export const TextView = ({ bold, children, style, ...props }: TextViewProps) => 
 
   return (
     <Text
+      suppressHighlighting
       allowFontScaling={false}
       style={[styles.text, bold ? styles.bold : styles.regular, style]}
       textBreakStrategy='balanced'

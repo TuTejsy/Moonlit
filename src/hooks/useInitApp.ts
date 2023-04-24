@@ -8,7 +8,7 @@ export const useInitApp = () => {
   const isAppReady = isSplashAnimationEnd;
 
   const initialRouteName = useMemo(() => {
-    return RootRoutes.STORY_PLAYER;
+    return RootRoutes.TAB;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
