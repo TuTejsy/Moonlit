@@ -19,3 +19,7 @@ export const tabOptions: StackNavigationOptions = {
   headerShown: false,
   presentation: 'transparentModal',
 };
+
+export const storyPlayerOptions: StackNavigationOptions = {
+  headerShown: false,
+};

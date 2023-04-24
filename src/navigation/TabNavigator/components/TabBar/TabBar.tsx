@@ -1,109 +1,82 @@
-// import { TextStyle, TouchableWithoutFeedback, View } from 'react-native';
+import { TextStyle, TouchableWithoutFeedback, View } from 'react-native';
 
-// import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-// import { useNavigationState } from '@react-navigation/native';
+import { BlurView } from '@react-native-community/blur';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-// import { isSandbox } from '@/constants/common';
-// import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-// import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
-// import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
-// import { TabBarBadge } from '@/navigation/TabNavigator/components/TabBarBadge/TabBarBadge';
-// import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
-// import { navigationService } from '@/services/navigation/navigationService';
+import { Icons } from '@/assets/icons/Icons';
+import { TextView } from '@/components/Primitives/TextView/TextView';
+import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useTheme } from '@/hooks/theme/useTheme';
+import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
+import { navigationService } from '@/services/navigation/navigationService';
+import { getCurrentRoute } from '@/utils/navigation/getCurrentRoute';
 
-// import { makeStyles } from './TabBar.styles';
+import { makeStyles } from './TabBar.styles';
 
-// import { useCartMetaQuery } from '@/api/cart/queries/useCartMetaQuery';
-// import { Icons } from '@/assets/icons/Icons';
-// import { getCurrentRoute } from '@/utils/navigation/getCurrentRoute';
+const MAP_ICON_AND_TITLE_BY_ROUTE: { [key: string]: [typeof Icons.HomeTab, string] } = {
+  [TabRoutes.HOME]: [Icons.HomeTab, 'Home'],
+  [TabRoutes.SEARCH]: [Icons.SearchTab, 'Explore'],
+  [TabRoutes.FAVORITES]: [Icons.FavoritesTab, 'Saved'],
+};
 
-// const MAP_ICON_BY_ROUTE = {
-//   [TabRoutes.HOME]: Icons.Home,
-//   [TabRoutes.CATALOG]: Icons.Catalog,
-//   [TabRoutes.CART]: Icons.Cart,
-//   [TabRoutes.ACCOUNT]: Icons.Account,
-// };
+export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
+  const styles = useMakeStyles(makeStyles);
+  const { colors } = useTheme();
 
-// const ROUTES_WITH_DISABLED_SHADOW: string[] = [TabRoutes.CART, SharedRoutes.CART];
+  return (
+    <View style={styles.tabBarWrapper}>
+      <BlurView
+        blurAmount={10}
+        blurType='dark'
+        reducedTransparencyFallbackColor={colors.opacityWhite(0.1)}
+        style={styles.tabBar}
+      >
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
 
-// export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
-//   const currentRouteName = useNavigationState(getCurrentRoute);
+          const isFocused = state.index === index;
 
-//   const styles = useMakeStyles(makeStyles, {
-//     disableShadow:
-//       currentRouteName?.endsWith(SharedRoutes.PRODUCT_CARD) ||
-//       (!!currentRouteName && ROUTES_WITH_DISABLED_SHADOW.includes(currentRouteName)),
-//   });
+          if (isFocused && navigationService.activeTab !== route.name) {
+            navigationService.onChangeActiveTab(route.name as TabRoutes);
+          }
 
-//   const { data: cartMeta } = useCartMetaQuery();
+          const onPress = () => {
+            const event = navigation.emit({
+              canPreventDefault: true,
+              target: route.key,
+              type: 'tabPress',
+            });
 
-//   return (
-//     <View style={styles.tabBarWrapper}>
-//       <View style={styles.tabBar}>
-//         {state.routes.map((route, index) => {
-//           const { options } = descriptors[route.key];
+            if (!isFocused && !event.defaultPrevented) {
+              // The `merge: true` option makes sure that the params inside the tab screen are preserved
+              navigation.navigate({ merge: true, name: route.name, params: undefined });
+            }
+          };
 
-//           const isFocused = state.index === index;
-//           const isCart = route.name === TabRoutes.CART;
+          const [Icon, title] = MAP_ICON_AND_TITLE_BY_ROUTE[route.name as TabRoutes];
 
-//           if (isFocused && navigationService.activeTab !== route.name) {
-//             navigationService.onChangeActiveTab(route.name as TabRoutes);
-//           }
-
-//           const onPress = () => {
-//             const event = navigation.emit({
-//               canPreventDefault: true,
-//               target: route.key,
-//               type: 'tabPress',
-//             });
-
-//             if (!isFocused && !event.defaultPrevented) {
-//               // The `merge: true` option makes sure that the params inside the tab screen are preserved
-//               navigation.navigate({ merge: true, name: route.name, params: undefined });
-//             }
-//           };
-
-//           const onLongPress = () => {
-//             navigation.emit({
-//               target: route.key,
-//               type: 'tabLongPress',
-//             });
-
-//             if (route.name === TabRoutes.HOME && isSandbox()) {
-//               navigation.navigate(RootRoutes.DEBUG);
-//             }
-//           };
-
-//           const Icon = MAP_ICON_BY_ROUTE[route.name as TabRoutes];
-
-//           return (
-//             <TouchableWithoutFeedback
-//               key={route.name}
-//               accessibilityHint={`Open ${route.name} screen`}
-//               accessibilityLabel={options.tabBarAccessibilityLabel}
-//               accessibilityRole='button'
-//               accessibilityState={isFocused ? { selected: true } : {}}
-//               testID={options.tabBarTestID}
-//               onLongPress={onLongPress}
-//               onPress={onPress}
-//             >
-//               <View style={styles.shapeIconWrapper}>
-//                 <View style={[styles.shapeIcon, isFocused && styles.shapeIconFocused]}>
-//                   <Icon
-//                     testID={`icon-${route.name}`}
-//                     style={[
-//                       (isFocused ? styles.iconFocused : styles.icon) as TextStyle,
-//                       isCart && styles.cartIcon,
-//                     ]}
-//                   />
-
-//                   {isCart && <TabBarBadge value={cartMeta?.totalAmountOfItems} />}
-//                 </View>
-//               </View>
-//             </TouchableWithoutFeedback>
-//           );
-//         })}
-//       </View>
-//     </View>
-//   );
-// };
+          return (
+            <TouchableWithoutFeedback
+              key={route.name}
+              accessibilityHint={`Open ${route.name} screen`}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              accessibilityRole='button'
+              accessibilityState={isFocused ? { selected: true } : {}}
+              onPress={onPress}
+            >
+              <View style={styles.tabContainer}>
+                <Icon
+                  color={isFocused ? colors.white : colors.opacityWhite(0.5)}
+                  fill={isFocused ? colors.white : 'none'}
+                />
+                <TextView style={isFocused ? styles.activeTabTitle : styles.inactiveTabTitle}>
+                  {title}
+                </TextView>
+              </View>
+            </TouchableWithoutFeedback>
+          );
+        })}
+      </BlurView>
+    </View>
+  );
+};

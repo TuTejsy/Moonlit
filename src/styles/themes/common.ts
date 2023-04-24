@@ -1,5 +1,5 @@
 export const commonColors = {
-  black: '#000',
+  black: '#000000',
   grey: '#D9D9D9',
   opacityBlack: (float: number) => `rgba(0, 0, 0, ${float})`,
   opacityGrey: (float: number) => `rgba(217, 217, 217, ${float})`,

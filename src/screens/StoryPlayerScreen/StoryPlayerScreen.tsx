@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { noop } from 'lodash';
 import { GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
@@ -19,8 +20,8 @@ import StoryPlayer from './components/StoryPlayer/StoryPlayer';
 import VoiceSettingsButton from './components/VoiceSettingsButton/VoiceSettingsButton';
 import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
 import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
-import storyImage from './images/story/story.png';
 import { makeStyles } from './StoryPlayerScreen.styles';
+import { NavigationType, RouteType } from './StoryPlayerScreen.types';
 
 const AnimatedLinearGradient = Animated.createAnimatedComponent<
   Omit<LinearGradientProps, 'colors'>
@@ -31,10 +32,13 @@ function StoryPlayerScreen() {
   const storyContainerMinHeight =
     WINDOW_HEIGHT - DEFAULT_HEADER_HEIGHT - insets.top - insets.bottom - 90;
 
+  const navigation = useNavigation<NavigationType>();
+  const route = useRoute<RouteType>();
+  const { storyImageSource, storyTitle } = route.params;
+
   const styles = useMakeStyles(makeStyles, { storyContainerMinHeight });
 
   const storyPlayingSharedValue = useSharedValue(0);
-
   const isStoryPlaying = useDerivedValue(() => storyPlayingSharedValue.value > 0);
 
   const { coverAnimatedStyles, gradientAnimatedProps, storyContainerAnimatedStyles } =
@@ -43,8 +47,8 @@ function StoryPlayerScreen() {
   const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue);
 
   const handleGoBack = useCallback(() => {
-    noop();
-  }, []);
+    navigation.goBack();
+  }, [navigation]);
 
   return (
     <View style={styles.screen}>
@@ -52,7 +56,7 @@ function StoryPlayerScreen() {
         renderRight={<Icons.Share />}
         style={styles.header}
         subtitle='Wishes and Magic'
-        title='Little Red Riding Hood'
+        title={storyTitle}
         onGoBack={handleGoBack}
       />
 
@@ -61,7 +65,7 @@ function StoryPlayerScreen() {
           <View style={styles.imageContainer}>
             <Animated.Image
               resizeMode='cover'
-              source={storyImage}
+              source={storyImageSource}
               style={[styles.cover, coverAnimatedStyles]}
             />
 

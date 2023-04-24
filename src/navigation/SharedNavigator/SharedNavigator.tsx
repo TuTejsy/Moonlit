@@ -3,6 +3,7 @@ import { memo, useMemo } from 'react';
 import { createStackNavigator, StackCardStyleInterpolator } from '@react-navigation/stack';
 
 import { useTheme } from '@/hooks/theme/useTheme';
+import HomeScreen from '@/screens/HomeScreen/HomeScreen';
 
 import { TabRoutes } from '../TabNavigator/TabNavigator.routes';
 
@@ -23,12 +24,24 @@ const forFade: StackCardStyleInterpolator = ({ current }) => ({
   },
 });
 
-// export const SharedNavigator = memo(({ parentRoute }: Props) => {
-//   const theme = useTheme();
+export const SharedNavigator = memo(({ parentRoute }: Props) => {
+  const theme = useTheme();
 
-//   // const initialRouteName = useMemo(() => INITIAL_ROUTE_MAP[parentRoute], [parentRoute]);
+  const initialRouteName = useMemo(() => INITIAL_ROUTE_MAP[parentRoute], [parentRoute]);
 
-//   return (
-//     // <Stack.Navigator initialRouteName={initialRouteName} screenOptions={commonOptions(theme)} />\
-//   );
-// });
+  return (
+    <Stack.Navigator initialRouteName={initialRouteName} screenOptions={commonOptions(theme)}>
+      {parentRoute === TabRoutes.HOME && (
+        <Stack.Screen component={HomeScreen} name={SharedRoutes.HOME} />
+      )}
+
+      {parentRoute === TabRoutes.SEARCH && (
+        <Stack.Screen component={HomeScreen} name={SharedRoutes.SEARCH} />
+      )}
+
+      {parentRoute === TabRoutes.FAVORITES && (
+        <Stack.Screen component={HomeScreen} name={SharedRoutes.FAVORITES} />
+      )}
+    </Stack.Navigator>
+  );
+});
