@@ -12,9 +12,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       backgroundColor: colors.black,
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
     },
-    gradient: {
-      paddingTop: insets.top,
-    },
     listContainer: {
       width: SCREEN_WIDTH,
     },
@@ -54,6 +51,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     tabText: {
       ...fonts.size_16,
       color: colors.white,
+      paddingVertical: 10,
       textAlign: 'center',
       width: TAB_WIDTH,
     },
