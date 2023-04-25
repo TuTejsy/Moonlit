@@ -1,20 +1,27 @@
 import { StyleSheet } from 'react-native';
 
+import { HORIZONTAL_PADDING, TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-interface Context {
-  storyContainerMinHeight: number;
-}
+import { PROMOTION_BANNER_HEIGHT, PROMOTION_BANNER_WIDTH } from './HomeScreen.constants';
 
-export const makeStyles = (
-  { colors, insets }: MakeStylesProps,
-  { storyContainerMinHeight }: Context,
-) =>
+export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
   StyleSheet.create({
     content: {
+      backgroundColor: colors.black,
+      paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
+    },
+    gradient: {
       paddingTop: insets.top,
     },
+    promotionBanner: {
+      height: PROMOTION_BANNER_HEIGHT,
+      marginBottom: 40,
+      marginHorizontal: HORIZONTAL_PADDING,
+      width: PROMOTION_BANNER_WIDTH,
+    },
     screen: {
+      backgroundColor: colors.black,
       flex: 1,
     },
   });

@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { SCREEN_WIDTH } from '@/constants/layout';
+import { TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
@@ -23,7 +24,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       backgroundColor: colors.opacityWhite(0.3),
       borderRadius: 1000,
       bottom: 0,
-      height: 64,
+      height: TAB_BAR_HEIGHT,
       left: 35,
       marginBottom: insets.bottom + 10,
       maxWidth: SCREEN_WIDTH - 70,
