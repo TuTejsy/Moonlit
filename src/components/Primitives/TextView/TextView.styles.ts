@@ -7,6 +7,9 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
     bold: {
       ...fonts.fontFamilyBold,
     },
+    medium: {
+      ...fonts.fontFamilyMedium,
+    },
     regular: {
       ...fonts.fontFamilyRegular,
     },

@@ -1,8 +1,6 @@
 import { Gesture } from 'react-native-gesture-handler';
 import { SharedValue, interpolate, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { SCREEN_HEIGHT } from '@/constants/layout';
-
 import { EXTROPOLATION_CONFIG } from '../StoryPlayerScreen.constants';
 
 function useStoryCoverGestureHandler(storyPlayingSharedValue: SharedValue<number>) {

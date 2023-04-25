@@ -5,10 +5,10 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
   StyleSheet.create({
-    featuringList: {
+    list: {
       marginTop: 12,
     },
-    featuringListContent: {
+    listContent: {
       paddingLeft: HORIZONTAL_PADDING,
     },
   });

@@ -31,7 +31,7 @@ function HomeScreen() {
         <LinearGradient
           angle={180}
           colors={[colors.orange, colors.black]}
-          locations={[0.4, 1]}
+          locations={[0.2, 0.8]}
           style={styles.gradient}
         >
           <SectionHeader title='Featuring tales' onSeeAllPress={noop} />
@@ -49,7 +49,7 @@ function HomeScreen() {
         <MediumStoriesList stories={[...POPULAR_STORIES].reverse()} />
 
         <SectionHeader title='All tales' onSeeAllPress={noop} />
-        <SmallStoriesList isScrollable={false} stories={ALL_STORIES} />
+        <SmallStoriesList isScrollable={false} stories={ALL_STORIES} style={styles.smallList} />
       </ScrollView>
     </LinearGradient>
   );

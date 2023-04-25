@@ -9,7 +9,7 @@ export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
   StyleSheet.create({
     content: {
       backgroundColor: colors.black,
-      paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
+      paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 20,
     },
     gradient: {
       paddingTop: insets.top,
@@ -23,5 +23,8 @@ export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
     screen: {
       backgroundColor: colors.black,
       flex: 1,
+    },
+    smallList: {
+      marginTop: 16,
     },
   });

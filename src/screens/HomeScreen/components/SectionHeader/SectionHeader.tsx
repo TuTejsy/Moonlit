@@ -16,7 +16,7 @@ function SectionHeader({ onSeeAllPress, title }: SectionHeaderPropTypes) {
 
   return (
     <View style={styles.sectionHeaderContainer}>
-      <TextView bold style={styles.titleText}>
+      <TextView style={styles.titleText} type='bold'>
         {title}
       </TextView>
       <TextView style={styles.seeAllText} onPress={onSeeAllPress}>
