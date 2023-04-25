@@ -5,6 +5,7 @@ import RNFS from 'react-native-fs';
 import { getApplicationEnv } from '@/utils/getEnv';
 
 export const Fonts = Object.freeze({
+  PoppinsMedium: 'Poppins-Medium',
   PoppinsRegular: 'Poppins-Regular',
   PoppinsSemiBold: 'Poppins-SemiBold',
 });

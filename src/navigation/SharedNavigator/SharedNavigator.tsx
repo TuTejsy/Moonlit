@@ -3,6 +3,7 @@ import { memo, useMemo } from 'react';
 import { createStackNavigator, StackCardStyleInterpolator } from '@react-navigation/stack';
 
 import { useTheme } from '@/hooks/theme/useTheme';
+import FavoritesScreen from '@/screens/FavoritesScreen/FavoritesScreen';
 import HomeScreen from '@/screens/HomeScreen/HomeScreen';
 
 import { TabRoutes } from '../TabNavigator/TabNavigator.routes';
@@ -40,7 +41,7 @@ export const SharedNavigator = memo(({ parentRoute }: Props) => {
       )}
 
       {parentRoute === TabRoutes.FAVORITES && (
-        <Stack.Screen component={HomeScreen} name={SharedRoutes.FAVORITES} />
+        <Stack.Screen component={FavoritesScreen} name={SharedRoutes.FAVORITES} />
       )}
     </Stack.Navigator>
   );

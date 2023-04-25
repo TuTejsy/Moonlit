@@ -11,6 +11,9 @@ export const makeFonts = () =>
     fontFamilyBold: {
       fontFamily: Fonts.PoppinsSemiBold,
     },
+    fontFamilyMedium: {
+      fontFamily: Fonts.PoppinsMedium,
+    },
     fontFamilyRegular: {
       fontFamily: Fonts.PoppinsRegular,
     },

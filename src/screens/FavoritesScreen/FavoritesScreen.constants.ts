@@ -4,11 +4,9 @@
 import { ImageSourcePropType } from 'react-native/types';
 
 import { SCREEN_WIDTH } from '@/constants/layout';
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 
-export const PROMOTION_BANNER_WIDTH = SCREEN_WIDTH - 32;
-export const PROMOTION_BANNER_HEIGHT = (PROMOTION_BANNER_WIDTH / 343) * 480;
-
-export const FEATURING_STORIES = [
+const STORIES = [
   {
     image: require('@/assets/images/story1/story1.png') as ImageSourcePropType,
     title: 'The Elves and the Shoemaker',
@@ -17,9 +15,6 @@ export const FEATURING_STORIES = [
     image: require('@/assets/images/story2/story2.png') as ImageSourcePropType,
     title: 'The Twelve Dancing Princesses',
   },
-];
-
-export const POPULAR_STORIES = [
   {
     image: require('@/assets/images/story3/story3.png') as ImageSourcePropType,
     title: 'The Elves and the Shoemaker',
@@ -30,4 +25,13 @@ export const POPULAR_STORIES = [
   },
 ];
 
-export const ALL_STORIES = [...FEATURING_STORIES, ...POPULAR_STORIES, ...FEATURING_STORIES];
+export const SAVED_STORIES = [...STORIES, ...STORIES, ...STORIES, ...STORIES];
+
+export const RECENTLY_PLAYED_STORIES = [...SAVED_STORIES].reverse();
+
+export const TAB_WIDTH = (SCREEN_WIDTH - HORIZONTAL_PADDING * 2) / 2 - 8;
+
+export const EXTROPOLATION_CONFIG = {
+  extrapolateLeft: 'clamp',
+  extrapolateRight: 'clamp',
+};

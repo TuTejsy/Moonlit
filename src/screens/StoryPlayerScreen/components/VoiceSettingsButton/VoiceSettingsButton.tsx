@@ -20,7 +20,7 @@ function VoiceSettingsButton() {
       reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
       style={styles.button}
     >
-      <TextView bold style={styles.text}>
+      <TextView style={styles.text} type='bold'>
         Voice settings
       </TextView>
 

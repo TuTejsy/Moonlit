@@ -19,14 +19,20 @@ function LargeStoriesList({ stories }: LargeStoriesListPropTypes) {
     return <StoryPreview imageSource={item.image} title={item.title} />;
   }, []);
 
+  const keyExtractor = useCallback(
+    (item: ListStory, index: number) => `${item.title}-${index}`,
+    [],
+  );
+
   return (
     <FlatList
       horizontal
-      contentContainerStyle={styles.featuringListContent}
+      contentContainerStyle={styles.listContent}
       data={stories}
+      keyExtractor={keyExtractor}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
-      style={styles.featuringList}
+      style={styles.list}
     />
   );
 }

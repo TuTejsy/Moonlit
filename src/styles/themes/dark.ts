@@ -7,6 +7,7 @@ const darkColors = {
   dark_grey: '#1A1A1A',
   green: '#247F8A',
   opacityGreen: (float: number) => `rgba(36, 127, 138, ${float})`,
+  opacityOrange: (float: number) => `rgba(236, 119, 72, ${float})`,
 
   orange: '#EC7748',
 };

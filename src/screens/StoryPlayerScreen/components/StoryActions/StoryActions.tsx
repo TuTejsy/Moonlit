@@ -74,7 +74,7 @@ function StoryActions({ isStoryPlaying, storyPlayingSharedValue }: StoryActionsP
         onPress={handlePlayStoryPress}
       >
         <Icons.PlaySmall />
-        <TextView bold style={styles.listenText}>
+        <TextView style={styles.listenText} type='bold'>
           Listen Story
         </TextView>
       </PressableView>
