@@ -12,14 +12,18 @@ interface SmallStoriesListPropTypes {
   stories: Array<ListStory>;
   ListHeaderComponent?: FlatListProps<ListStory>['ListHeaderComponent'];
   contentContainerStyle?: ViewStyle;
+  indicatorStyle?: FlatListProps<ListStory>['indicatorStyle'];
   isScrollable?: boolean;
+  showsHorizontalScrollIndicator?: boolean;
   style?: ViewStyle;
 }
 
 function SmallStoriesList({
   ListHeaderComponent,
   contentContainerStyle,
+  indicatorStyle,
   isScrollable = true,
+  showsHorizontalScrollIndicator = false,
   stories,
   style,
 }: SmallStoriesListPropTypes) {
@@ -39,11 +43,12 @@ function SmallStoriesList({
       ListHeaderComponent={ListHeaderComponent}
       contentContainerStyle={[styles.listContent, contentContainerStyle]}
       data={stories}
+      indicatorStyle={indicatorStyle}
       keyExtractor={keyExtractor}
       numColumns={2}
       renderItem={renderItem}
       scrollEnabled={isScrollable}
-      showsHorizontalScrollIndicator={false}
+      showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       style={style}
     />
   );

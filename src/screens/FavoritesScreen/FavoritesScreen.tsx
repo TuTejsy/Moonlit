@@ -105,7 +105,9 @@ function FavoritesScreen() {
       >
         <View style={styles.listContainer}>
           <SmallStoriesList
+            showsHorizontalScrollIndicator
             contentContainerStyle={styles.listContent}
+            indicatorStyle='white'
             stories={SAVED_STORIES}
             ListHeaderComponent={
               <TextView style={styles.listTitleText} type='bold'>
@@ -117,7 +119,9 @@ function FavoritesScreen() {
 
         <View style={styles.listContainer}>
           <SmallStoriesList
+            showsHorizontalScrollIndicator
             contentContainerStyle={styles.listContent}
+            indicatorStyle='white'
             stories={RECENTLY_PLAYED_STORIES}
             ListHeaderComponent={
               <TextView style={styles.listTitleText} type='bold'>
