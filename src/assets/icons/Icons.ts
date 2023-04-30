@@ -5,6 +5,7 @@ import { Favorite } from './common/Favorite';
 import { Share } from './common/Share';
 import { Waveframe } from './common/Waveframe';
 import { ArrowBack } from './navigation/ArrowBack';
+import { Close } from './navigation/Close';
 import { FavoritesTab } from './navigation/FavoritesTab';
 import { HomeTab } from './navigation/HomeTab';
 import { SearchTab } from './navigation/SearchTab';
@@ -16,6 +17,7 @@ import { PlaySmall } from './player/PlaySmall';
 export const Icons = {
   ArrowBack,
   Clock,
+  Close,
   Download,
   DownloadRound,
   Favorite,

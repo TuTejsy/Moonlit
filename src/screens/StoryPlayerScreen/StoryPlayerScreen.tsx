@@ -17,7 +17,7 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import StoryActions from './components/StoryActions/StoryActions';
 import StoryMeta from './components/StoryMeta/StoryMeta';
 import StoryPlayer from './components/StoryPlayer/StoryPlayer';
-import VoiceSettingsButton from './components/VoiceSettingsButton/VoiceSettingsButton';
+import VoiceSettingsModal from './components/VoiceSettingsModal/VoiceSettingsModal';
 import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
 import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
 import { makeStyles } from './StoryPlayerScreen.styles';
@@ -104,7 +104,8 @@ function StoryPlayerScreen() {
         isStoryPlaying={isStoryPlaying}
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
-      <VoiceSettingsButton />
+
+      <VoiceSettingsModal />
     </LinearGradient>
   );
 }
