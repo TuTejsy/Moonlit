@@ -4,6 +4,7 @@ import { ScrollView, Image } from 'react-native';
 import { noop } from 'lodash';
 import LinearGradient from 'react-native-linear-gradient';
 
+import PromotionBannerImage from '@/assets/images/PromotionBanner/PromotionBanner.png';
 import LargeStoriesList from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import MediumStoriesList from '@/components/Lists/MediumStoriesList/MediumStoriesList';
 import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
@@ -14,7 +15,6 @@ import CategoriesList from './components/CategoriesList/CategoriesList';
 import SectionHeader from './components/SectionHeader/SectionHeader';
 import { ALL_STORIES, FEATURING_STORIES, POPULAR_STORIES } from './HomeScreen.constants';
 import { makeStyles } from './HomeScreen.styles';
-import PromotionBannerImage from './images/PromotionBanner/PromotionBanner.png';
 
 function HomeScreen() {
   const { colors } = useTheme();
@@ -40,13 +40,13 @@ function HomeScreen() {
           <CategoriesList />
 
           <SectionHeader title='Popular tales' onSeeAllPress={noop} />
-          <MediumStoriesList stories={POPULAR_STORIES} />
+          <MediumStoriesList stories={POPULAR_STORIES} style={styles.mediumList} />
         </LinearGradient>
 
         <Image resizeMode='cover' source={PromotionBannerImage} style={styles.promotionBanner} />
 
         <SectionHeader title='Free tales' onSeeAllPress={noop} />
-        <MediumStoriesList stories={[...POPULAR_STORIES].reverse()} />
+        <MediumStoriesList stories={[...POPULAR_STORIES].reverse()} style={styles.mediumList} />
 
         <SectionHeader title='All tales' onSeeAllPress={noop} />
         <SmallStoriesList isScrollable={false} stories={ALL_STORIES} style={styles.smallList} />

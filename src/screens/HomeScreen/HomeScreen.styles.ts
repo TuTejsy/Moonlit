@@ -14,6 +14,10 @@ export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
     gradient: {
       paddingTop: insets.top,
     },
+    mediumList: {
+      marginBottom: 40,
+      marginTop: 16,
+    },
     promotionBanner: {
       height: PROMOTION_BANNER_HEIGHT,
       marginBottom: 40,
