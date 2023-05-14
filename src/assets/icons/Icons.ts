@@ -2,6 +2,7 @@ import { Clock } from './common/Clock';
 import { Download } from './common/Download';
 import { DownloadRound } from './common/DownloadRound';
 import { Favorite } from './common/Favorite';
+import { Search } from './common/Search';
 import { Share } from './common/Share';
 import { Waveframe } from './common/Waveframe';
 import { ArrowBack } from './navigation/ArrowBack';
@@ -27,6 +28,7 @@ export const Icons = {
   HomeTab,
   PauseBig,
   PlaySmall,
+  Search,
   SearchTab,
   Share,
   Waveframe,

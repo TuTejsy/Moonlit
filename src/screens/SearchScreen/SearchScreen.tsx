@@ -13,6 +13,7 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import CategoriesList from '../HomeScreen/components/CategoriesList/CategoriesList';
 import SectionHeader from '../HomeScreen/components/SectionHeader/SectionHeader';
 
+import SearchBar from './components/SearchBar/SearchBar';
 import { ALL_STORIES, POPULAR_STORIES } from './SearchScreen.constants';
 import { makeStyles } from './SearchScreen.styles';
 
@@ -27,7 +28,13 @@ function SearchScreen() {
       locations={[0, 1]}
       style={styles.screen}
     >
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <SearchBar />
+
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardDismissMode='on-drag'
+        showsVerticalScrollIndicator={false}
+      >
         <SectionHeader title='Popular tales' onSeeAllPress={noop} />
         <MediumStoriesList stories={POPULAR_STORIES} style={styles.popularList} />
 
