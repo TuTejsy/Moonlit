@@ -1,0 +1,9 @@
+import { SCREEN_WIDTH } from '@/constants/layout';
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
+
+export const CLOSE_BUTTON_WIDTH = 70;
+export const CLOSE_BUTTON_MARGIN_LEFT = 8;
+
+export const SEARCH_BAR_BLURED_WIDTH = SCREEN_WIDTH - HORIZONTAL_PADDING * 2;
+export const SEARCH_BAR_FOCUSED_WIDTH =
+  SEARCH_BAR_BLURED_WIDTH - CLOSE_BUTTON_WIDTH - CLOSE_BUTTON_MARGIN_LEFT;

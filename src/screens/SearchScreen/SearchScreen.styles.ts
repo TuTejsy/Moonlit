@@ -10,6 +10,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     content: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 20,
+      paddingTop: 38,
     },
     freeList: {
       marginBottom: 40,
