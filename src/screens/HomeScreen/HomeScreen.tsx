@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Image } from 'react-native';
+import { ScrollView, Image, RefreshControl } from 'react-native';
 
 import { noop } from 'lodash';
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,6 +8,7 @@ import PromotionBannerImage from '@/assets/images/PromotionBanner/PromotionBanne
 import LargeStoriesList from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import MediumStoriesList from '@/components/Lists/MediumStoriesList/MediumStoriesList';
 import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
+import useStories from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
@@ -15,10 +16,15 @@ import CategoriesList from './components/CategoriesList/CategoriesList';
 import SectionHeader from './components/SectionHeader/SectionHeader';
 import { ALL_STORIES, FEATURING_STORIES, POPULAR_STORIES } from './HomeScreen.constants';
 import { makeStyles } from './HomeScreen.styles';
+import { useStoriesUpdate } from './hooks/useStoriesUpdate';
 
 function HomeScreen() {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
+
+  const [isRefreshing, updateStories] = useStoriesUpdate();
+
+  const [allStories, allStoriesVersion] = useStories();
 
   return (
     <LinearGradient
@@ -27,7 +33,17 @@ function HomeScreen() {
       locations={[0.5, 0.5]}
       style={styles.screen}
     >
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            tintColor={colors.white}
+            onRefresh={updateStories}
+          />
+        }
+      >
         <LinearGradient
           angle={180}
           colors={[colors.orange, colors.black]}
@@ -36,7 +52,7 @@ function HomeScreen() {
         >
           <SectionHeader title='Featuring tales' onSeeAllPress={noop} />
 
-          <LargeStoriesList stories={FEATURING_STORIES} />
+          <LargeStoriesList stories={allStories} />
           <CategoriesList />
 
           <SectionHeader title='Popular tales' onSeeAllPress={noop} />

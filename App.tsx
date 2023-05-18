@@ -8,12 +8,13 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { enableFreeze } from 'react-native-screens';
 
+import { StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
 import { SharedKeyboardHeightProvider } from '@/hooks/useSharedKeyboardHeight';
 import { RootNavigator } from '@/navigation/RootNavigator/RootNavigator';
 import { navigationService } from '@/services/navigation/navigationService';
-import { lightNavTheme } from '@/styles/themes/dark';
+import { darkNavTheme } from '@/styles/themes/dark';
 
 if (!__DEV__) {
   console.log = () => undefined;
@@ -22,6 +23,8 @@ if (!__DEV__) {
 }
 
 enableFreeze(true);
+
+StoriesDB.open();
 
 function App(): JSX.Element {
   const theme = useInitTheme();
@@ -34,7 +37,7 @@ function App(): JSX.Element {
             <StatusBar backgroundColor={theme.colors.white} barStyle='light-content' />
             <NavigationContainer
               ref={navigationService.setRef}
-              theme={lightNavTheme}
+              theme={darkNavTheme}
               onStateChange={navigationService.onStateChange}
             >
               <BottomSheetModalProvider>

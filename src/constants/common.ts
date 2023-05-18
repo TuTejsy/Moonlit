@@ -10,6 +10,9 @@ export const Fonts = Object.freeze({
   PoppinsSemiBold: 'Poppins-SemiBold',
 });
 
+export const SERVER_URL = 'http://localhost:8080/';
+export const SUPABASE_URL = 'https://lshlquihgvuemvgpgamq.supabase.co/';
+
 export const IS_IOS = Platform.OS === 'ios';
 
 export const IS_ANDROID = Platform.OS === 'android';

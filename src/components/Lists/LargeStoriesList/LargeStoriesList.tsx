@@ -1,26 +1,29 @@
 import React, { useCallback } from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 
-import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { Results } from 'realm';
 
-import { ListStory } from '../Lists.types';
+import { SUPABASE_URL } from '@/constants/common';
+import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import StoryPreview from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './LargeStoriesList.styles';
 
 interface LargeStoriesListPropTypes {
-  stories: Array<ListStory>;
+  stories: Results<StorySchema>;
 }
 
 function LargeStoriesList({ stories }: LargeStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
-  const renderItem = useCallback(({ item }: ListRenderItemInfo<ListStory>) => {
-    return <StoryPreview imageSource={item.image} title={item.title} />;
+  const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
+    const previewURL = `${SUPABASE_URL}${item.full_cover_url}`;
+    return <StoryPreview previewURL={previewURL} title={item.name} />;
   }, []);
 
   const keyExtractor = useCallback(
-    (item: ListStory, index: number) => `${item.title}-${index}`,
+    (item: StorySchema, index: number) => `${item.name}-${index}`,
     [],
   );
 
