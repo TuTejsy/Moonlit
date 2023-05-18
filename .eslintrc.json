@@ -45,6 +45,8 @@
       ],
       "plugins": ["prettier"],
       "rules": {
+        "no-plusplus": "off",
+       "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/ban-ts-comment": "off",
         "no-use-before-define": "off",

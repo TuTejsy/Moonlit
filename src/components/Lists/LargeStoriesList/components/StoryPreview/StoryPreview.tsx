@@ -14,26 +14,28 @@ import { makeStyles } from './StoryPreview.styles';
 import { NavigationType } from './StoryPreview.types';
 
 interface StoryPreviewPropTypes {
-  imageSource: ImageSourcePropType;
+  previewURL: string;
   title: string;
 }
 
-function StoryPreview({ imageSource, title }: StoryPreviewPropTypes) {
+function StoryPreview({ previewURL, title }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
   const navigation = useNavigation<NavigationType>();
 
+  console.log(previewURL);
+
   const handlePreviewPress = useCallback(() => {
     navigation.navigate(RootRoutes.STORY_PLAYER, {
-      storyImageSource: imageSource,
+      storyImageSource: { uri: previewURL },
       storyTitle: title,
     });
-  }, [imageSource, navigation, title]);
+  }, [navigation, previewURL, title]);
 
   return (
     <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
-      <ImageBackground source={imageSource} style={styles.preview}>
+      <ImageBackground source={{ uri: previewURL }} style={styles.preview}>
         <LinearGradient
           angle={180}
           colors={[colors.opacityBlack(0), colors.opacityBlack(0.8)]}
