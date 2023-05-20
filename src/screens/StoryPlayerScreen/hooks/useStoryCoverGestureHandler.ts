@@ -1,7 +1,11 @@
 import { Gesture } from 'react-native-gesture-handler';
-import { SharedValue, interpolate, useSharedValue, withTiming } from 'react-native-reanimated';
-
-import { EXTROPOLATION_CONFIG } from '../StoryPlayerScreen.constants';
+import {
+  Extrapolate,
+  SharedValue,
+  interpolate,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 function useStoryCoverGestureHandler(storyPlayingSharedValue: SharedValue<number>) {
   const isGestureEnabled = useSharedValue(false);
@@ -18,7 +22,7 @@ function useStoryCoverGestureHandler(storyPlayingSharedValue: SharedValue<number
           e.translationY,
           [-10, -110],
           [1, 0],
-          EXTROPOLATION_CONFIG,
+          Extrapolate.CLAMP,
         );
       }
     })

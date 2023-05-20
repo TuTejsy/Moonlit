@@ -2,12 +2,15 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
-import Animated, { SharedValue, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, {
+  Extrapolate,
+  SharedValue,
+  interpolate,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-
-import { EXTROPOLATION_CONFIG } from '../../StoryPlayerScreen.constants';
 
 import { makeStyles } from './StoryMeta.styles';
 
@@ -27,18 +30,18 @@ function StoryMeta({ description, storyPlayingSharedValue }: StoryMetaPropTypes)
         storyPlayingSharedValue.value,
         [0, 1],
         [0, -SCREEN_HEIGHT / 2 + 50],
-        EXTROPOLATION_CONFIG,
+        Extrapolate.CLAMP,
       ),
 
-      opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], EXTROPOLATION_CONFIG),
+      opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], Extrapolate.CLAMP),
     };
   });
 
   const animatedTextStyle = useAnimatedStyle(() => {
     return {
-      marginTop: interpolate(storyPlayingSharedValue.value, [0, 1], [24, 40], EXTROPOLATION_CONFIG),
+      marginTop: interpolate(storyPlayingSharedValue.value, [0, 1], [24, 40], Extrapolate.CLAMP),
 
-      opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], EXTROPOLATION_CONFIG),
+      opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], Extrapolate.CLAMP),
     };
   });
 

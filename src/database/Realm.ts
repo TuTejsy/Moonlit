@@ -33,9 +33,9 @@ class RealmDB<ObjectType> {
       });
   };
 
-  fetch = (input: Array<string>): [Array<ObjectType>, Array<string>] => {
+  fetch = (input: Array<number>): [Array<ObjectType>, Array<number>] => {
     const results: Array<ObjectType> = [];
-    const notFoundObjects: Array<string> = [];
+    const notFoundObjects: Array<number> = [];
 
     input.forEach((id) => {
       const object = this.object(id);
@@ -51,12 +51,12 @@ class RealmDB<ObjectType> {
   };
 
   find = (
-    input: Array<string>,
+    input: Array<number>,
     callback: (obj: ObjectType) => boolean,
-  ): [Array<ObjectType>, Array<ObjectType>, Array<string>] => {
+  ): [Array<ObjectType>, Array<ObjectType>, Array<number>] => {
     const results: Array<ObjectType> = [];
     const notSuitObjects: Array<ObjectType> = [];
-    const notFoundObjectsIds: Array<string> = [];
+    const notFoundObjectsIds: Array<number> = [];
 
     input.forEach((id) => {
       const object = this.object(id);
@@ -75,8 +75,8 @@ class RealmDB<ObjectType> {
     return [results, notSuitObjects, notFoundObjectsIds];
   };
 
-  filter = (input: Array<string>, callback: (obj: ObjectType) => boolean): Array<string> => {
-    const results: Array<string> = [];
+  filter = (input: Array<number>, callback: (obj: ObjectType) => boolean): Array<number> => {
+    const results: Array<number> = [];
 
     input.forEach((id) => {
       const object = this.object(id);
@@ -89,7 +89,7 @@ class RealmDB<ObjectType> {
     return results;
   };
 
-  object = (id: string) => {
+  object = (id: number) => {
     if (id) {
       return this.instance.objectForPrimaryKey<ObjectType>(this.objectName, id);
     }
@@ -97,7 +97,7 @@ class RealmDB<ObjectType> {
   };
 
   // eslint-disable-next-line arrow-parens
-  subObject = <SubObjectType>(subObjectName: string, id: string) => {
+  subObject = <SubObjectType>(subObjectName: string, id: number) => {
     if (id) {
       return this.instance.objectForPrimaryKey<SubObjectType>(subObjectName, id);
     }
@@ -147,7 +147,7 @@ class RealmDB<ObjectType> {
       });
     });
 
-  delete = (input: Array<ObjectType | string> | Results<ObjectType> | ObjectType | string) => {
+  delete = (input: Array<ObjectType | number> | Results<ObjectType> | ObjectType | number) => {
     if (!input) {
       return;
     }
@@ -156,14 +156,14 @@ class RealmDB<ObjectType> {
       this.instance.write(() => {
         if (Array.isArray(input)) {
           input.forEach((data) => {
-            const object = typeof data === 'string' ? this.object(data) : data;
+            const object = typeof data === 'number' ? this.object(data) : data;
 
             if (object) {
               this.instance.delete(object);
             }
           });
         } else {
-          const object = typeof input === 'string' ? this.object(input) : input;
+          const object = typeof input === 'number' ? this.object(input) : input;
 
           if (object) {
             this.instance.delete(object);
@@ -191,7 +191,7 @@ class RealmDB<ObjectType> {
     });
   };
 
-  update = (ids: Array<string>, updater: (object: ObjectType) => void) => {
+  update = (ids: Array<number>, updater: (object: ObjectType) => void) => {
     this.modify(() => {
       const [foundObjects, notFoundObjects] = this.fetch(ids);
       foundObjects.forEach((object) => updater(object));

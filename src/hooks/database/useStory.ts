@@ -1,36 +1,59 @@
-import { useRef, useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { ObjectChangeCallback } from 'realm';
 
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { mapById } from '@/utils/getMapById';
 
-function useStory(storyId: number): [StorySchema | undefined | null, number] {
-  const story = useMemo(() => StoriesDB.object(storyId), [storyId]);
+import useMutableValue from '../useMutableValue';
+
+function useStory(
+  storyId: number,
+  propsToWatch?: Array<keyof StorySchema>,
+): [StorySchema | undefined | null, number] {
+  const [story, setStory] = useState<StorySchema | null>(StoriesDB.object(storyId));
 
   const [storyVersion, setStoryVersion] = useState(0);
-  const storyVersionRef = useRef(storyVersion);
+  const storyVersionRef = useMutableValue(storyVersion);
 
   useEffect(() => {
-    const listener: ObjectChangeCallback<StorySchema> = (
-      nextStory,
-      { changedProperties, deleted },
-    ) => {
-      const isAnythingChanged = !!changedProperties.length;
+    const story = StoriesDB.object(storyId);
 
-      if (isAnythingChanged) {
-        setStoryVersion(++storyVersionRef.current); // triggers re-render
+    if (story) {
+      setStory(story);
+      setStoryVersion(storyVersionRef.current + 1);
+      let propsToWatchMap: { [props: string]: boolean } = {};
+
+      if (propsToWatch) {
+        propsToWatchMap = mapById.toExists(propsToWatch);
       }
-    };
 
-    StoriesDB.performAfterTransactionComplete(() =>
-      story?.addListener(listener as ObjectChangeCallback<unknown>),
-    );
+      const listener: ObjectChangeCallback<StorySchema> = (
+        nextStory,
+        { changedProperties, deleted },
+      ) => {
+        let isAnythingChanged = !!changedProperties.length;
 
-    return () => {
-      story?.removeListener(listener as ObjectChangeCallback<unknown>);
-    };
-  }, [story]);
+        if (propsToWatch) {
+          isAnythingChanged = changedProperties.some((changedProp) => propsToWatchMap[changedProp]);
+        }
+
+        if (isAnythingChanged) {
+          setStoryVersion(storyVersionRef.current + 1);
+          setStory(nextStory);
+        }
+      };
+
+      StoriesDB.performAfterTransactionComplete(() =>
+        story.addListener(listener as ObjectChangeCallback<unknown>),
+      );
+
+      return () => {
+        story.removeListener(listener as ObjectChangeCallback<unknown>);
+      };
+    }
+  }, [storyId]);
 
   return [story, storyVersion];
 }

@@ -24,7 +24,7 @@ function useStories(filter?: string, sortConfig?: SortConfig): [Results<StorySch
     }
 
     return result;
-  }, [filter, sortConfig]);
+  }, [filter]);
 
   const [storiesVersion, setstoriesVersion] = useState(0);
   const storiesVersionRef = useRef(storiesVersion);

@@ -5,6 +5,7 @@ export interface StorySchema {
   description: string;
   full_cover_url: string;
   id: number;
+  is_favorite: boolean;
   is_free: boolean;
   name: string;
   played_count: number;
@@ -12,4 +13,6 @@ export interface StorySchema {
   revision: number;
   type: number;
   updated_at_timestamp: number;
+  played_at_timestamp?: number;
+  saved_at_timestamp?: number;
 }

@@ -1,9 +1,8 @@
 import { Gesture } from 'react-native-gesture-handler';
-import { SharedValue, interpolate, runOnJS, useSharedValue } from 'react-native-reanimated';
+import { Extrapolate, SharedValue, interpolate, runOnJS } from 'react-native-reanimated';
 
 import { SCREEN_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
-import { EXTROPOLATION_CONFIG } from '@/screens/StoryPlayerScreen/StoryPlayerScreen.constants';
 
 function useProgressBarGestureHandler(
   progressSharedValue: SharedValue<number>,
@@ -16,7 +15,7 @@ function useProgressBarGestureHandler(
         e.allTouches[0].absoluteX,
         [HORIZONTAL_PADDING, SCREEN_WIDTH - HORIZONTAL_PADDING],
         [0, 100],
-        EXTROPOLATION_CONFIG,
+        Extrapolate.CLAMP,
       );
     })
     .onEnd(() => {
@@ -29,7 +28,7 @@ function useProgressBarGestureHandler(
         e.absoluteX,
         [HORIZONTAL_PADDING, SCREEN_WIDTH - HORIZONTAL_PADDING],
         [0, 100],
-        EXTROPOLATION_CONFIG,
+        Extrapolate.CLAMP,
       );
     })
     .onEnd(() => {

@@ -42,7 +42,7 @@ function StoryPlayerScreen() {
   const route = useRoute<RouteType>();
   const { storyId } = route.params;
 
-  const [story, storyVersion] = useStory(storyId);
+  const [story, storyVersion] = useStory(storyId, ['full_cover_url', 'name', 'description']);
 
   const coverURL = useMemo(
     () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
@@ -105,6 +105,7 @@ function StoryPlayerScreen() {
             />
             <StoryActions
               isStoryPlaying={isStoryPlaying}
+              storyId={storyId}
               storyPlayingSharedValue={storyPlayingSharedValue}
             />
           </View>
@@ -117,6 +118,7 @@ function StoryPlayerScreen() {
 
       <StoryPlayer
         isStoryPlaying={isStoryPlaying}
+        storyId={storyId}
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
 
