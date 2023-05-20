@@ -25,6 +25,9 @@ export const makeStyles = (
       ...fonts.size_12,
       color: colors.white,
     },
+    closeIcon: {
+      marginHorizontal: 8,
+    },
     inputContainer: {
       alignItems: 'center',
       backgroundColor: colors.opacityBlack(0.2),

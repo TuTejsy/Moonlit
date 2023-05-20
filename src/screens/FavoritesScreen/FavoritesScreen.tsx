@@ -13,7 +13,7 @@ import Animated, {
 import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SCREEN_WIDTH } from '@/constants/layout';
-import useStories from '@/hooks/database/useStories';
+import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
@@ -87,7 +87,7 @@ function FavoritesScreen() {
   return (
     <LinearGradient
       angle={180}
-      colors={[colors.opacityOrange(0.3), colors.black]}
+      colors={[colors.opacityOrange(0.3), colors.opacityOrange(0)]}
       locations={[0, 1]}
       style={styles.screen}
     >

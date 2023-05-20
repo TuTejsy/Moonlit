@@ -1,6 +1,3 @@
-/* eslint-disable global-require */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 import { SCREEN_WIDTH } from '@/constants/layout';
 
 export const PROMOTION_BANNER_WIDTH = SCREEN_WIDTH - 32;

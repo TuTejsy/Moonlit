@@ -23,9 +23,14 @@ import {
 } from './SearchBar.constants';
 import { makeStyles } from './SearchBar.styles';
 
-interface SearchBarPropTypes {}
+interface SearchBarPropTypes {
+  onChangeText: (text: string) => void;
+  value: string;
+  onInputBlur?: () => void;
+  onInputFocus?: () => void;
+}
 
-function SearchBar({}: SearchBarPropTypes) {
+function SearchBar({ onChangeText, onInputBlur, onInputFocus, value }: SearchBarPropTypes) {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   const styles = useMakeStyles(makeStyles, { isInputFocused });
@@ -53,16 +58,25 @@ function SearchBar({}: SearchBarPropTypes) {
   const handleInputFocus = useCallback(() => {
     setIsInputFocused(true);
     isInputFocusedSharedValue.value = withTiming(1);
-  }, [isInputFocusedSharedValue]);
+
+    onInputFocus?.();
+  }, [isInputFocusedSharedValue, onInputFocus]);
 
   const handleInputBlur = useCallback(() => {
     setIsInputFocused(false);
     isInputFocusedSharedValue.value = withTiming(0);
-  }, [isInputFocusedSharedValue]);
+
+    onInputBlur?.();
+  }, [isInputFocusedSharedValue, onInputBlur]);
 
   const handleCloseButtonPress = useCallback(() => {
     inputRef.current?.blur();
   }, []);
+
+  const handleRemovePress = useCallback(() => {
+    inputRef.current?.clear();
+    onChangeText('');
+  }, [onChangeText]);
 
   return (
     <View style={styles.searchBar}>
@@ -76,9 +90,13 @@ function SearchBar({}: SearchBarPropTypes) {
           returnKeyType='search'
           selectionColor={colors.white}
           style={styles.textInput}
+          value={value}
           onBlur={handleInputBlur}
+          onChangeText={onChangeText}
           onFocus={handleInputFocus}
         />
+
+        {!!value && <Icons.Close style={styles.closeIcon} onPress={handleRemovePress} />}
       </Animated.View>
       <Animated.View style={closeButtonAnimatedStyle}>
         <PressableView style={styles.closeButton} onPress={handleCloseButtonPress}>
@@ -91,4 +109,4 @@ function SearchBar({}: SearchBarPropTypes) {
   );
 }
 
-export default SearchBar;
+export default React.memo(SearchBar);

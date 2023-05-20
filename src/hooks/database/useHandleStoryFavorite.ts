@@ -16,6 +16,7 @@ export function useHandleStoryFavorite(storyId: number) {
 
     StoriesDB.modify(() => {
       story.is_favorite = !isFavorite;
+      story.saved_at_timestamp = Date.now();
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [story, storyVersion, isFavorite]);
