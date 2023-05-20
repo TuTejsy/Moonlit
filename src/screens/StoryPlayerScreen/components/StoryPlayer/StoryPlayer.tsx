@@ -1,28 +1,35 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import Animated, { SharedValue, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, {
+  Extrapolate,
+  SharedValue,
+  interpolate,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
+import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-
-import { EXTROPOLATION_CONFIG } from '../../StoryPlayerScreen.constants';
 
 import ProgressBar from './components/ProgressBar/ProgressBar';
 import { makeStyles } from './StoryPlayer.styles';
 
 interface StoryPlayerPropTypes {
   isStoryPlaying: SharedValue<boolean>;
+  storyId: number;
   storyPlayingSharedValue: SharedValue<number>;
 }
 
 const DURATION = 5 * 60;
 
-function StoryPlayer({ isStoryPlaying, storyPlayingSharedValue }: StoryPlayerPropTypes) {
+function StoryPlayer({ isStoryPlaying, storyId, storyPlayingSharedValue }: StoryPlayerPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const insets = useSafeAreaInsets();
+
+  const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite(storyId);
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
@@ -30,7 +37,7 @@ function StoryPlayer({ isStoryPlaying, storyPlayingSharedValue }: StoryPlayerPro
         storyPlayingSharedValue.value,
         [0, 1],
         [insets.bottom + 60, insets.bottom + 100],
-        EXTROPOLATION_CONFIG,
+        Extrapolate.CLAMP,
       ),
 
       opacity: storyPlayingSharedValue.value,
@@ -45,7 +52,7 @@ function StoryPlayer({ isStoryPlaying, storyPlayingSharedValue }: StoryPlayerPro
             storyPlayingSharedValue.value,
             [0, 1],
             [-insets.bottom + 100, 0],
-            EXTROPOLATION_CONFIG,
+            Extrapolate.CLAMP,
           ),
         },
       ],
@@ -65,7 +72,11 @@ function StoryPlayer({ isStoryPlaying, storyPlayingSharedValue }: StoryPlayerPro
       <Animated.View style={[styles.playerActionsContainer, animatedActionsContainerStyle]}>
         <Icons.Clock />
         <Icons.DownloadRound />
-        <Icons.Favorite />
+        <Icons.Favorite
+          inactiveOpacity={0.5}
+          isFavorite={isFavorite}
+          onPress={handleStoryFavoritePress}
+        />
       </Animated.View>
     </Animated.View>
   );

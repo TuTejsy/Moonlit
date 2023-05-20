@@ -6,7 +6,6 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
-import { enableFreeze } from 'react-native-screens';
 
 import { StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
@@ -22,10 +21,8 @@ if (!__DEV__) {
   console.error = () => undefined;
 }
 
-enableFreeze(true);
-
-// StoriesDB.open();
-StoriesDB.open().then(() => StoriesDB.dropDatabase());
+StoriesDB.open();
+// StoriesDB.open().then(() => StoriesDB.dropDatabase());
 
 function App(): JSX.Element {
   const theme = useInitTheme();

@@ -9,29 +9,32 @@ import Animated, {
   withTiming,
   Easing,
   withDecay,
+  Extrapolate,
 } from 'react-native-reanimated';
 
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SCREEN_HEIGHT } from '@/constants/layout';
+import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-
-import { EXTROPOLATION_CONFIG } from '../../StoryPlayerScreen.constants';
 
 import { makeStyles } from './StoryActions.styles';
 
 interface StoryActionsPropTyps {
   isStoryPlaying: SharedValue<boolean>;
+  storyId: number;
   storyPlayingSharedValue: SharedValue<number>;
 }
 
-function StoryActions({ isStoryPlaying, storyPlayingSharedValue }: StoryActionsPropTyps) {
+function StoryActions({ isStoryPlaying, storyId, storyPlayingSharedValue }: StoryActionsPropTyps) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
   const areActionsDisabled = isStoryPlaying.value;
+
+  const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite(storyId);
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
@@ -39,10 +42,10 @@ function StoryActions({ isStoryPlaying, storyPlayingSharedValue }: StoryActionsP
         storyPlayingSharedValue.value,
         [0, 1],
         [24, SCREEN_HEIGHT / 2],
-        EXTROPOLATION_CONFIG,
+        Extrapolate.CLAMP,
       ),
 
-      opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], EXTROPOLATION_CONFIG),
+      opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], Extrapolate.CLAMP),
     };
   });
 
@@ -52,14 +55,16 @@ function StoryActions({ isStoryPlaying, storyPlayingSharedValue }: StoryActionsP
 
   return (
     <Animated.View style={[styles.actionsContainer, animatedContainerStyle]}>
-      <BlurView
-        blurAmount={5}
-        blurType='light'
-        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-        style={styles.button}
-      >
-        <Icons.Favorite />
-      </BlurView>
+      <PressableView onPress={handleStoryFavoritePress}>
+        <BlurView
+          blurAmount={5}
+          blurType='light'
+          reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+          style={styles.button}
+        >
+          <Icons.Favorite isFavorite={isFavorite} />
+        </BlurView>
+      </PressableView>
       <BlurView
         blurAmount={5}
         blurType='light'

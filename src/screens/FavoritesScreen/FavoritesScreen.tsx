@@ -3,6 +3,7 @@ import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
+  Extrapolate,
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
@@ -12,15 +13,11 @@ import Animated, {
 import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SCREEN_WIDTH } from '@/constants/layout';
+import useStories from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
-import {
-  EXTROPOLATION_CONFIG,
-  RECENTLY_PLAYED_STORIES,
-  SAVED_STORIES,
-  TAB_WIDTH,
-} from './FavoritesScreen.constants';
+import { TAB_WIDTH } from './FavoritesScreen.constants';
 import { makeStyles } from './FavoritesScreen.styles';
 
 function FavoritesScreen() {
@@ -30,12 +27,24 @@ function FavoritesScreen() {
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffsetSharedValue = useScrollViewOffset(scrollViewRef);
 
+  const [savedStories, savedStoriesVersion] = useStories('is_favorite = true', {
+    reverse: true,
+    sortDescriptor: 'saved_at_timestamp',
+  });
+  const [recentlyPlayedStories, recentlyPlayedStoriesVersion] = useStories(
+    'played_at_timestamp != nil',
+    {
+      reverse: true,
+      sortDescriptor: 'played_at_timestamp',
+    },
+  );
+
   const animatedTabIndicatorStyle = useAnimatedStyle(() => ({
     left: interpolate(
       scrollOffsetSharedValue.value,
       [0, SCREEN_WIDTH],
       [4, TAB_WIDTH - 4],
-      EXTROPOLATION_CONFIG,
+      Extrapolate.CLAMP,
     ),
   }));
 
@@ -44,7 +53,7 @@ function FavoritesScreen() {
       scrollOffsetSharedValue.value,
       [0, SCREEN_WIDTH],
       [1, 0.5],
-      EXTROPOLATION_CONFIG,
+      Extrapolate.CLAMP,
     ),
   }));
 
@@ -53,7 +62,7 @@ function FavoritesScreen() {
       scrollOffsetSharedValue.value,
       [0, SCREEN_WIDTH],
       [0.5, 1],
-      EXTROPOLATION_CONFIG,
+      Extrapolate.CLAMP,
     ),
   }));
 
@@ -108,7 +117,7 @@ function FavoritesScreen() {
             showsHorizontalScrollIndicator
             contentContainerStyle={styles.listContent}
             indicatorStyle='white'
-            stories={SAVED_STORIES}
+            stories={savedStories}
             ListHeaderComponent={
               <TextView style={styles.listTitleText} type='bold'>
                 Your saved tales
@@ -122,7 +131,7 @@ function FavoritesScreen() {
             showsHorizontalScrollIndicator
             contentContainerStyle={styles.listContent}
             indicatorStyle='white'
-            stories={RECENTLY_PLAYED_STORIES}
+            stories={recentlyPlayedStories}
             ListHeaderComponent={
               <TextView style={styles.listTitleText} type='bold'>
                 Recent Played
