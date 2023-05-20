@@ -8,7 +8,7 @@ import PromotionBannerImage from '@/assets/images/PromotionBanner/PromotionBanne
 import LargeStoriesList from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import MediumStoriesList from '@/components/Lists/MediumStoriesList/MediumStoriesList';
 import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
-import useStories from '@/hooks/database/useStories';
+import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
@@ -33,7 +33,7 @@ function HomeScreen() {
   return (
     <LinearGradient
       angle={180}
-      colors={[colors.orange, colors.black]}
+      colors={[colors.orange, colors.opacityOrange(0)]}
       locations={[0.5, 0.5]}
       style={styles.screen}
     >
@@ -50,7 +50,7 @@ function HomeScreen() {
       >
         <LinearGradient
           angle={180}
-          colors={[colors.orange, colors.black]}
+          colors={[colors.orange, colors.opacityOrange(0)]}
           locations={[0.2, 0.8]}
           style={styles.gradient}
         >
@@ -69,7 +69,13 @@ function HomeScreen() {
         <MediumStoriesList stories={freeStories} style={styles.mediumList} />
 
         <SectionHeader title='All tales' onSeeAllPress={noop} />
-        <SmallStoriesList isScrollable={false} stories={allStories} style={styles.smallList} />
+        <SmallStoriesList
+          displayCount={6}
+          extraData={allStoriesVersion}
+          isScrollable={false}
+          stories={allStories}
+          style={styles.smallList}
+        />
       </ScrollView>
     </LinearGradient>
   );

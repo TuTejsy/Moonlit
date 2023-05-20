@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { FlatList, FlatListProps, ListRenderItemInfo, ViewStyle } from 'react-native';
 
 import { Results } from 'realm';
@@ -14,6 +14,8 @@ interface SmallStoriesListPropTypes {
   stories: Results<StorySchema>;
   ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
   contentContainerStyle?: ViewStyle;
+  displayCount?: number;
+  extraData?: number;
   indicatorStyle?: FlatListProps<StorySchema>['indicatorStyle'];
   isScrollable?: boolean;
   showsHorizontalScrollIndicator?: boolean;
@@ -23,6 +25,8 @@ interface SmallStoriesListPropTypes {
 function SmallStoriesList({
   ListHeaderComponent,
   contentContainerStyle,
+  displayCount,
+  extraData,
   indicatorStyle,
   isScrollable = true,
   showsHorizontalScrollIndicator = false,
@@ -30,6 +34,13 @@ function SmallStoriesList({
   style,
 }: SmallStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
+
+  const storiesToRender = useMemo(() => {
+    if (displayCount) {
+      return stories.slice(0, displayCount);
+    }
+    return stories;
+  }, [displayCount, stories]);
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
     return (
@@ -48,7 +59,8 @@ function SmallStoriesList({
     <FlatList
       ListHeaderComponent={ListHeaderComponent}
       contentContainerStyle={[styles.listContent, contentContainerStyle]}
-      data={stories}
+      data={storiesToRender}
+      extraData={extraData}
       indicatorStyle={indicatorStyle}
       keyExtractor={keyExtractor}
       numColumns={2}

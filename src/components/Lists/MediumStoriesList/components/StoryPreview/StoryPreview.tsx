@@ -12,12 +12,13 @@ import { makeStyles } from './StoryPreview.styles';
 import { NavigationType } from './StoryPreview.types';
 
 interface StoryPreviewPropTypes {
+  description: string;
   previewURL: string;
   storyId: number;
   title: string;
 }
 
-function StoryPreview({ previewURL, storyId, title }: StoryPreviewPropTypes) {
+function StoryPreview({ description, previewURL, storyId, title }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const navigation = useNavigation<NavigationType>();
@@ -33,7 +34,7 @@ function StoryPreview({ previewURL, storyId, title }: StoryPreviewPropTypes) {
       <Image source={{ uri: previewURL }} style={styles.preview} />
 
       <TextView style={styles.titleText}>{title}</TextView>
-      <TextView style={styles.descriptionText}>Description</TextView>
+      <TextView style={styles.descriptionText}>{description}</TextView>
     </PressableView>
   );
 }

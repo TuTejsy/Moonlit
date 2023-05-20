@@ -1,6 +1,5 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 
-import { reverse } from 'lodash';
 import { CollectionChangeCallback, Results } from 'realm';
 
 import { StoriesDB } from '@/database';
@@ -11,7 +10,10 @@ interface SortConfig {
   sortDescriptor: string;
 }
 
-function useStories(filter?: string, sortConfig?: SortConfig): [Results<StorySchema>, number] {
+export function useStories(
+  filter?: string,
+  sortConfig?: SortConfig,
+): [Results<StorySchema>, number] {
   const stories = useMemo(() => {
     let result = StoriesDB.objects();
 
@@ -43,5 +45,3 @@ function useStories(filter?: string, sortConfig?: SortConfig): [Results<StorySch
 
   return [stories, storiesVersion];
 }
-
-export default useStories;

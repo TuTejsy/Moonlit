@@ -1,26 +1,21 @@
-import React from 'react';
-import { Image, ScrollView } from 'react-native';
+import React, { useCallback, useState } from 'react';
 
-import { noop } from 'lodash';
 import LinearGradient from 'react-native-linear-gradient';
 
-import PromotionBannerImage from '@/assets/images/PromotionBanner/PromotionBanner.png';
-import MediumStoriesList from '@/components/Lists/MediumStoriesList/MediumStoriesList';
-import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
-import useStories from '@/hooks/database/useStories';
+import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
-import CategoriesList from '../HomeScreen/components/CategoriesList/CategoriesList';
-import SectionHeader from '../HomeScreen/components/SectionHeader/SectionHeader';
-
+import DefaultSearchList from './components/DefaultSearchList/DefaultSearchList';
 import SearchBar from './components/SearchBar/SearchBar';
-import { ALL_STORIES, POPULAR_STORIES } from './SearchScreen.constants';
 import { makeStyles } from './SearchScreen.styles';
 
 function SearchScreen() {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
+
+  const [searchText, setSearchText] = useState('');
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const [allStories, allStoriesVersion] = useStories();
   const [popularStories, popularStoriesVersion] = useStories(undefined, {
@@ -29,33 +24,41 @@ function SearchScreen() {
   });
   const [freeStories, freeStoriesVersion] = useStories('is_free = true');
 
+  const popularSearch = popularStories.slice(0, 5).map((story) => story.name);
+
+  const orangeOpacity = searchText ? 0.15 : 0.3;
+
+  const handleSearchTextChange = useCallback((text: string) => {
+    setSearchText(text);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    setIsInputFocused(false);
+  }, []);
+
+  const handleInputFocus = useCallback(() => {
+    setIsInputFocused(true);
+  }, []);
+
   return (
     <LinearGradient
       angle={180}
-      colors={[colors.opacityOrange(0.3), colors.black]}
+      colors={[colors.opacityOrange(orangeOpacity), colors.opacityOrange(0)]}
       locations={[0, 1]}
       style={styles.screen}
     >
-      <SearchBar />
+      <SearchBar
+        value={searchText}
+        onChangeText={handleSearchTextChange}
+        onInputBlur={handleInputBlur}
+        onInputFocus={handleInputFocus}
+      />
 
-      <ScrollView
-        contentContainerStyle={styles.content}
-        keyboardDismissMode='on-drag'
-        showsVerticalScrollIndicator={false}
-      >
-        <SectionHeader title='Popular tales' onSeeAllPress={noop} />
-        <MediumStoriesList stories={popularStories} style={styles.popularList} />
-
-        <CategoriesList />
-
-        <Image resizeMode='cover' source={PromotionBannerImage} style={styles.promotionBanner} />
-
-        <SectionHeader title='Free tales' onSeeAllPress={noop} />
-        <MediumStoriesList stories={freeStories} style={styles.freeList} />
-
-        <SectionHeader title='All tales' onSeeAllPress={noop} />
-        <SmallStoriesList isScrollable={false} stories={allStories} style={styles.smallList} />
-      </ScrollView>
+      <DefaultSearchList
+        allStories={allStories}
+        freeStories={freeStories}
+        popularStories={popularStories}
+      />
     </LinearGradient>
   );
 }

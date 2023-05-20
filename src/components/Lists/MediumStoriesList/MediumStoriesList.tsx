@@ -22,6 +22,7 @@ function MediumStoriesList({ stories, style }: MediumStoriesListPropTypes) {
   const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
     return (
       <StoryPreview
+        description={item.description}
         previewURL={formatServerFileURLToAbsolutePath(item.preview_cover_url)}
         storyId={item.id}
         title={item.name}
