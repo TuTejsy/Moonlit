@@ -5,7 +5,7 @@ import { ObjectChangeCallback } from 'realm';
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/StorySchema.types';
 
-function useStory(storyId: string): [StorySchema | undefined | null, number] {
+function useStory(storyId: number): [StorySchema | undefined | null, number] {
   const story = useMemo(() => StoriesDB.object(storyId), [storyId]);
 
   const [storyVersion, setStoryVersion] = useState(0);

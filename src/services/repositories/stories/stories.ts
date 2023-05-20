@@ -13,4 +13,14 @@ export const StoriesRepository = {
 
     return response.data.data;
   },
+
+  playNotify: async (storyId: number) => {
+    const response = await networkClient.instance.post('playNotify', null, {
+      params: {
+        storyId,
+      },
+    });
+
+    return response.data;
+  },
 };

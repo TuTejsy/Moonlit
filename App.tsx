@@ -24,7 +24,8 @@ if (!__DEV__) {
 
 enableFreeze(true);
 
-StoriesDB.open();
+// StoriesDB.open();
+StoriesDB.open().then(() => StoriesDB.dropDatabase());
 
 function App(): JSX.Element {
   const theme = useInitTheme();

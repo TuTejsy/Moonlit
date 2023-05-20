@@ -14,10 +14,11 @@ import { makeStyles } from './StoryMeta.styles';
 const CATEGORIES = ['10min', 'Princes', 'Wishes and Magic'];
 
 interface StoryMetaPropTypes {
+  description: string;
   storyPlayingSharedValue: SharedValue<number>;
 }
 
-function StoryMeta({ storyPlayingSharedValue }: StoryMetaPropTypes) {
+function StoryMeta({ description, storyPlayingSharedValue }: StoryMetaPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const animatedCategoriesStyle = useAnimatedStyle(() => {
@@ -51,11 +52,7 @@ function StoryMeta({ storyPlayingSharedValue }: StoryMetaPropTypes) {
         ))}
       </Animated.View>
       <Animated.View style={animatedTextStyle}>
-        <TextView style={styles.storyText}>
-          Once upon a time, in a land far, far away, a young girl named Ella lived with her wicked
-          stepmother and two stepsisters. One day, a royal invitation arrived, announcing a grand
-          ball at the palace...
-        </TextView>
+        <TextView style={styles.storyText}>{description}</TextView>
       </Animated.View>
     </View>
   );
