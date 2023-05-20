@@ -19,6 +19,7 @@ export interface Story {
   id: number;
   is_free: boolean;
   name: string;
+  played_count: number;
   preview_cover_url: string;
   revision: number;
   type: number;

@@ -1,4 +1,4 @@
-function formatSecondsToDuration(seconds: number): string {
+export function formatSecondsToDuration(seconds: number): string {
   const secs = ~~seconds % 60;
   const mins = ~~((seconds % 60 ** 2) / 60);
   const hours = ~~((seconds % 60 ** 3) / 60 ** 2);
@@ -11,5 +11,3 @@ function formatSecondsToDuration(seconds: number): string {
 
   return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
-
-export default formatSecondsToDuration;

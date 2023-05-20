@@ -10,8 +10,20 @@ export function useStoriesUpdate(): [boolean, () => void] {
     try {
       setIsRefreshing(true);
       const stories = await StoriesRepository.getStories();
+      const formattedStories = stories.map((story) => {
+        const { created_at_timestamp, updated_at_timestamp } = story;
 
-      StoriesDB.upsert(stories);
+        const createdDate = new Date(created_at_timestamp);
+        const updatedDate = new Date(updated_at_timestamp);
+
+        return {
+          ...story,
+          created_at_timestamp: createdDate.getTime(),
+          updated_at_timestamp: updatedDate.getTime(),
+        };
+      });
+
+      StoriesDB.upsert(formattedStories);
     } catch (err) {
       console.error(err);
     } finally {

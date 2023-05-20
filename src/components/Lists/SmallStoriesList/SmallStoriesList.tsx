@@ -1,18 +1,20 @@
 import React, { useCallback } from 'react';
 import { FlatList, FlatListProps, ListRenderItemInfo, ViewStyle } from 'react-native';
 
-import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { Results } from 'realm';
 
-import { ListStory } from '../Lists.types';
+import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import StoryPreview from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
-  stories: Array<ListStory>;
-  ListHeaderComponent?: FlatListProps<ListStory>['ListHeaderComponent'];
+  stories: Results<StorySchema>;
+  ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
   contentContainerStyle?: ViewStyle;
-  indicatorStyle?: FlatListProps<ListStory>['indicatorStyle'];
+  indicatorStyle?: FlatListProps<StorySchema>['indicatorStyle'];
   isScrollable?: boolean;
   showsHorizontalScrollIndicator?: boolean;
   style?: ViewStyle;
@@ -29,14 +31,18 @@ function SmallStoriesList({
 }: SmallStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
-  const renderItem = useCallback(({ item }: ListRenderItemInfo<ListStory>) => {
-    return <StoryPreview imageSource={item.image} title={item.title} />;
+  const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
+    return (
+      <StoryPreview
+        description={item.description}
+        previewURL={formatServerFileURLToAbsolutePath(item.preview_cover_url)}
+        storyId={item.id}
+        title={item.name}
+      />
+    );
   }, []);
 
-  const keyExtractor = useCallback(
-    (item: ListStory, index: number) => `${item.title}-${index}`,
-    [],
-  );
+  const keyExtractor = useCallback((item: StorySchema) => `${item.id}`, []);
 
   return (
     <FlatList

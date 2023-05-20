@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -11,8 +11,10 @@ import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import useStory from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import StoryActions from './components/StoryActions/StoryActions';
 import StoryMeta from './components/StoryMeta/StoryMeta';
@@ -20,6 +22,7 @@ import StoryPlayer from './components/StoryPlayer/StoryPlayer';
 import VoiceSettingsModal from './components/VoiceSettingsModal/VoiceSettingsModal';
 import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
 import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
+import { useStoryPlayNotify } from './hooks/useStoryPlayNotify';
 import { makeStyles } from './StoryPlayerScreen.styles';
 import { NavigationType, RouteType } from './StoryPlayerScreen.types';
 
@@ -37,7 +40,14 @@ function StoryPlayerScreen() {
 
   const navigation = useNavigation<NavigationType>();
   const route = useRoute<RouteType>();
-  const { storyImageSource, storyTitle } = route.params;
+  const { storyId } = route.params;
+
+  const [story, storyVersion] = useStory(storyId);
+
+  const coverURL = useMemo(
+    () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
+    [story?.full_cover_url],
+  );
 
   const storyPlayingSharedValue = useSharedValue(0);
   const isStoryPlaying = useDerivedValue(() => storyPlayingSharedValue.value > 0);
@@ -55,6 +65,8 @@ function StoryPlayerScreen() {
     navigation.goBack();
   }, [navigation]);
 
+  useStoryPlayNotify(storyId);
+
   return (
     <LinearGradient
       angle={180}
@@ -66,7 +78,7 @@ function StoryPlayerScreen() {
         renderRight={<Icons.Share />}
         style={styles.header}
         subtitle='Wishes and Magic'
-        title={storyTitle}
+        title={story?.name}
         onGoBack={handleGoBack}
       />
 
@@ -75,7 +87,7 @@ function StoryPlayerScreen() {
           <View style={styles.imageContainer}>
             <Animated.Image
               resizeMode='cover'
-              source={storyImageSource}
+              source={{ uri: coverURL }}
               style={[styles.cover, coverAnimatedStyles]}
             />
 
@@ -96,7 +108,10 @@ function StoryPlayerScreen() {
               storyPlayingSharedValue={storyPlayingSharedValue}
             />
           </View>
-          <StoryMeta storyPlayingSharedValue={storyPlayingSharedValue} />
+          <StoryMeta
+            description={story?.description ?? ''}
+            storyPlayingSharedValue={storyPlayingSharedValue}
+          />
         </Animated.View>
       </GestureDetector>
 

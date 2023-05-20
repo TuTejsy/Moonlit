@@ -14,7 +14,6 @@ import { useTheme } from '@/hooks/theme/useTheme';
 
 import CategoriesList from './components/CategoriesList/CategoriesList';
 import SectionHeader from './components/SectionHeader/SectionHeader';
-import { ALL_STORIES, FEATURING_STORIES, POPULAR_STORIES } from './HomeScreen.constants';
 import { makeStyles } from './HomeScreen.styles';
 import { useStoriesUpdate } from './hooks/useStoriesUpdate';
 
@@ -25,6 +24,11 @@ function HomeScreen() {
   const [isRefreshing, updateStories] = useStoriesUpdate();
 
   const [allStories, allStoriesVersion] = useStories();
+  const [popularStories, popularStoriesVersion] = useStories(undefined, {
+    reverse: true,
+    sortDescriptor: 'played_count',
+  });
+  const [freeStories, freeStoriesVersion] = useStories('is_free = true');
 
   return (
     <LinearGradient
@@ -56,16 +60,16 @@ function HomeScreen() {
           <CategoriesList />
 
           <SectionHeader title='Popular tales' onSeeAllPress={noop} />
-          <MediumStoriesList stories={POPULAR_STORIES} style={styles.mediumList} />
+          <MediumStoriesList stories={popularStories} style={styles.mediumList} />
         </LinearGradient>
 
         <Image resizeMode='cover' source={PromotionBannerImage} style={styles.promotionBanner} />
 
         <SectionHeader title='Free tales' onSeeAllPress={noop} />
-        <MediumStoriesList stories={[...POPULAR_STORIES].reverse()} style={styles.mediumList} />
+        <MediumStoriesList stories={freeStories} style={styles.mediumList} />
 
         <SectionHeader title='All tales' onSeeAllPress={noop} />
-        <SmallStoriesList isScrollable={false} stories={ALL_STORIES} style={styles.smallList} />
+        <SmallStoriesList isScrollable={false} stories={allStories} style={styles.smallList} />
       </ScrollView>
     </LinearGradient>
   );

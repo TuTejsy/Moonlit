@@ -14,7 +14,7 @@ import Animated, {
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import useMutableValue from '@/hooks/useMutableValue';
-import formatSecondsToDuration from '@/utils/formatters/formatSecondsToDuration';
+import { formatSecondsToDuration } from '@/utils/formatters/formatSecondsToDuration';
 
 import useProgressBarGestureHandler from './hooks/useProgressBarGestureHandler';
 import { makeStyles } from './ProgressBar.styles';

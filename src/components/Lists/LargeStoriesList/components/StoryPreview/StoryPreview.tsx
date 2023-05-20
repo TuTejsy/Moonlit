@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { ImageBackground, ImageSourcePropType } from 'react-native';
+import { ImageBackground } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,24 +14,23 @@ import { makeStyles } from './StoryPreview.styles';
 import { NavigationType } from './StoryPreview.types';
 
 interface StoryPreviewPropTypes {
+  description: string;
   previewURL: string;
+  storyId: number;
   title: string;
 }
 
-function StoryPreview({ previewURL, title }: StoryPreviewPropTypes) {
+function StoryPreview({ description, previewURL, storyId, title }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
   const navigation = useNavigation<NavigationType>();
 
-  console.log(previewURL);
-
   const handlePreviewPress = useCallback(() => {
     navigation.navigate(RootRoutes.STORY_PLAYER, {
-      storyImageSource: { uri: previewURL },
-      storyTitle: title,
+      storyId,
     });
-  }, [navigation, previewURL, title]);
+  }, [navigation, storyId]);
 
   return (
     <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
@@ -44,7 +43,7 @@ function StoryPreview({ previewURL, title }: StoryPreviewPropTypes) {
           style={styles.previewGradient}
         />
         <TextView style={styles.titleText}>{title}</TextView>
-        <TextView style={styles.descriptionText}>Description</TextView>
+        <TextView style={styles.descriptionText}>{description}</TextView>
       </ImageBackground>
     </PressableView>
   );

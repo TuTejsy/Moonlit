@@ -12,25 +12,25 @@ import { makeStyles } from './StoryPreview.styles';
 import { NavigationType } from './StoryPreview.types';
 
 interface StoryPreviewPropTypes {
-  imageSource: ImageSourcePropType;
+  previewURL: string;
+  storyId: number;
   title: string;
 }
 
-function StoryPreview({ imageSource, title }: StoryPreviewPropTypes) {
+function StoryPreview({ previewURL, storyId, title }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const navigation = useNavigation<NavigationType>();
 
   const handlePreviewPress = useCallback(() => {
     navigation.navigate(RootRoutes.STORY_PLAYER, {
-      storyImageSource: imageSource,
-      storyTitle: title,
+      storyId,
     });
-  }, [imageSource, navigation, title]);
+  }, [navigation, storyId]);
 
   return (
     <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
-      <Image source={imageSource} style={styles.preview} />
+      <Image source={{ uri: previewURL }} style={styles.preview} />
 
       <TextView style={styles.titleText}>{title}</TextView>
       <TextView style={styles.descriptionText}>Description</TextView>

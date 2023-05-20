@@ -34,8 +34,6 @@
     "react-native-svg": "^13.9.0",
     "react-navigation": "^4.4.4",
     "realm": "^11.7.0",
-    "redux-saga": "^1.2.3",
-    "typed-redux-saga": "^1.5.0",
     "yarn": "^1.22.19"
   },
   "devDependencies": {
