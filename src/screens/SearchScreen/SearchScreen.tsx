@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -7,7 +7,9 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
 import DefaultSearchList from './components/DefaultSearchList/DefaultSearchList';
+import PopularSearch from './components/PopularSearch/PopularSearch';
 import SearchBar from './components/SearchBar/SearchBar';
+import SearchResultList from './components/SearchResultList/SearchResultList';
 import { makeStyles } from './SearchScreen.styles';
 
 function SearchScreen() {
@@ -17,14 +19,22 @@ function SearchScreen() {
   const [searchText, setSearchText] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
 
-  const [allStories, allStoriesVersion] = useStories();
+  const searchDecriptor = useMemo(() => {
+    const trimmedSeacrhText = searchText.trim();
+
+    if (trimmedSeacrhText) {
+      return `name CONTAINS[c] "${trimmedSeacrhText}"`;
+    }
+    return undefined;
+  }, [searchText]);
+
+  const [allStories, allStoriesVersion] = useStories(searchDecriptor);
   const [popularStories, popularStoriesVersion] = useStories(undefined, {
     reverse: true,
     sortDescriptor: 'played_count',
   });
   const [freeStories, freeStoriesVersion] = useStories('is_free = true');
-
-  const popularSearch = popularStories.slice(0, 5).map((story) => story.name);
+  const popularSearchItems = popularStories.slice(0, 5).map((story) => story.name);
 
   const orangeOpacity = searchText ? 0.15 : 0.3;
 
@@ -38,6 +48,10 @@ function SearchScreen() {
 
   const handleInputFocus = useCallback(() => {
     setIsInputFocused(true);
+  }, []);
+
+  const handlePopularSearchItemSelected = useCallback((item: string) => {
+    setSearchText(item);
   }, []);
 
   return (
@@ -54,11 +68,20 @@ function SearchScreen() {
         onInputFocus={handleInputFocus}
       />
 
-      <DefaultSearchList
-        allStories={allStories}
-        freeStories={freeStories}
-        popularStories={popularStories}
-      />
+      {searchText ? (
+        <SearchResultList stories={allStories} />
+      ) : isInputFocused ? (
+        <PopularSearch
+          popularSearchItems={popularSearchItems}
+          onPopularSearchItemSelected={handlePopularSearchItemSelected}
+        />
+      ) : (
+        <DefaultSearchList
+          allStories={allStories}
+          freeStories={freeStories}
+          popularStories={popularStories}
+        />
+      )}
     </LinearGradient>
   );
 }

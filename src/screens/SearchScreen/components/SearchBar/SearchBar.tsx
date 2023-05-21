@@ -85,6 +85,7 @@ function SearchBar({ onChangeText, onInputBlur, onInputFocus, value }: SearchBar
         <TextInput
           ref={inputRef}
           cursorColor={colors.white}
+          keyboardAppearance='dark'
           placeholder='Look for stories'
           placeholderTextColor={colors.opacityWhite(0.4)}
           returnKeyType='search'

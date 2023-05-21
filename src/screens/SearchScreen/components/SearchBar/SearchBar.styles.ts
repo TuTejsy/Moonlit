@@ -47,7 +47,8 @@ export const makeStyles = (
       paddingBottom: 10,
     },
     searchIcon: {
-      marginHorizontal: 12,
+      marginLeft: 12,
+      marginRight: 3,
     },
     textInput: {
       ...fonts.fontFamilyRegular,
