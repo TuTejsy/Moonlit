@@ -7,7 +7,7 @@ import { StorySchema } from '@/database/schema/stories/StorySchema.types';
 
 interface SortConfig {
   reverse: boolean;
-  sortDescriptor: string;
+  sortDescriptor: keyof StorySchema;
 }
 
 export function useStories(
@@ -21,11 +21,15 @@ export function useStories(
       result = result.filtered(filter);
     }
 
-    if (sortConfig) {
-      result = result.sorted(sortConfig.sortDescriptor, sortConfig.reverse);
-    }
+    const config = sortConfig ?? {
+      reverse: true,
+      sortDescriptor: 'updated_at_timestamp',
+    };
+
+    result = result.sorted(config.sortDescriptor, config.reverse);
 
     return result;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   const [storiesVersion, setstoriesVersion] = useState(0);

@@ -35,7 +35,9 @@ function StoryPlayerScreen() {
   const storyContainerMinHeight =
     WINDOW_HEIGHT - DEFAULT_HEADER_HEIGHT - insets.top - insets.bottom - 90;
 
-  const styles = useMakeStyles(makeStyles, { storyContainerMinHeight });
+  const stylesContext = useMemo(() => ({ storyContainerMinHeight }), [storyContainerMinHeight]);
+
+  const styles = useMakeStyles(makeStyles, stylesContext);
   const { colors } = useTheme();
 
   const navigation = useNavigation<NavigationType>();

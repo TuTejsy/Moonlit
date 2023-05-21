@@ -1,4 +1,4 @@
-import { TextStyle, TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableWithoutFeedback, View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -9,7 +9,6 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { navigationService } from '@/services/navigation/navigationService';
-import { getCurrentRoute } from '@/utils/navigation/getCurrentRoute';
 
 import { makeStyles } from './TabBar.styles';
 

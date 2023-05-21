@@ -24,7 +24,9 @@ function VoiceWaveform({
   voicePowerSharedValue,
   color = commonColors.white,
 }: VoiceWaveformPropTypes) {
-  const styles = useMakeStyles(makeStyles, { maxHeight });
+  const stylesContext = useMemo(() => ({ maxHeight }), [maxHeight]);
+
+  const styles = useMakeStyles(makeStyles, stylesContext);
 
   const frames = useMemo(() => Array(numberOfFrames).fill(true), [numberOfFrames]);
 
