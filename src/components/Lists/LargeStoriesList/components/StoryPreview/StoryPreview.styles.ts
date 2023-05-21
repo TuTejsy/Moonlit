@@ -9,6 +9,11 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       color: colors.opacityWhite(0.6),
       marginTop: 4,
     },
+    lockIcon: {
+      position: 'absolute',
+      right: 8,
+      top: 8,
+    },
     preview: {
       alignItems: 'flex-start',
       flex: 1,

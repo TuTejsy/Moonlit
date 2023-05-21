@@ -4,6 +4,7 @@ import { ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
+import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -15,12 +16,13 @@ import { NavigationType } from './StoryPreview.types';
 
 interface StoryPreviewPropTypes {
   description: string;
+  isFree: boolean;
   previewURL: string;
   storyId: number;
   title: string;
 }
 
-function StoryPreview({ description, previewURL, storyId, title }: StoryPreviewPropTypes) {
+function StoryPreview({ description, isFree, previewURL, storyId, title }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
@@ -42,6 +44,9 @@ function StoryPreview({ description, previewURL, storyId, title }: StoryPreviewP
           pointerEvents='none'
           style={styles.previewGradient}
         />
+
+        {!isFree && <Icons.Lock style={styles.lockIcon} />}
+
         <TextView style={styles.titleText}>{title}</TextView>
         <TextView style={styles.descriptionText}>{description}</TextView>
       </ImageBackground>

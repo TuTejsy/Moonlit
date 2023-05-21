@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Animated, {
   SharedValue,
@@ -29,7 +29,12 @@ function WaveformFrame({
   opacity,
   voicePowerSharedValue,
 }: WaveformFramePropTypes) {
-  const styles = useMakeStyles(makeStyles, { color, maxHeight, minHeight, opacity });
+  const stylesContext = useMemo(
+    () => ({ color, maxHeight, minHeight, opacity }),
+    [color, maxHeight, minHeight, opacity],
+  );
+
+  const styles = useMakeStyles(makeStyles, stylesContext);
 
   const animatedStyles = useAnimatedStyle(() => {
     return {

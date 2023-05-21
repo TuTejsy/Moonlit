@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { LayoutChangeEvent, StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -42,7 +42,9 @@ export const ScreenHeader = ({
   const navigation = useNavigation<NavigationType>();
 
   const [horizontalInset, setHorizontalInset] = useState(0);
-  const styles = useMakeStyles(makeStyles, { horizontalInset });
+  const stylesContext = useMemo(() => ({ horizontalInset }), [horizontalInset]);
+
+  const styles = useMakeStyles(makeStyles, stylesContext);
 
   const onLayout = ({ nativeEvent }: LayoutChangeEvent) => {
     setHorizontalInset((inset) => Math.max(nativeEvent.layout.width, inset));

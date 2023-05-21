@@ -15,6 +15,14 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       color: colors.opacityWhite(0.7),
       marginTop: 4,
     },
+    imageContainer: {
+      position: 'relative',
+    },
+    lockIcon: {
+      position: 'absolute',
+      right: 8,
+      top: 8,
+    },
     preview: {
       borderRadius: 16,
       height: 100,

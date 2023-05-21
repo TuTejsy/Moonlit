@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { TextInput, View } from 'react-native';
 
 import Animated, {
@@ -32,8 +32,9 @@ interface SearchBarPropTypes {
 
 function SearchBar({ onChangeText, onInputBlur, onInputFocus, value }: SearchBarPropTypes) {
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const stylesContext = useMemo(() => ({ isInputFocused }), [isInputFocused]);
 
-  const styles = useMakeStyles(makeStyles, { isInputFocused });
+  const styles = useMakeStyles(makeStyles, stylesContext);
   const { colors } = useTheme();
 
   const inputRef = useRef<TextInput | null>(null);

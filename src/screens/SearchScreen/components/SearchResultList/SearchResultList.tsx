@@ -21,6 +21,7 @@ function SearchResultList({ stories }: SearchResultListPropTypes) {
     return (
       <StoryPreview
         description={item.description}
+        isFree={item.is_free}
         previewURL={formatServerFileURLToAbsolutePath(item.preview_cover_url)}
         storyId={item.id}
         title={item.name}

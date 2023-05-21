@@ -9,13 +9,13 @@ type MakeStylesGenerator<T, C> = (theme: MakeStylesProps, styleContext: C) => T;
 
 export const useMakeStyles = <T extends object, C extends object>(
   makeStyles: MakeStylesGenerator<T, C>,
-  styleContext: C = {} as any,
+  styleContext?: C,
 ) => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
 
   return useMemo(
-    () => makeStyles({ ...theme, insets }, styleContext),
+    () => makeStyles({ ...theme, insets }, styleContext ?? ({} as any)),
     [makeStyles, theme, insets, styleContext],
   );
 };

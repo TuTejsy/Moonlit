@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
-import { Image, ImageSourcePropType } from 'react-native';
+import { Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
+import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -13,12 +14,13 @@ import { NavigationType } from './StoryPreview.types';
 
 interface StoryPreviewPropTypes {
   description: string;
+  isFree: boolean;
   previewURL: string;
   storyId: number;
   title: string;
 }
 
-function StoryPreview({ description, previewURL, storyId, title }: StoryPreviewPropTypes) {
+function StoryPreview({ description, isFree, previewURL, storyId, title }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const navigation = useNavigation<NavigationType>();
@@ -33,8 +35,14 @@ function StoryPreview({ description, previewURL, storyId, title }: StoryPreviewP
     <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
       <Image source={{ uri: previewURL }} style={styles.preview} />
 
-      <TextView style={styles.titleText}>{title}</TextView>
-      <TextView style={styles.descriptionText}>{description}</TextView>
+      {!isFree && <Icons.Lock style={styles.lockIcon} />}
+
+      <TextView numberOfLines={1} style={styles.titleText}>
+        {title}
+      </TextView>
+      <TextView numberOfLines={2} style={styles.descriptionText}>
+        {description}
+      </TextView>
     </PressableView>
   );
 }

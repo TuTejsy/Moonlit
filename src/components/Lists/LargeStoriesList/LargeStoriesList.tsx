@@ -21,6 +21,7 @@ function LargeStoriesList({ stories }: LargeStoriesListPropTypes) {
     return (
       <StoryPreview
         description={item.description}
+        isFree={item.is_free}
         previewURL={formatServerFileURLToAbsolutePath(item.full_cover_url)}
         storyId={item.id}
         title={item.name}

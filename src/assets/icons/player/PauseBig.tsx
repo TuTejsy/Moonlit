@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import Svg, { SvgProps, Rect, Circle } from 'react-native-svg';
 
