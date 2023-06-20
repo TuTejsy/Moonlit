@@ -162,7 +162,6 @@ function StoryPlayerScreen() {
             )}
 
             <StoryActions
-              isStoryPlayingSharedValue={isStoryPlayingSharedValue}
               startStoryPlaying={startStoryPlaying}
               storyId={storyId}
               storyPlayingSharedValue={storyPlayingSharedValue}

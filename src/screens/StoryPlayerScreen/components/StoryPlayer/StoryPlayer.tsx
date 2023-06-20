@@ -55,12 +55,14 @@ function StoryPlayer({
         Extrapolate.CLAMP,
       ),
 
+      display: storyPlayingSharedValue.value === 0 ? 'none' : 'flex',
       opacity: storyPlayingSharedValue.value,
     };
   });
 
   const animatedActionsContainerStyle = useAnimatedStyle(() => {
     return {
+      display: storyPlayingSharedValue.value === 0 ? 'none' : 'flex',
       transform: [
         {
           translateY: interpolate(
