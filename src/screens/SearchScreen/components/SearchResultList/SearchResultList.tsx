@@ -22,7 +22,7 @@ function SearchResultList({ stories }: SearchResultListPropTypes) {
       <StoryPreview
         description={item.description}
         isFree={item.is_free}
-        previewURL={formatServerFileURLToAbsolutePath(item.preview_cover_url)}
+        previewURL={formatServerFileURLToAbsolutePath(item.small_preview_cover_url)}
         storyId={item.id}
         title={item.name}
       />
@@ -31,8 +31,10 @@ function SearchResultList({ stories }: SearchResultListPropTypes) {
 
   return (
     <FlatList
+      showsVerticalScrollIndicator
       contentContainerStyle={styles.contentContainer}
       data={stories}
+      indicatorStyle='white'
       renderItem={renderItem}
     />
   );
