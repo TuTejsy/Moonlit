@@ -73,7 +73,7 @@ function StoryPlayerScreen() {
     topGradientAnimatedProps,
   } = useStoryCoverAnimation(storyPlayingSharedValue, storyContainerMinHeight);
 
-  const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue);
+  const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue, pauseStoryPlaying);
 
   const handleGoBack = useCallback(() => {
     navigation.goBack();
@@ -92,7 +92,7 @@ function StoryPlayerScreen() {
     (isStoryPlayingSharedValue, previousIsStoryPlayingSharedValue) => {
       if (isStoryPlayingSharedValue !== previousIsStoryPlayingSharedValue) {
         if (!isStoryPlayingSharedValue) {
-          runOnJS(stopStoryPlaying);
+          runOnJS(pauseStoryPlaying);
         }
       }
     },
@@ -103,7 +103,16 @@ function StoryPlayerScreen() {
     if (isStoryPlaying) {
       storyPlayingSharedValue.value = withTiming(1);
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isStoryPlaying]);
+
+  useEffect(
+    () => () => {
+      stopStoryPlaying();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return (
     <LinearGradient
