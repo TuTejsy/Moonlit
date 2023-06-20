@@ -73,22 +73,27 @@ function ProgressBar({
     [duration, moveToTime],
   );
 
-  const gestureHandler = useProgressBarGestureHandler(progressSharedValue, handleUpdatePlayPercent);
+  const [gestureHandler, isGestureActiveRef] = useProgressBarGestureHandler(
+    progressSharedValue,
+    handleUpdatePlayPercent,
+  );
 
   useEffect(() => {
-    progressSharedValue.value = (playedTime / duration) * 100;
+    if (!isGestureActiveRef.current) {
+      progressSharedValue.value = (playedTime / duration) * 100;
 
-    if (isStoryPlaying) {
-      progressSharedValue.value = withTiming(100, {
-        duration: (duration - playedTime) * 1000,
-      });
+      if (isStoryPlaying) {
+        progressSharedValue.value = withTiming(100, {
+          duration: (duration - playedTime) * 1000,
+        });
 
-      startTimer();
-    } else {
-      stopTimer();
+        startTimer();
+      } else {
+        stopTimer();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isStoryPlaying]);
+  }, [isStoryPlaying, isGestureActiveRef, playedTime]);
 
   return (
     <GestureDetector gesture={gestureHandler}>

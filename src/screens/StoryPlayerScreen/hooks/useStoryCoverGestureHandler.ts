@@ -3,11 +3,15 @@ import {
   Extrapolate,
   SharedValue,
   interpolate,
+  runOnJS,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
-function useStoryCoverGestureHandler(storyPlayingSharedValue: SharedValue<number>) {
+function useStoryCoverGestureHandler(
+  storyPlayingSharedValue: SharedValue<number>,
+  onCoverCollapsed: () => void,
+) {
   const isGestureEnabled = useSharedValue(false);
 
   const gesture = Gesture.Pan()
@@ -30,7 +34,12 @@ function useStoryCoverGestureHandler(storyPlayingSharedValue: SharedValue<number
       if (isGestureEnabled.value) {
         isGestureEnabled.value = false;
 
-        storyPlayingSharedValue.value = withTiming(e.translationY < -40 ? 0 : 1);
+        if (e.translationY < -40) {
+          storyPlayingSharedValue.value = withTiming(0);
+          runOnJS(onCoverCollapsed)();
+        } else {
+          storyPlayingSharedValue.value = withTiming(1);
+        }
       }
     });
 

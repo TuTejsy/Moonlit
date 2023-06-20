@@ -10,6 +10,7 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
@@ -84,14 +85,19 @@ function StoryPlayer({
   return (
     <Animated.View style={[styles.playerContainer, animatedContainerStyle]}>
       <View style={styles.playerControllsContainer}>
-        <Icons.GoBack onPress={handleGoBackPress} />
+        <PressableView onPress={handleGoBackPress}>
+          <Icons.GoBack />
+        </PressableView>
 
         {isStoryPlaying ? (
           <Icons.PauseBig onPress={pauseStoryPlaying} />
         ) : (
           <Icons.PlayBig onPress={startStoryPlaying} />
         )}
-        <Icons.GoForward onPress={handleGoForwardPress} />
+
+        <PressableView onPress={handleGoForwardPress}>
+          <Icons.GoForward />
+        </PressableView>
       </View>
 
       <ProgressBar

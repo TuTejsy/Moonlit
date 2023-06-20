@@ -1,10 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { EmitterSubscription, NativeEventEmitter } from 'react-native';
 
 import RNFS from 'react-native-fs';
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
 import { SANDBOX } from '@/constants/common';
 import { audioPlayer } from '@/native-modules/native-modules';
+import { AUDIO_PLAYER_EMITTER_EVENT } from '@/native-modules/native-modules.types';
 
 const AUDIO_PATH =
   'https://lshlquihgvuemvgpgamq.supabase.co/storage/v1/object/public/Test/Initialtales/test.mp3';
@@ -14,6 +16,10 @@ const LOCAL_FILE_PATH = `${SANDBOX.DOCUMENTS.STORIES}/test.mp3`;
 const DURATION = 4 * 60 + 2;
 
 export function useStoryPlayer() {
+  const eventEmmiterRef = useRef(new NativeEventEmitter(audioPlayer));
+  const audioPlayerDidFinishPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
+  const audioPlayerDidInterruptPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
+
   const [isStoryPlaying, setIsStoryPlaying] = useState(false);
   const [playedTime, setPlayedTime] = useState(0);
 
@@ -67,25 +73,50 @@ export function useStoryPlayer() {
   const moveStoryPlayingToTime = useCallback(
     async (playedTime: number) => {
       try {
+        if (playedTime > DURATION) {
+          stopStoryPlaying();
+          setPlayedTime(DURATION);
+          return;
+        }
+
         let playedTimeToSet = playedTime;
 
         if (playedTimeToSet < 0) {
           playedTimeToSet = 0;
-        } else if (playedTimeToSet > DURATION) {
-          playedTimeToSet = DURATION;
-        }
-
-        if (isStoryPlaying) {
+        } else if (isStoryPlaying) {
           await audioPlayer.startPlayingFromTime(playedTime);
         }
 
-        setPlayedTime(playedTime);
+        setPlayedTime(playedTimeToSet);
       } catch (err) {
         console.error(err);
       }
     },
-    [isStoryPlaying],
+    [isStoryPlaying, stopStoryPlaying],
   );
+
+  useEffect(() => {
+    audioPlayerDidFinishPlayingSubscriptionRef.current = eventEmmiterRef.current?.addListener(
+      AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_FINISH,
+      () => {
+        setIsStoryPlaying(false);
+        setPlayedTime(0);
+      },
+    );
+
+    audioPlayerDidInterruptPlayingSubscriptionRef.current = eventEmmiterRef.current?.addListener(
+      AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_INTERRUPT,
+      ({ playingTime }) => {
+        setIsStoryPlaying(false);
+        setPlayedTime(playingTime);
+      },
+    );
+
+    return () => {
+      audioPlayerDidFinishPlayingSubscriptionRef.current?.remove();
+      audioPlayerDidInterruptPlayingSubscriptionRef.current?.remove();
+    };
+  }, []);
 
   return {
     isStoryPlaying,
