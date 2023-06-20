@@ -29,9 +29,10 @@ function DefaultSearchList({
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator
       contentContainerStyle={styles.content}
+      indicatorStyle='white'
       keyboardDismissMode='on-drag'
-      showsVerticalScrollIndicator={false}
     >
       <SectionHeader title='Popular tales' onSeeAllPress={noop} />
       <MediumStoriesList stories={popularStories} style={styles.popularList} />

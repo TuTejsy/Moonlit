@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
-import Animated, { useDerivedValue, useSharedValue } from 'react-native-reanimated';
+import Animated, { runOnJS, useAnimatedReaction, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
@@ -22,6 +22,7 @@ import StoryPlayer from './components/StoryPlayer/StoryPlayer';
 import VoiceSettingsModal from './components/VoiceSettingsModal/VoiceSettingsModal';
 import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
 import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
+import { useStoryPlayer } from './hooks/useStoryPlayer';
 import { useStoryPlayNotify } from './hooks/useStoryPlayNotify';
 import { makeStyles } from './StoryPlayerScreen.styles';
 import { NavigationType, RouteType } from './StoryPlayerScreen.types';
@@ -40,6 +41,20 @@ function StoryPlayerScreen() {
   const styles = useMakeStyles(makeStyles, stylesContext);
   const { colors } = useTheme();
 
+  const [isAnimatedGradientLoaded, setIsAnimatedGradientLoaded] = useState(false);
+
+  const {
+    isStoryPlaying,
+    isStoryPlayingSharedValue,
+    moveStoryPlayingToTime,
+    pauseStoryPlaying,
+    playedTime,
+    setPlayedTime,
+    startStoryPlaying,
+    stopStoryPlaying,
+    storyPlayingSharedValue,
+  } = useStoryPlayer();
+
   const navigation = useNavigation<NavigationType>();
   const route = useRoute<RouteType>();
   const { storyId } = route.params;
@@ -50,9 +65,6 @@ function StoryPlayerScreen() {
     () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
     [story?.full_cover_url],
   );
-
-  const storyPlayingSharedValue = useSharedValue(0);
-  const isStoryPlaying = useDerivedValue(() => storyPlayingSharedValue.value > 0);
 
   const {
     bottomGradientAnimatedProps,
@@ -67,7 +79,31 @@ function StoryPlayerScreen() {
     navigation.goBack();
   }, [navigation]);
 
+  const handleAnimatedGradientLoaded = useCallback(() => {
+    setIsAnimatedGradientLoaded(true);
+  }, []);
+
   useStoryPlayNotify(storyId);
+
+  useAnimatedReaction(
+    () => {
+      return isStoryPlayingSharedValue.value;
+    },
+    (isStoryPlayingSharedValue, previousIsStoryPlayingSharedValue) => {
+      if (isStoryPlayingSharedValue !== previousIsStoryPlayingSharedValue) {
+        if (!isStoryPlayingSharedValue) {
+          runOnJS(stopStoryPlaying);
+        }
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (isStoryPlaying) {
+      storyPlayingSharedValue.value = withTiming(1);
+    }
+  });
 
   return (
     <LinearGradient
@@ -104,9 +140,21 @@ function StoryPlayerScreen() {
               animatedProps={bottomGradientAnimatedProps}
               pointerEvents='none'
               style={styles.bottomGradient}
+              onLayout={handleAnimatedGradientLoaded}
             />
+            {!isAnimatedGradientLoaded && (
+              <LinearGradient
+                angle={180}
+                colors={['rgba(26,26, 26, 0)', 'rgba(26,26, 26, 1)']}
+                locations={[0.531, 1]}
+                pointerEvents='none'
+                style={styles.bottomGradient}
+              />
+            )}
+
             <StoryActions
-              isStoryPlaying={isStoryPlaying}
+              isStoryPlayingSharedValue={isStoryPlayingSharedValue}
+              startStoryPlaying={startStoryPlaying}
               storyId={storyId}
               storyPlayingSharedValue={storyPlayingSharedValue}
             />
@@ -120,6 +168,11 @@ function StoryPlayerScreen() {
 
       <StoryPlayer
         isStoryPlaying={isStoryPlaying}
+        moveStoryPlayingToTime={moveStoryPlayingToTime}
+        pauseStoryPlaying={pauseStoryPlaying}
+        playedTime={playedTime}
+        setPlayedTime={setPlayedTime}
+        startStoryPlaying={startStoryPlaying}
         storyId={storyId}
         storyPlayingSharedValue={storyPlayingSharedValue}
       />

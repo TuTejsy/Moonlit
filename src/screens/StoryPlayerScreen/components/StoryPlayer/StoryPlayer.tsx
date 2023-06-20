@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
 import Animated, {
@@ -17,14 +17,28 @@ import ProgressBar from './components/ProgressBar/ProgressBar';
 import { makeStyles } from './StoryPlayer.styles';
 
 interface StoryPlayerPropTypes {
-  isStoryPlaying: SharedValue<boolean>;
+  isStoryPlaying: boolean;
+  moveStoryPlayingToTime: (playedTime: number) => void;
+  pauseStoryPlaying: () => void;
+  playedTime: number;
+  setPlayedTime: (playedTime: number) => void;
+  startStoryPlaying: () => void;
   storyId: number;
   storyPlayingSharedValue: SharedValue<number>;
 }
 
-const DURATION = 5 * 60;
+const DURATION = 4 * 60 + 2;
 
-function StoryPlayer({ isStoryPlaying, storyId, storyPlayingSharedValue }: StoryPlayerPropTypes) {
+function StoryPlayer({
+  isStoryPlaying,
+  moveStoryPlayingToTime,
+  pauseStoryPlaying,
+  playedTime,
+  setPlayedTime,
+  startStoryPlaying,
+  storyId,
+  storyPlayingSharedValue,
+}: StoryPlayerPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const insets = useSafeAreaInsets();
@@ -59,15 +73,34 @@ function StoryPlayer({ isStoryPlaying, storyId, storyPlayingSharedValue }: Story
     };
   });
 
+  const handleGoBackPress = useCallback(() => {
+    moveStoryPlayingToTime(playedTime - 15);
+  }, [moveStoryPlayingToTime, playedTime]);
+
+  const handleGoForwardPress = useCallback(() => {
+    moveStoryPlayingToTime(playedTime + 15);
+  }, [moveStoryPlayingToTime, playedTime]);
+
   return (
     <Animated.View style={[styles.playerContainer, animatedContainerStyle]}>
       <View style={styles.playerControllsContainer}>
-        <Icons.GoBack />
-        <Icons.PauseBig />
-        <Icons.GoForward />
+        <Icons.GoBack onPress={handleGoBackPress} />
+
+        {isStoryPlaying ? (
+          <Icons.PauseBig onPress={pauseStoryPlaying} />
+        ) : (
+          <Icons.PlayBig onPress={startStoryPlaying} />
+        )}
+        <Icons.GoForward onPress={handleGoForwardPress} />
       </View>
 
-      <ProgressBar duration={DURATION} isStoryPlaying={isStoryPlaying} />
+      <ProgressBar
+        duration={DURATION}
+        isStoryPlaying={isStoryPlaying}
+        moveToTime={moveStoryPlayingToTime}
+        playedTime={playedTime}
+        setPlayedTime={setPlayedTime}
+      />
 
       <Animated.View style={[styles.playerActionsContainer, animatedActionsContainerStyle]}>
         <Icons.Clock />

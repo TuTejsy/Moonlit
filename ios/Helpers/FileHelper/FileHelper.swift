@@ -9,6 +9,7 @@ enum SANDBOX {
   enum DOCUMENTS: String, CaseIterable {
     case TEMP = "temp"
     case VOICE = "voice"
+    case STORIES = "stories"
     case PREVIEW = "preview"
     case ORIGINAL = "original"
     case DOWNLOAD = "download"

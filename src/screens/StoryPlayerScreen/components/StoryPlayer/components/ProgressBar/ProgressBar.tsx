@@ -1,15 +1,8 @@
-import React, { useRef, useMemo, useState, useCallback } from 'react';
+import React, { useRef, useMemo, useState, useCallback, useEffect } from 'react';
 import { View, ViewProps } from 'react-native';
 
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated, {
-  SharedValue,
-  runOnJS,
-  useAnimatedReaction,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -21,13 +14,20 @@ import { makeStyles } from './ProgressBar.styles';
 
 interface ProgressBarPropTypes extends ViewProps {
   duration: number;
-  isStoryPlaying: SharedValue<boolean>;
+  isStoryPlaying: boolean;
+  moveToTime: (playedTime: number) => void;
+  playedTime: number;
+  setPlayedTime: (playedTime: number) => void;
 }
 
-function ProgressBar({ duration, isStoryPlaying, style }: ProgressBarPropTypes) {
+function ProgressBar({
+  duration,
+  isStoryPlaying,
+  moveToTime,
+  playedTime,
+  setPlayedTime,
+}: ProgressBarPropTypes) {
   const styles = useMakeStyles(makeStyles);
-
-  const [playedTime, setPlayedTime] = useState(0);
 
   const playedTimeRef = useMutableValue(playedTime);
   const timerRef = useRef<NodeJS.Timer | null>(null);
@@ -64,38 +64,31 @@ function ProgressBar({ duration, isStoryPlaying, style }: ProgressBarPropTypes) 
 
       timerRef.current = interval;
     }
-  }, [duration, playedTimeRef, stopTimer]);
+  }, [duration, playedTimeRef, stopTimer, setPlayedTime]);
 
   const handleUpdatePlayPercent = useCallback(
     (playPercent: number) => {
-      setPlayedTime(duration * (playPercent / 100));
+      moveToTime(duration * (playPercent / 100));
     },
-    [duration],
+    [duration, moveToTime],
   );
 
   const gestureHandler = useProgressBarGestureHandler(progressSharedValue, handleUpdatePlayPercent);
 
-  useAnimatedReaction(
-    () => {
-      return isStoryPlaying.value;
-    },
-    (isPlaying, previousIsPlaying) => {
-      if (isPlaying !== previousIsPlaying) {
-        progressSharedValue.value = (playedTime / duration) * 100;
+  useEffect(() => {
+    progressSharedValue.value = (playedTime / duration) * 100;
 
-        if (isPlaying) {
-          progressSharedValue.value = withTiming(100, {
-            duration: (duration - playedTime) * 1000,
-          });
+    if (isStoryPlaying) {
+      progressSharedValue.value = withTiming(100, {
+        duration: (duration - playedTime) * 1000,
+      });
 
-          runOnJS(startTimer)();
-        } else {
-          runOnJS(stopTimer)();
-        }
-      }
-    },
-    [playedTime],
-  );
+      startTimer();
+    } else {
+      stopTimer();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isStoryPlaying]);
 
   return (
     <GestureDetector gesture={gestureHandler}>

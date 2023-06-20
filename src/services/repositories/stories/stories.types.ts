@@ -20,8 +20,8 @@ export interface Story {
   is_free: boolean;
   name: string;
   played_count: number;
-  preview_cover_url: string;
   revision: number;
+  small_preview_cover_url: string;
   type: number;
   updated_at_timestamp: number;
 }

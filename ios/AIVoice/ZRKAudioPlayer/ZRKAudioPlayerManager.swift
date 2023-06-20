@@ -52,7 +52,7 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
         if isPlayingStarted {
             resolve(true)
             
-            ZRKKeepAwake.activate()
+//            ZRKKeepAwake.activate()
         } else {
             reject(nil, nil, nil)
         }
@@ -66,7 +66,7 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
         if isPlayingStopped {
             resolve(true)
             
-            ZRKKeepAwake.deactivate()
+//            ZRKKeepAwake.deactivate()
         } else {
             reject(nil, nil, nil)
         }
@@ -87,7 +87,7 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
         if isPlayingPaused {
             resolve(["playingTime": audioPlayer.playingTime])
             
-            ZRKKeepAwake.deactivate()
+//            ZRKKeepAwake.deactivate()
         } else {
             reject(nil, nil, nil)
         }
@@ -107,7 +107,7 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
             
             sendEvent(withName: AudioPlayerEvents.PLAYING_DID_INTERRUPT.rawValue, body: ["playingTime": audioPlayer.playingTime])
            
-            ZRKKeepAwake.deactivate()
+//            ZRKKeepAwake.deactivate()
         default :
             return
         }
@@ -119,7 +119,7 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
     func playerDidFinishPlaying() {
         sendEvent(withName: AudioPlayerEvents.PLAYING_DID_FINISH.rawValue, body: true)
        
-        ZRKKeepAwake.deactivate()
+//        ZRKKeepAwake.deactivate()
     }
     
 }

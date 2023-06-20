@@ -29,6 +29,9 @@ export const SANDBOX = {
     get PREVIEW() {
       return `${RNFS.DocumentDirectoryPath}/preview`;
     },
+    get STORIES() {
+      return `${RNFS.DocumentDirectoryPath}/stories`;
+    },
     get TEMP() {
       return `${RNFS.DocumentDirectoryPath}/temp`;
     },

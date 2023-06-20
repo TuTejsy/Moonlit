@@ -1,14 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { BlurView } from '@react-native-community/blur';
 import Animated, {
   SharedValue,
   useAnimatedStyle,
   interpolate,
-  withSpring,
-  withTiming,
-  Easing,
-  withDecay,
   Extrapolate,
 } from 'react-native-reanimated';
 
@@ -23,16 +19,22 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { makeStyles } from './StoryActions.styles';
 
 interface StoryActionsPropTyps {
-  isStoryPlaying: SharedValue<boolean>;
+  isStoryPlayingSharedValue: SharedValue<boolean>;
+  startStoryPlaying: () => void;
   storyId: number;
   storyPlayingSharedValue: SharedValue<number>;
 }
 
-function StoryActions({ isStoryPlaying, storyId, storyPlayingSharedValue }: StoryActionsPropTyps) {
+function StoryActions({
+  isStoryPlayingSharedValue,
+  startStoryPlaying,
+  storyId,
+  storyPlayingSharedValue,
+}: StoryActionsPropTyps) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
-  const areActionsDisabled = isStoryPlaying.value;
+  const areActionsDisabled = isStoryPlayingSharedValue.value;
 
   const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite(storyId);
 
@@ -48,10 +50,6 @@ function StoryActions({ isStoryPlaying, storyId, storyPlayingSharedValue }: Stor
       opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], Extrapolate.CLAMP),
     };
   });
-
-  const handlePlayStoryPress = useCallback(() => {
-    storyPlayingSharedValue.value = withTiming(1);
-  }, [storyPlayingSharedValue]);
 
   return (
     <Animated.View style={[styles.actionsContainer, animatedContainerStyle]}>
@@ -76,7 +74,7 @@ function StoryActions({ isStoryPlaying, storyId, storyPlayingSharedValue }: Stor
       <PressableView
         disabled={areActionsDisabled}
         style={styles.listenButton}
-        onPress={handlePlayStoryPress}
+        onPress={startStoryPlaying}
       >
         <Icons.PlaySmall />
         <TextView style={styles.listenText} type='bold'>

@@ -14,6 +14,7 @@ import { SearchTab } from './navigation/SearchTab';
 import { GoBack } from './player/GoBack';
 import { GoForward } from './player/GoForward';
 import { PauseBig } from './player/PauseBig';
+import { PlayBig } from './player/PlayBig';
 import { PlaySmall } from './player/PlaySmall';
 
 export const Icons = {
@@ -29,6 +30,7 @@ export const Icons = {
   HomeTab,
   Lock,
   PauseBig,
+  PlayBig,
   PlaySmall,
   Search,
   SearchTab,
