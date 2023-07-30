@@ -30,7 +30,11 @@ export interface AudioRecorderTypes extends NativeModule {
 export interface AudioPlayerTypes extends NativeModule {
   pausePlaying: () => Promise<{ playingTime?: number }>;
   rewindPlayingToTime: (time: number) => Promise<any>;
-  setToPlayFileAtPath: (path: string) => Promise<any>;
+  setToPlayFile: (fileInfo: {
+    coverPath: string;
+    filePath: string;
+    fileTitle: string;
+  }) => Promise<any>;
   startPlayingFromTime: (time: number) => Promise<any>;
   stopPlaying: () => Promise<any>;
 }

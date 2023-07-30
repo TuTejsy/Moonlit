@@ -3,7 +3,7 @@
 
 @interface RCT_EXTERN_MODULE(ZRKAudioPlayerManager, RCTEventEmitter)
 
-RCT_EXTERN_METHOD(setToPlayFileAtPath: (NSString *)path
+RCT_EXTERN_METHOD(setToPlayFile: (NSDictionary *)fileInfo
                   resolver: (RCTPromiseResolveBlock)resolve
                   rejecter: (RCTPromiseRejectBlock)reject)
 
