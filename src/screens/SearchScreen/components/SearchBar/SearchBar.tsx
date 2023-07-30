@@ -98,7 +98,7 @@ function SearchBar({ onChangeText, onInputBlur, onInputFocus, value }: SearchBar
           onFocus={handleInputFocus}
         />
 
-        {!!value && <Icons.Close style={styles.closeIcon} onPress={handleRemovePress} />}
+        {!!value && <Icons.RoundClose style={styles.closeIcon} onPress={handleRemovePress} />}
       </Animated.View>
       <Animated.View style={closeButtonAnimatedStyle}>
         <PressableView style={styles.closeButton} onPress={handleCloseButtonPress}>

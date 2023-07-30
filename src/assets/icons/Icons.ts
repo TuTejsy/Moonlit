@@ -10,6 +10,7 @@ import { ArrowBack } from './navigation/ArrowBack';
 import { Close } from './navigation/Close';
 import { FavoritesTab } from './navigation/FavoritesTab';
 import { HomeTab } from './navigation/HomeTab';
+import { RoundClose } from './navigation/RoundClose';
 import { SearchTab } from './navigation/SearchTab';
 import { GoBack } from './player/GoBack';
 import { GoForward } from './player/GoForward';
@@ -32,6 +33,7 @@ export const Icons = {
   PauseBig,
   PlayBig,
   PlaySmall,
+  RoundClose,
   Search,
   SearchTab,
   Share,
