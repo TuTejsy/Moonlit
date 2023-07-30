@@ -15,7 +15,7 @@ const LOCAL_FILE_PATH = `${SANDBOX.DOCUMENTS.STORIES}/test.mp3`;
 
 const DURATION = 4 * 60 + 2;
 
-export function useStoryPlayer() {
+export function useStoryPlayer(title: string, coverPath: string) {
   const eventEmmiterRef = useRef(new NativeEventEmitter(audioPlayer));
   const audioPlayerDidFinishPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
   const audioPlayerDidInterruptPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
@@ -61,14 +61,14 @@ export function useStoryPlayer() {
         await result.promise;
       }
 
-      await audioPlayer.setToPlayFileAtPath(LOCAL_FILE_PATH);
+      await audioPlayer.setToPlayFile({ coverPath, filePath: LOCAL_FILE_PATH, fileTitle: title });
       await audioPlayer.startPlayingFromTime(playedTime);
 
       setIsStoryPlaying(true);
     } catch (err) {
       console.error(err);
     }
-  }, [playedTime]);
+  }, [coverPath, playedTime, title]);
 
   const moveStoryPlayingToTime = useCallback(
     async (playedTime: number) => {

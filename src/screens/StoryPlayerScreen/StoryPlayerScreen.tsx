@@ -43,18 +43,6 @@ function StoryPlayerScreen() {
 
   const [isAnimatedGradientLoaded, setIsAnimatedGradientLoaded] = useState(false);
 
-  const {
-    isStoryPlaying,
-    isStoryPlayingSharedValue,
-    moveStoryPlayingToTime,
-    pauseStoryPlaying,
-    playedTime,
-    setPlayedTime,
-    startStoryPlaying,
-    stopStoryPlaying,
-    storyPlayingSharedValue,
-  } = useStoryPlayer();
-
   const navigation = useNavigation<NavigationType>();
   const route = useRoute<RouteType>();
   const { storyId } = route.params;
@@ -65,6 +53,18 @@ function StoryPlayerScreen() {
     () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
     [story?.full_cover_url],
   );
+
+  const {
+    isStoryPlaying,
+    isStoryPlayingSharedValue,
+    moveStoryPlayingToTime,
+    pauseStoryPlaying,
+    playedTime,
+    setPlayedTime,
+    startStoryPlaying,
+    stopStoryPlaying,
+    storyPlayingSharedValue,
+  } = useStoryPlayer(story?.name ?? '', coverURL);
 
   const {
     bottomGradientAnimatedProps,
