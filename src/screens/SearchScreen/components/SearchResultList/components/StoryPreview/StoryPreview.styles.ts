@@ -11,7 +11,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       marginLeft: 16,
     },
     descriptionText: {
-      ...fonts.size_12,
+      ...fonts.size_14,
       color: colors.opacityWhite(0.7),
       marginTop: 4,
     },

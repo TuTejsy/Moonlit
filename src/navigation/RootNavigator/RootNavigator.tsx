@@ -5,8 +5,14 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { useInitApp } from '@/hooks/useInitApp';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
 import StoryPlayerScreen from '@/screens/StoryPlayerScreen/StoryPlayerScreen';
+import GetReadyToRecordScreen from '@/screens/VoiceRecordingScreens/GetReadyToRecordScreen/GetReadyToRecordScreen';
 
-import { rootOptions, storyPlayerOptions, tabOptions } from './RootNavigator.options';
+import {
+  getStartedToRecord,
+  rootOptions,
+  storyPlayerOptions,
+  tabOptions,
+} from './RootNavigator.options';
 import { RootRoutes } from './RootNavigator.routes';
 import { RootStackParams } from './RootNavigator.types';
 
@@ -27,6 +33,12 @@ export const RootNavigator = () => {
         component={StoryPlayerScreen}
         name={RootRoutes.STORY_PLAYER}
         options={storyPlayerOptions}
+      />
+
+      <RootStack.Screen
+        component={GetReadyToRecordScreen}
+        name={RootRoutes.GET_STARTED_TO_RECORD}
+        options={getStartedToRecord}
       />
     </RootStack.Navigator>
   );

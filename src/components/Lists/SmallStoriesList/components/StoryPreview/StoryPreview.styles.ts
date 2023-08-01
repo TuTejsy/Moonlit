@@ -7,7 +7,7 @@ import { PREVIEW_SIZE } from './StoryPreview.constants';
 export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     descriptionText: {
-      ...fonts.size_12,
+      ...fonts.size_14,
       color: colors.opacityWhite(0.7),
       marginTop: 4,
     },
