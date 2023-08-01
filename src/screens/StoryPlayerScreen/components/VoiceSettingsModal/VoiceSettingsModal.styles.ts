@@ -1,10 +1,24 @@
 import { StyleSheet } from 'react-native';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
+    addVoiceButton: {
+      alignItems: 'center',
+      backgroundColor: colors.white,
+      borderRadius: 24,
+      flex: 1,
+      height: 48,
+      justifyContent: 'center',
+      marginHorizontal: HORIZONTAL_PADDING,
+    },
+    addVoiceText: {
+      ...fonts.size_14,
+      color: colors.opacityBlack(0.7),
+    },
     bottomBar: {
       height: 64,
       marginBottom: insets.bottom,

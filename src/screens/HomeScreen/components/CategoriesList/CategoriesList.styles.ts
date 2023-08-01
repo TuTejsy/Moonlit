@@ -28,7 +28,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       marginRight: 8,
     },
     cateogryText: {
-      ...fonts.size_10,
+      ...fonts.size_12,
       color: colors.opacityWhite(0.7),
       textAlign: 'center',
     },

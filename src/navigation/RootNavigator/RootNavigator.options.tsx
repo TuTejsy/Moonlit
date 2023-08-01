@@ -23,3 +23,7 @@ export const tabOptions: StackNavigationOptions = {
 export const storyPlayerOptions: StackNavigationOptions = {
   headerShown: false,
 };
+
+export const getStartedToRecord: StackNavigationOptions = {
+  headerShown: false,
+};

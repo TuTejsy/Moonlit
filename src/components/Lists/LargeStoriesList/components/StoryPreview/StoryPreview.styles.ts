@@ -5,7 +5,7 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     descriptionText: {
-      ...fonts.size_10,
+      ...fonts.size_15,
       color: colors.opacityWhite(0.6),
       marginTop: 4,
     },
