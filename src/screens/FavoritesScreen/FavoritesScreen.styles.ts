@@ -1,13 +1,22 @@
 import { StyleSheet } from 'react-native';
 
 import { SCREEN_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING, TAB_BAR_HEIGHT } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING, TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { TAB_WIDTH } from './FavoritesScreen.constants';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
+    blurView: {
+      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingTop: insets.top + 10,
+    },
+    blurViewContainer: {
+      left: 0,
+      position: 'absolute',
+      top: 0,
+    },
     content: {
       backgroundColor: colors.black,
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
@@ -17,7 +26,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     listContent: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
-      paddingTop: 30,
+      paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 38,
     },
     listTitleText: {
       ...fonts.size_24,
@@ -27,7 +36,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     screen: {
       backgroundColor: colors.black,
       flex: 1,
-      paddingTop: insets.top + 10,
+      position: 'relative',
     },
     tabContainer: {
       alignItems: 'center',

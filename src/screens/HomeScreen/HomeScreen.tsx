@@ -1,13 +1,13 @@
 import React from 'react';
-import { ScrollView, Image, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 
 import { noop } from 'lodash';
 import LinearGradient from 'react-native-linear-gradient';
 
-import PromotionBannerImage from '@/assets/images/PromotionBanner/PromotionBanner.png';
 import LargeStoriesList from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import MediumStoriesList from '@/components/Lists/MediumStoriesList/MediumStoriesList';
 import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
+import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -63,7 +63,7 @@ function HomeScreen() {
           <MediumStoriesList stories={popularStories} style={styles.mediumList} />
         </LinearGradient>
 
-        <Image resizeMode='cover' source={PromotionBannerImage} style={styles.promotionBanner} />
+        <PromotionBanner style={styles.promotionBanner} />
 
         <SectionHeader title='Free tales' onSeeAllPress={noop} />
         <MediumStoriesList stories={freeStories} style={styles.mediumList} />

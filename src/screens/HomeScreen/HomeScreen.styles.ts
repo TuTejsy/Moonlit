@@ -19,10 +19,8 @@ export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
       marginTop: 16,
     },
     promotionBanner: {
-      height: PROMOTION_BANNER_HEIGHT,
       marginBottom: 40,
       marginHorizontal: HORIZONTAL_PADDING,
-      width: PROMOTION_BANNER_WIDTH,
     },
     screen: {
       backgroundColor: colors.black,

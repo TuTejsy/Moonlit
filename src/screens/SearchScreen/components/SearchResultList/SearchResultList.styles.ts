@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING, TAB_BAR_HEIGHT } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING, TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
@@ -8,6 +8,6 @@ export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
     contentContainer: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 16,
       paddingHorizontal: HORIZONTAL_PADDING,
-      paddingTop: 40,
+      paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 50,
     },
   });

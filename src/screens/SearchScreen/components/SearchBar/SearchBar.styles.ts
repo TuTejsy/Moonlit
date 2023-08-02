@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { CLOSE_BUTTON_MARGIN_LEFT, CLOSE_BUTTON_WIDTH } from './SearchBar.constants';
-
 interface Context {
   isInputFocused: boolean;
 }
@@ -14,6 +12,14 @@ export const makeStyles = (
   { isInputFocused }: Context,
 ) =>
   StyleSheet.create({
+    blurView: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      paddingBottom: 10,
+      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingTop: insets.top + 10,
+    },
     closeButton: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.2),
@@ -40,11 +46,7 @@ export const makeStyles = (
       paddingHorizontal: 4,
     },
     searchBar: {
-      alignItems: 'center',
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      marginHorizontal: HORIZONTAL_PADDING,
-      paddingBottom: 10,
+      position: 'absolute',
     },
     searchIcon: {
       marginLeft: 12,
