@@ -12,7 +12,7 @@ const makeStyles = ({ colors }: MakeStylesProps) =>
   StyleSheet.create({
     blurView: {
       alignItems: 'center',
-      backgroundColor: colors.opacityWhite(0.4),
+      backgroundColor: colors.opacityBlack(0.4),
       borderRadius: 12,
       height: 24,
       justifyContent: 'center',
@@ -27,8 +27,8 @@ export const Lock = ({ style, ...props }: SvgProps) => {
 
   return (
     <BlurView
-      blurAmount={5}
-      blurType='dark'
+      blurAmount={2}
+      blurType='light'
       reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
       style={[styles.blurView, style]}
     >

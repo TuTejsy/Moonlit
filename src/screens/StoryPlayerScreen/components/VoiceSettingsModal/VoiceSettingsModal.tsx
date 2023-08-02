@@ -94,7 +94,7 @@ function VoiceSettingsModal() {
             <Animated.View style={[styles.content, animatedContentStyle]}>
               <ScrollView style={styles.scrollView}>
                 <PressableView style={styles.addVoiceButton} onPress={handleAddVoicePress}>
-                  <TextView style={styles.addVoiceText} type='medium'>
+                  <TextView style={styles.addVoiceText} type='bold'>
                     Add your voice
                   </TextView>
                 </PressableView>

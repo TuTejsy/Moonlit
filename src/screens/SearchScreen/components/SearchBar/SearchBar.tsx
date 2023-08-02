@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { TextInput, View } from 'react-native';
 
+import { BlurView } from '@react-native-community/blur';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -14,6 +15,7 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useScrollBackgroundColor } from '@/hooks/useScrollBackgroundColor';
 
 import {
   CLOSE_BUTTON_MARGIN_LEFT,
@@ -26,13 +28,25 @@ import { makeStyles } from './SearchBar.styles';
 interface SearchBarPropTypes {
   onChangeText: (text: string) => void;
   value: string;
+  colorAnimStyle?: ReturnType<typeof useScrollBackgroundColor>['colorAnimStyle'];
   onInputBlur?: () => void;
   onInputFocus?: () => void;
 }
 
-function SearchBar({ onChangeText, onInputBlur, onInputFocus, value }: SearchBarPropTypes) {
+function SearchBar({
+  colorAnimStyle,
+  onChangeText,
+  onInputBlur,
+  onInputFocus,
+  value,
+}: SearchBarPropTypes) {
   const [isInputFocused, setIsInputFocused] = useState(false);
-  const stylesContext = useMemo(() => ({ isInputFocused }), [isInputFocused]);
+  const hasSearchText = !!value;
+
+  const stylesContext = useMemo(
+    () => ({ hasSearchText, isInputFocused }),
+    [isInputFocused, hasSearchText],
+  );
 
   const styles = useMakeStyles(makeStyles, stylesContext);
   const { colors } = useTheme();
@@ -80,34 +94,41 @@ function SearchBar({ onChangeText, onInputBlur, onInputFocus, value }: SearchBar
   }, [onChangeText]);
 
   return (
-    <View style={styles.searchBar}>
-      <Animated.View style={[styles.inputContainer, inputContainerAnimatedStyle]}>
-        <Icons.Search style={styles.searchIcon} />
-        <TextInput
-          ref={inputRef}
-          cursorColor={colors.white}
-          keyboardAppearance='dark'
-          placeholder='Look for stories'
-          placeholderTextColor={colors.opacityWhite(0.4)}
-          returnKeyType='search'
-          selectionColor={colors.white}
-          style={styles.textInput}
-          value={value}
-          onBlur={handleInputBlur}
-          onChangeText={onChangeText}
-          onFocus={handleInputFocus}
-        />
+    <Animated.View style={[styles.searchBar, colorAnimStyle]}>
+      <BlurView
+        blurAmount={10}
+        blurType='dark'
+        reducedTransparencyFallbackColor={colors.opacityOrange(0.3)}
+        style={styles.blurView}
+      >
+        <Animated.View style={[styles.inputContainer, inputContainerAnimatedStyle]}>
+          <Icons.Search style={styles.searchIcon} />
+          <TextInput
+            ref={inputRef}
+            cursorColor={colors.white}
+            keyboardAppearance='dark'
+            placeholder='Look for stories'
+            placeholderTextColor={colors.opacityWhite(0.4)}
+            returnKeyType='search'
+            selectionColor={colors.white}
+            style={styles.textInput}
+            value={value}
+            onBlur={handleInputBlur}
+            onChangeText={onChangeText}
+            onFocus={handleInputFocus}
+          />
 
-        {!!value && <Icons.RoundClose style={styles.closeIcon} onPress={handleRemovePress} />}
-      </Animated.View>
-      <Animated.View style={closeButtonAnimatedStyle}>
-        <PressableView style={styles.closeButton} onPress={handleCloseButtonPress}>
-          <TextView style={styles.closeButtonText} type='bold'>
-            Close
-          </TextView>
-        </PressableView>
-      </Animated.View>
-    </View>
+          {!!value && <Icons.RoundClose style={styles.closeIcon} onPress={handleRemovePress} />}
+        </Animated.View>
+        <Animated.View style={closeButtonAnimatedStyle}>
+          <PressableView style={styles.closeButton} onPress={handleCloseButtonPress}>
+            <TextView style={styles.closeButtonText} type='bold'>
+              Close
+            </TextView>
+          </PressableView>
+        </Animated.View>
+      </BlurView>
+    </Animated.View>
   );
 }
 

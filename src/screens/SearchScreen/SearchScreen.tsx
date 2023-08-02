@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useScrollBackgroundColor } from '@/hooks/useScrollBackgroundColor';
 
 import DefaultSearchList from './components/DefaultSearchList/DefaultSearchList';
 import PopularSearch from './components/PopularSearch/PopularSearch';
@@ -18,6 +19,11 @@ function SearchScreen() {
 
   const [searchText, setSearchText] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const { colorAnimStyle, handleBackgroundColorScroll } = useScrollBackgroundColor(
+    0,
+    searchText ? 0 : 0.43,
+  );
 
   const searchDecriptor = useMemo(() => {
     const trimmedSeacrhText = searchText.trim();
@@ -58,30 +64,33 @@ function SearchScreen() {
     <LinearGradient
       angle={180}
       colors={[colors.opacityOrange(orangeOpacity), colors.opacityOrange(0)]}
-      locations={[0, 1]}
+      locations={[0.3, 1]}
       style={styles.screen}
     >
-      <SearchBar
-        value={searchText}
-        onChangeText={handleSearchTextChange}
-        onInputBlur={handleInputBlur}
-        onInputFocus={handleInputFocus}
-      />
-
       {searchText ? (
-        <SearchResultList stories={allStories} />
+        <SearchResultList stories={allStories} onScroll={handleBackgroundColorScroll} />
       ) : isInputFocused ? (
         <PopularSearch
           popularSearchItems={popularSearchItems}
           onPopularSearchItemSelected={handlePopularSearchItemSelected}
+          onScroll={handleBackgroundColorScroll}
         />
       ) : (
         <DefaultSearchList
           allStories={allStories}
           freeStories={freeStories}
           popularStories={popularStories}
+          onScroll={handleBackgroundColorScroll}
         />
       )}
+
+      <SearchBar
+        colorAnimStyle={colorAnimStyle}
+        value={searchText}
+        onChangeText={handleSearchTextChange}
+        onInputBlur={handleInputBlur}
+        onInputFocus={handleInputFocus}
+      />
     </LinearGradient>
   );
 }

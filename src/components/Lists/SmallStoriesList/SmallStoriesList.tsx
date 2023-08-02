@@ -1,5 +1,12 @@
-import React, { useCallback, useMemo } from 'react';
-import { FlatList, FlatListProps, ListRenderItemInfo, ViewStyle } from 'react-native';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import {
+  FlatList,
+  FlatListProps,
+  ListRenderItemInfo,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ViewStyle,
+} from 'react-native';
 
 import { Results } from 'realm';
 
@@ -18,6 +25,7 @@ interface SmallStoriesListPropTypes {
   extraData?: number;
   indicatorStyle?: FlatListProps<StorySchema>['indicatorStyle'];
   isScrollable?: boolean;
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   showsHorizontalScrollIndicator?: boolean;
   style?: ViewStyle;
 }
@@ -29,6 +37,7 @@ function SmallStoriesList({
   extraData,
   indicatorStyle,
   isScrollable = true,
+  onScroll,
   showsHorizontalScrollIndicator = false,
   stories,
   style,
@@ -56,6 +65,19 @@ function SmallStoriesList({
 
   const keyExtractor = useCallback((item: StorySchema) => `${item.id}`, []);
 
+  const handleScrollToTop = useCallback(() => {
+    onScroll?.({
+      nativeEvent: {
+        contentOffset: { x: 0, y: 0 },
+      },
+    } as NativeSyntheticEvent<NativeScrollEvent>);
+  }, [onScroll]);
+
+  useEffect(() => {
+    handleScrollToTop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <FlatList
       ListHeaderComponent={ListHeaderComponent}
@@ -69,6 +91,8 @@ function SmallStoriesList({
       scrollEnabled={isScrollable}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       style={style}
+      onScroll={onScroll}
+      onScrollToTop={handleScrollToTop}
     />
   );
 }
