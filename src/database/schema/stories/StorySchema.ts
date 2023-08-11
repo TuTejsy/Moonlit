@@ -20,6 +20,7 @@ export const StorySchema: ObjectSchema = {
     played_count: 'int',
     revision: 'int',
     saved_at_timestamp: 'int?',
+    // small_preview_cover_cached_name: 'string',
     small_preview_cover_url: 'string',
     type: 'int',
     updated_at_timestamp: 'int',

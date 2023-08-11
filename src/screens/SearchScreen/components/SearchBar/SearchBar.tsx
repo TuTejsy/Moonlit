@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { TextInput, View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -12,10 +12,11 @@ import Animated, {
 
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
+import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useScrollBackgroundColor } from '@/hooks/useScrollBackgroundColor';
+import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
 import {
   CLOSE_BUTTON_MARGIN_LEFT,
@@ -28,16 +29,16 @@ import { makeStyles } from './SearchBar.styles';
 interface SearchBarPropTypes {
   onChangeText: (text: string) => void;
   value: string;
-  colorAnimStyle?: ReturnType<typeof useScrollBackgroundColor>['colorAnimStyle'];
   onInputBlur?: () => void;
   onInputFocus?: () => void;
+  opacityAnimStyle?: ReturnType<typeof useScrollOpacity>['opacityAnimStyle'];
 }
 
 function SearchBar({
-  colorAnimStyle,
   onChangeText,
   onInputBlur,
   onInputFocus,
+  opacityAnimStyle,
   value,
 }: SearchBarPropTypes) {
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -94,13 +95,10 @@ function SearchBar({
   }, [onChangeText]);
 
   return (
-    <Animated.View style={[styles.searchBar, colorAnimStyle]}>
-      <BlurView
-        blurAmount={10}
-        blurType='dark'
-        reducedTransparencyFallbackColor={colors.opacityOrange(0.3)}
-        style={styles.blurView}
-      >
+    <View style={styles.searchBar}>
+      <View style={styles.contentContainer}>
+        <ScrollShadow opacityAnimStyle={opacityAnimStyle} />
+
         <Animated.View style={[styles.inputContainer, inputContainerAnimatedStyle]}>
           <Icons.Search style={styles.searchIcon} />
           <TextInput
@@ -127,8 +125,8 @@ function SearchBar({
             </TextView>
           </PressableView>
         </Animated.View>
-      </BlurView>
-    </Animated.View>
+      </View>
+    </View>
   );
 }
 

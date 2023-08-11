@@ -27,7 +27,7 @@ function useStoryCoverAnimation(
       backgroundColor: interpolateColor(
         storyPlayingSharedValue.value,
         [0, 1],
-        [colors.dark_grey, colors.black],
+        [colors.darkGrey, colors.black],
         'RGB',
       ),
       height: interpolate(

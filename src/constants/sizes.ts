@@ -6,7 +6,7 @@ export const PURE_TAB_HEIGHT = 52;
 
 export const DEFAULT_HEADER_HEIGHT = 52;
 
-export const TAB_BAR_HEIGHT = 64;
+export const TAB_BAR_HEIGHT = 112;
 
 export const FILTERS_SCREEN_BUTTONS_AREA = 66;
 

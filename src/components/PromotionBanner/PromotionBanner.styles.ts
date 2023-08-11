@@ -22,7 +22,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       color: colors.black,
     },
     container: {
-      backgroundColor: colors.orange,
+      backgroundColor: colors.lightPurple,
       borderRadius: 16,
       height: PROMOTION_BANNER_HEIGHT,
       overflow: 'hidden',

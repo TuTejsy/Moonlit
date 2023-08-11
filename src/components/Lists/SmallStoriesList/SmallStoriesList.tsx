@@ -27,6 +27,7 @@ interface SmallStoriesListPropTypes {
   isScrollable?: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   showsHorizontalScrollIndicator?: boolean;
+  showsVerticalScrollIndicator?: boolean;
   style?: ViewStyle;
 }
 
@@ -39,6 +40,7 @@ function SmallStoriesList({
   isScrollable = true,
   onScroll,
   showsHorizontalScrollIndicator = false,
+  showsVerticalScrollIndicator = true,
   stories,
   style,
 }: SmallStoriesListPropTypes) {
@@ -90,6 +92,7 @@ function SmallStoriesList({
       renderItem={renderItem}
       scrollEnabled={isScrollable}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
+      showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       style={style}
       onScroll={onScroll}
       onScrollToTop={handleScrollToTop}

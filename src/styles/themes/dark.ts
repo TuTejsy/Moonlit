@@ -4,12 +4,17 @@ import { commonColors } from './common';
 
 const darkColors = {
   dark: '#2D2D2D',
-  dark_grey: '#1A1A1A',
+  darkGrey: '#1A1A1A',
+  darkPurple: '#080211',
   green: '#247F8A',
+  lightPurple: '#1F0647',
+  opacityDarkPurple: (float: number) => `rgba(8, 12, 17, ${float})`,
   opacityGreen: (float: number) => `rgba(36, 127, 138, ${float})`,
+  opacityLightPurple: (float: number) => `rgba(31, 6, 71, ${float})`,
   opacityOrange: (float: number) => `rgba(236, 119, 72, ${float})`,
-
+  opacityPurple: (float: number) => `rgba(23, 6, 52, ${float})`,
   orange: '#EC7748',
+  purple: '#170634',
 };
 
 export const darkTheme = {

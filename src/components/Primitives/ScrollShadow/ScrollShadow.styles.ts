@@ -1,16 +1,22 @@
 import { StyleSheet } from 'react-native';
 
-import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
+
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, zIndex }: MakeStylesProps) =>
+export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
   StyleSheet.create({
-    view: {
-      backgroundColor: colors.white,
-      height: DEFAULT_HEADER_HEIGHT,
+    gradient: {
+      height: insets.top + 68,
+      width: SCREEN_WIDTH,
+    },
+    gradientContainer: {
+      left: 0,
       position: 'absolute',
-      top: -DEFAULT_HEADER_HEIGHT,
-      width: '100%',
-      zIndex: zIndex.shadow,
+      shadowColor: colors.black,
+      shadowOffset: { height: 0, width: -4 },
+      shadowOpacity: 0.25,
+      shadowRadius: 100,
+      top: 0,
     },
   });
