@@ -41,7 +41,6 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   useEffect(() => {
     if (imageWidth > PROMOTION_BANNER_WIDTH && imageTranslateXSharedValue.value === 0) {
       const widthDiff = imageWidth - PROMOTION_BANNER_WIDTH;
-      console.log('widthDiff: ', widthDiff);
 
       imageTranslateXSharedValue.value = withRepeat(
         withTiming(-(imageWidth - PROMOTION_BANNER_WIDTH), {
@@ -64,7 +63,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
       <LinearGradient
         angle={180}
-        colors={[colors.opacityOrange(0), colors.opacityOrange(1)]}
+        colors={[colors.opacityLightPurple(0), colors.opacityLightPurple(1)]}
         locations={[0.3, 0.85]}
         style={styles.content}
       >

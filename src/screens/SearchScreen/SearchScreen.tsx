@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useScrollBackgroundColor } from '@/hooks/useScrollBackgroundColor';
+import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
 import DefaultSearchList from './components/DefaultSearchList/DefaultSearchList';
 import PopularSearch from './components/PopularSearch/PopularSearch';
@@ -20,10 +20,7 @@ function SearchScreen() {
   const [searchText, setSearchText] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
 
-  const { colorAnimStyle, handleBackgroundColorScroll } = useScrollBackgroundColor(
-    0,
-    searchText ? 0 : 0.43,
-  );
+  const { handleOpacityScroll, opacityAnimStyle } = useScrollOpacity();
 
   const searchDecriptor = useMemo(() => {
     const trimmedSeacrhText = searchText.trim();
@@ -41,8 +38,6 @@ function SearchScreen() {
   });
   const [freeStories, freeStoriesVersion] = useStories('is_free = true');
   const popularSearchItems = popularStories.slice(0, 5).map((story) => story.name);
-
-  const orangeOpacity = searchText ? 0.15 : 0.3;
 
   const handleSearchTextChange = useCallback((text: string) => {
     setSearchText(text);
@@ -63,29 +58,29 @@ function SearchScreen() {
   return (
     <LinearGradient
       angle={180}
-      colors={[colors.opacityOrange(orangeOpacity), colors.opacityOrange(0)]}
+      colors={[colors.purple, colors.darkPurple]}
       locations={[0.3, 1]}
       style={styles.screen}
     >
       {searchText ? (
-        <SearchResultList stories={allStories} onScroll={handleBackgroundColorScroll} />
+        <SearchResultList stories={allStories} onScroll={handleOpacityScroll} />
       ) : isInputFocused ? (
         <PopularSearch
           popularSearchItems={popularSearchItems}
           onPopularSearchItemSelected={handlePopularSearchItemSelected}
-          onScroll={handleBackgroundColorScroll}
+          onScroll={handleOpacityScroll}
         />
       ) : (
         <DefaultSearchList
           allStories={allStories}
           freeStories={freeStories}
           popularStories={popularStories}
-          onScroll={handleBackgroundColorScroll}
+          onScroll={handleOpacityScroll}
         />
       )}
 
       <SearchBar
-        colorAnimStyle={colorAnimStyle}
+        opacityAnimStyle={opacityAnimStyle}
         value={searchText}
         onChangeText={handleSearchTextChange}
         onInputBlur={handleInputBlur}

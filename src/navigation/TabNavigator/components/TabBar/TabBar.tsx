@@ -1,7 +1,7 @@
 import { TouchableWithoutFeedback, View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
@@ -23,59 +23,73 @@ export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) =>
   const { colors } = useTheme();
 
   return (
-    <View style={styles.tabBarWrapper}>
-      <BlurView
-        blurAmount={10}
-        blurType='dark'
-        reducedTransparencyFallbackColor={colors.opacityWhite(0.1)}
-        style={styles.tabBar}
+    <View style={styles.tabBarShadow}>
+      <LinearGradient
+        angle={180}
+        colors={[colors.opacityDarkPurple(0), colors.opacityDarkPurple(1)]}
+        locations={[0, 1]}
       >
-        {state.routes.map((route, index) => {
-          const { options } = descriptors[route.key];
+        <LinearGradient
+          angle={180}
+          colors={[colors.opacityDarkPurple(0), colors.opacityDarkPurple(1)]}
+          locations={[0, 1]}
+        >
+          <LinearGradient
+            angle={180}
+            colors={[colors.opacityDarkPurple(0), colors.opacityDarkPurple(1)]}
+            locations={[0, 1]}
+            style={styles.tabBarWrapper}
+          >
+            <View style={styles.tabBar}>
+              {state.routes.map((route, index) => {
+                const { options } = descriptors[route.key];
 
-          const isFocused = state.index === index;
+                const isFocused = state.index === index;
 
-          if (isFocused && navigationService.activeTab !== route.name) {
-            navigationService.onChangeActiveTab(route.name as TabRoutes);
-          }
+                if (isFocused && navigationService.activeTab !== route.name) {
+                  navigationService.onChangeActiveTab(route.name as TabRoutes);
+                }
 
-          const onPress = () => {
-            const event = navigation.emit({
-              canPreventDefault: true,
-              target: route.key,
-              type: 'tabPress',
-            });
+                const onPress = () => {
+                  const event = navigation.emit({
+                    canPreventDefault: true,
+                    target: route.key,
+                    type: 'tabPress',
+                  });
 
-            if (!isFocused && !event.defaultPrevented) {
-              // The `merge: true` option makes sure that the params inside the tab screen are preserved
-              navigation.navigate({ merge: true, name: route.name, params: undefined });
-            }
-          };
+                  if (!isFocused && !event.defaultPrevented) {
+                    // The `merge: true` option makes sure that the params inside the tab screen are preserved
+                    navigation.navigate({ merge: true, name: route.name, params: undefined });
+                  }
+                };
 
-          const [Icon, title] = MAP_ICON_AND_TITLE_BY_ROUTE[route.name as TabRoutes];
+                const [Icon, title] = MAP_ICON_AND_TITLE_BY_ROUTE[route.name as TabRoutes];
 
-          return (
-            <TouchableWithoutFeedback
-              key={route.name}
-              accessibilityHint={`Open ${route.name} screen`}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              accessibilityRole='button'
-              accessibilityState={isFocused ? { selected: true } : {}}
-              onPress={onPress}
-            >
-              <View style={styles.tabContainer}>
-                <Icon
-                  color={isFocused ? colors.white : colors.opacityWhite(0.5)}
-                  fill={isFocused ? colors.white : 'none'}
-                />
-                <TextView style={isFocused ? styles.activeTabTitle : styles.inactiveTabTitle}>
-                  {title}
-                </TextView>
-              </View>
-            </TouchableWithoutFeedback>
-          );
-        })}
-      </BlurView>
+                return (
+                  <TouchableWithoutFeedback
+                    key={route.name}
+                    accessibilityHint={`Open ${route.name} screen`}
+                    accessibilityLabel={options.tabBarAccessibilityLabel}
+                    accessibilityRole='button'
+                    accessibilityState={isFocused ? { selected: true } : {}}
+                    onPress={onPress}
+                  >
+                    <View style={styles.tabContainer}>
+                      <Icon
+                        color={isFocused ? colors.white : colors.opacityWhite(0.5)}
+                        fill={isFocused ? colors.white : 'none'}
+                      />
+                      <TextView style={isFocused ? styles.activeTabTitle : styles.inactiveTabTitle}>
+                        {title}
+                      </TextView>
+                    </View>
+                  </TouchableWithoutFeedback>
+                );
+              })}
+            </View>
+          </LinearGradient>
+        </LinearGradient>
+      </LinearGradient>
     </View>
   );
 };

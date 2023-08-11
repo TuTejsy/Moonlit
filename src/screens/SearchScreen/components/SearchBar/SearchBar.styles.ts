@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { SCREEN_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
@@ -12,14 +13,6 @@ export const makeStyles = (
   { isInputFocused }: Context,
 ) =>
   StyleSheet.create({
-    blurView: {
-      alignItems: 'center',
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-      paddingBottom: 10,
-      paddingHorizontal: HORIZONTAL_PADDING,
-      paddingTop: insets.top + 10,
-    },
     closeButton: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.2),
@@ -33,6 +26,17 @@ export const makeStyles = (
     },
     closeIcon: {
       marginHorizontal: 8,
+    },
+    contentContainer: {
+      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      paddingBottom: 10,
+      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingTop: insets.top + 10,
+      position: 'relative',
+      width: SCREEN_WIDTH,
     },
     inputContainer: {
       alignItems: 'center',

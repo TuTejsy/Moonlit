@@ -14,7 +14,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       paddingHorizontal: HORIZONTAL_PADDING,
     },
     seeAllText: {
-      ...fonts.size_12,
+      ...fonts.size_14,
       color: colors.opacityWhite(0.5),
     },
     titleText: {

@@ -17,6 +17,7 @@ export interface Story {
   description: string;
   full_cover_url: string;
   id: number;
+  is_favorite: boolean;
   is_free: boolean;
   name: string;
   played_count: number;

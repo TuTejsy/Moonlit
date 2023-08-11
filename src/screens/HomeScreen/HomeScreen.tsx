@@ -33,7 +33,7 @@ function HomeScreen() {
   return (
     <LinearGradient
       angle={180}
-      colors={[colors.orange, colors.opacityOrange(0)]}
+      colors={[colors.purple, colors.darkPurple]}
       locations={[0.5, 0.5]}
       style={styles.screen}
     >
@@ -50,7 +50,7 @@ function HomeScreen() {
       >
         <LinearGradient
           angle={180}
-          colors={[colors.orange, colors.opacityOrange(0)]}
+          colors={[colors.purple, colors.darkPurple]}
           locations={[0.2, 0.8]}
           style={styles.gradient}
         >

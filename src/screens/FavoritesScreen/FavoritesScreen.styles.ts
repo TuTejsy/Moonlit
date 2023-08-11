@@ -8,10 +8,6 @@ import { TAB_WIDTH } from './FavoritesScreen.constants';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
-    blurView: {
-      paddingHorizontal: HORIZONTAL_PADDING,
-      paddingTop: insets.top + 10,
-    },
     blurViewContainer: {
       left: 0,
       position: 'absolute',
@@ -21,12 +17,17 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       backgroundColor: colors.black,
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
     },
+    contentContainer: {
+      paddingHorizontal: HORIZONTAL_PADDING + 4,
+      paddingTop: insets.top + 10,
+      position: 'relative',
+    },
     listContainer: {
       width: SCREEN_WIDTH,
     },
     listContent: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
-      paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 38,
+      paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 100,
     },
     listTitleText: {
       ...fonts.size_24,
@@ -41,19 +42,19 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     tabContainer: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.1),
-      borderRadius: 100,
+      borderRadius: 16,
       flexDirection: 'row',
-      height: 55,
+      height: 48,
       justifyContent: 'center',
       marginBottom: 10,
-      marginLeft: HORIZONTAL_PADDING,
+      marginLeft: 4,
       position: 'relative',
       width: TAB_WIDTH * 2,
     },
     tabIndicator: {
       backgroundColor: colors.orange,
-      borderRadius: 100,
-      height: 47,
+      borderRadius: 12,
+      height: 40,
       position: 'absolute',
       width: TAB_WIDTH,
     },
@@ -63,5 +64,8 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       paddingVertical: 10,
       textAlign: 'center',
       width: TAB_WIDTH,
+    },
+    tabsGradient: {
+      height: insets.top + DEFAULT_HEADER_HEIGHT + 38,
     },
   });

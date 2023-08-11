@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   Extrapolate,
@@ -12,12 +11,13 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
+import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SCREEN_WIDTH } from '@/constants/layout';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useScrollBackgroundColor } from '@/hooks/useScrollBackgroundColor';
+import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
 import { TAB_WIDTH } from './FavoritesScreen.constants';
 import { makeStyles } from './FavoritesScreen.styles';
@@ -32,7 +32,7 @@ function FavoritesScreen() {
   const [isFirstTabScrolled, setIsFirstTabScrolled] = useState(false);
   const [isSecondTabScrolled, setIsSecondTabScrolled] = useState(false);
 
-  const { colorAnimStyle, handleBackgroundColorScroll } = useScrollBackgroundColor(0, 0.43);
+  const { handleOpacityScroll, opacityAnimStyle } = useScrollOpacity();
 
   const [savedStories, savedStoriesVersion] = useStories('is_favorite = true', {
     reverse: true,
@@ -77,13 +77,13 @@ function FavoritesScreen() {
     (isTabScrolled: boolean) => {
       const offset = isTabScrolled ? 10 : 0;
 
-      handleBackgroundColorScroll({
+      handleOpacityScroll({
         nativeEvent: {
           contentOffset: { x: 0, y: offset },
         },
       } as NativeSyntheticEvent<NativeScrollEvent>);
     },
-    [handleBackgroundColorScroll],
+    [handleOpacityScroll],
   );
 
   const handleSavedTabPress = useCallback(() => {
@@ -142,7 +142,7 @@ function FavoritesScreen() {
   return (
     <LinearGradient
       angle={180}
-      colors={[colors.opacityOrange(0.3), colors.opacityOrange(0)]}
+      colors={[colors.purple, colors.darkPurple]}
       locations={[0.3, 1]}
       style={styles.screen}
     >
@@ -157,6 +157,7 @@ function FavoritesScreen() {
             showsHorizontalScrollIndicator
             contentContainerStyle={styles.listContent}
             indicatorStyle='white'
+            showsVerticalScrollIndicator={false}
             stories={savedStories}
             ListHeaderComponent={
               <TextView style={styles.listTitleText} type='bold'>
@@ -171,7 +172,7 @@ function FavoritesScreen() {
           <SmallStoriesList
             showsHorizontalScrollIndicator
             contentContainerStyle={styles.listContent}
-            indicatorStyle='white'
+            showsVerticalScrollIndicator={false}
             stories={recentlyPlayedStories}
             ListHeaderComponent={
               <TextView style={styles.listTitleText} type='bold'>
@@ -183,13 +184,10 @@ function FavoritesScreen() {
         </View>
       </Animated.ScrollView>
 
-      <Animated.View style={[styles.blurViewContainer, colorAnimStyle]}>
-        <BlurView
-          blurAmount={10}
-          blurType='dark'
-          reducedTransparencyFallbackColor={colors.opacityOrange(0.3)}
-          style={styles.blurView}
-        >
+      <View style={styles.blurViewContainer}>
+        <View style={styles.contentContainer}>
+          <ScrollShadow gradientStyle={styles.gradient} opacityAnimStyle={opacityAnimStyle} />
+
           <Animated.View style={styles.tabContainer}>
             <Animated.View style={[styles.tabIndicator, animatedTabIndicatorStyle]} />
 
@@ -204,8 +202,8 @@ function FavoritesScreen() {
               </TextView>
             </Animated.View>
           </Animated.View>
-        </BlurView>
-      </Animated.View>
+        </View>
+      </View>
     </LinearGradient>
   );
 }
