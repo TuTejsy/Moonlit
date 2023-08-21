@@ -8,7 +8,7 @@ const storiesConfig: ZRKRealmConfiguration = {
   deleteRealmIfMigrationNeeded: true,
 
   schema: [StorySchema],
-  schemaVersion: 1,
+  schemaVersion: 2,
 };
 
 export default storiesConfig;

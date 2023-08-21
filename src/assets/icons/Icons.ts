@@ -5,6 +5,7 @@ import { Favorite } from './common/Favorite';
 import { Lock } from './common/Lock';
 import { Search } from './common/Search';
 import { Share } from './common/Share';
+import { Unlock } from './common/Unlock';
 import { Waveframe } from './common/Waveframe';
 import { ArrowBack } from './navigation/ArrowBack';
 import { Close } from './navigation/Close';
@@ -37,5 +38,6 @@ export const Icons = {
   Search,
   SearchTab,
   Share,
+  Unlock,
   Waveframe,
 };

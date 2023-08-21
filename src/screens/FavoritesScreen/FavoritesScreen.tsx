@@ -186,7 +186,7 @@ function FavoritesScreen() {
 
       <View style={styles.blurViewContainer}>
         <View style={styles.contentContainer}>
-          <ScrollShadow gradientStyle={styles.gradient} opacityAnimStyle={opacityAnimStyle} />
+          <ScrollShadow gradientStyle={styles.tabsGradient} opacityAnimStyle={opacityAnimStyle} />
 
           <Animated.View style={styles.tabContainer}>
             <Animated.View style={[styles.tabIndicator, animatedTabIndicatorStyle]} />

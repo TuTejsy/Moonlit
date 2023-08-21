@@ -9,12 +9,14 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { Icons } from '@/assets/icons/Icons';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
 import { TextView } from '../Primitives/TextView/TextView';
 
 import bannerImage from './images/banner/banner.png';
+import voicesImage from './images/voices/voices.png';
 import { PROMOTION_BANNER_WIDTH } from './PromotionBanner.constants';
 import { makeStyles } from './PromotionBanner.styles';
 
@@ -60,24 +62,30 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
         style={[styles.image, imageAnimatedStyle]}
         onLayout={handleImageLayout}
       />
-
       <LinearGradient
         angle={180}
         colors={[colors.opacityLightPurple(0), colors.opacityLightPurple(1)]}
-        locations={[0.3, 0.85]}
-        style={styles.content}
-      >
+        locations={[0, 1]}
+        style={styles.imageGradient}
+      />
+
+      <View style={styles.content}>
         <TextView style={styles.title} type='bold'>
-          Your Special{'\n'}Welcome Offer
+          Try 3 days{'\n'}for free
         </TextView>
-        <TextView style={styles.subtitle}>Get 40% Off - Today only</TextView>
+        <TextView style={styles.subtitle}>
+          and discover a library{'\n'}of stories and unique voiceovers
+        </TextView>
+
+        <Image source={voicesImage} style={styles.voicesImage} />
 
         <View style={styles.button}>
           <TextView style={styles.buttonText} type='bold'>
-            Unlock FairyVoice+
+            Get 3 days free
           </TextView>
+          <Icons.Unlock style={styles.unlockIcon} />
         </View>
-      </LinearGradient>
+      </View>
     </View>
   );
 }

@@ -46,6 +46,7 @@
       "plugins": ["prettier"],
       "rules": {
         "no-plusplus": "off",
+        "no-await-in-loop": "off",
         "no-nested-ternary": "off",
        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-empty-interface": "off",
