@@ -31,7 +31,7 @@ function SearchResultList({ onScroll, stories }: SearchResultListPropTypes) {
       <StoryPreview
         description={item.description}
         isFree={item.is_free}
-        previewURL={formatServerFileURLToAbsolutePath(item.small_preview_cover_url)}
+        previewURL={formatServerFileURLToAbsolutePath(item.small_cover_url)}
         storyId={item.id}
         title={item.name}
       />

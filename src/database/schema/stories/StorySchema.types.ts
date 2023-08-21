@@ -7,12 +7,14 @@ export interface StorySchema {
   id: number;
   is_favorite: boolean;
   is_free: boolean;
+  medium_cover_url: string;
   name: string;
   played_count: number;
   revision: number;
-  small_preview_cover_url: string;
+  small_cover_url: string;
   type: number;
   updated_at_timestamp: number;
   played_at_timestamp?: number;
   saved_at_timestamp?: number;
+  small_preview_cover_cached_name?: string;
 }

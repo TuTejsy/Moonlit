@@ -18,6 +18,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
 
         return {
           ...story,
+          category_ids: story.category_ids.split(', ').map((value) => Number(value)),
           created_at_timestamp: createdDate.getTime(),
           updated_at_timestamp: updatedDate.getTime(),
         };

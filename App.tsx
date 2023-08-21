@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 
+import { AppLogicProvider } from '@/components/Providers/AppLogicProvider/AppLogicProvider';
 import { StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
@@ -21,8 +22,8 @@ if (!__DEV__) {
   console.error = () => undefined;
 }
 
-StoriesDB.open();
-// StoriesDB.open().then(() => StoriesDB.dropDatabase());
+// StoriesDB.open();
+StoriesDB.open().then(() => StoriesDB.dropDatabase());
 
 function App(): JSX.Element {
   const theme = useInitTheme();
@@ -39,7 +40,9 @@ function App(): JSX.Element {
               onStateChange={navigationService.onStateChange}
             >
               <BottomSheetModalProvider>
-                <RootNavigator />
+                <AppLogicProvider>
+                  <RootNavigator />
+                </AppLogicProvider>
               </BottomSheetModalProvider>
             </NavigationContainer>
           </GestureHandlerRootView>

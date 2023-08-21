@@ -3,7 +3,6 @@ import { FlatList, ListRenderItemInfo, ViewStyle } from 'react-native';
 
 import { Results } from 'realm';
 
-import { SUPABASE_URL } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/StorySchema.types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
@@ -24,7 +23,7 @@ function MediumStoriesList({ stories, style }: MediumStoriesListPropTypes) {
       <StoryPreview
         description={item.description}
         isFree={item.is_free}
-        previewURL={formatServerFileURLToAbsolutePath(item.small_preview_cover_url)}
+        previewURL={formatServerFileURLToAbsolutePath(item.medium_cover_url)}
         storyId={item.id}
         title={item.name}
       />

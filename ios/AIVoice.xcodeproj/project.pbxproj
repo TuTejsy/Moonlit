@@ -17,6 +17,8 @@
 		3DA6C76D80A248CA81D4C170 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E02D01CA4B1487E8FA88458 /* Poppins-Medium.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-AIVoice-AIVoiceTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-AIVoice-AIVoiceTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		883424AA2A93C26700AED6E9 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883424A92A93C26700AED6E9 /* GradientView.swift */; };
+		883424AC2A93C37B00AED6E9 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 883424AB2A93C37B00AED6E9 /* Colors.xcassets */; };
 		88E122BA29E1BC8A00C30444 /* ZRKAudioRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */; };
 		88E122BB29E1BC8A00C30444 /* ZRKAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */; };
 		88E122BC29E1BC8A00C30444 /* ZRKAudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */; };
@@ -60,6 +62,8 @@
 		5B7EB9410499542E8C5724F5 /* Pods-AIVoice-AIVoiceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIVoice-AIVoiceTests.debug.xcconfig"; path = "Target Support Files/Pods-AIVoice-AIVoiceTests/Pods-AIVoice-AIVoiceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-AIVoice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AIVoice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AIVoice/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		883424A92A93C26700AED6E9 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		883424AB2A93C37B00AED6E9 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZRKAudioRecorderManager.m; sourceTree = "<group>"; };
 		88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioRecorder.swift; sourceTree = "<group>"; };
 		88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioRecorderManager.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 		13B07FAE1A68108700A75B9A /* AIVoice */ = {
 			isa = PBXGroup;
 			children = (
+				883424A72A93C23400AED6E9 /* Views */,
 				88E122D329E1C47D00C30444 /* Helpers */,
 				88E122CE29E1C3E300C30444 /* Extensions */,
 				88E122C029E1BDCD00C30444 /* ZRKKeepAwake */,
@@ -136,6 +141,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				88E122C729E1C07E00C30444 /* AIVoice-Bridging-Header.h */,
+				883424AB2A93C37B00AED6E9 /* Colors.xcassets */,
 			);
 			name = AIVoice;
 			sourceTree = "<group>";
@@ -182,6 +188,22 @@
 				00E356EE1AD99517003FC87E /* AIVoiceTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		883424A72A93C23400AED6E9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				883424A82A93C24200AED6E9 /* GradientView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		883424A82A93C24200AED6E9 /* GradientView */ = {
+			isa = PBXGroup;
+			children = (
+				883424A92A93C26700AED6E9 /* GradientView.swift */,
+			);
+			path = GradientView;
 			sourceTree = "<group>";
 		};
 		88E122B229E1BC8A00C30444 /* ZRKAudioRecorder */ = {
@@ -363,6 +385,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				2B81BAADBBD04FFE8FCE5F04 /* Poppins-Regular.ttf in Resources */,
+				883424AC2A93C37B00AED6E9 /* Colors.xcassets in Resources */,
 				10305B375D664034A5405623 /* Poppins-SemiBold.ttf in Resources */,
 				3DA6C76D80A248CA81D4C170 /* Poppins-Medium.ttf in Resources */,
 			);
@@ -538,6 +561,7 @@
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				88E122BD29E1BC8A00C30444 /* ZRKAudioPlayerManager.m in Sources */,
 				88E122CD29E1C1CB00C30444 /* ZRKNative.m in Sources */,
+				883424AA2A93C26700AED6E9 /* GradientView.swift in Sources */,
 				88E122DA29E1C61500C30444 /* Extensions+optional.swift in Sources */,
 				88E122D829E1C59000C30444 /* NSString+Helper.m in Sources */,
 				88E122BC29E1BC8A00C30444 /* ZRKAudioRecorderManager.swift in Sources */,
