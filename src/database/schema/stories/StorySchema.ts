@@ -6,6 +6,7 @@ export const StorySchema: ObjectSchema = {
   properties: {
     author: 'string',
     category_ids: 'int[]',
+    colors: 'ColorSchema?',
     created_at_timestamp: 'int',
     description: 'string',
     full_cover_url: 'string',

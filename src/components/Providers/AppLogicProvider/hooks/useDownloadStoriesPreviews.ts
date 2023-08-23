@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 
 import RNFS from 'react-native-fs';
 import { CollectionChangeCallback, Results } from 'realm';
+import { getColorFromURL } from 'rn-dominant-color';
 
 import { SANDBOX } from '@/constants/common';
 import { StoriesDB } from '@/database';
-import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { ColorSchema, StorySchema } from '@/database/schema/stories/types';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { generateStoryCoverCachedName } from '@/utils/generators/generateStoryCoverCachedName';
 
@@ -74,10 +75,31 @@ async function downloadPreviews(stories: Results<StorySchema>, sliceFrom: number
   }
 
   const results = await Promise.all(promises);
+  const colors: Array<ColorSchema | null> = [];
+
+  for (let i = 0; i < filesCachedNames.length; i++) {
+    try {
+      const cachedName = filesCachedNames[i];
+      const colorURL = `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${cachedName}`;
+
+      const storyColors = await getColorFromURL(colorURL);
+      colors.push(storyColors);
+    } catch (err) {
+      if (!colors[i]) {
+        colors[i] = null;
+      }
+    }
+  }
+
   StoriesDB.modify(() => {
     filesCachedNames.forEach((cachedName, index) => {
       if (results[index].statusCode === 200 && cachedName) {
-        stories[sliceFrom + index].small_preview_cover_cached_name = cachedName;
+        const story = stories[sliceFrom + index];
+
+        if (story) {
+          story.small_preview_cover_cached_name = cachedName;
+          story.colors = colors[index];
+        }
       }
     });
   });

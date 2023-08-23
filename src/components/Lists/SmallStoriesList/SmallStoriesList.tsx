@@ -11,7 +11,7 @@ import {
 import { Results } from 'realm';
 
 import { SANDBOX } from '@/constants/common';
-import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import StoryPreview from './components/StoryPreview/StoryPreview';
