@@ -29,7 +29,6 @@
     "react-native-config": "^1.5.0",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.9.0",
-    "react-native-image-colors": "^2.3.0",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-mmkv": "^2.8.0",
     "react-native-reanimated": "2.12.0",
@@ -38,6 +37,7 @@
     "react-native-svg": "^13.9.0",
     "react-navigation": "^4.4.4",
     "realm": "^11.7.0",
+    "rn-dominant-color": "^1.7.2",
     "yarn": "^1.22.19"
   },
   "devDependencies": {

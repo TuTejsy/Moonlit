@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { ObjectChangeCallback } from 'realm';
 
 import { StoriesDB } from '@/database';
-import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { StorySchema } from '@/database/schema/stories/types';
 import { mapById } from '@/utils/getMapById';
 
 import useMutableValue from '../useMutableValue';

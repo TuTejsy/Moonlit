@@ -3,7 +3,7 @@ import { useRef, useMemo, useState, useEffect } from 'react';
 import { CollectionChangeCallback, Results } from 'realm';
 
 import { StoriesDB } from '@/database';
-import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { StorySchema } from '@/database/schema/stories/types';
 
 interface SortConfig {
   reverse: boolean;

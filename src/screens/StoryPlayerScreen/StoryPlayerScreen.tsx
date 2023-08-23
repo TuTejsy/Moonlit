@@ -3,8 +3,6 @@ import { View } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import { getColors } from 'react-native-image-colors';
-import { IOSImageColors } from 'react-native-image-colors/build/types';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
 import Animated, { runOnJS, useAnimatedReaction, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -44,7 +42,6 @@ function StoryPlayerScreen() {
   const { colors } = useTheme();
 
   const [isAnimatedGradientLoaded, setIsAnimatedGradientLoaded] = useState(false);
-  const [gradientColor, setGradientColor] = useState(colors.black);
 
   const navigation = useNavigation<NavigationType>();
   const route = useRoute<RouteType>();
@@ -60,6 +57,11 @@ function StoryPlayerScreen() {
   const coverURL = useMemo(
     () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
     [story?.full_cover_url],
+  );
+
+  const gradientColor = useMemo(
+    () => story?.colors?.primary ?? colors.black,
+    [colors.black, story?.colors?.primary],
   );
 
   const {
@@ -116,19 +118,6 @@ function StoryPlayerScreen() {
 
   useEffect(
     () => {
-      if (story?.small_preview_cover_cached_name) {
-        const colorURL = `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story?.small_preview_cover_cached_name}`;
-
-        getColors(colorURL, {
-          cache: true,
-          fallback: colors.black,
-          key: colorURL,
-        }).then((colors) => {
-          const iosColors = colors as IOSImageColors;
-          setGradientColor(iosColors.background);
-        });
-      }
-
       return () => {
         stopStoryPlaying();
       };

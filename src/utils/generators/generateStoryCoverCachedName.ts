@@ -1,4 +1,4 @@
-import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { StorySchema } from '@/database/schema/stories/types';
 
 type StoryCoverType = 'small' | 'medium' | 'full';
 

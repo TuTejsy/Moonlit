@@ -3,7 +3,7 @@ import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { Results } from 'realm';
 
-import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 

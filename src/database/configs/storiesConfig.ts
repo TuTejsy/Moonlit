@@ -1,5 +1,6 @@
 import { ZRKRealmConfiguration } from 'realm';
 
+import { ColorSchema } from '../schema/stories/ColorSchema';
 import { StorySchema } from '../schema/stories/StorySchema';
 
 const storiesConfig: ZRKRealmConfiguration = {
@@ -7,7 +8,7 @@ const storiesConfig: ZRKRealmConfiguration = {
 
   deleteRealmIfMigrationNeeded: true,
 
-  schema: [StorySchema],
+  schema: [StorySchema, ColorSchema],
   schemaVersion: 2,
 };
 

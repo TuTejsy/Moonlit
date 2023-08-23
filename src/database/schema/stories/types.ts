@@ -14,7 +14,15 @@ export interface StorySchema {
   small_cover_url: string;
   type: number;
   updated_at_timestamp: number;
+  colors?: ColorSchema | null;
   played_at_timestamp?: number;
   saved_at_timestamp?: number;
   small_preview_cover_cached_name?: string;
+}
+
+export interface ColorSchema {
+  background: string;
+  detail: string;
+  primary: string;
+  secondary: string;
 }

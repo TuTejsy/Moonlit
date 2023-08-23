@@ -9,7 +9,7 @@ import MediumStoriesList from '@/components/Lists/MediumStoriesList/MediumStorie
 import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
-import { StorySchema } from '@/database/schema/stories/StorySchema.types';
+import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import CategoriesList from '@/screens/HomeScreen/components/CategoriesList/CategoriesList';
 import SectionHeader from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
