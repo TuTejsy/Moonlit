@@ -12,6 +12,7 @@ const makeStyles = ({ colors }: MakeStylesProps) =>
   StyleSheet.create({
     blurView: {
       alignItems: 'center',
+      backgroundColor: colors.opacityWhite(0.1),
       borderRadius: 16,
       height: 32,
       justifyContent: 'center',

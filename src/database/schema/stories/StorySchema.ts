@@ -22,7 +22,7 @@ export const StorySchema: ObjectSchema = {
     revision: 'int',
     saved_at_timestamp: 'int?',
     small_cover_url: 'string',
-    small_preview_cover_cached_name: 'string',
+    small_preview_cover_cached_name: 'string?',
     type: 'int',
     updated_at_timestamp: 'int',
   },

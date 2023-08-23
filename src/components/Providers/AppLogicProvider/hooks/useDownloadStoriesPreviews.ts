@@ -14,7 +14,7 @@ const CHUNK_SIZE = 5;
 export function useDownloadStoriesPreviews() {
   useEffect(() => {
     const storiesWithoutPreviews = StoriesDB.objects().filtered(
-      'small_cover_url != nil && small_preview_cover_cached_name == nil',
+      'small_preview_cover_cached_name == nil',
     );
 
     const listener: CollectionChangeCallback<StorySchema> = (collection, changes) => {
@@ -25,7 +25,7 @@ export function useDownloadStoriesPreviews() {
     return () => {
       storiesWithoutPreviews.removeListener(listener);
     };
-  });
+  }, []);
 }
 
 async function processStoriesWithoutPreviews(storiesWithoutPreviews: Results<StorySchema>) {
@@ -76,7 +76,7 @@ async function downloadPreviews(stories: Results<StorySchema>, sliceFrom: number
   const results = await Promise.all(promises);
   StoriesDB.modify(() => {
     filesCachedNames.forEach((cachedName, index) => {
-      if (results[index].statusCode === 200) {
+      if (results[index].statusCode === 200 && cachedName) {
         stories[sliceFrom + index].small_preview_cover_cached_name = cachedName;
       }
     });

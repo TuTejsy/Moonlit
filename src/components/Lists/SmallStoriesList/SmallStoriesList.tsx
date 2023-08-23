@@ -13,8 +13,6 @@ import { Results } from 'realm';
 import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/StorySchema.types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
-import { generateStoryCoverCachedName } from '@/utils/generators/generateStoryCoverCachedName';
 
 import StoryPreview from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesList.styles';
@@ -60,12 +58,9 @@ function SmallStoriesList({
       <StoryPreview
         description={item.description}
         isFree={item.is_free}
+        previewURL={`file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${item.small_preview_cover_cached_name}`}
         storyId={item.id}
         title={item.name}
-        previewURL={`${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${generateStoryCoverCachedName(
-          item,
-          'small',
-        )}`}
       />
     );
   }, []);
