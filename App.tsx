@@ -6,6 +6,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
+import RealmPlugin from 'realm-flipper-plugin-device';
 
 import { AppLogicProvider } from '@/components/Providers/AppLogicProvider/AppLogicProvider';
 import { StoriesDB } from '@/database';
@@ -22,8 +23,8 @@ if (!__DEV__) {
   console.error = () => undefined;
 }
 
-// StoriesDB.open();
-StoriesDB.open().then(() => StoriesDB.dropDatabase());
+StoriesDB.open();
+// StoriesDB.open().then(() => StoriesDB.dropDatabase());
 
 function App(): JSX.Element {
   const theme = useInitTheme();
@@ -41,6 +42,7 @@ function App(): JSX.Element {
             >
               <BottomSheetModalProvider>
                 <AppLogicProvider>
+                  {__DEV__ && <RealmPlugin realms={[StoriesDB.realm]} />}
                   <RootNavigator />
                 </AppLogicProvider>
               </BottomSheetModalProvider>

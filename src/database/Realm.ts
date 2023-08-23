@@ -8,6 +8,10 @@ class RealmDB<ObjectType> {
   // eslint-disable-next-line no-useless-constructor
   constructor(private realmConfig: ZRKRealmConfiguration, public objectName: string) {}
 
+  get realm() {
+    return this.instance;
+  }
+
   schema = () => this.instance.schema;
 
   open = () => {

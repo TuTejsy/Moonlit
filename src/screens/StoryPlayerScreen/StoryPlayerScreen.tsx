@@ -3,6 +3,8 @@ import { View } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
+import { getColors } from 'react-native-image-colors';
+import { IOSImageColors } from 'react-native-image-colors/build/types';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
 import Animated, { runOnJS, useAnimatedReaction, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -42,12 +44,18 @@ function StoryPlayerScreen() {
   const { colors } = useTheme();
 
   const [isAnimatedGradientLoaded, setIsAnimatedGradientLoaded] = useState(false);
+  const [gradientColor, setGradientColor] = useState(colors.black);
 
   const navigation = useNavigation<NavigationType>();
   const route = useRoute<RouteType>();
   const { storyId } = route.params;
 
-  const [story, storyVersion] = useStory(storyId, ['full_cover_url', 'name', 'description']);
+  const [story, storyVersion] = useStory(storyId, [
+    'full_cover_url',
+    'name',
+    'description',
+    'small_preview_cover_cached_name',
+  ]);
 
   const coverURL = useMemo(
     () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
@@ -107,8 +115,23 @@ function StoryPlayerScreen() {
   }, [isStoryPlaying]);
 
   useEffect(
-    () => () => {
-      stopStoryPlaying();
+    () => {
+      if (story?.small_preview_cover_cached_name) {
+        const colorURL = `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story?.small_preview_cover_cached_name}`;
+
+        getColors(colorURL, {
+          cache: true,
+          fallback: colors.black,
+          key: colorURL,
+        }).then((colors) => {
+          const iosColors = colors as IOSImageColors;
+          setGradientColor(iosColors.background);
+        });
+      }
+
+      return () => {
+        stopStoryPlaying();
+      };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -117,7 +140,7 @@ function StoryPlayerScreen() {
   return (
     <LinearGradient
       angle={180}
-      colors={[colors.opacityGreen(0.3), colors.opacityGreen(0)]}
+      colors={[gradientColor, colors.black]}
       locations={[0, 1]}
       style={styles.screen}
     >
