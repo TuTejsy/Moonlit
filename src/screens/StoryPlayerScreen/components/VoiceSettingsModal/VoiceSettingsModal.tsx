@@ -104,7 +104,7 @@ function VoiceSettingsModal({ storyColor }: VoiceSettingsModalProps) {
           style={[styles.modalContainerBackground, modalContainerBackgroundAnimatedStyle]}
         >
           <BlurView
-            blurAmount={10}
+            blurAmount={5}
             blurType='light'
             reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
             style={styles.modal}

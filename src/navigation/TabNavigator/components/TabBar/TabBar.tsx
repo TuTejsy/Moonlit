@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -5,11 +6,14 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { StorySchema } from '@/database/schema/stories/types';
+import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { navigationService } from '@/services/navigation/navigationService';
 
+import { TabBarStoryPlayer } from './components/TabBarStoryPlayer/TabBarStoryPlayer';
 import { makeStyles } from './TabBar.styles';
 
 const MAP_ICON_AND_TITLE_BY_ROUTE: { [key: string]: [typeof Icons.HomeTab, string] } = {
@@ -19,16 +23,35 @@ const MAP_ICON_AND_TITLE_BY_ROUTE: { [key: string]: [typeof Icons.HomeTab, strin
 };
 
 export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
-  const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
+  const [recentlyPlayedStories, recentlyPlayedStoriesVersion] = useStories(
+    'played_at_timestamp != nil',
+    {
+      reverse: true,
+      sortDescriptor: 'played_at_timestamp',
+    },
+  );
+
+  const lastPlayedStory: StorySchema | undefined = useMemo(() => {
+    return recentlyPlayedStories[0];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recentlyPlayedStories, recentlyPlayedStoriesVersion]);
+
+  const hasPlayer = !!lastPlayedStory;
+
+  const stylesContext = useMemo(
+    () => ({
+      hasPlayer,
+    }),
+    [hasPlayer],
+  );
+
+  const styles = useMakeStyles(makeStyles, stylesContext);
+
   return (
-    <View style={styles.tabBarShadow}>
-      <LinearGradient
-        angle={180}
-        colors={[colors.opacityDarkPurple(0), colors.opacityDarkPurple(1)]}
-        locations={[0, 1]}
-      >
+    <>
+      <View style={styles.tabBarShadow}>
         <LinearGradient
           angle={180}
           colors={[colors.opacityDarkPurple(0), colors.opacityDarkPurple(1)]}
@@ -38,58 +61,68 @@ export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) =>
             angle={180}
             colors={[colors.opacityDarkPurple(0), colors.opacityDarkPurple(1)]}
             locations={[0, 1]}
-            style={styles.tabBarWrapper}
           >
-            <View style={styles.tabBar}>
-              {state.routes.map((route, index) => {
-                const { options } = descriptors[route.key];
+            <LinearGradient
+              angle={180}
+              colors={[colors.opacityDarkPurple(0), colors.opacityDarkPurple(1)]}
+              locations={[0, 1]}
+              style={styles.tabBarWrapper}
+            >
+              <View style={styles.tabBar}>
+                {state.routes.map((route, index) => {
+                  const { options } = descriptors[route.key];
 
-                const isFocused = state.index === index;
+                  const isFocused = state.index === index;
 
-                if (isFocused && navigationService.activeTab !== route.name) {
-                  navigationService.onChangeActiveTab(route.name as TabRoutes);
-                }
-
-                const onPress = () => {
-                  const event = navigation.emit({
-                    canPreventDefault: true,
-                    target: route.key,
-                    type: 'tabPress',
-                  });
-
-                  if (!isFocused && !event.defaultPrevented) {
-                    // The `merge: true` option makes sure that the params inside the tab screen are preserved
-                    navigation.navigate({ merge: true, name: route.name, params: undefined });
+                  if (isFocused && navigationService.activeTab !== route.name) {
+                    navigationService.onChangeActiveTab(route.name as TabRoutes);
                   }
-                };
 
-                const [Icon, title] = MAP_ICON_AND_TITLE_BY_ROUTE[route.name as TabRoutes];
+                  const onPress = () => {
+                    const event = navigation.emit({
+                      canPreventDefault: true,
+                      target: route.key,
+                      type: 'tabPress',
+                    });
 
-                return (
-                  <TouchableWithoutFeedback
-                    key={route.name}
-                    accessibilityHint={`Open ${route.name} screen`}
-                    accessibilityLabel={options.tabBarAccessibilityLabel}
-                    accessibilityRole='button'
-                    accessibilityState={isFocused ? { selected: true } : {}}
-                    onPress={onPress}
-                  >
-                    <View style={styles.tabContainer}>
-                      <Icon
-                        color={isFocused ? colors.white : colors.opacityWhite(0.5)}
-                        fill={isFocused ? colors.white : 'none'}
-                      />
-                      <TextView style={isFocused ? styles.activeTabTitle : styles.inactiveTabTitle}>
-                        {title}
-                      </TextView>
-                    </View>
-                  </TouchableWithoutFeedback>
-                );
-              })}
-            </View>
+                    if (!isFocused && !event.defaultPrevented) {
+                      // The `merge: true` option makes sure that the params inside the tab screen are preserved
+                      navigation.navigate({ merge: true, name: route.name, params: undefined });
+                    }
+                  };
+
+                  const [Icon, title] = MAP_ICON_AND_TITLE_BY_ROUTE[route.name as TabRoutes];
+
+                  return (
+                    <TouchableWithoutFeedback
+                      key={route.name}
+                      accessibilityHint={`Open ${route.name} screen`}
+                      accessibilityLabel={options.tabBarAccessibilityLabel}
+                      accessibilityRole='button'
+                      accessibilityState={isFocused ? { selected: true } : {}}
+                      onPress={onPress}
+                    >
+                      <View style={styles.tabContainer}>
+                        <Icon
+                          color={isFocused ? colors.white : colors.opacityWhite(0.5)}
+                          fill={isFocused ? colors.white : 'none'}
+                        />
+                        <TextView
+                          style={isFocused ? styles.activeTabTitle : styles.inactiveTabTitle}
+                        >
+                          {title}
+                        </TextView>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  );
+                })}
+              </View>
+            </LinearGradient>
           </LinearGradient>
         </LinearGradient>
-      </LinearGradient>
-    </View>
+      </View>
+
+      {hasPlayer && <TabBarStoryPlayer storyId={lastPlayedStory.id} />}
+    </>
   );
 };

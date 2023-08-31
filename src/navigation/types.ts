@@ -1,6 +1,6 @@
-import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { StackScreenProps } from '@react-navigation/stack';
+import type { BottomTabScreenProps, BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type { CompositeScreenProps, NavigationProp } from '@react-navigation/native';
+import type { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
 
 import { RootRoutes } from './RootNavigator/RootNavigator.routes';
 import type { RootStackParams } from './RootNavigator/RootNavigator.types';
@@ -8,6 +8,16 @@ import { SharedRoutes } from './SharedNavigator/SharedNavigator.routes';
 import type { SharedStackParams } from './SharedNavigator/SharedNavigator.types';
 import { TabRoutes } from './TabNavigator/TabNavigator.routes';
 import type { TabStackParams } from './TabNavigator/TabNavigator.types';
+
+export type AllRoutes = RootRoutes | SharedRoutes | TabRoutes;
+
+export type NavigationAppProp<R extends AllRoutes | unknown> = R extends AllRoutes
+  ? R extends TabRoutes
+    ? BottomTabNavigationProp<AllStackParams, R>
+    : StackNavigationProp<AllStackParams, R>
+  : NavigationProp<AllStackParams>;
+
+export type AllStackParams = RootStackParams & SharedStackParams & TabStackParams;
 
 export type RootScreenProps<T extends RootRoutes> = StackScreenProps<RootStackParams, T>;
 
