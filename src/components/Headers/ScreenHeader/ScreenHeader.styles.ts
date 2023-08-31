@@ -35,7 +35,7 @@ export const makeStyles = (
       flex: 1,
       justifyContent: 'center',
       marginHorizontal: 24 + horizontalInset,
-      marginTop: TOP_OFFSET,
+      marginTop: TOP_OFFSET + 2,
     },
     titleText: {
       ...fonts.size_16,

@@ -4,12 +4,19 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+interface Context {
+  storyColor: string;
+}
+
+export const makeStyles = (
+  { colors, fonts, insets, zIndex }: MakeStylesProps,
+  { storyColor }: Context,
+) =>
   StyleSheet.create({
     addVoiceButton: {
       alignItems: 'center',
       backgroundColor: colors.white,
-      borderRadius: 24,
+      borderRadius: 16,
       flex: 1,
       height: 48,
       justifyContent: 'center',
@@ -36,8 +43,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       justifyContent: 'space-between',
     },
     modal: {
-      backgroundColor: colors.opacityBlack(0.3),
-      borderRadius: 24,
       width: '100%',
     },
     modalContainer: {
@@ -46,6 +51,10 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       width: '100%',
       zIndex: 12,
     },
+    modalContainerBackground: {
+      borderRadius: 16,
+      overflow: 'hidden',
+    },
     overlay: {
       backgroundColor: colors.black,
       height: SCREEN_HEIGHT,
@@ -53,7 +62,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       position: 'absolute',
       top: 0,
       width: SCREEN_WIDTH,
-      zIndex: 11,
+      zIndex: zIndex.max,
     },
     scrollView: {},
     separator: {

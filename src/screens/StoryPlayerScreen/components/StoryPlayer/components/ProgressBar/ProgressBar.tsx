@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState, useCallback, useEffect } from 'react';
+import React, { useRef, useMemo, useCallback, useEffect, useState } from 'react';
 import { View, ViewProps } from 'react-native';
 
 import { GestureDetector } from 'react-native-gesture-handler';
@@ -29,20 +29,30 @@ function ProgressBar({
 }: ProgressBarPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
+  const [playedText, setPlayedText] = useState('');
+  const [remainedTimeText, setRemainedTimeText] = useState('');
+
   const playedTimeRef = useMutableValue(playedTime);
   const timerRef = useRef<NodeJS.Timer | null>(null);
 
   const progressSharedValue = useSharedValue(0);
 
-  const formattedPlayedTime = useMemo(() => formatSecondsToDuration(playedTime), [playedTime]);
-  const formattedRemainedTime = useMemo(
-    () => `-${formatSecondsToDuration(duration - playedTime)}`,
-    [playedTime, duration],
-  );
-
   const animatedProgressStyle = useAnimatedStyle(() => ({
     width: `${progressSharedValue.value}%`,
   }));
+
+  const setPlayedTimeText = useCallback(
+    (playPercent: number) => {
+      const time = duration * (playPercent / 100);
+
+      const formattedPlayedTime = formatSecondsToDuration(time);
+      const formattedRemainedTime = `-${formatSecondsToDuration(duration - time)}`;
+
+      setPlayedText(formattedPlayedTime);
+      setRemainedTimeText(formattedRemainedTime);
+    },
+    [duration],
+  );
 
   const stopTimer = useCallback(() => {
     if (timerRef.current) {
@@ -76,6 +86,7 @@ function ProgressBar({
   const [gestureHandler, isGestureActiveRef] = useProgressBarGestureHandler(
     progressSharedValue,
     handleUpdatePlayPercent,
+    setPlayedTimeText,
   );
 
   useEffect(() => {
@@ -95,16 +106,26 @@ function ProgressBar({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isStoryPlaying, isGestureActiveRef, playedTime]);
 
+  useEffect(() => {
+    const formattedPlayedTime = formatSecondsToDuration(playedTime);
+    const formattedRemainedTime = `-${formatSecondsToDuration(duration - playedTime)}`;
+
+    setPlayedText(formattedPlayedTime);
+    setRemainedTimeText(formattedRemainedTime);
+  }, [playedTime]);
+
   return (
     <GestureDetector gesture={gestureHandler}>
       <View style={styles.progressBarContainer}>
         <View style={styles.progressBar}>
-          <Animated.View style={[styles.progressBarValue, animatedProgressStyle]} />
+          <Animated.View style={[styles.progressBarValue, animatedProgressStyle]}>
+            <Animated.View style={styles.cirlce} />
+          </Animated.View>
         </View>
 
         <View style={styles.timeContainer}>
-          <TextView style={styles.time}>{formattedPlayedTime}</TextView>
-          <TextView style={styles.time}>{formattedRemainedTime}</TextView>
+          <TextView style={styles.time}>{playedText}</TextView>
+          <TextView style={styles.time}>{remainedTimeText}</TextView>
         </View>
       </View>
     </GestureDetector>

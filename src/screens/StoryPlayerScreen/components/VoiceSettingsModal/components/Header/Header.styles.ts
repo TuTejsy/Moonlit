@@ -4,7 +4,7 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { MODAL_COLLAPSED_HEIGHT } from '../../VoiceSettingsModal.constants';
 
-export const makeStyles = ({ fonts }: MakeStylesProps) =>
+export const makeStyles = ({ fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     closeIconStyle: {
       position: 'absolute',

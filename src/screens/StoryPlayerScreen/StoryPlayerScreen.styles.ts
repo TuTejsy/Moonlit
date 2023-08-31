@@ -7,12 +7,13 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 import { STORY_CONTAINER_MIN_WIDTH, STORY_COVER_MIN_HEIGHT } from './StoryPlayerScreen.constants';
 
 interface Context {
+  gradientColor: string;
   storyContainerMinHeight: number;
 }
 
 export const makeStyles = (
-  { colors, insets }: MakeStylesProps,
-  { storyContainerMinHeight }: Context,
+  { colors }: MakeStylesProps,
+  { gradientColor, storyContainerMinHeight }: Context,
 ) =>
   StyleSheet.create({
     bottomGradient: {
@@ -34,6 +35,7 @@ export const makeStyles = (
     },
     imageContainer: {
       alignItems: 'center',
+      justifyContent: 'flex-end',
       minHeight: STORY_COVER_MIN_HEIGHT,
       minWidth: STORY_CONTAINER_MIN_WIDTH,
       position: 'relative',
@@ -41,7 +43,7 @@ export const makeStyles = (
     },
     screen: {
       alignItems: 'center',
-      backgroundColor: colors.black,
+      backgroundColor: gradientColor,
       flex: 1,
       maxHeight: SCREEN_HEIGHT,
       maxWidth: SCREEN_WIDTH,
@@ -49,17 +51,10 @@ export const makeStyles = (
     },
     storyContainer: {
       alignItems: 'center',
-      borderBottomLeftRadius: 32,
-      borderBottomRightRadius: 32,
-      borderTopLeftRadius: 24,
-      borderTopRightRadius: 24,
+      backgroundColor: gradientColor,
+      borderRadius: 16,
       minHeight: storyContainerMinHeight,
       minWidth: STORY_CONTAINER_MIN_WIDTH,
       overflow: 'hidden',
-    },
-    topGradient: {
-      height: insets.top + DEFAULT_HEADER_HEIGHT + 30,
-      position: 'absolute',
-      width: '100%',
     },
   });

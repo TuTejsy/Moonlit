@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
-import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient';
 import Animated, { runOnJS, useAnimatedReaction, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -27,21 +27,12 @@ import { useStoryPlayNotify } from './hooks/useStoryPlayNotify';
 import { makeStyles } from './StoryPlayerScreen.styles';
 import { NavigationType, RouteType } from './StoryPlayerScreen.types';
 
-const AnimatedLinearGradient = Animated.createAnimatedComponent<
-  Omit<LinearGradientProps, 'colors'>
->(LinearGradient as any);
-
 function StoryPlayerScreen() {
   const insets = useSafeAreaInsets();
   const storyContainerMinHeight =
-    WINDOW_HEIGHT - DEFAULT_HEADER_HEIGHT - insets.top - insets.bottom - 90;
+    WINDOW_HEIGHT - DEFAULT_HEADER_HEIGHT - insets.top - insets.bottom - 102;
 
-  const stylesContext = useMemo(() => ({ storyContainerMinHeight }), [storyContainerMinHeight]);
-
-  const styles = useMakeStyles(makeStyles, stylesContext);
   const { colors } = useTheme();
-
-  const [isAnimatedGradientLoaded, setIsAnimatedGradientLoaded] = useState(false);
 
   const navigation = useNavigation<NavigationType>();
   const route = useRoute<RouteType>();
@@ -56,13 +47,20 @@ function StoryPlayerScreen() {
 
   const coverURL = useMemo(
     () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
-    [story?.full_cover_url],
+    [story],
   );
 
   const gradientColor = useMemo(
     () => story?.colors?.primary ?? colors.black,
     [colors.black, story?.colors?.primary],
   );
+
+  const stylesContext = useMemo(
+    () => ({ gradientColor, storyContainerMinHeight }),
+    [gradientColor, storyContainerMinHeight],
+  );
+
+  const styles = useMakeStyles(makeStyles, stylesContext);
 
   const {
     isStoryPlaying,
@@ -76,22 +74,16 @@ function StoryPlayerScreen() {
     storyPlayingSharedValue,
   } = useStoryPlayer(story?.name ?? '', coverURL);
 
-  const {
-    bottomGradientAnimatedProps,
-    coverAnimatedStyles,
-    storyContainerAnimatedStyles,
-    topGradientAnimatedProps,
-  } = useStoryCoverAnimation(storyPlayingSharedValue, storyContainerMinHeight);
+  const { coverAnimatedStyles, storyContainerAnimatedStyles } = useStoryCoverAnimation(
+    storyPlayingSharedValue,
+    storyContainerMinHeight,
+  );
 
   const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue, pauseStoryPlaying);
 
   const handleGoBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
-
-  const handleAnimatedGradientLoaded = useCallback(() => {
-    setIsAnimatedGradientLoaded(true);
-  }, []);
 
   useStoryPlayNotify(storyId);
 
@@ -150,38 +142,29 @@ function StoryPlayerScreen() {
               style={[styles.cover, coverAnimatedStyles]}
             />
 
-            <AnimatedLinearGradient
+            <LinearGradient
               angle={180}
-              animatedProps={topGradientAnimatedProps}
-              pointerEvents='none'
-              style={styles.topGradient}
-            />
-            <AnimatedLinearGradient
-              angle={180}
-              animatedProps={bottomGradientAnimatedProps}
+              colors={[colors.opacityBlack(0), gradientColor]}
+              locations={[0, 1]}
               pointerEvents='none'
               style={styles.bottomGradient}
-              onLayout={handleAnimatedGradientLoaded}
             />
-            {!isAnimatedGradientLoaded && (
-              <LinearGradient
-                angle={180}
-                colors={['rgba(26,26, 26, 0)', 'rgba(26,26, 26, 1)']}
-                locations={[0.531, 1]}
-                pointerEvents='none'
-                style={styles.bottomGradient}
-              />
-            )}
 
             <StoryActions
               startStoryPlaying={startStoryPlaying}
               storyId={storyId}
               storyPlayingSharedValue={storyPlayingSharedValue}
+              storyTitle={story?.name ?? ''}
             />
           </View>
           <StoryMeta
-            description={story?.description ?? ''}
+            duration={4}
             storyPlayingSharedValue={storyPlayingSharedValue}
+            description={
+              'Once upon a time, in a land far, far away, a young girl named Ella lived with her wicked stepmother and two stepsisters. One day, a royal invitation arrived, announcing a grand ball at the palace...' ??
+              story?.description ??
+              ''
+            }
           />
         </Animated.View>
       </GestureDetector>
@@ -194,10 +177,11 @@ function StoryPlayerScreen() {
         setPlayedTime={setPlayedTime}
         startStoryPlaying={startStoryPlaying}
         storyId={storyId}
+        storyName={story?.name}
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
 
-      <VoiceSettingsModal />
+      <VoiceSettingsModal storyColor={gradientColor} />
     </LinearGradient>
   );
 }

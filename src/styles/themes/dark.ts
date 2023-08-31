@@ -4,6 +4,7 @@ import { commonColors } from './common';
 
 const darkColors = {
   dark: '#2D2D2D',
+  darkBlack: '#141C1A',
   darkGrey: '#1A1A1A',
   darkPurple: '#080211',
   green: '#247F8A',
