@@ -9,6 +9,7 @@ import { HORIZONTAL_PADDING } from '@/constants/sizes';
 function useProgressBarGestureHandler(
   progressSharedValue: SharedValue<number>,
   onUpdatePlayPercent: (playPercent: number) => void,
+  setPlayedTimeText: (playPercent: number) => void,
 ): [ComposedGesture, React.MutableRefObject<boolean>] {
   const isTapActiveRef = useRef(false);
   const isPanActiveRef = useRef(false);
@@ -65,6 +66,8 @@ function useProgressBarGestureHandler(
         [0, 100],
         Extrapolate.CLAMP,
       );
+
+      runOnJS(setPlayedTimeText)(progressSharedValue.value);
     })
     .onEnd(() => {
       runOnJS(setIsPanActiveRef)(false);

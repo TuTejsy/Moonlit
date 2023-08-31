@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
 import Animated, {
@@ -11,7 +12,6 @@ import Animated, {
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { SCREEN_HEIGHT } from '@/constants/layout';
 import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -22,12 +22,14 @@ interface StoryActionsPropTyps {
   startStoryPlaying: () => void;
   storyId: number;
   storyPlayingSharedValue: SharedValue<number>;
+  storyTitle: string;
 }
 
 function StoryActions({
   startStoryPlaying,
   storyId,
   storyPlayingSharedValue,
+  storyTitle,
 }: StoryActionsPropTyps) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
@@ -36,12 +38,6 @@ function StoryActions({
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
-      bottom: interpolate(
-        storyPlayingSharedValue.value,
-        [0, 1],
-        [24, SCREEN_HEIGHT / 2],
-        Extrapolate.CLAMP,
-      ),
       display: storyPlayingSharedValue.value === 1 ? 'none' : 'flex',
       opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], Extrapolate.CLAMP),
     };
@@ -49,30 +45,36 @@ function StoryActions({
 
   return (
     <Animated.View style={[styles.actionsContainer, animatedContainerStyle]}>
-      <PressableView onPress={handleStoryFavoritePress}>
+      <TextView style={styles.title} type='bold'>
+        {storyTitle}
+      </TextView>
+
+      <View style={styles.actions}>
+        <PressableView onPress={handleStoryFavoritePress}>
+          <BlurView
+            blurAmount={5}
+            blurType='light'
+            reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+            style={styles.button}
+          >
+            <Icons.Favorite isFavorite={isFavorite} />
+          </BlurView>
+        </PressableView>
         <BlurView
           blurAmount={5}
           blurType='light'
           reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
           style={styles.button}
         >
-          <Icons.Favorite isFavorite={isFavorite} />
+          <Icons.Download />
         </BlurView>
-      </PressableView>
-      <BlurView
-        blurAmount={5}
-        blurType='light'
-        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-        style={styles.button}
-      >
-        <Icons.Download />
-      </BlurView>
-      <PressableView style={styles.listenButton} onPress={startStoryPlaying}>
-        <Icons.PlaySmall />
-        <TextView style={styles.listenText} type='bold'>
-          Listen Story
-        </TextView>
-      </PressableView>
+        <PressableView style={styles.listenButton} onPress={startStoryPlaying}>
+          <Icons.PlaySmall />
+          <TextView style={styles.listenText} type='bold'>
+            Listen Story
+          </TextView>
+        </PressableView>
+      </View>
     </Animated.View>
   );
 }

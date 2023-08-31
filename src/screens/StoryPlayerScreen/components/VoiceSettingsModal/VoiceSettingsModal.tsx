@@ -5,6 +5,7 @@ import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
 import Animated, {
   interpolate,
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -18,24 +19,26 @@ import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
-import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 
 import Header from './components/Header/Header';
 import { MODAL_BOTTOM_PADDING, MODAL_COLLAPSED_HEIGHT } from './VoiceSettingsModal.constants';
 import { makeStyles } from './VoiceSettingsModal.styles';
 import { NavigationType } from './VoiceSettingsModal.types';
 
-function VoiceSettingsModal() {
-  const styles = useMakeStyles(makeStyles);
+interface VoiceSettingsModalProps {
+  storyColor: string;
+}
+
+function VoiceSettingsModal({ storyColor }: VoiceSettingsModalProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
 
-  const navigation = useNavigation<NavigationType>();
+  const stylesContext = useMemo(() => ({ storyColor }), [storyColor]);
 
-  const modalExpandedHeight = useMemo(
-    () => SCREEN_HEIGHT - insets.top - DEFAULT_HEADER_HEIGHT,
-    [insets.top],
-  );
+  const styles = useMakeStyles(makeStyles, stylesContext);
+
+  const navigation = useNavigation<NavigationType>();
 
   const isModalExpandedSharedValue = useSharedValue(0);
 
@@ -43,8 +46,10 @@ function VoiceSettingsModal() {
     height: interpolate(
       isModalExpandedSharedValue.value,
       [0, 1],
-      [MODAL_COLLAPSED_HEIGHT, modalExpandedHeight],
+      [MODAL_COLLAPSED_HEIGHT, SCREEN_HEIGHT],
     ),
+
+    paddingTop: interpolate(isModalExpandedSharedValue.value, [0, 1], [0, insets.top]),
   }));
 
   const animatedContentStyle = useAnimatedStyle(() => ({
@@ -55,6 +60,20 @@ function VoiceSettingsModal() {
     display: isModalExpandedSharedValue.value === 0 ? 'none' : 'flex',
     opacity: interpolate(isModalExpandedSharedValue.value, [0, 1], [0, 0.5]),
     paddingHorizontal: interpolate(isModalExpandedSharedValue.value, [0, 1], [16, 0]),
+  }));
+
+  const [buttonColor, modalColor] = useMemo(
+    () => [convertHEXtoRGBA(storyColor, 1), convertHEXtoRGBA(storyColor, 0)],
+    [storyColor],
+  );
+
+  const modalContainerBackgroundAnimatedStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      isModalExpandedSharedValue.value,
+      [0, 1],
+      [buttonColor, modalColor],
+      'RGB',
+    ),
   }));
 
   const modalContainerAnimatedStyle = useAnimatedStyle(() => ({
@@ -81,35 +100,39 @@ function VoiceSettingsModal() {
         onTouchEnd={handleOverlayTouchEnd}
       />
       <Animated.View style={[styles.modalContainer, modalContainerAnimatedStyle]}>
-        <BlurView
-          blurAmount={10}
-          blurType='light'
-          reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-          style={styles.modal}
+        <Animated.View
+          style={[styles.modalContainerBackground, modalContainerBackgroundAnimatedStyle]}
         >
-          <Animated.View style={modalAnimatedStyle}>
-            <Header isModalExpandedSharedValue={isModalExpandedSharedValue} />
-            <View style={styles.separator} />
+          <BlurView
+            blurAmount={10}
+            blurType='light'
+            reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+            style={styles.modal}
+          >
+            <Animated.View style={modalAnimatedStyle}>
+              <Header isModalExpandedSharedValue={isModalExpandedSharedValue} />
+              <View style={styles.separator} />
 
-            <Animated.View style={[styles.content, animatedContentStyle]}>
-              <ScrollView style={styles.scrollView}>
-                <PressableView style={styles.addVoiceButton} onPress={handleAddVoicePress}>
-                  <TextView style={styles.addVoiceText} type='bold'>
-                    Add your voice
-                  </TextView>
-                </PressableView>
-              </ScrollView>
-              <View style={styles.bottomBar}>
-                <View style={styles.separator} />
-                <View style={styles.bottomBarContent}>
-                  <TextView style={styles.bottomText} type='bold'>
-                    Save settings
-                  </TextView>
+              <Animated.View style={[styles.content, animatedContentStyle]}>
+                <ScrollView style={styles.scrollView}>
+                  <PressableView style={styles.addVoiceButton} onPress={handleAddVoicePress}>
+                    <TextView style={styles.addVoiceText} type='bold'>
+                      Add your voice
+                    </TextView>
+                  </PressableView>
+                </ScrollView>
+                <View style={styles.bottomBar}>
+                  <View style={styles.separator} />
+                  <View style={styles.bottomBarContent}>
+                    <TextView style={styles.bottomText} type='bold'>
+                      Save settings
+                    </TextView>
+                  </View>
                 </View>
-              </View>
+              </Animated.View>
             </Animated.View>
-          </Animated.View>
-        </BlurView>
+          </BlurView>
+        </Animated.View>
       </Animated.View>
     </>
   );

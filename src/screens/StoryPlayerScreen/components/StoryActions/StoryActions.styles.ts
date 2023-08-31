@@ -5,10 +5,13 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
-    actionsContainer: {
+    actions: {
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'space-between',
+    },
+    actionsContainer: {
+      bottom: 0,
       paddingHorizontal: 16,
       position: 'absolute',
       width: WINDOW_WIDTH - 32,
@@ -24,7 +27,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     listenButton: {
       alignItems: 'center',
-      backgroundColor: colors.orange,
+      backgroundColor: colors.white,
       borderRadius: 24,
       flexDirection: 'row',
       height: 48,
@@ -33,6 +36,12 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     listenText: {
       ...fonts.size_16,
+      color: colors.darkBlack,
       marginLeft: 19,
+    },
+    title: {
+      ...fonts.size_32,
+      color: colors.white,
+      marginBottom: 32,
     },
   });

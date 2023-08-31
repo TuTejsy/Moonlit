@@ -2,6 +2,7 @@ import { Clock } from './common/Clock';
 import { Download } from './common/Download';
 import { DownloadRound } from './common/DownloadRound';
 import { Favorite } from './common/Favorite';
+import { FavoriteBig } from './common/FavoriteBig';
 import { Lock } from './common/Lock';
 import { Search } from './common/Search';
 import { Share } from './common/Share';
@@ -26,6 +27,7 @@ export const Icons = {
   Download,
   DownloadRound,
   Favorite,
+  FavoriteBig,
   FavoritesTab,
   GoBack,
   GoForward,
