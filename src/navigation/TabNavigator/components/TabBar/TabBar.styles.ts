@@ -4,7 +4,11 @@ import { SCREEN_WIDTH } from '@/constants/layout';
 import { TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+interface Context {
+  hasPlayer: boolean;
+}
+
+export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { hasPlayer }: Context) =>
   StyleSheet.create({
     activeTabTitle: {
       ...fonts.size_10,
@@ -16,12 +20,16 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     tabBar: {
       alignItems: 'center',
-      flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
+      paddingBottom: insets.bottom,
+      paddingHorizontal: 57,
+      width: '100%',
     },
     tabBarShadow: {
       bottom: 0,
+      height: TAB_BAR_HEIGHT + insets.bottom,
+      justifyContent: 'flex-end',
       left: 0,
       position: 'absolute',
       shadowColor: colors.black,
@@ -31,7 +39,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     tabBarWrapper: {
       height: TAB_BAR_HEIGHT + insets.bottom,
-      paddingHorizontal: 57,
+      justifyContent: 'flex-end',
       width: SCREEN_WIDTH,
     },
     tabContainer: {

@@ -14,6 +14,7 @@ import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import useStory from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useStoryPlayer } from '@/hooks/useStoryPlayer';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import StoryActions from './components/StoryActions/StoryActions';
@@ -22,7 +23,6 @@ import StoryPlayer from './components/StoryPlayer/StoryPlayer';
 import VoiceSettingsModal from './components/VoiceSettingsModal/VoiceSettingsModal';
 import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
 import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
-import { useStoryPlayer } from './hooks/useStoryPlayer';
 import { useStoryPlayNotify } from './hooks/useStoryPlayNotify';
 import { makeStyles } from './StoryPlayerScreen.styles';
 import { NavigationType, RouteType } from './StoryPlayerScreen.types';

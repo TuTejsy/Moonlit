@@ -112,6 +112,7 @@ function ProgressBar({
 
     setPlayedText(formattedPlayedTime);
     setRemainedTimeText(formattedRemainedTime);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playedTime]);
 
   return (
