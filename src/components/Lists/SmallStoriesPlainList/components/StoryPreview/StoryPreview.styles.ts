@@ -4,6 +4,14 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
   StyleSheet.create({
+    button: {
+      alignItems: 'center',
+      backgroundColor: colors.opacityWhite(0.1),
+      borderRadius: 16,
+      height: 32,
+      justifyContent: 'center',
+      width: 32,
+    },
     content: {
       alignItems: 'flex-start',
       flex: 1,
@@ -29,6 +37,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       width: 100,
     },
     previewContainer: {
+      alignItems: 'center',
       flexDirection: 'row',
       marginBottom: 16,
     },

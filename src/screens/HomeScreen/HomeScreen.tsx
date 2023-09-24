@@ -56,24 +56,32 @@ function HomeScreen() {
         >
           <SectionHeader title='Featuring tales' onSeeAllPress={noop} />
 
-          <LargeStoriesList stories={allStories} />
+          <LargeStoriesList stories={allStories} storiesVersion={allStoriesVersion} />
           <CategoriesList />
 
           <SectionHeader title='Popular tales' onSeeAllPress={noop} />
-          <MediumStoriesList stories={popularStories} style={styles.mediumList} />
+          <MediumStoriesList
+            stories={popularStories}
+            storiesVersion={popularStoriesVersion}
+            style={styles.mediumList}
+          />
         </LinearGradient>
 
         <PromotionBanner style={styles.promotionBanner} />
 
         <SectionHeader title='Free tales' onSeeAllPress={noop} />
-        <MediumStoriesList stories={freeStories} style={styles.mediumList} />
+        <MediumStoriesList
+          stories={freeStories}
+          storiesVersion={freeStoriesVersion}
+          style={styles.mediumList}
+        />
 
         <SectionHeader title='All tales' onSeeAllPress={noop} />
         <SmallStoriesList
           displayCount={6}
-          extraData={allStoriesVersion}
           isScrollable={false}
           stories={allStories}
+          storiesVersion={allStoriesVersion}
           style={styles.smallList}
         />
       </ScrollView>

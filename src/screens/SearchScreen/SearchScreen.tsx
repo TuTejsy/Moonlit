@@ -7,10 +7,11 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
+import SmallStoriesPlainList from '../../components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
+
 import DefaultSearchList from './components/DefaultSearchList/DefaultSearchList';
 import PopularSearch from './components/PopularSearch/PopularSearch';
 import SearchBar from './components/SearchBar/SearchBar';
-import SearchResultList from './components/SearchResultList/SearchResultList';
 import { makeStyles } from './SearchScreen.styles';
 
 function SearchScreen() {
@@ -63,7 +64,11 @@ function SearchScreen() {
       style={styles.screen}
     >
       {searchText ? (
-        <SearchResultList stories={allStories} onScroll={handleOpacityScroll} />
+        <SmallStoriesPlainList
+          stories={allStories}
+          storiesVersion={allStoriesVersion}
+          onScroll={handleOpacityScroll}
+        />
       ) : isInputFocused ? (
         <PopularSearch
           popularSearchItems={popularSearchItems}
@@ -73,8 +78,11 @@ function SearchScreen() {
       ) : (
         <DefaultSearchList
           allStories={allStories}
+          allStoriesVersion={allStoriesVersion}
           freeStories={freeStories}
+          freeStoriesVersion={freeStoriesVersion}
           popularStories={popularStories}
+          popularStoriesVersion={popularStoriesVersion}
           onScroll={handleOpacityScroll}
         />
       )}
