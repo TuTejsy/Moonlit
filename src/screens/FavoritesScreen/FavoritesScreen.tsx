@@ -10,7 +10,7 @@ import Animated, {
   useScrollViewOffset,
 } from 'react-native-reanimated';
 
-import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
+import SmallStoriesPlainList from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
 import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SCREEN_WIDTH } from '@/constants/layout';
@@ -153,12 +153,12 @@ function FavoritesScreen() {
         onScrollEndDrag={handleScrollEndDrag}
       >
         <View style={styles.listContainer}>
-          <SmallStoriesList
-            showsHorizontalScrollIndicator
+          <SmallStoriesPlainList
+            showSaveButton
             contentContainerStyle={styles.listContent}
-            indicatorStyle='white'
             showsVerticalScrollIndicator={false}
             stories={savedStories}
+            storiesVersion={savedStoriesVersion}
             ListHeaderComponent={
               <TextView style={styles.listTitleText} type='bold'>
                 Your saved tales
@@ -169,11 +169,12 @@ function FavoritesScreen() {
         </View>
 
         <View style={styles.listContainer}>
-          <SmallStoriesList
+          <SmallStoriesPlainList
             showsHorizontalScrollIndicator
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
             stories={recentlyPlayedStories}
+            storiesVersion={recentlyPlayedStoriesVersion}
             ListHeaderComponent={
               <TextView style={styles.listTitleText} type='bold'>
                 Recent Played

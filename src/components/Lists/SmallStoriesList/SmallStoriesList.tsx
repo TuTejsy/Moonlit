@@ -19,10 +19,10 @@ import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
   stories: Results<StorySchema>;
+  storiesVersion: number;
   ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
   contentContainerStyle?: ViewStyle;
   displayCount?: number;
-  extraData?: number;
   indicatorStyle?: FlatListProps<StorySchema>['indicatorStyle'];
   isScrollable?: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -35,13 +35,13 @@ function SmallStoriesList({
   ListHeaderComponent,
   contentContainerStyle,
   displayCount,
-  extraData,
   indicatorStyle,
   isScrollable = true,
   onScroll,
   showsHorizontalScrollIndicator = false,
   showsVerticalScrollIndicator = true,
   stories,
+  storiesVersion,
   style,
 }: SmallStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
@@ -85,7 +85,7 @@ function SmallStoriesList({
       ListHeaderComponent={ListHeaderComponent}
       contentContainerStyle={[styles.listContent, contentContainerStyle]}
       data={storiesToRender}
-      extraData={extraData}
+      extraData={storiesVersion}
       indicatorStyle={indicatorStyle}
       keyExtractor={keyExtractor}
       numColumns={2}

@@ -27,6 +27,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     listContent: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
+      paddingHorizontal: HORIZONTAL_PADDING,
       paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 39,
     },
     listTitleText: {

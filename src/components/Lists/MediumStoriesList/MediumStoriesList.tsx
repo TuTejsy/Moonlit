@@ -12,10 +12,11 @@ import { makeStyles } from './MediumStoriesList.styles';
 
 interface MediumStoriesListPropTypes {
   stories: Results<StorySchema>;
+  storiesVersion: number;
   style?: ViewStyle;
 }
 
-function MediumStoriesList({ stories, style }: MediumStoriesListPropTypes) {
+function MediumStoriesList({ stories, storiesVersion, style }: MediumStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
@@ -37,6 +38,7 @@ function MediumStoriesList({ stories, style }: MediumStoriesListPropTypes) {
       horizontal
       contentContainerStyle={styles.listContent}
       data={stories}
+      extraData={storiesVersion}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}

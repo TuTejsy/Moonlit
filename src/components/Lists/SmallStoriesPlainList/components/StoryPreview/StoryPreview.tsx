@@ -18,9 +18,21 @@ interface StoryPreviewPropTypes {
   previewURL: string;
   storyId: number;
   title: string;
+  isSaved?: boolean;
+  onSaveStoryPress?: (storyId: number) => void;
+  showSaveButton?: boolean;
 }
 
-function StoryPreview({ description, isFree, previewURL, storyId, title }: StoryPreviewPropTypes) {
+function StoryPreview({
+  description,
+  isFree,
+  isSaved,
+  onSaveStoryPress,
+  previewURL,
+  showSaveButton,
+  storyId,
+  title,
+}: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const navigation = useNavigation<NavigationType>();
@@ -31,6 +43,10 @@ function StoryPreview({ description, isFree, previewURL, storyId, title }: Story
     });
   }, [navigation, storyId]);
 
+  const handleStoryFavoritePress = useCallback(() => {
+    onSaveStoryPress?.(storyId);
+  }, [onSaveStoryPress, storyId]);
+
   return (
     <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
       <View style={styles.imageContainer}>
@@ -38,9 +54,19 @@ function StoryPreview({ description, isFree, previewURL, storyId, title }: Story
         {!isFree && <Icons.Lock style={styles.lockIcon} />}
       </View>
       <View style={styles.content}>
-        <TextView style={styles.titleText}>{title}</TextView>
-        <TextView style={styles.descriptionText}>{description}</TextView>
+        <TextView numberOfLines={1} style={styles.titleText} type='bold'>
+          {title}
+        </TextView>
+        <TextView numberOfLines={1} style={styles.descriptionText}>
+          {description}
+        </TextView>
       </View>
+
+      {showSaveButton && (
+        <PressableView style={styles.button} onPress={handleStoryFavoritePress}>
+          <Icons.Favorite height={20} isFavorite={isSaved ?? false} width={20} />
+        </PressableView>
+      )}
     </PressableView>
   );
 }

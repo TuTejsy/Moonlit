@@ -19,7 +19,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     button: {
       alignItems: 'center',
-      backgroundColor: colors.opacityBlack(0.3),
       borderRadius: 24,
       height: 48,
       justifyContent: 'center',

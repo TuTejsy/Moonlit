@@ -18,16 +18,22 @@ import { makeStyles } from './DefaultSearchList.styles';
 
 interface DefaultSearchListPropTypes {
   allStories: Results<StorySchema>;
+  allStoriesVersion: number;
   freeStories: Results<StorySchema>;
+  freeStoriesVersion: number;
   popularStories: Results<StorySchema>;
+  popularStoriesVersion: number;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
 
 function DefaultSearchList({
   allStories,
+  allStoriesVersion,
   freeStories,
+  freeStoriesVersion,
   onScroll,
   popularStories,
+  popularStoriesVersion,
 }: DefaultSearchListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
@@ -57,20 +63,29 @@ function DefaultSearchList({
       onScrollToTop={handleScrollToTop}
     >
       <SectionHeader title='Popular tales' onSeeAllPress={noop} />
-      <MediumStoriesList stories={popularStories} style={styles.popularList} />
+      <MediumStoriesList
+        stories={popularStories}
+        storiesVersion={popularStoriesVersion}
+        style={styles.popularList}
+      />
 
       <CategoriesList />
 
       <PromotionBanner style={styles.promotionBanner} />
 
       <SectionHeader title='Free tales' onSeeAllPress={noop} />
-      <MediumStoriesList stories={freeStories} style={styles.freeList} />
+      <MediumStoriesList
+        stories={freeStories}
+        storiesVersion={freeStoriesVersion}
+        style={styles.freeList}
+      />
 
       <SectionHeader title='All tales' onSeeAllPress={noop} />
       <SmallStoriesList
         displayCount={6}
         isScrollable={false}
         stories={allStories}
+        storiesVersion={allStoriesVersion}
         style={styles.smallList}
       />
     </ScrollView>

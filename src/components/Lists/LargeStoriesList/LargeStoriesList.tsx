@@ -12,9 +12,10 @@ import { makeStyles } from './LargeStoriesList.styles';
 
 interface LargeStoriesListPropTypes {
   stories: Results<StorySchema>;
+  storiesVersion: number;
 }
 
-function LargeStoriesList({ stories }: LargeStoriesListPropTypes) {
+function LargeStoriesList({ stories, storiesVersion }: LargeStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
@@ -36,6 +37,7 @@ function LargeStoriesList({ stories }: LargeStoriesListPropTypes) {
       horizontal
       contentContainerStyle={styles.listContent}
       data={stories}
+      extraData={storiesVersion}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
