@@ -13,7 +13,7 @@ export interface AudioRecording {
 export interface Story {
   author: string;
   category_ids: string;
-  created_at_timestamp: number;
+  created_at_timestamp: string;
   description: string;
   full_cover_url: string;
   id: number;
@@ -25,7 +25,7 @@ export interface Story {
   revision: number;
   small_cover_url: string;
   type: number;
-  updated_at_timestamp: number;
+  updated_at_timestamp: string;
 }
 
 export interface GetStoriesResponse {

@@ -2,6 +2,8 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
+import { PREVIEW_HEIGHT, PREVIEW_WIDTH } from './StoryPreview.constants';
+
 export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     descriptionText: {
@@ -16,20 +18,30 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
     },
     preview: {
       alignItems: 'flex-start',
+      backgroundColor: colors.transparent,
       borderRadius: 16,
       flex: 1,
-      height: 180,
+      height: PREVIEW_HEIGHT,
       justifyContent: 'flex-end',
-      maxHeight: 180,
-      maxWidth: 260,
+      maxHeight: PREVIEW_HEIGHT,
+      maxWidth: PREVIEW_WIDTH,
       paddingHorizontal: 16,
       paddingVertical: 16,
-      width: 260,
+      width: PREVIEW_WIDTH,
     },
     previewContainer: {
       marginRight: 16,
-      maxWidth: 260,
+      maxWidth: PREVIEW_WIDTH,
       position: 'relative',
+    },
+    previewGradient: {
+      backgroundColor: colors.imagePurple,
+      borderRadius: 16,
+      height: PREVIEW_HEIGHT,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: PREVIEW_WIDTH,
     },
     titleText: {
       ...fonts.size_14,

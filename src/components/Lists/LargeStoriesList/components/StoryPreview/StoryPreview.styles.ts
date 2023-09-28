@@ -2,12 +2,22 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
+import { PREVIEW_HEIGHT, PREVIEW_WIDTH } from './StoryPreview.constants';
+
 export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     descriptionText: {
       ...fonts.size_15,
       color: colors.opacityWhite(0.6),
       marginTop: 4,
+    },
+    imageGradient: {
+      backgroundColor: colors.imagePurple,
+      height: PREVIEW_HEIGHT,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: PREVIEW_WIDTH,
     },
     lockIcon: {
       position: 'absolute',
@@ -16,6 +26,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
     },
     preview: {
       alignItems: 'flex-start',
+      backgroundColor: colors.transparent,
       flex: 1,
       justifyContent: 'flex-end',
       paddingHorizontal: 16,
@@ -24,17 +35,17 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
     },
     previewContainer: {
       borderRadius: 16,
-      height: 420,
+      height: PREVIEW_HEIGHT,
       marginRight: 16,
       overflow: 'hidden',
-      width: 280,
+      width: PREVIEW_WIDTH,
     },
     previewGradient: {
-      height: 420,
+      height: PREVIEW_HEIGHT,
       left: 0,
       position: 'absolute',
       top: 0,
-      width: 280,
+      width: PREVIEW_WIDTH,
     },
     titleText: {
       ...fonts.size_24,
