@@ -18,6 +18,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
     },
     preview: {
       alignItems: 'flex-start',
+      backgroundColor: colors.transparent,
       borderRadius: 16,
       flex: 1,
       height: PREVIEW_SIZE,
@@ -33,6 +34,15 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       marginRight: 16,
       maxWidth: PREVIEW_SIZE,
       position: 'relative',
+    },
+    previewGradient: {
+      backgroundColor: colors.imagePurple,
+      borderRadius: 16,
+      height: PREVIEW_SIZE,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: PREVIEW_SIZE,
     },
     titleText: {
       ...fonts.size_16,

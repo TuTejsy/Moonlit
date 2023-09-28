@@ -143,6 +143,7 @@ class RealmDB<ObjectType> {
               upserted.push(created);
             } catch (err) {
               notUpserted.push({ err: err as Error, object: input });
+              console.error(err);
             }
           }
 

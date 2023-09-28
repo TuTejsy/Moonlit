@@ -3,12 +3,12 @@ import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { Results } from 'realm';
 
+import StoryPreview from './components/StoryPreview/StoryPreview';
+import { makeStyles } from './LargeStoriesList.styles';
+
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
-
-import StoryPreview from './components/StoryPreview/StoryPreview';
-import { makeStyles } from './LargeStoriesList.styles';
 
 interface LargeStoriesListPropTypes {
   stories: Results<StorySchema>;

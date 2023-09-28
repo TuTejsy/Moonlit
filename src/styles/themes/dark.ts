@@ -8,6 +8,7 @@ const darkColors = {
   darkGrey: '#1A1A1A',
   darkPurple: '#080211',
   green: '#247F8A',
+  imagePurple: '#4C3F55',
   lightPurple: '#1F0647',
   opacityDarkPurple: (float: number) => `rgba(8, 12, 17, ${float})`,
   opacityGreen: (float: number) => `rgba(36, 127, 138, ${float})`,
