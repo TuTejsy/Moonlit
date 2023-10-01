@@ -31,8 +31,8 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   const [story, storyVersion] = useStory(storyId, ['name', 'small_preview_cover_cached_name']);
 
   const storyColor = useMemo(() => {
-    return story?.colors?.primary ?? colors.black;
-  }, [colors.black, story?.colors?.primary]);
+    return story?.colors?.primary ?? colors.imagePurple;
+  }, [colors.imagePurple, story?.colors?.primary]);
 
   const stylesContext = useMemo(
     () => ({

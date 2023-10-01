@@ -21,6 +21,7 @@ import StoryActions from './components/StoryActions/StoryActions';
 import StoryMeta from './components/StoryMeta/StoryMeta';
 import StoryPlayer from './components/StoryPlayer/StoryPlayer';
 import VoiceSettingsModal from './components/VoiceSettingsModal/VoiceSettingsModal';
+import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUpdate';
 import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
 import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
 import { useStoryPlayNotify } from './hooks/useStoryPlayNotify';
@@ -45,14 +46,16 @@ function StoryPlayerScreen() {
     'small_preview_cover_cached_name',
   ]);
 
+  const [isLoading] = useStoryAudioRecordingsUpdate(storyId);
+
   const coverURL = useMemo(
     () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
     [story],
   );
 
   const gradientColor = useMemo(
-    () => story?.colors?.primary ?? colors.black,
-    [colors.black, story?.colors?.primary],
+    () => story?.colors?.primary ?? colors.imagePurple,
+    [colors.imagePurple, story?.colors?.primary],
   );
 
   const stylesContext = useMemo(
@@ -181,7 +184,7 @@ function StoryPlayerScreen() {
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
 
-      <VoiceSettingsModal storyColor={gradientColor} />
+      <VoiceSettingsModal storyColor={gradientColor} storyId={storyId} />
     </LinearGradient>
   );
 }
