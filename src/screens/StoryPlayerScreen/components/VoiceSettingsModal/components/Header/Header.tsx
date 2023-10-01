@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { View } from 'react-native';
 
 import Animated, {
   Easing,
@@ -22,7 +23,13 @@ interface HeaderProps {
 function Header({ isModalExpandedSharedValue }: HeaderProps) {
   const styles = useMakeStyles(makeStyles);
 
-  const closeIconAnimatedStyle = useAnimatedStyle(() => ({
+  const buttonHeaderContainerAnimatedStyle = useAnimatedStyle(() => ({
+    display: isModalExpandedSharedValue.value === 1 ? 'none' : 'flex',
+    opacity: interpolate(isModalExpandedSharedValue.value, [0, 1], [1, 0]),
+  }));
+
+  const modalHeaderContainerAnimatedStyle = useAnimatedStyle(() => ({
+    display: isModalExpandedSharedValue.value === 0 ? 'none' : 'flex',
     opacity: interpolate(isModalExpandedSharedValue.value, [0, 1], [0, 1]),
   }));
 
@@ -38,16 +45,30 @@ function Header({ isModalExpandedSharedValue }: HeaderProps) {
 
   return (
     <PressableView style={styles.header} onPress={handleHeaderPress}>
-      <TextView style={styles.text} type='bold'>
-        Voice settings
-      </TextView>
+      <Animated.View style={[styles.buttonHeaderContainer, buttonHeaderContainerAnimatedStyle]}>
+        <Icons.Waveframe />
 
-      <Icons.Waveframe />
+        <View style={styles.buttonTitleContainer}>
+          <TextView style={styles.title} type='bold'>
+            Grandpa Voice
+          </TextView>
 
-      <Animated.View style={[styles.closeIconStyle, closeIconAnimatedStyle]}>
-        <PressableView onPress={handleCloseIconPress}>
-          <Icons.Close />
-        </PressableView>
+          <TextView style={styles.subTitle} type='regular'>
+            Select voice
+          </TextView>
+        </View>
+      </Animated.View>
+
+      <Animated.View style={[styles.modalHeaderContainer, modalHeaderContainerAnimatedStyle]}>
+        <View style={styles.modalTitleContainer}>
+          <PressableView style={styles.closeIcon} onPress={handleCloseIconPress}>
+            <Icons.Close />
+          </PressableView>
+
+          <TextView style={styles.title} type='medium'>
+            Select voice
+          </TextView>
+        </View>
       </Animated.View>
     </PressableView>
   );

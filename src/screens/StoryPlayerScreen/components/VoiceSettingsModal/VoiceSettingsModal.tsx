@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react';
-import { ScrollView, View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
@@ -12,10 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
-import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SCREEN_HEIGHT } from '@/constants/layout';
-import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
@@ -28,9 +24,10 @@ import { NavigationType } from './VoiceSettingsModal.types';
 
 interface VoiceSettingsModalProps {
   storyColor: string;
+  storyId: number;
 }
 
-function VoiceSettingsModal({ storyColor }: VoiceSettingsModalProps) {
+function VoiceSettingsModal({ storyColor, storyId }: VoiceSettingsModalProps) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
 
@@ -58,7 +55,6 @@ function VoiceSettingsModal({ storyColor }: VoiceSettingsModalProps) {
 
   const overlayAnimatedStyle = useAnimatedStyle(() => ({
     display: isModalExpandedSharedValue.value === 0 ? 'none' : 'flex',
-    opacity: interpolate(isModalExpandedSharedValue.value, [0, 1], [0, 0.5]),
     paddingHorizontal: interpolate(isModalExpandedSharedValue.value, [0, 1], [16, 0]),
   }));
 
@@ -89,10 +85,6 @@ function VoiceSettingsModal({ storyColor }: VoiceSettingsModalProps) {
     isModalExpandedSharedValue.value = withTiming(0);
   }, [isModalExpandedSharedValue]);
 
-  const handleAddVoicePress = useCallback(() => {
-    navigation.navigate(RootRoutes.GET_STARTED_TO_RECORD);
-  }, [navigation]);
-
   return (
     <>
       <Animated.View
@@ -105,31 +97,14 @@ function VoiceSettingsModal({ storyColor }: VoiceSettingsModalProps) {
         >
           <BlurView
             blurAmount={5}
-            blurType='light'
+            blurType='dark'
             reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
             style={styles.modal}
           >
             <Animated.View style={modalAnimatedStyle}>
               <Header isModalExpandedSharedValue={isModalExpandedSharedValue} />
-              <View style={styles.separator} />
 
-              <Animated.View style={[styles.content, animatedContentStyle]}>
-                <ScrollView style={styles.scrollView}>
-                  <PressableView style={styles.addVoiceButton} onPress={handleAddVoicePress}>
-                    <TextView style={styles.addVoiceText} type='bold'>
-                      Add your voice
-                    </TextView>
-                  </PressableView>
-                </ScrollView>
-                <View style={styles.bottomBar}>
-                  <View style={styles.separator} />
-                  <View style={styles.bottomBarContent}>
-                    <TextView style={styles.bottomText} type='bold'>
-                      Save settings
-                    </TextView>
-                  </View>
-                </View>
-              </Animated.View>
+              <Animated.View style={[styles.content, animatedContentStyle]} />
             </Animated.View>
           </BlurView>
         </Animated.View>

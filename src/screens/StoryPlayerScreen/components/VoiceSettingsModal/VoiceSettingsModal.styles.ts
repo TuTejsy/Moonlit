@@ -13,15 +13,6 @@ export const makeStyles = (
   { storyColor }: Context,
 ) =>
   StyleSheet.create({
-    addVoiceButton: {
-      alignItems: 'center',
-      backgroundColor: colors.white,
-      borderRadius: 16,
-      flex: 1,
-      height: 48,
-      justifyContent: 'center',
-      marginHorizontal: HORIZONTAL_PADDING,
-    },
     addVoiceText: {
       ...fonts.size_14,
       color: colors.opacityBlack(0.7),
@@ -56,7 +47,6 @@ export const makeStyles = (
       overflow: 'hidden',
     },
     overlay: {
-      backgroundColor: colors.black,
       height: SCREEN_HEIGHT,
       left: 0,
       position: 'absolute',

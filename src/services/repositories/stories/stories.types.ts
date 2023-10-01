@@ -1,13 +1,14 @@
 export interface AudioRecording {
-  audio_url: number;
-  created_at_timestamp: number;
+  audioURL: string;
+  createdAtTimestamp: string;
   duration: number;
-  extension: string;
   id: number;
+  is_free: boolean;
   name: string;
   size: number;
-  story_id: string;
-  updated_at_timestamp: number;
+  story_id: number;
+  updatedAtTimestamp: string;
+  voice_cover_url: string;
 }
 
 export interface Story {
@@ -30,4 +31,8 @@ export interface Story {
 
 export interface GetStoriesResponse {
   data: Story[];
+}
+
+export interface GetAudioRecordingsResponse {
+  data: AudioRecording[];
 }

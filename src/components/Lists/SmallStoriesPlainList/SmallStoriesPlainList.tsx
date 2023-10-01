@@ -94,7 +94,7 @@ function SmallStoriesPlainList({
 
           StoriesDB.update(ids, (story) => {
             story.is_favorite = false;
-            story.saved_at_timestamp = Date.now();
+            story.saved_at_timestamp = undefined;
           });
         }
       },

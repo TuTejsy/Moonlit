@@ -9,7 +9,7 @@ import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-c
 import RealmPlugin from 'realm-flipper-plugin-device';
 
 import { AppLogicProvider } from '@/components/Providers/AppLogicProvider/AppLogicProvider';
-import { StoriesDB } from '@/database';
+import { AudioRecordingsDB, StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
 import { SharedKeyboardHeightProvider } from '@/hooks/useSharedKeyboardHeight';
@@ -24,7 +24,9 @@ if (!__DEV__) {
 }
 
 StoriesDB.open();
+AudioRecordingsDB.open();
 // StoriesDB.open().then(() => StoriesDB.dropDatabase());
+// AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
 
 function App(): JSX.Element {
   const theme = useInitTheme();
