@@ -12,7 +12,7 @@ interface Context {
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyColor }: Context) =>
   StyleSheet.create({
     blurView: {
-      backgroundColor: storyColor ? convertHEXtoRGBA(storyColor, 0.6) : colors.imagePurple,
+      backgroundColor: storyColor ? convertHEXtoRGBA(storyColor, 0.7) : colors.imagePurple,
       borderRadius: 16,
       bottom: insets.bottom + TAB_BAR_STORY_PLAYER_HEIGHT + 3,
       height: TAB_BAR_STORY_PLAYER_HEIGHT,

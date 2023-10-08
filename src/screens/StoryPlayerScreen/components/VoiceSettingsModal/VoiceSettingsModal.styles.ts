@@ -34,30 +34,15 @@ export const makeStyles = (
       justifyContent: 'space-between',
     },
     modal: {
-      width: '100%',
+      height: SCREEN_HEIGHT,
+      width: SCREEN_WIDTH,
     },
     modalContainer: {
-      left: 0,
-      position: 'absolute',
-      width: '100%',
-      zIndex: 12,
-    },
-    modalContainerBackground: {
-      borderRadius: 16,
-      overflow: 'hidden',
-    },
-    overlay: {
       height: SCREEN_HEIGHT,
       left: 0,
       position: 'absolute',
       top: 0,
       width: SCREEN_WIDTH,
       zIndex: zIndex.max,
-    },
-    scrollView: {},
-    separator: {
-      backgroundColor: colors.opacityWhite(0.1),
-      flex: 1,
-      maxHeight: 1,
     },
   });

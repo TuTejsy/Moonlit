@@ -1,3 +1,0 @@
-export const MODAL_COLLAPSED_HEIGHT = 64;
-
-export const MODAL_BOTTOM_PADDING = 14;

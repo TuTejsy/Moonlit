@@ -13,22 +13,24 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
       const audioRecordings = await StoriesRepository.getAudioRecordings(storyId);
       const formattedAudioRecordings: Array<AudioRecordingSchema> = audioRecordings.map(
         (audioRecording) => {
-          const { createdAtTimestamp, updatedAtTimestamp } = audioRecording;
+          const { created_at_timestamp, updated_at_timestamp } = audioRecording;
 
-          const createdDate = new Date(createdAtTimestamp);
-          const updatedDate = new Date(updatedAtTimestamp);
+          const createdDate = new Date(created_at_timestamp);
+          const updatedDate = new Date(updated_at_timestamp);
 
           return {
-            audioURL: audioRecording.audioURL,
-            createdAtTimestamp: createdDate.getTime(),
+            audio_url: audioRecording.audio_url,
+            cover_url: audioRecording.voices.cover_url,
+            created_at_timestamp: createdDate.getTime(),
             duration: audioRecording.duration,
             id: audioRecording.id,
-            isFree: audioRecording.is_free,
+            is_free: audioRecording.voices.is_free,
             name: audioRecording.name,
             size: audioRecording.size,
             storyId: audioRecording.story_id,
-            updatedAtTimestamp: updatedDate.getTime(),
-            voiceCoverUrl: audioRecording.voice_cover_url,
+            updated_at_timestamp: updatedDate.getTime(),
+            voice_id: audioRecording.voices.id,
+            voice_name: audioRecording.voices.name,
           };
         },
       );
