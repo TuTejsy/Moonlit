@@ -1,12 +1,14 @@
 export interface AudioRecordingSchema {
-  audioURL: string;
-  createdAtTimestamp: number;
+  audio_url: string;
+  cover_url: string;
+  created_at_timestamp: number;
   duration: number;
   id: number;
-  isFree: boolean;
+  is_free: boolean;
   name: string;
   size: number;
   storyId: number;
-  updatedAtTimestamp: number;
-  voiceCoverUrl: string;
+  updated_at_timestamp: number;
+  voice_id: number;
+  voice_name: string;
 }

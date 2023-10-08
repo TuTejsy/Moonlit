@@ -9,7 +9,7 @@ import { audioPlayer } from '@/native-modules/native-modules';
 import { AUDIO_PLAYER_EMITTER_EVENT } from '@/native-modules/native-modules.types';
 
 const AUDIO_PATH =
-  'https://lshlquihgvuemvgpgamq.supabase.co/storage/v1/object/public/Test/Initialtales/test.mp3';
+  'https://qkicekcbtfabthpftkxx.supabase.co/storage/v1/object/public/Stories/Audio/Cinderella/Eleanor.mp3';
 
 const LOCAL_FILE_PATH = `${SANDBOX.DOCUMENTS.STORIES}/test.mp3`;
 

@@ -3,6 +3,7 @@ import { Download } from './common/Download';
 import { DownloadRound } from './common/DownloadRound';
 import { Favorite } from './common/Favorite';
 import { FavoriteBig } from './common/FavoriteBig';
+import { Loader } from './common/Loader';
 import { Lock } from './common/Lock';
 import { Search } from './common/Search';
 import { Share } from './common/Share';
@@ -33,6 +34,7 @@ export const Icons = {
   GoBack,
   GoForward,
   HomeTab,
+  Loader,
   Lock,
   PauseBig,
   PauseSmall,

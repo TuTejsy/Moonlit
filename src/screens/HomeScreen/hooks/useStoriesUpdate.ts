@@ -19,7 +19,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
 
         return {
           author: story.author,
-          category_ids: [0], // story.category_ids.split(', ').map((value) => Number(value)),
+          category_ids: [story.category_ids], // , .split(', ').map((value) => Number(value)),
           created_at_timestamp: createdDate.getTime(),
           description: story.description,
           full_cover_url: story.full_cover_url,
@@ -30,7 +30,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
           played_count: story.played_count,
           revision: story.revision,
           small_cover_url: story.small_cover_url,
-          type: 0, // story.type,
+          type: story.type,
           updated_at_timestamp: updatedDate.getTime(),
         } as StorySchema;
       });

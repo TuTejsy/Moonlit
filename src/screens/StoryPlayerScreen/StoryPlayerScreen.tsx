@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -46,7 +46,7 @@ function StoryPlayerScreen() {
     'small_preview_cover_cached_name',
   ]);
 
-  const [isLoading] = useStoryAudioRecordingsUpdate(storyId);
+  const [areRecordingsLoading] = useStoryAudioRecordingsUpdate(storyId);
 
   const coverURL = useMemo(
     () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
