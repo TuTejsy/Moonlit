@@ -1,9 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
-
-import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';

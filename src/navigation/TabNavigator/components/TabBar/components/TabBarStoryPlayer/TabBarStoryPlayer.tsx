@@ -8,10 +8,11 @@ import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SANDBOX } from '@/constants/common';
+import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
 import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useStoryPlayer } from '@/hooks/useStoryPlayer';
+import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { navigationService } from '@/services/navigation/navigationService';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
@@ -23,12 +24,13 @@ interface TabBarStoryPlayerProps {
   storyId: number;
 }
 
-const DURATION = 4 * 60 + 2;
-
 export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   const { colors } = useTheme();
 
   const [story, storyVersion] = useStory(storyId, ['name', 'small_preview_cover_cached_name']);
+
+  const { selectedAudioRecording, selectedAudioRecordingVersion } =
+    useSelectedAudioRecording(storyId);
 
   const storyColor = useMemo(() => {
     return story?.colors?.primary ?? colors.imagePurple;
@@ -58,7 +60,12 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
     startStoryPlaying,
     stopStoryPlaying,
     storyPlayingSharedValue,
-  } = useStoryPlayer(story?.name ?? '', coverURL);
+  } = useStoryPlayer({
+    audioRecordingId: selectedAudioRecording?.id,
+    coverPath: coverURL,
+    storyId,
+    title: story?.name ?? '',
+  });
 
   const progressSharedValue = useSharedValue(0);
 
@@ -73,15 +80,19 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   }, [storyId]);
 
   useEffect(() => {
-    progressSharedValue.value = (playedTime / DURATION) * 100;
+    if (!selectedAudioRecording) {
+      return;
+    }
+
+    progressSharedValue.value = (playedTime / selectedAudioRecording.duration) * 100;
 
     if (isStoryPlaying) {
       progressSharedValue.value = withTiming(100, {
-        duration: (DURATION - playedTime) * 1000,
+        duration: (selectedAudioRecording.duration - playedTime) * 1000,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isStoryPlaying, playedTime]);
+  }, [isStoryPlaying, playedTime, selectedAudioRecording?.duration]);
 
   if (!story) {
     return null;

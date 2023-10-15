@@ -23,10 +23,10 @@ if (!__DEV__) {
   console.error = () => undefined;
 }
 
-StoriesDB.open();
-AudioRecordingsDB.open();
-// StoriesDB.open().then(() => StoriesDB.dropDatabase());
-// AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
+// StoriesDB.open();
+// AudioRecordingsDB.open();
+StoriesDB.open().then(() => StoriesDB.dropDatabase());
+AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
 
 function App(): JSX.Element {
   const theme = useInitTheme();

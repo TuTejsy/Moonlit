@@ -5,26 +5,57 @@ import RNFS from 'react-native-fs';
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
 import { SANDBOX } from '@/constants/common';
+import { AudioRecordingsDB } from '@/database';
 import { audioPlayer } from '@/native-modules/native-modules';
 import { AUDIO_PLAYER_EMITTER_EVENT } from '@/native-modules/native-modules.types';
+import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
+import { generateAudioRecordingCachedName } from '@/utils/generators/generateAudioRecordingCachedName';
 
-const AUDIO_PATH =
-  'https://qkicekcbtfabthpftkxx.supabase.co/storage/v1/object/public/Stories/Audio/Cinderella/Eleanor.mp3';
+import { useAudioRecording } from '../database/useAudioRecording';
 
-const LOCAL_FILE_PATH = `${SANDBOX.DOCUMENTS.STORIES}/test.mp3`;
+import { notifyStoryPlay } from './utils/notifyStoryPlay';
 
-const DURATION = 4 * 60 + 2;
+interface useStoryPlayerProps {
+  coverPath: string;
+  storyId: number;
+  title: string;
+  audioRecordingId?: number;
+}
 
-export function useStoryPlayer(title: string, coverPath: string) {
+export function useStoryPlayer({
+  audioRecordingId,
+  coverPath,
+  storyId,
+  title,
+}: useStoryPlayerProps) {
   const eventEmmiterRef = useRef(new NativeEventEmitter(audioPlayer));
   const audioPlayerDidFinishPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
   const audioPlayerDidInterruptPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
+  const isStoryPlayNotifiedRef = useRef(false);
+
+  const [selectedAudioRecording, selectedAudioRecordingVersion] = useAudioRecording(
+    audioRecordingId,
+    ['played_time', 'audio_url', 'cached_name', 'duration'],
+  );
 
   const [isStoryPlaying, setIsStoryPlaying] = useState(false);
-  const [playedTime, setPlayedTime] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const playedTime = selectedAudioRecording?.played_time ?? 0;
 
   const storyPlayingSharedValue = useSharedValue(0);
   const isStoryPlayingSharedValue = useDerivedValue(() => storyPlayingSharedValue.value > 0);
+
+  const setPlayedTime = useCallback(
+    (playedTime: number) => {
+      AudioRecordingsDB.modify(() => {
+        if (selectedAudioRecording) {
+          selectedAudioRecording.played_time = playedTime;
+        }
+      });
+    },
+    [selectedAudioRecording],
+  );
 
   const stopStoryPlaying = useCallback(async () => {
     try {
@@ -48,34 +79,66 @@ export function useStoryPlayer(title: string, coverPath: string) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [setPlayedTime]);
 
   const startStoryPlaying = useCallback(async () => {
-    try {
-      if (!(await RNFS.exists(LOCAL_FILE_PATH))) {
-        const result = await RNFS.downloadFile({
-          fromUrl: AUDIO_PATH,
-          toFile: LOCAL_FILE_PATH,
-        });
+    if (!selectedAudioRecording) {
+      return;
+    }
 
-        await result.promise;
+    setIsStoryPlaying(true);
+
+    try {
+      let filePath: string;
+
+      if (selectedAudioRecording.cached_name) {
+        filePath = `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecording.cached_name}`;
+      } else {
+        setIsLoading(true);
+
+        const selectedAudioRecordingCachedName =
+          generateAudioRecordingCachedName(selectedAudioRecording);
+        filePath = `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedName}`;
+
+        if (!(await RNFS.exists(filePath))) {
+          const result = await RNFS.downloadFile({
+            fromUrl: formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
+            toFile: filePath,
+          });
+
+          await result.promise;
+
+          await AudioRecordingsDB.modify(() => {
+            selectedAudioRecording.cached_name = selectedAudioRecordingCachedName;
+          });
+        }
+
+        setIsLoading(false);
       }
 
-      await audioPlayer.setToPlayFile({ coverPath, filePath: LOCAL_FILE_PATH, fileTitle: title });
+      await audioPlayer.setToPlayFile({ coverPath, filePath, fileTitle: title });
       await audioPlayer.startPlayingFromTime(playedTime);
-
-      setIsStoryPlaying(true);
     } catch (err) {
       console.error(err);
     }
-  }, [coverPath, playedTime, title]);
+
+    if (!isStoryPlayNotifiedRef.current) {
+      isStoryPlayNotifiedRef.current = true;
+      notifyStoryPlay(storyId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coverPath, playedTime, selectedAudioRecordingVersion, title, storyId]);
 
   const moveStoryPlayingToTime = useCallback(
     async (playedTime: number) => {
+      if (!selectedAudioRecording) {
+        return;
+      }
+
       try {
-        if (playedTime > DURATION) {
+        if (playedTime > selectedAudioRecording.duration) {
           stopStoryPlaying();
-          setPlayedTime(DURATION);
+          setPlayedTime(selectedAudioRecording.duration);
           return;
         }
 
@@ -92,7 +155,8 @@ export function useStoryPlayer(title: string, coverPath: string) {
         console.error(err);
       }
     },
-    [isStoryPlaying, stopStoryPlaying],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isStoryPlaying, selectedAudioRecordingVersion, stopStoryPlaying, setPlayedTime],
   );
 
   useEffect(() => {
@@ -119,6 +183,7 @@ export function useStoryPlayer(title: string, coverPath: string) {
   }, []);
 
   return {
+    isStoryLoading: isLoading,
     isStoryPlaying,
     isStoryPlayingSharedValue,
     moveStoryPlayingToTime,

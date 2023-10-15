@@ -15,7 +15,7 @@ import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioReco
 import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useStoryPlayer } from '@/hooks/useStoryPlayer';
+import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import StoryActions from './components/StoryActions/StoryActions';
@@ -25,7 +25,6 @@ import VoiceSettingsModal from './components/VoiceSettingsModal/VoiceSettingsMod
 import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUpdate';
 import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
 import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
-import { useStoryPlayNotify } from './hooks/useStoryPlayNotify';
 import { makeStyles } from './StoryPlayerScreen.styles';
 import { NavigationType, RouteType } from './StoryPlayerScreen.types';
 
@@ -70,6 +69,7 @@ function StoryPlayerScreen() {
   const styles = useMakeStyles(makeStyles, stylesContext);
 
   const {
+    isStoryLoading,
     isStoryPlaying,
     isStoryPlayingSharedValue,
     moveStoryPlayingToTime,
@@ -79,7 +79,12 @@ function StoryPlayerScreen() {
     startStoryPlaying,
     stopStoryPlaying,
     storyPlayingSharedValue,
-  } = useStoryPlayer(story?.name ?? '', coverURL);
+  } = useStoryPlayer({
+    audioRecordingId: selectedAudioRecording?.id,
+    coverPath: coverURL,
+    storyId,
+    title: story?.name ?? '',
+  });
 
   const { coverAnimatedStyles, storyContainerAnimatedStyles } = useStoryCoverAnimation(
     storyPlayingSharedValue,
@@ -91,8 +96,6 @@ function StoryPlayerScreen() {
   const handleGoBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
-
-  useStoryPlayNotify(storyId);
 
   useAnimatedReaction(
     () => {
@@ -177,6 +180,8 @@ function StoryPlayerScreen() {
       </GestureDetector>
 
       <StoryPlayer
+        audioRecordingDuration={selectedAudioRecording?.duration || 0}
+        isStoryLoading={isStoryLoading}
         isStoryPlaying={isStoryPlaying}
         moveStoryPlayingToTime={moveStoryPlayingToTime}
         pauseStoryPlaying={pauseStoryPlaying}
