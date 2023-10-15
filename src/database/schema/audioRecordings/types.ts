@@ -11,4 +11,6 @@ export interface AudioRecordingSchema {
   updated_at_timestamp: number;
   voice_id: number;
   voice_name: string;
+  cached_name?: string;
+  played_time?: number;
 }

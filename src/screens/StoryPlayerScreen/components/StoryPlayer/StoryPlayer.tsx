@@ -22,6 +22,8 @@ import ProgressBar from './components/ProgressBar/ProgressBar';
 import { makeStyles } from './StoryPlayer.styles';
 
 interface StoryPlayerPropTypes {
+  audioRecordingDuration: number;
+  isStoryLoading: boolean;
   isStoryPlaying: boolean;
   moveStoryPlayingToTime: (playedTime: number) => void;
   pauseStoryPlaying: () => void;
@@ -33,9 +35,9 @@ interface StoryPlayerPropTypes {
   storyName?: string;
 }
 
-const DURATION = 4 * 60 + 2;
-
 function StoryPlayer({
+  audioRecordingDuration,
+  isStoryLoading,
   isStoryPlaying,
   moveStoryPlayingToTime,
   pauseStoryPlaying,
@@ -52,8 +54,6 @@ function StoryPlayer({
   const insets = useSafeAreaInsets();
 
   const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite(storyId);
-
-  const [isStoryLoading, setIsStoryLoading] = useState(true);
 
   const animatedBlurViewContainerStyle = useAnimatedStyle(() => {
     return {
@@ -137,7 +137,7 @@ function StoryPlayer({
         ) : (
           <>
             <ProgressBar
-              duration={DURATION}
+              duration={audioRecordingDuration}
               isStoryPlaying={isStoryPlaying}
               moveToTime={moveStoryPlayingToTime}
               playedTime={playedTime}

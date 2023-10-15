@@ -1,5 +1,7 @@
 import { StorySchema } from '@/database/schema/stories/types';
 
+import { getFileExtension } from './getFileExtension';
+
 type StoryCoverType = 'small' | 'medium' | 'full';
 
 const mapStoryPreivewTypeToPreviewURL: {
@@ -12,7 +14,7 @@ const mapStoryPreivewTypeToPreviewURL: {
 
 export function generateStoryCoverCachedName(story: StorySchema, type: StoryCoverType) {
   const key = mapStoryPreivewTypeToPreviewURL[type];
-  const fileExtension = story[key].split('.').at(-1);
+  const fileExtension = getFileExtension(story[key]);
 
   return `${story.id}.${fileExtension}`;
 }
