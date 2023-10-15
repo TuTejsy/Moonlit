@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import { StoriesDB } from '@/database';
 
-import useStory from './useStory';
+import { useStory } from './useStory';
 
 export function useHandleStoryFavorite(storyId: number) {
   const [story, storyVersion] = useStory(storyId, ['is_favorite']);

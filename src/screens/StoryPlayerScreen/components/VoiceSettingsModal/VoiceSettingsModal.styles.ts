@@ -4,18 +4,17 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-interface Context {
-  storyColor: string;
-}
-
-export const makeStyles = (
-  { colors, fonts, insets, zIndex }: MakeStylesProps,
-  { storyColor }: Context,
-) =>
+export const makeStyles = ({ colors, dw, fonts, insets, zIndex }: MakeStylesProps) =>
   StyleSheet.create({
     addVoiceText: {
       ...fonts.size_14,
       color: colors.opacityBlack(0.7),
+    },
+    audioRecordingsList: {
+      flex: 1,
+    },
+    audioRecordingsListContainer: {
+      paddingHorizontal: HORIZONTAL_PADDING - dw(7.5),
     },
     bottomBar: {
       height: 64,

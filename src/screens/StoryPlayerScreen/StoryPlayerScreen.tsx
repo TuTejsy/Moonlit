@@ -11,7 +11,8 @@ import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
-import useStory from '@/hooks/database/useStory';
+import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
+import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer';
@@ -45,6 +46,9 @@ function StoryPlayerScreen() {
     'description',
     'small_preview_cover_cached_name',
   ]);
+
+  const { selectedAudioRecording, selectedAudioRecordingVersion, setSelectedAudioRecording } =
+    useSelectedAudioRecording(storyId);
 
   const [areRecordingsLoading] = useStoryAudioRecordingsUpdate(storyId);
 
@@ -184,7 +188,13 @@ function StoryPlayerScreen() {
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
 
-      <VoiceSettingsModal storyColor={gradientColor} storyId={storyId} />
+      <VoiceSettingsModal
+        selectedAudioRecordingId={selectedAudioRecording?.id}
+        selectedAudioRecordingVersion={selectedAudioRecordingVersion}
+        setSelectedAudioRecording={setSelectedAudioRecording}
+        storyColor={gradientColor}
+        storyId={storyId}
+      />
     </LinearGradient>
   );
 }
