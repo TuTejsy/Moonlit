@@ -17,6 +17,7 @@ export interface StorySchema {
   colors?: ColorSchema | null;
   played_at_timestamp?: number;
   saved_at_timestamp?: number;
+  selected_audio_recording_id?: number;
   small_preview_cover_cached_name?: string;
 }
 

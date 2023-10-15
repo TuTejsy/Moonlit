@@ -8,7 +8,7 @@ import { mapById } from '@/utils/getMapById';
 
 import useMutableValue from '../useMutableValue';
 
-function useStory(
+export function useStory(
   storyId: number,
   propsToWatch?: Array<keyof StorySchema>,
 ): [StorySchema | undefined | null, number] {
@@ -57,5 +57,3 @@ function useStory(
 
   return [story, storyVersion];
 }
-
-export default useStory;

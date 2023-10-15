@@ -7,7 +7,7 @@ export interface AudioRecordingSchema {
   is_free: boolean;
   name: string;
   size: number;
-  storyId: number;
+  story_id: number;
   updated_at_timestamp: number;
   voice_id: number;
   voice_name: string;

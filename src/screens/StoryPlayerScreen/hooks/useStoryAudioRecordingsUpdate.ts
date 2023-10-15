@@ -27,7 +27,7 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
             is_free: audioRecording.voices.is_free,
             name: audioRecording.name,
             size: audioRecording.size,
-            storyId: audioRecording.story_id,
+            story_id: audioRecording.story_id,
             updated_at_timestamp: updatedDate.getTime(),
             voice_id: audioRecording.voices.id,
             voice_name: audioRecording.voices.name,

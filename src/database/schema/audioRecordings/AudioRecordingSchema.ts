@@ -12,7 +12,7 @@ export const AudioRecordingSchema: ObjectSchema = {
     is_free: 'bool',
     name: 'string',
     size: 'int',
-    storyId: 'int',
+    story_id: 'int',
     updated_at_timestamp: 'int',
     voice_id: 'int',
     voice_name: 'string',
