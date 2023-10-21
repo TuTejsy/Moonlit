@@ -1,15 +1,16 @@
 import React, { useCallback, useMemo } from 'react';
 import { Image, View } from 'react-native';
 
+import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useTheme } from '@/hooks/theme/useTheme';
 
 import { makeStyles } from './AudioRecording.styles';
 
 interface AudioRecordingProps {
   coverUrl: string;
+  isFree: boolean;
   isSelected: boolean;
   name: string;
   onSelect: (recordingId: number) => void;
@@ -18,6 +19,7 @@ interface AudioRecordingProps {
 
 function AudioRecording({
   coverUrl,
+  isFree,
   isSelected,
   name,
   onSelect,
@@ -25,7 +27,6 @@ function AudioRecording({
 }: AudioRecordingProps) {
   const stylesContext = useMemo(() => ({ isSelected }), [isSelected]);
   const styles = useMakeStyles(makeStyles, stylesContext);
-  const { colors } = useTheme();
 
   const handleSelect = useCallback(() => {
     onSelect(recordingId);
@@ -33,7 +34,20 @@ function AudioRecording({
 
   return (
     <PressableView style={styles.audioRecordingContainer} onPress={handleSelect}>
-      <View style={styles.indicatorsContainer} />
+      <View style={styles.indicatorsContainer}>
+        {isSelected ? (
+          <>
+            {isFree && (
+              <TextView style={styles.freeLabel} type='medium'>
+                Free
+              </TextView>
+            )}
+            <Icons.Check style={styles.rightIcon} />
+          </>
+        ) : (
+          !isFree && <Icons.Lock style={styles.rightIcon} />
+        )}
+      </View>
       <Image source={{ uri: coverUrl }} style={styles.voiceAvatar} />
       <TextView style={styles.text} type='bold'>
         {name}

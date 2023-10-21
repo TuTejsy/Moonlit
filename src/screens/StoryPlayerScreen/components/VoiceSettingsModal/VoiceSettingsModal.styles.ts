@@ -4,7 +4,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dw, fonts, insets, zIndex }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStylesProps) =>
   StyleSheet.create({
     addVoiceText: {
       ...fonts.size_14,
@@ -15,6 +15,7 @@ export const makeStyles = ({ colors, dw, fonts, insets, zIndex }: MakeStylesProp
     },
     audioRecordingsListContainer: {
       paddingHorizontal: HORIZONTAL_PADDING - dw(7.5),
+      paddingTop: 10,
     },
     bottomBar: {
       height: 64,
@@ -32,8 +33,16 @@ export const makeStyles = ({ colors, dw, fonts, insets, zIndex }: MakeStylesProp
       flex: 1,
       justifyContent: 'space-between',
     },
+    gradient: {
+      bottom: 0,
+      height: dh(306),
+      left: 0,
+      position: 'absolute',
+      width: '100%',
+    },
     modal: {
       height: SCREEN_HEIGHT,
+      position: 'relative',
       width: SCREEN_WIDTH,
     },
     modalContainer: {
@@ -43,5 +52,9 @@ export const makeStyles = ({ colors, dw, fonts, insets, zIndex }: MakeStylesProp
       top: 0,
       width: SCREEN_WIDTH,
       zIndex: zIndex.max,
+    },
+    unlockButton: {
+      marginBottom: insets.bottom + 17,
+      marginHorizontal: HORIZONTAL_PADDING,
     },
   });

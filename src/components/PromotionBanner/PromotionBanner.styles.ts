@@ -7,22 +7,6 @@ import { PROMOTION_BANNER_HEIGHT, PROMOTION_BANNER_WIDTH } from './PromotionBann
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
-    button: {
-      alignItems: 'center',
-      backgroundColor: colors.opacityWhite(0.2),
-      borderRadius: 24,
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginBottom: 16,
-      marginTop: 25,
-      maxHeight: 48,
-    },
-    buttonText: {
-      ...fonts.size_16,
-      color: colors.white,
-      marginLeft: 23,
-    },
     container: {
       backgroundColor: colors.lightPurple,
       borderRadius: 16,
@@ -57,9 +41,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     title: {
       ...fonts.size_32,
       color: colors.white,
-    },
-    unlockIcon: {
-      marginRight: 8,
     },
     voicesImage: {
       marginTop: 24,
