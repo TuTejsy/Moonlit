@@ -10,7 +10,6 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useImageLoaded } from '@/hooks/useImageLoaded';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 
 import { makeStyles } from './StoryPreview.styles';
@@ -19,17 +18,16 @@ import { NavigationType } from './StoryPreview.types';
 interface StoryPreviewPropTypes {
   description: string;
   isFree: boolean;
+  isImageLoaded: boolean;
   previewURL: string;
   storyId: number;
   title: string;
 }
 
 export const StoryPreview = React.memo(
-  ({ description, isFree, previewURL, storyId, title }: StoryPreviewPropTypes) => {
+  ({ description, isFree, isImageLoaded, previewURL, storyId, title }: StoryPreviewPropTypes) => {
     const styles = useMakeStyles(makeStyles);
     const { colors } = useTheme();
-
-    const { handleImageLoad, isImageLoaded } = useImageLoaded();
 
     const navigation = useNavigation<NavigationType>();
 
@@ -56,7 +54,6 @@ export const StoryPreview = React.memo(
           resizeMode={isImageLoaded ? 'cover' : 'center'}
           source={{ uri: previewURL }}
           style={styles.preview}
-          onLoad={handleImageLoad}
         >
           {isImageLoaded && (
             <LinearGradient

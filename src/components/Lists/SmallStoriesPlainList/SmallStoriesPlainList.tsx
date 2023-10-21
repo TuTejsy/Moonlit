@@ -11,11 +11,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Results } from 'realm';
 
+import { SANDBOX } from '@/constants/common';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { generateMapStoriesToSaved } from '@/utils/generators/generateMapStoriesToSaved';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
@@ -61,7 +61,7 @@ export const SmallStoriesPlainList = React.memo(
             description={item.description}
             isFree={item.is_free}
             isSaved={mapStoriesToSaved.get(item.id)}
-            previewURL={formatServerFileURLToAbsolutePath(item.small_cover_url)}
+            previewURL={`file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${item.small_cover_cached_name}`}
             showSaveButton={showSaveButton}
             storyId={item.id}
             title={item.name}

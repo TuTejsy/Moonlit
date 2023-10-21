@@ -18,19 +18,19 @@ export function useDownloadStoriesPreviews() {
     );
 
     const storiesWithoutFulCover = StoriesDB.objects().filtered(
-      'small_cover_cached_name != nil && medium_cover_cached_name == nil && full_cover_cached_name != nil',
+      'small_cover_cached_name != nil && medium_cover_cached_name != nil && full_cover_cached_name == nil',
     );
 
     const smallPreviewsListener: CollectionChangeCallback<StorySchema> = (collection, changes) => {
-      processStoriesWithoutPreviews(storiesWithoutSmallPreview, 'small');
+      processStoriesWithoutPreviews([...storiesWithoutSmallPreview], 'small');
     };
 
     const mediumPreviewsListener: CollectionChangeCallback<StorySchema> = (collection, changes) => {
-      processStoriesWithoutPreviews(storiesWithoutMediumPreview, 'medium');
+      processStoriesWithoutPreviews([...storiesWithoutMediumPreview], 'medium');
     };
 
     const fullCoversListener: CollectionChangeCallback<StorySchema> = (collection, changes) => {
-      processStoriesWithoutPreviews(storiesWithoutFulCover, 'full');
+      processStoriesWithoutPreviews([...storiesWithoutFulCover], 'full');
     };
 
     StoriesDB.performAfterTransactionComplete(() => {
