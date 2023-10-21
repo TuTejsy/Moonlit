@@ -1,3 +1,4 @@
+import { Check } from './common/Check';
 import { Clock } from './common/Clock';
 import { Download } from './common/Download';
 import { DownloadRound } from './common/DownloadRound';
@@ -24,6 +25,7 @@ import { PlaySmall } from './player/PlaySmall';
 
 export const Icons = {
   ArrowBack,
+  Check,
   Clock,
   Close,
   Download,

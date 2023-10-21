@@ -58,7 +58,7 @@ function VoiceSettingsButton({
     >
       <PressableView onPress={handleVoiceSettingsButtonPress}>
         <BlurView
-          blurAmount={0}
+          blurAmount={5}
           blurType='light'
           reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
           style={styles.voiceSettingsButton}

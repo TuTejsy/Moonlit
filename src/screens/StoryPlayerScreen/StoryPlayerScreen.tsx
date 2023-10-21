@@ -99,9 +99,12 @@ function StoryPlayerScreen() {
   const handleSelectAudioRecording = useCallback(
     (audioRecordingId: number) => {
       setSelectedAudioRecording(audioRecordingId);
-      pauseStoryPlaying();
+
+      if (isStoryPlaying) {
+        pauseStoryPlaying();
+      }
     },
-    [pauseStoryPlaying, setSelectedAudioRecording],
+    [pauseStoryPlaying, setSelectedAudioRecording, isStoryPlaying],
   );
 
   useAnimatedReaction(
@@ -174,6 +177,7 @@ function StoryPlayerScreen() {
 
       <StoryPlayer
         audioRecordingDuration={selectedAudioRecording?.duration || 0}
+        isStoryDownloaded={!!selectedAudioRecording?.cached_name}
         isStoryLoading={isStoryLoading}
         isStoryPlaying={isStoryPlaying}
         moveStoryPlayingToTime={moveStoryPlayingToTime}

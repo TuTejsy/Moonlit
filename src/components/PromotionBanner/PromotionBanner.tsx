@@ -9,10 +9,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { Icons } from '@/assets/icons/Icons';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
+import { UnlockButton } from '../Buttons/UnlockButton/UnlockButton';
 import { TextView } from '../Primitives/TextView/TextView';
 
 import bannerImage from './images/banner/banner.png';
@@ -79,12 +79,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
         <Image source={voicesImage} style={styles.voicesImage} />
 
-        <View style={styles.button}>
-          <TextView style={styles.buttonText} type='bold'>
-            Get 3 days free
-          </TextView>
-          <Icons.Unlock style={styles.unlockIcon} />
-        </View>
+        <UnlockButton>Get 3 days free</UnlockButton>
       </View>
     </View>
   );

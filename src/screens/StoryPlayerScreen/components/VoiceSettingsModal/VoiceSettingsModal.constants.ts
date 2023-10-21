@@ -1,0 +1,3 @@
+export const MORE_VOICES_PLACEHOLDER = {
+  id: 'MORE_VOICES_PLACEHOLDER',
+};

@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
+import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -9,6 +10,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -17,7 +19,9 @@ import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServ
 
 import AudioRecording from './components/AudioRecording/AudioRecording';
 import Header from './components/Header/Header';
+import { MoreVoicesPlaceholder } from './components/MoreVoicesPlaceholder/MoreVoicesPlaceholder';
 import VoiceSettingsButton from './components/VoiceSettingsButton/VoiceSettingsButton';
+import { MORE_VOICES_PLACEHOLDER } from './VoiceSettingsModal.constants';
 import { makeStyles } from './VoiceSettingsModal.styles';
 
 interface VoiceSettingsModalProps {
@@ -54,6 +58,12 @@ function VoiceSettingsModal({
 
   const [audioRecordings, auidioRecoridngsVersion] = useAudioRecordings(`story_id = '${storyId}'`);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const flatListData = useMemo(
+    () => [...audioRecordings, MORE_VOICES_PLACEHOLDER],
+    [auidioRecoridngsVersion],
+  );
+
   const handleClosePress = useCallback(() => {
     isModalExpandedSharedValue.value = withTiming(0);
   }, [isModalExpandedSharedValue]);
@@ -67,13 +77,20 @@ function VoiceSettingsModal({
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<AudioRecordingSchema>) => {
+    ({ item }: ListRenderItemInfo<AudioRecordingSchema | typeof MORE_VOICES_PLACEHOLDER>) => {
+      if (item.id === MORE_VOICES_PLACEHOLDER.id) {
+        return <MoreVoicesPlaceholder />;
+      }
+
+      const audioRecording = item as AudioRecordingSchema;
+
       return (
         <AudioRecording
-          coverUrl={formatServerFileURLToAbsolutePath(item.cover_url)}
+          coverUrl={formatServerFileURLToAbsolutePath(audioRecording.cover_url)}
+          isFree={audioRecording.is_free}
           isSelected={selectedAudioRecordingId === item.id}
-          name={item.voice_name}
-          recordingId={item.id}
+          name={audioRecording.voice_name}
+          recordingId={audioRecording.id}
           onSelect={handleSelectAudioRecording}
         />
       );
@@ -81,7 +98,10 @@ function VoiceSettingsModal({
     [handleSelectAudioRecording, selectedAudioRecordingId],
   );
 
-  const keyExtractor = useCallback((item: AudioRecordingSchema) => `${item.id}`, []);
+  const keyExtractor = useCallback(
+    (item: AudioRecordingSchema | typeof MORE_VOICES_PLACEHOLDER) => `${item.id}`,
+    [],
+  );
 
   return (
     <>
@@ -96,13 +116,23 @@ function VoiceSettingsModal({
 
           <FlatList
             contentContainerStyle={styles.audioRecordingsListContainer}
-            data={audioRecordings}
+            data={flatListData}
             extraData={auidioRecoridngsVersion + selectedAudioRecordingVersion}
             keyExtractor={keyExtractor}
             numColumns={2}
             renderItem={renderItem}
             style={styles.audioRecordingsList}
           />
+
+          <LinearGradient
+            angle={180}
+            colors={[colors.opacityLightPurple(0), colors.opacityLightPurple(1)]}
+            locations={[0, 1]}
+            pointerEvents='none'
+            style={styles.gradient}
+          />
+
+          <UnlockButton style={styles.unlockButton}>Unlock all voices</UnlockButton>
         </BlurView>
       </Animated.View>
 
