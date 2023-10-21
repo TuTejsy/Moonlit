@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
 import Animated, {
@@ -21,9 +21,16 @@ import { makeStyles } from './VoiceSettingsButton.styles';
 interface VoiceSettingsButtonProps {
   isModalExpandedSharedValue: SharedValue<number>;
   storyColor: string;
+  voiceCoverUrl: string;
+  voiceName: string;
 }
 
-function VoiceSettingsButton({ isModalExpandedSharedValue, storyColor }: VoiceSettingsButtonProps) {
+function VoiceSettingsButton({
+  isModalExpandedSharedValue,
+  storyColor,
+  voiceCoverUrl,
+  voiceName,
+}: VoiceSettingsButtonProps) {
   const stylesContext = useMemo(
     () => ({
       storyColor,
@@ -51,7 +58,7 @@ function VoiceSettingsButton({ isModalExpandedSharedValue, storyColor }: VoiceSe
     >
       <PressableView onPress={handleVoiceSettingsButtonPress}>
         <BlurView
-          blurAmount={5}
+          blurAmount={0}
           blurType='light'
           reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
           style={styles.voiceSettingsButton}
@@ -60,7 +67,7 @@ function VoiceSettingsButton({ isModalExpandedSharedValue, storyColor }: VoiceSe
 
           <View style={styles.titleContainer}>
             <TextView style={styles.title} type='bold'>
-              Grandpa Voice
+              {voiceName} Voice
             </TextView>
 
             <TextView style={styles.subTitle} type='regular'>
@@ -68,6 +75,8 @@ function VoiceSettingsButton({ isModalExpandedSharedValue, storyColor }: VoiceSe
             </TextView>
           </View>
         </BlurView>
+
+        <Image source={{ uri: voiceCoverUrl }} style={styles.voiceAvatar} />
       </PressableView>
     </Animated.View>
   );

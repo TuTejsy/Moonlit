@@ -21,7 +21,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     storyText: {
       ...fonts.size_14,
       color: colors.opacityWhite(0.7),
-      height: 100,
       marginBottom: 32,
       marginTop: 14,
     },

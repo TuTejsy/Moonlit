@@ -15,6 +15,7 @@ const darkColors = {
   opacityLightPurple: (float: number) => `rgba(31, 6, 71, ${float})`,
   opacityOrange: (float: number) => `rgba(236, 119, 72, ${float})`,
   opacityPurple: (float: number) => `rgba(23, 6, 52, ${float})`,
+  opacitySkin: (float: number) => `rgba(202, 166, 144, ${float})`,
   orange: '#EC7748',
   purple: '#170634',
 };

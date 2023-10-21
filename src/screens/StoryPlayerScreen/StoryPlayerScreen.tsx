@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -77,7 +77,6 @@ function StoryPlayerScreen() {
     playedTime,
     setPlayedTime,
     startStoryPlaying,
-    stopStoryPlaying,
     storyPlayingSharedValue,
   } = useStoryPlayer({
     audioRecordingId: selectedAudioRecording?.id,
@@ -96,6 +95,14 @@ function StoryPlayerScreen() {
   const handleGoBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
+
+  const handleSelectAudioRecording = useCallback(
+    (audioRecordingId: number) => {
+      setSelectedAudioRecording(audioRecordingId);
+      pauseStoryPlaying();
+    },
+    [pauseStoryPlaying, setSelectedAudioRecording],
+  );
 
   useAnimatedReaction(
     () => {
@@ -117,16 +124,6 @@ function StoryPlayerScreen() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isStoryPlaying]);
-
-  useEffect(
-    () => {
-      return () => {
-        stopStoryPlaying();
-      };
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
 
   return (
     <LinearGradient
@@ -168,13 +165,9 @@ function StoryPlayerScreen() {
             />
           </View>
           <StoryMeta
-            duration={4}
+            description={story?.description ?? ''}
+            duration={selectedAudioRecording?.duration ?? 0}
             storyPlayingSharedValue={storyPlayingSharedValue}
-            description={
-              'Once upon a time, in a land far, far away, a young girl named Ella lived with her wicked stepmother and two stepsisters. One day, a royal invitation arrived, announcing a grand ball at the palace...' ??
-              story?.description ??
-              ''
-            }
           />
         </Animated.View>
       </GestureDetector>
@@ -195,10 +188,12 @@ function StoryPlayerScreen() {
 
       <VoiceSettingsModal
         selectedAudioRecordingId={selectedAudioRecording?.id}
+        selectedAudioRecordingName={selectedAudioRecording?.voice_name}
         selectedAudioRecordingVersion={selectedAudioRecordingVersion}
-        setSelectedAudioRecording={setSelectedAudioRecording}
+        selectedVoiceCoverUrl={selectedAudioRecording?.cover_url}
         storyColor={gradientColor}
         storyId={storyId}
+        onSelectAudioRecording={handleSelectAudioRecording}
       />
     </LinearGradient>
   );

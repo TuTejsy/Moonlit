@@ -6,7 +6,9 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
 import RealmPlugin from 'realm-flipper-plugin-device';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import { AppLogicProvider } from '@/components/Providers/AppLogicProvider/AppLogicProvider';
 import { AudioRecordingsDB, StoriesDB } from '@/database';
@@ -15,6 +17,7 @@ import { ThemeContext } from '@/hooks/theme/useTheme';
 import { SharedKeyboardHeightProvider } from '@/hooks/useSharedKeyboardHeight';
 import { RootNavigator } from '@/navigation/RootNavigator/RootNavigator';
 import { navigationService } from '@/services/navigation/navigationService';
+import { store, storePersistor } from '@/store/store';
 import { darkNavTheme } from '@/styles/themes/dark';
 
 if (!__DEV__) {
@@ -23,36 +26,40 @@ if (!__DEV__) {
   console.error = () => undefined;
 }
 
-// StoriesDB.open();
-// AudioRecordingsDB.open();
-StoriesDB.open().then(() => StoriesDB.dropDatabase());
-AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
+StoriesDB.open();
+AudioRecordingsDB.open();
+// StoriesDB.open().then(() => StoriesDB.dropDatabase());
+// AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
 
 function App(): JSX.Element {
   const theme = useInitTheme();
 
   return (
-    <ThemeContext.Provider value={theme}>
-      <SharedKeyboardHeightProvider>
-        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <StatusBar backgroundColor={theme.colors.white} barStyle='light-content' />
-            <NavigationContainer
-              ref={navigationService.setRef}
-              theme={darkNavTheme}
-              onStateChange={navigationService.onStateChange}
-            >
-              <BottomSheetModalProvider>
-                <AppLogicProvider>
-                  {__DEV__ && <RealmPlugin realms={[StoriesDB.realm]} />}
-                  <RootNavigator />
-                </AppLogicProvider>
-              </BottomSheetModalProvider>
-            </NavigationContainer>
-          </GestureHandlerRootView>
-        </SafeAreaProvider>
-      </SharedKeyboardHeightProvider>
-    </ThemeContext.Provider>
+    <Provider store={store}>
+      <PersistGate persistor={storePersistor}>
+        <ThemeContext.Provider value={theme}>
+          <SharedKeyboardHeightProvider>
+            <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <StatusBar backgroundColor={theme.colors.white} barStyle='light-content' />
+                <NavigationContainer
+                  ref={navigationService.setRef}
+                  theme={darkNavTheme}
+                  onStateChange={navigationService.onStateChange}
+                >
+                  <BottomSheetModalProvider>
+                    <AppLogicProvider>
+                      {__DEV__ && <RealmPlugin realms={[StoriesDB.realm]} />}
+                      <RootNavigator />
+                    </AppLogicProvider>
+                  </BottomSheetModalProvider>
+                </NavigationContainer>
+              </GestureHandlerRootView>
+            </SafeAreaProvider>
+          </SharedKeyboardHeightProvider>
+        </ThemeContext.Provider>
+      </PersistGate>
+    </Provider>
   );
 }
 

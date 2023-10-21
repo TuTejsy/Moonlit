@@ -11,7 +11,10 @@ interface Context {
   storyColor: string;
 }
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyColor }: Context) =>
+export const makeStyles = (
+  { colors, fonts, insets, zIndex }: MakeStylesProps,
+  { storyColor }: Context,
+) =>
   StyleSheet.create({
     subTitle: {
       ...fonts.size_12,
@@ -24,18 +27,24 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
     titleContainer: {
       marginHorizontal: 12,
     },
+    voiceAvatar: {
+      bottom: 0,
+      height: 94,
+      position: 'absolute',
+      right: 0,
+      width: 81,
+    },
     voiceSettingsButton: {
       alignItems: 'center',
       backgroundColor: convertHEXtoRGBA(storyColor, 0.7),
+      borderRadius: 16,
       flexDirection: 'row',
       height: BUTTON_HEIGHT,
       paddingLeft: 12,
       width: '100%',
     },
     voiceSettingsButtonContainer: {
-      borderRadius: 16,
       bottom: insets.bottom + BUTTON_BOTTOM_PADDING,
-      overflow: 'hidden',
       position: 'absolute',
       width: WINDOW_WIDTH - HORIZONTAL_PADDING * 2,
     },

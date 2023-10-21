@@ -13,6 +13,7 @@ import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import AudioRecording from './components/AudioRecording/AudioRecording';
 import Header from './components/Header/Header';
@@ -20,17 +21,21 @@ import VoiceSettingsButton from './components/VoiceSettingsButton/VoiceSettingsB
 import { makeStyles } from './VoiceSettingsModal.styles';
 
 interface VoiceSettingsModalProps {
+  onSelectAudioRecording: (selectedAudioRecordingId: number) => void;
   selectedAudioRecordingId: number;
+  selectedAudioRecordingName: string;
   selectedAudioRecordingVersion: number;
-  setSelectedAudioRecording: (selectedAudioRecordingId: number) => void;
+  selectedVoiceCoverUrl: string;
   storyColor: string;
   storyId: number;
 }
 
 function VoiceSettingsModal({
+  onSelectAudioRecording,
   selectedAudioRecordingId,
+  selectedAudioRecordingName,
   selectedAudioRecordingVersion,
-  setSelectedAudioRecording,
+  selectedVoiceCoverUrl,
   storyColor,
   storyId,
 }: VoiceSettingsModalProps) {
@@ -49,24 +54,32 @@ function VoiceSettingsModal({
 
   const [audioRecordings, auidioRecoridngsVersion] = useAudioRecordings(`story_id = '${storyId}'`);
 
+  const handleClosePress = useCallback(() => {
+    isModalExpandedSharedValue.value = withTiming(0);
+  }, [isModalExpandedSharedValue]);
+
+  const handleSelectAudioRecording = useCallback(
+    (audioRecordingnId: number) => {
+      onSelectAudioRecording(audioRecordingnId);
+      handleClosePress();
+    },
+    [handleClosePress, onSelectAudioRecording],
+  );
+
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<AudioRecordingSchema>) => {
       return (
         <AudioRecording
-          coverUrl={item.cover_url}
+          coverUrl={formatServerFileURLToAbsolutePath(item.cover_url)}
           isSelected={selectedAudioRecordingId === item.id}
           name={item.voice_name}
           recordingId={item.id}
-          onSelect={setSelectedAudioRecording}
+          onSelect={handleSelectAudioRecording}
         />
       );
     },
-    [selectedAudioRecordingId, setSelectedAudioRecording],
+    [handleSelectAudioRecording, selectedAudioRecordingId],
   );
-
-  const handleCloseIconPress = useCallback(() => {
-    isModalExpandedSharedValue.value = withTiming(0);
-  }, [isModalExpandedSharedValue]);
 
   const keyExtractor = useCallback((item: AudioRecordingSchema) => `${item.id}`, []);
 
@@ -79,7 +92,7 @@ function VoiceSettingsModal({
           reducedTransparencyFallbackColor={colors.opacityBlack(0.6)}
           style={styles.modal}
         >
-          <Header onCloseIconPress={handleCloseIconPress} />
+          <Header onCloseIconPress={handleClosePress} />
 
           <FlatList
             contentContainerStyle={styles.audioRecordingsListContainer}
@@ -96,6 +109,8 @@ function VoiceSettingsModal({
       <VoiceSettingsButton
         isModalExpandedSharedValue={isModalExpandedSharedValue}
         storyColor={storyColor}
+        voiceCoverUrl={formatServerFileURLToAbsolutePath(selectedVoiceCoverUrl)}
+        voiceName={selectedAudioRecordingName}
       />
     </>
   );
