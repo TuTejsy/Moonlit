@@ -13,7 +13,7 @@ const CATEGORIES = [
   ["The Hero's Adventure", 'Animal Adventures'],
 ];
 
-function CategoriesList() {
+export const CategoriesList = () => {
   const styles = useMakeStyles(makeStyles);
 
   const renderItem = useCallback(
@@ -41,6 +41,4 @@ function CategoriesList() {
       style={styles.categoriesList}
     />
   );
-}
-
-export default CategoriesList;
+};

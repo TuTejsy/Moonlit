@@ -35,7 +35,7 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
         },
       );
 
-      const [upserted, notUpserted] = await AudioRecordingsDB.upsert(formattedAudioRecordings);
+      const [_upserted, notUpserted] = await AudioRecordingsDB.upsert(formattedAudioRecordings);
 
       if (notUpserted.length) {
         notUpserted.forEach(({ err }) => console.error(err));

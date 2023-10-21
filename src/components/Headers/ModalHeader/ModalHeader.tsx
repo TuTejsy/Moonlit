@@ -1,12 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 
-import { Icons } from '@/assets/icons/Icons';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 
 import { EXTRA_TOUCH_AREA } from '../Headers.constants';
 import { NavigationType } from '../Headers.types';
 import { ScreenHeader, ScreenHeaderProps } from '../ScreenHeader/ScreenHeader';
-
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 
 export interface ModalHeaderProps extends ScreenHeaderProps {
   disableClose?: boolean;

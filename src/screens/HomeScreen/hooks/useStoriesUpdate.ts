@@ -35,7 +35,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
         } as StorySchema;
       });
 
-      const [upserted, notUpserted] = await StoriesDB.upsert(formattedStories);
+      const [_upserted, notUpserted] = await StoriesDB.upsert(formattedStories);
 
       if (notUpserted.length) {
         notUpserted.forEach(({ err }) => console.error(err));

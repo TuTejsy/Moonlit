@@ -23,52 +23,52 @@ interface StoryPreviewPropTypes {
   showSaveButton?: boolean;
 }
 
-function StoryPreview({
-  description,
-  isFree,
-  isSaved,
-  onSaveStoryPress,
-  previewURL,
-  showSaveButton,
-  storyId,
-  title,
-}: StoryPreviewPropTypes) {
-  const styles = useMakeStyles(makeStyles);
+export const StoryPreview = React.memo(
+  ({
+    description,
+    isFree,
+    isSaved,
+    onSaveStoryPress,
+    previewURL,
+    showSaveButton,
+    storyId,
+    title,
+  }: StoryPreviewPropTypes) => {
+    const styles = useMakeStyles(makeStyles);
 
-  const navigation = useNavigation<NavigationType>();
+    const navigation = useNavigation<NavigationType>();
 
-  const handlePreviewPress = useCallback(() => {
-    navigation.navigate(RootRoutes.STORY_PLAYER, {
-      storyId,
-    });
-  }, [navigation, storyId]);
+    const handlePreviewPress = useCallback(() => {
+      navigation.navigate(RootRoutes.STORY_PLAYER, {
+        storyId,
+      });
+    }, [navigation, storyId]);
 
-  const handleStoryFavoritePress = useCallback(() => {
-    onSaveStoryPress?.(storyId);
-  }, [onSaveStoryPress, storyId]);
+    const handleStoryFavoritePress = useCallback(() => {
+      onSaveStoryPress?.(storyId);
+    }, [onSaveStoryPress, storyId]);
 
-  return (
-    <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: previewURL }} style={styles.preview} />
-        {!isFree && <Icons.Lock style={styles.lockIcon} />}
-      </View>
-      <View style={styles.content}>
-        <TextView numberOfLines={1} style={styles.titleText} type='bold'>
-          {title}
-        </TextView>
-        <TextView numberOfLines={1} style={styles.descriptionText}>
-          {description}
-        </TextView>
-      </View>
+    return (
+      <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: previewURL }} style={styles.preview} />
+          {!isFree && <Icons.Lock style={styles.lockIcon} />}
+        </View>
+        <View style={styles.content}>
+          <TextView numberOfLines={1} style={styles.titleText} type='bold'>
+            {title}
+          </TextView>
+          <TextView numberOfLines={1} style={styles.descriptionText}>
+            {description}
+          </TextView>
+        </View>
 
-      {showSaveButton && (
-        <PressableView style={styles.button} onPress={handleStoryFavoritePress}>
-          <Icons.Favorite height={20} isFavorite={isSaved ?? false} width={20} />
-        </PressableView>
-      )}
-    </PressableView>
-  );
-}
-
-export default React.memo(StoryPreview);
+        {showSaveButton && (
+          <PressableView style={styles.button} onPress={handleStoryFavoritePress}>
+            <Icons.Favorite height={20} isFavorite={isSaved ?? false} width={20} />
+          </PressableView>
+        )}
+      </PressableView>
+    );
+  },
+);

@@ -8,7 +8,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
-function useStoryCoverGestureHandler(
+export function useStoryCoverGestureHandler(
   storyPlayingSharedValue: SharedValue<number>,
   onCoverCollapsed: () => void,
 ) {
@@ -45,5 +45,3 @@ function useStoryCoverGestureHandler(
 
   return gesture;
 }
-
-export default useStoryCoverGestureHandler;

@@ -12,49 +12,45 @@ interface PopularSearchPropTypes {
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
 
-function PopularSearch({
-  onPopularSearchItemSelected,
-  onScroll,
-  popularSearchItems,
-}: PopularSearchPropTypes) {
-  const styles = useMakeStyles(makeStyles);
+export const PopularSearch = React.memo(
+  ({ onPopularSearchItemSelected, onScroll, popularSearchItems }: PopularSearchPropTypes) => {
+    const styles = useMakeStyles(makeStyles);
 
-  const handleScrollToTop = useCallback(() => {
-    onScroll?.({
-      nativeEvent: {
-        contentOffset: { x: 0, y: 0 },
-      },
-    } as NativeSyntheticEvent<NativeScrollEvent>);
-  }, [onScroll]);
+    const handleScrollToTop = useCallback(() => {
+      onScroll?.({
+        nativeEvent: {
+          contentOffset: { x: 0, y: 0 },
+        },
+      } as NativeSyntheticEvent<NativeScrollEvent>);
+    }, [onScroll]);
 
-  useEffect(() => {
-    handleScrollToTop();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    useEffect(() => {
+      handleScrollToTop();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-  return (
-    <ScrollView
-      contentContainerStyle={styles.popularSearchContainer}
-      keyboardShouldPersistTaps='always'
-      onScroll={onScroll}
-      onScrollToTop={handleScrollToTop}
-    >
-      <TextView style={styles.titleText} type='bold'>
-        Popular search
-      </TextView>
-      <View style={styles.separator} />
-
-      {popularSearchItems.map((item) => (
-        <TextView
-          key={item}
-          style={styles.itemText}
-          onPress={() => onPopularSearchItemSelected(item)}
-        >
-          {item}
+    return (
+      <ScrollView
+        contentContainerStyle={styles.popularSearchContainer}
+        keyboardShouldPersistTaps='always'
+        onScroll={onScroll}
+        onScrollToTop={handleScrollToTop}
+      >
+        <TextView style={styles.titleText} type='bold'>
+          Popular search
         </TextView>
-      ))}
-    </ScrollView>
-  );
-}
+        <View style={styles.separator} />
 
-export default React.memo(PopularSearch);
+        {popularSearchItems.map((item) => (
+          <TextView
+            key={item}
+            style={styles.itemText}
+            onPress={() => onPopularSearchItemSelected(item)}
+          >
+            {item}
+          </TextView>
+        ))}
+      </ScrollView>
+    );
+  },
+);

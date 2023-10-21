@@ -7,7 +7,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './Loader.styles';
 
-function VoiceSettingsButton() {
+export function Loader() {
   const styles = useMakeStyles(makeStyles);
 
   return (
@@ -17,5 +17,3 @@ function VoiceSettingsButton() {
     </View>
   );
 }
-
-export default VoiceSettingsButton;

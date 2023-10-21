@@ -6,7 +6,7 @@ import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
 import { mapById } from '@/utils/getMapById';
 
-import useMutableValue from '../useMutableValue';
+import { useMutableValue } from '../useMutableValue';
 
 export function useStory(
   storyId: number,

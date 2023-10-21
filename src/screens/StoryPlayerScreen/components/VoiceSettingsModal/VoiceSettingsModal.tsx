@@ -17,10 +17,10 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
-import AudioRecording from './components/AudioRecording/AudioRecording';
-import Header from './components/Header/Header';
+import { AudioRecording } from './components/AudioRecording/AudioRecording';
+import { Header } from './components/Header/Header';
 import { MoreVoicesPlaceholder } from './components/MoreVoicesPlaceholder/MoreVoicesPlaceholder';
-import VoiceSettingsButton from './components/VoiceSettingsButton/VoiceSettingsButton';
+import { VoiceSettingsButton } from './components/VoiceSettingsButton/VoiceSettingsButton';
 import { MORE_VOICES_PLACEHOLDER } from './VoiceSettingsModal.constants';
 import { makeStyles } from './VoiceSettingsModal.styles';
 
@@ -34,7 +34,7 @@ interface VoiceSettingsModalProps {
   storyId: number;
 }
 
-function VoiceSettingsModal({
+export function VoiceSettingsModal({
   onSelectAudioRecording,
   selectedAudioRecordingId,
   selectedAudioRecordingName,
@@ -61,6 +61,7 @@ function VoiceSettingsModal({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const flatListData = useMemo(
     () => [...audioRecordings, MORE_VOICES_PLACEHOLDER],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [auidioRecoridngsVersion],
   );
 
@@ -145,5 +146,3 @@ function VoiceSettingsModal({
     </>
   );
 }
-
-export default VoiceSettingsModal;

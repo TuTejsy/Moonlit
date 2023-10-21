@@ -10,7 +10,7 @@ import Animated, {
   useScrollViewOffset,
 } from 'react-native-reanimated';
 
-import SmallStoriesPlainList from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
+import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
 import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SCREEN_WIDTH } from '@/constants/layout';
@@ -22,7 +22,7 @@ import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 import { TAB_WIDTH } from './FavoritesScreen.constants';
 import { makeStyles } from './FavoritesScreen.styles';
 
-function FavoritesScreen() {
+export const FavoritesScreen = () => {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
 
@@ -207,6 +207,4 @@ function FavoritesScreen() {
       </View>
     </LinearGradient>
   );
-}
-
-export default FavoritesScreen;
+};

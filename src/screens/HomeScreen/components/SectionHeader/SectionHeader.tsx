@@ -11,7 +11,7 @@ interface SectionHeaderPropTypes {
   title: string;
 }
 
-function SectionHeader({ onSeeAllPress, title }: SectionHeaderPropTypes) {
+export const SectionHeader = ({ onSeeAllPress, title }: SectionHeaderPropTypes) => {
   const styles = useMakeStyles(makeStyles);
 
   return (
@@ -24,6 +24,4 @@ function SectionHeader({ onSeeAllPress, title }: SectionHeaderPropTypes) {
       </TextView>
     </View>
   );
-}
-
-export default SectionHeader;
+};

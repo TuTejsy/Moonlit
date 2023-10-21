@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 import { HORIZONTAL_PADDING, TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { PROMOTION_BANNER_HEIGHT, PROMOTION_BANNER_WIDTH } from './HomeScreen.constants';
-
 export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
   StyleSheet.create({
     content: {

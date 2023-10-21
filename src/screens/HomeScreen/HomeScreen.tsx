@@ -4,20 +4,20 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { noop } from 'lodash';
 import LinearGradient from 'react-native-linear-gradient';
 
-import LargeStoriesList from '@/components/Lists/LargeStoriesList/LargeStoriesList';
-import MediumStoriesList from '@/components/Lists/MediumStoriesList/MediumStoriesList';
-import SmallStoriesList from '@/components/Lists/SmallStoriesList/SmallStoriesList';
+import { LargeStoriesList } from '@/components/Lists/LargeStoriesList/LargeStoriesList';
+import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumStoriesList';
+import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
-import CategoriesList from './components/CategoriesList/CategoriesList';
-import SectionHeader from './components/SectionHeader/SectionHeader';
+import { CategoriesList } from './components/CategoriesList/CategoriesList';
+import { SectionHeader } from './components/SectionHeader/SectionHeader';
 import { makeStyles } from './HomeScreen.styles';
 import { useStoriesUpdate } from './hooks/useStoriesUpdate';
 
-function HomeScreen() {
+export const HomeScreen = () => {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
 
@@ -87,6 +87,4 @@ function HomeScreen() {
       </ScrollView>
     </LinearGradient>
   );
-}
-
-export default HomeScreen;
+};

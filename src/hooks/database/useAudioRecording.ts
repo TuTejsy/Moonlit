@@ -6,7 +6,7 @@ import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { mapById } from '@/utils/getMapById';
 
-import useMutableValue from '../useMutableValue';
+import { useMutableValue } from '../useMutableValue';
 
 export function useAudioRecording(
   audioRecordingId: number | undefined,

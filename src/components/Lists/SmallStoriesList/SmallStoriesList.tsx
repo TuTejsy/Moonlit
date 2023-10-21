@@ -14,7 +14,7 @@ import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
-import StoryPreview from './components/StoryPreview/StoryPreview';
+import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
@@ -31,7 +31,7 @@ interface SmallStoriesListPropTypes {
   style?: ViewStyle;
 }
 
-function SmallStoriesList({
+export function SmallStoriesList({
   ListHeaderComponent,
   contentContainerStyle,
   displayCount,
@@ -58,7 +58,7 @@ function SmallStoriesList({
       <StoryPreview
         description={item.description}
         isFree={item.is_free}
-        previewURL={`file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${item.small_preview_cover_cached_name}`}
+        previewURL={`file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${item.small_cover_cached_name}`}
         storyId={item.id}
         title={item.name}
       />
@@ -99,5 +99,3 @@ function SmallStoriesList({
     />
   );
 }
-
-export default SmallStoriesList;

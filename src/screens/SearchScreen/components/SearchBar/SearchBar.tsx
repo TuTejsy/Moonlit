@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { TextInput, View } from 'react-native';
 
-import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -34,100 +33,94 @@ interface SearchBarPropTypes {
   opacityAnimStyle?: ReturnType<typeof useScrollOpacity>['opacityAnimStyle'];
 }
 
-function SearchBar({
-  onChangeText,
-  onInputBlur,
-  onInputFocus,
-  opacityAnimStyle,
-  value,
-}: SearchBarPropTypes) {
-  const [isInputFocused, setIsInputFocused] = useState(false);
-  const hasSearchText = !!value;
+export const SearchBar = React.memo(
+  ({ onChangeText, onInputBlur, onInputFocus, opacityAnimStyle, value }: SearchBarPropTypes) => {
+    const [isInputFocused, setIsInputFocused] = useState(false);
+    const hasSearchText = !!value;
 
-  const stylesContext = useMemo(
-    () => ({ hasSearchText, isInputFocused }),
-    [isInputFocused, hasSearchText],
-  );
+    const stylesContext = useMemo(
+      () => ({ hasSearchText, isInputFocused }),
+      [isInputFocused, hasSearchText],
+    );
 
-  const styles = useMakeStyles(makeStyles, stylesContext);
-  const { colors } = useTheme();
+    const styles = useMakeStyles(makeStyles, stylesContext);
+    const { colors } = useTheme();
 
-  const inputRef = useRef<TextInput | null>(null);
-  const isInputFocusedSharedValue = useSharedValue(0);
+    const inputRef = useRef<TextInput | null>(null);
+    const isInputFocusedSharedValue = useSharedValue(0);
 
-  const inputContainerAnimatedStyle = useAnimatedStyle(() => ({
-    width: interpolate(
-      isInputFocusedSharedValue.value,
-      [0, 1],
-      [SEARCH_BAR_BLURED_WIDTH, SEARCH_BAR_FOCUSED_WIDTH],
-      Extrapolation.CLAMP,
-    ),
-  }));
+    const inputContainerAnimatedStyle = useAnimatedStyle(() => ({
+      width: interpolate(
+        isInputFocusedSharedValue.value,
+        [0, 1],
+        [SEARCH_BAR_BLURED_WIDTH, SEARCH_BAR_FOCUSED_WIDTH],
+        Extrapolation.CLAMP,
+      ),
+    }));
 
-  const closeButtonAnimatedStyle = useAnimatedStyle(() => ({
-    display: isInputFocusedSharedValue.value === 0 ? 'none' : 'flex',
-    marginLeft: CLOSE_BUTTON_MARGIN_LEFT,
-    opacity: isInputFocusedSharedValue.value,
-    width: CLOSE_BUTTON_WIDTH,
-  }));
+    const closeButtonAnimatedStyle = useAnimatedStyle(() => ({
+      display: isInputFocusedSharedValue.value === 0 ? 'none' : 'flex',
+      marginLeft: CLOSE_BUTTON_MARGIN_LEFT,
+      opacity: isInputFocusedSharedValue.value,
+      width: CLOSE_BUTTON_WIDTH,
+    }));
 
-  const handleInputFocus = useCallback(() => {
-    setIsInputFocused(true);
-    isInputFocusedSharedValue.value = withTiming(1);
+    const handleInputFocus = useCallback(() => {
+      setIsInputFocused(true);
+      isInputFocusedSharedValue.value = withTiming(1);
 
-    onInputFocus?.();
-  }, [isInputFocusedSharedValue, onInputFocus]);
+      onInputFocus?.();
+    }, [isInputFocusedSharedValue, onInputFocus]);
 
-  const handleInputBlur = useCallback(() => {
-    setIsInputFocused(false);
-    isInputFocusedSharedValue.value = withTiming(0);
+    const handleInputBlur = useCallback(() => {
+      setIsInputFocused(false);
+      isInputFocusedSharedValue.value = withTiming(0);
 
-    onInputBlur?.();
-  }, [isInputFocusedSharedValue, onInputBlur]);
+      onInputBlur?.();
+    }, [isInputFocusedSharedValue, onInputBlur]);
 
-  const handleCloseButtonPress = useCallback(() => {
-    inputRef.current?.blur();
-  }, []);
+    const handleCloseButtonPress = useCallback(() => {
+      inputRef.current?.blur();
+    }, []);
 
-  const handleRemovePress = useCallback(() => {
-    inputRef.current?.clear();
-    onChangeText('');
-  }, [onChangeText]);
+    const handleRemovePress = useCallback(() => {
+      inputRef.current?.clear();
+      onChangeText('');
+    }, [onChangeText]);
 
-  return (
-    <View style={styles.searchBar}>
-      <View style={styles.contentContainer}>
-        <ScrollShadow opacityAnimStyle={opacityAnimStyle} />
+    return (
+      <View style={styles.searchBar}>
+        <View style={styles.contentContainer}>
+          <ScrollShadow opacityAnimStyle={opacityAnimStyle} />
 
-        <Animated.View style={[styles.inputContainer, inputContainerAnimatedStyle]}>
-          <Icons.Search style={styles.searchIcon} />
-          <TextInput
-            ref={inputRef}
-            cursorColor={colors.white}
-            keyboardAppearance='dark'
-            placeholder='Look for stories'
-            placeholderTextColor={colors.opacityWhite(0.4)}
-            returnKeyType='search'
-            selectionColor={colors.white}
-            style={styles.textInput}
-            value={value}
-            onBlur={handleInputBlur}
-            onChangeText={onChangeText}
-            onFocus={handleInputFocus}
-          />
+          <Animated.View style={[styles.inputContainer, inputContainerAnimatedStyle]}>
+            <Icons.Search style={styles.searchIcon} />
+            <TextInput
+              ref={inputRef}
+              cursorColor={colors.white}
+              keyboardAppearance='dark'
+              placeholder='Look for stories'
+              placeholderTextColor={colors.opacityWhite(0.4)}
+              returnKeyType='search'
+              selectionColor={colors.white}
+              style={styles.textInput}
+              value={value}
+              onBlur={handleInputBlur}
+              onChangeText={onChangeText}
+              onFocus={handleInputFocus}
+            />
 
-          {!!value && <Icons.RoundClose style={styles.closeIcon} onPress={handleRemovePress} />}
-        </Animated.View>
-        <Animated.View style={closeButtonAnimatedStyle}>
-          <PressableView style={styles.closeButton} onPress={handleCloseButtonPress}>
-            <TextView style={styles.closeButtonText} type='bold'>
-              Close
-            </TextView>
-          </PressableView>
-        </Animated.View>
+            {!!value && <Icons.RoundClose style={styles.closeIcon} onPress={handleRemovePress} />}
+          </Animated.View>
+          <Animated.View style={closeButtonAnimatedStyle}>
+            <PressableView style={styles.closeButton} onPress={handleCloseButtonPress}>
+              <TextView style={styles.closeButtonText} type='bold'>
+                Close
+              </TextView>
+            </PressableView>
+          </Animated.View>
+        </View>
       </View>
-    </View>
-  );
-}
-
-export default React.memo(SearchBar);
+    );
+  },
+);

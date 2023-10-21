@@ -17,7 +17,7 @@ interface AudioRecordingProps {
   recordingId: number;
 }
 
-function AudioRecording({
+export function AudioRecording({
   coverUrl,
   isFree,
   isSelected,
@@ -55,5 +55,3 @@ function AudioRecording({
     </PressableView>
   );
 }
-
-export default AudioRecording;

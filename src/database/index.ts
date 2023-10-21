@@ -1,6 +1,6 @@
-import audioRecordingsConfig from './configs/audioRecordingsConfig';
-import storiesConfig from './configs/storiesConfig';
-import RealmDB from './Realm';
+import { audioRecordingsConfig } from './configs/audioRecordingsConfig';
+import { storiesConfig } from './configs/storiesConfig';
+import { RealmDB } from './Realm';
 import { AudioRecordingSchema } from './schema/audioRecordings/types';
 import { StorySchema } from './schema/stories/types';
 

@@ -6,7 +6,7 @@ import { Extrapolate, SharedValue, interpolate, runOnJS } from 'react-native-rea
 import { SCREEN_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 
-function useProgressBarGestureHandler(
+export function useProgressBarGestureHandler(
   progressSharedValue: SharedValue<number>,
   onUpdatePlayPercent: (playPercent: number) => void,
   setPlayedTimeText: (playPercent: number) => void,
@@ -79,5 +79,3 @@ function useProgressBarGestureHandler(
 
   return [composedGesture, isGestureActiveRef];
 }
-
-export default useProgressBarGestureHandler;

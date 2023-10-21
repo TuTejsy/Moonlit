@@ -6,7 +6,7 @@ import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 
 import { STORY_CONTAINER_MIN_WIDTH, STORY_COVER_MIN_HEIGHT } from '../StoryPlayerScreen.constants';
 
-function useStoryCoverAnimation(
+export function useStoryCoverAnimation(
   storyPlayingSharedValue: SharedValue<number>,
   storyContainerMinHeight: number,
 ) {
@@ -51,5 +51,3 @@ function useStoryCoverAnimation(
     storyContainerAnimatedStyles,
   };
 }
-
-export default useStoryCoverAnimation;

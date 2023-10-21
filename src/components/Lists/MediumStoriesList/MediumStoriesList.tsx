@@ -7,7 +7,7 @@ import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
-import StoryPreview from './components/StoryPreview/StoryPreview';
+import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './MediumStoriesList.styles';
 
 interface MediumStoriesListPropTypes {
@@ -16,7 +16,7 @@ interface MediumStoriesListPropTypes {
   style?: ViewStyle;
 }
 
-function MediumStoriesList({ stories, storiesVersion, style }: MediumStoriesListPropTypes) {
+export function MediumStoriesList({ stories, storiesVersion, style }: MediumStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
@@ -46,5 +46,3 @@ function MediumStoriesList({ stories, storiesVersion, style }: MediumStoriesList
     />
   );
 }
-
-export default MediumStoriesList;
