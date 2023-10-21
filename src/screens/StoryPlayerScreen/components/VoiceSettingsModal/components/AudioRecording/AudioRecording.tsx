@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import { Image, View } from 'react-native';
 
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
@@ -32,6 +33,8 @@ function AudioRecording({
 
   return (
     <PressableView style={styles.audioRecordingContainer} onPress={handleSelect}>
+      <View style={styles.indicatorsContainer} />
+      <Image source={{ uri: coverUrl }} style={styles.voiceAvatar} />
       <TextView style={styles.text} type='bold'>
         {name}
       </TextView>

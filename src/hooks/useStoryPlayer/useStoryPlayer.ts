@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { EmitterSubscription, NativeEventEmitter } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import RNFS from 'react-native-fs';
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
@@ -8,10 +9,14 @@ import { SANDBOX } from '@/constants/common';
 import { AudioRecordingsDB } from '@/database';
 import { audioPlayer } from '@/native-modules/native-modules';
 import { AUDIO_PLAYER_EMITTER_EVENT } from '@/native-modules/native-modules.types';
+import { selectIsPlaying, selectSelectedAudioRecoringId } from '@/store/player/player.selector';
+import { startPlaying, stopPlaying } from '@/store/player/player.slice';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { generateAudioRecordingCachedName } from '@/utils/generators/generateAudioRecordingCachedName';
 
 import { useAudioRecording } from '../database/useAudioRecording';
+import { useAppDispatch } from '../useAppDispatch';
+import { useAppSelector } from '../useAppSelector';
 
 import { notifyStoryPlay } from './utils/notifyStoryPlay';
 
@@ -35,43 +40,47 @@ export function useStoryPlayer({
 
   const [selectedAudioRecording, selectedAudioRecordingVersion] = useAudioRecording(
     audioRecordingId,
-    ['played_time', 'audio_url', 'cached_name', 'duration'],
+    ['audio_url', 'cached_name', 'duration'],
   );
 
-  const [isStoryPlaying, setIsStoryPlaying] = useState(false);
+  const isStoryPlaying = useAppSelector(selectIsPlaying);
+  const selectedAudioRecordingId = useAppSelector(selectSelectedAudioRecoringId);
+
+  const reduxDispatch = useAppDispatch();
+
   const [isLoading, setIsLoading] = useState(false);
+  const [playedTime, setPlayedTime] = useState(selectedAudioRecording?.played_time ?? 0);
 
-  const playedTime = selectedAudioRecording?.played_time ?? 0;
+  const isCurrentStoryPlaying = useMemo(() => {
+    if (selectedAudioRecordingId) {
+      const audioRecording = AudioRecordingsDB.object(selectedAudioRecordingId);
 
-  const storyPlayingSharedValue = useSharedValue(0);
+      if (audioRecording && audioRecording.story_id === selectedAudioRecording?.story_id) {
+        return isStoryPlaying;
+      }
+    }
+
+    return false;
+  }, [isStoryPlaying, selectedAudioRecording?.story_id, selectedAudioRecordingId]);
+
+  const storyPlayingSharedValue = useSharedValue(isCurrentStoryPlaying ? 1 : 0);
   const isStoryPlayingSharedValue = useDerivedValue(() => storyPlayingSharedValue.value > 0);
-
-  const setPlayedTime = useCallback(
-    (playedTime: number) => {
-      AudioRecordingsDB.modify(() => {
-        if (selectedAudioRecording) {
-          selectedAudioRecording.played_time = playedTime;
-        }
-      });
-    },
-    [selectedAudioRecording],
-  );
 
   const stopStoryPlaying = useCallback(async () => {
     try {
       await audioPlayer.stopPlaying();
 
-      setIsStoryPlaying(false);
+      reduxDispatch(stopPlaying());
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [reduxDispatch]);
 
   const pauseStoryPlaying = useCallback(async () => {
     try {
       const { playingTime } = await audioPlayer.pausePlaying();
 
-      setIsStoryPlaying(false);
+      reduxDispatch(stopPlaying());
 
       if (playingTime) {
         setPlayedTime(playingTime);
@@ -79,14 +88,22 @@ export function useStoryPlayer({
     } catch (err) {
       console.error(err);
     }
-  }, [setPlayedTime]);
+  }, [reduxDispatch, setPlayedTime]);
 
   const startStoryPlaying = useCallback(async () => {
     if (!selectedAudioRecording) {
       return;
     }
 
-    setIsStoryPlaying(true);
+    if (selectedAudioRecordingId && selectedAudioRecordingId !== selectedAudioRecording.id) {
+      try {
+        await stopStoryPlaying();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    reduxDispatch(startPlaying(selectedAudioRecording.id));
 
     try {
       let filePath: string;
@@ -126,8 +143,16 @@ export function useStoryPlayer({
       isStoryPlayNotifiedRef.current = true;
       notifyStoryPlay(storyId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coverPath, playedTime, selectedAudioRecordingVersion, title, storyId]);
+  }, [
+    selectedAudioRecording,
+    selectedAudioRecordingId,
+    reduxDispatch,
+    stopStoryPlaying,
+    coverPath,
+    title,
+    playedTime,
+    storyId,
+  ]);
 
   const moveStoryPlayingToTime = useCallback(
     async (playedTime: number) => {
@@ -136,9 +161,9 @@ export function useStoryPlayer({
       }
 
       try {
-        if (playedTime > selectedAudioRecording.duration) {
-          stopStoryPlaying();
-          setPlayedTime(selectedAudioRecording.duration);
+        if (playedTime >= selectedAudioRecording.duration) {
+          await stopStoryPlaying();
+          setPlayedTime(0);
           return;
         }
 
@@ -146,7 +171,7 @@ export function useStoryPlayer({
 
         if (playedTimeToSet < 0) {
           playedTimeToSet = 0;
-        } else if (isStoryPlaying) {
+        } else if (isCurrentStoryPlaying) {
           await audioPlayer.startPlayingFromTime(playedTime);
         }
 
@@ -155,15 +180,14 @@ export function useStoryPlayer({
         console.error(err);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isStoryPlaying, selectedAudioRecordingVersion, stopStoryPlaying, setPlayedTime],
+    [selectedAudioRecording, isCurrentStoryPlaying, setPlayedTime, stopStoryPlaying],
   );
 
   useEffect(() => {
     audioPlayerDidFinishPlayingSubscriptionRef.current = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_FINISH,
       () => {
-        setIsStoryPlaying(false);
+        reduxDispatch(stopPlaying());
         setPlayedTime(0);
       },
     );
@@ -171,7 +195,7 @@ export function useStoryPlayer({
     audioPlayerDidInterruptPlayingSubscriptionRef.current = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_INTERRUPT,
       ({ playingTime }) => {
-        setIsStoryPlaying(false);
+        reduxDispatch(stopPlaying());
         setPlayedTime(playingTime);
       },
     );
@@ -180,11 +204,42 @@ export function useStoryPlayer({
       audioPlayerDidFinishPlayingSubscriptionRef.current?.remove();
       audioPlayerDidInterruptPlayingSubscriptionRef.current?.remove();
     };
-  }, []);
+  }, [reduxDispatch, setPlayedTime]);
+
+  useEffect(() => {
+    AudioRecordingsDB.modify(() => {
+      if (selectedAudioRecording) {
+        selectedAudioRecording.played_time = playedTime;
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playedTime, selectedAudioRecording?.id]);
+
+  useFocusEffect(
+    useCallback(
+      () => {
+        audioPlayer.getCurrentPlayingTime().then((playingTime) => {
+          setPlayedTime(playingTime);
+        });
+
+        return () => {
+          audioPlayer.getCurrentPlayingTime().then((playingTime) => {
+            AudioRecordingsDB.modify(() => {
+              if (selectedAudioRecording) {
+                selectedAudioRecording.played_time = playingTime;
+              }
+            });
+          });
+        };
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [selectedAudioRecording?.id],
+    ),
+  );
 
   return {
     isStoryLoading: isLoading,
-    isStoryPlaying,
+    isStoryPlaying: isCurrentStoryPlaying,
     isStoryPlayingSharedValue,
     moveStoryPlayingToTime,
     pauseStoryPlaying,

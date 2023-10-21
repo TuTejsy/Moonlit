@@ -28,6 +28,7 @@ export interface AudioRecorderTypes extends NativeModule {
 }
 
 export interface AudioPlayerTypes extends NativeModule {
+  getCurrentPlayingTime: () => Promise<number>;
   pausePlaying: () => Promise<{ playingTime?: number }>;
   rewindPlayingToTime: (time: number) => Promise<any>;
   setToPlayFile: (fileInfo: {

@@ -58,7 +58,6 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
     playedTime,
     setPlayedTime,
     startStoryPlaying,
-    stopStoryPlaying,
     storyPlayingSharedValue,
   } = useStoryPlayer({
     audioRecordingId: selectedAudioRecording?.id,
@@ -118,7 +117,7 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
         </TextView>
 
         {isStoryPlaying ? (
-          <PressableView hitSlop={getHitSlop(10)} onPress={stopStoryPlaying}>
+          <PressableView hitSlop={getHitSlop(10)} onPress={pauseStoryPlaying}>
             <Icons.PauseSmall fillCirlce={colors.opacityWhite(0.1)} />
           </PressableView>
         ) : (

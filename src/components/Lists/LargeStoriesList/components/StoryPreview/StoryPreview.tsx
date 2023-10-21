@@ -70,7 +70,9 @@ function StoryPreview({ description, isFree, previewURL, storyId, title }: Story
         {!isFree && <Icons.Lock style={styles.lockIcon} />}
 
         <TextView style={styles.titleText}>{title}</TextView>
-        <TextView style={styles.descriptionText}>{description}</TextView>
+        <TextView numberOfLines={2} style={styles.descriptionText}>
+          {description}
+        </TextView>
       </ImageBackground>
     </PressableView>
   );

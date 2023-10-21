@@ -1,5 +1,4 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useMemo } from 'react';
 
 import Animated, {
   Extrapolate,
@@ -9,19 +8,21 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { formatSecondsToMins } from '@/utils/formatters/formatSecondsToMins';
 
 import { makeStyles } from './StoryMeta.styles';
 
 interface StoryMetaPropTypes {
-  description: StorySchema['description'];
+  description: string;
   duration: number;
   storyPlayingSharedValue: SharedValue<number>;
 }
 
 function StoryMeta({ description, duration, storyPlayingSharedValue }: StoryMetaPropTypes) {
   const styles = useMakeStyles(makeStyles);
+
+  const formattedDuration = useMemo(() => formatSecondsToMins(duration), [duration]);
 
   const animatedTextStyle = useAnimatedStyle(() => {
     return {
@@ -32,7 +33,7 @@ function StoryMeta({ description, duration, storyPlayingSharedValue }: StoryMeta
   return (
     <Animated.View style={[styles.storyMetaContainer, animatedTextStyle]}>
       <TextView style={styles.durationTitle}>
-        Story duration: <TextView style={styles.durationText}>{duration} min</TextView>
+        Story duration: <TextView style={styles.durationText}>{formattedDuration} min</TextView>
       </TextView>
       <TextView style={styles.storyText}>{description}</TextView>
     </Animated.View>

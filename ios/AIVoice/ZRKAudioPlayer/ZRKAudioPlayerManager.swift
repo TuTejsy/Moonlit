@@ -127,6 +127,11 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
     }
   }
   
+  @objc func getCurrentPlayingTime(_ resolve: RCTPromiseResolveBlock,
+                                 rejecter reject: RCTPromiseRejectBlock) {
+    resolve(audioPlayer.playingTime)
+  }
+  
   @objc func rewindPlayingToTime(_ time: Double,
                                  resolver resolve: RCTPromiseResolveBlock,
                                  rejecter reject: RCTPromiseRejectBlock) {
