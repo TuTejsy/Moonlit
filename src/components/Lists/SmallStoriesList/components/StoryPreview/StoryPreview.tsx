@@ -24,7 +24,13 @@ interface StoryPreviewPropTypes {
   title: string;
 }
 
-function StoryPreview({ description, isFree, previewURL, storyId, title }: StoryPreviewPropTypes) {
+export function StoryPreview({
+  description,
+  isFree,
+  previewURL,
+  storyId,
+  title,
+}: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
@@ -67,5 +73,3 @@ function StoryPreview({ description, isFree, previewURL, storyId, title }: Story
     </PressableView>
   );
 }
-
-export default StoryPreview;

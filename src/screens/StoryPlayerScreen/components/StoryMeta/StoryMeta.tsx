@@ -19,7 +19,7 @@ interface StoryMetaPropTypes {
   storyPlayingSharedValue: SharedValue<number>;
 }
 
-function StoryMeta({ description, duration, storyPlayingSharedValue }: StoryMetaPropTypes) {
+export function StoryMeta({ description, duration, storyPlayingSharedValue }: StoryMetaPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const formattedDuration = useMemo(() => formatSecondsToMins(duration), [duration]);
@@ -39,5 +39,3 @@ function StoryMeta({ description, duration, storyPlayingSharedValue }: StoryMeta
     </Animated.View>
   );
 }
-
-export default StoryMeta;

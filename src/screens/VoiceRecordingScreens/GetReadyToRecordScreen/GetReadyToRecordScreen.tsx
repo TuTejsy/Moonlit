@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 
-import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';

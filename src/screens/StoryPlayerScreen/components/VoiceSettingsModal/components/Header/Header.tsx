@@ -12,7 +12,7 @@ interface HeaderProps {
   onCloseIconPress: () => void;
 }
 
-function Header({ onCloseIconPress }: HeaderProps) {
+export function Header({ onCloseIconPress }: HeaderProps) {
   const styles = useMakeStyles(makeStyles);
 
   return (
@@ -27,5 +27,3 @@ function Header({ onCloseIconPress }: HeaderProps) {
     </View>
   );
 }
-
-export default Header;

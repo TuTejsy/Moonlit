@@ -3,7 +3,7 @@ import { ZRKRealmConfiguration } from 'realm';
 import { ColorSchema } from '../schema/stories/ColorSchema';
 import { StorySchema } from '../schema/stories/StorySchema';
 
-const storiesConfig: ZRKRealmConfiguration = {
+export const storiesConfig: ZRKRealmConfiguration = {
   deleteCache: () => {},
 
   deleteRealmIfMigrationNeeded: true,
@@ -11,5 +11,3 @@ const storiesConfig: ZRKRealmConfiguration = {
   schema: [StorySchema, ColorSchema],
   schemaVersion: 2,
 };
-
-export default storiesConfig;

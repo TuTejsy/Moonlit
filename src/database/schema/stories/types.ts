@@ -15,10 +15,12 @@ export interface StorySchema {
   type: number;
   updated_at_timestamp: number;
   colors?: ColorSchema | null;
+  full_cover_cached_name?: string;
+  medium_cover_cached_name?: string;
   played_at_timestamp?: number;
   saved_at_timestamp?: number;
   selected_audio_recording_id?: number;
-  small_preview_cover_cached_name?: string;
+  small_cover_cached_name?: string;
 }
 
 export interface ColorSchema {

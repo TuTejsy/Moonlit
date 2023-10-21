@@ -3,9 +3,9 @@ import { memo, useMemo } from 'react';
 import { createStackNavigator, StackCardStyleInterpolator } from '@react-navigation/stack';
 
 import { useTheme } from '@/hooks/theme/useTheme';
-import FavoritesScreen from '@/screens/FavoritesScreen/FavoritesScreen';
-import HomeScreen from '@/screens/HomeScreen/HomeScreen';
-import SearchScreen from '@/screens/SearchScreen/SearchScreen';
+import { FavoritesScreen } from '@/screens/FavoritesScreen/FavoritesScreen';
+import { HomeScreen } from '@/screens/HomeScreen/HomeScreen';
+import { SearchScreen } from '@/screens/SearchScreen/SearchScreen';
 
 import { TabRoutes } from '../TabNavigator/TabNavigator.routes';
 

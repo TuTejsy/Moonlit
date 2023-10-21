@@ -7,7 +7,7 @@ import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
-import StoryPreview from './components/StoryPreview/StoryPreview';
+import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './LargeStoriesList.styles';
 
 interface LargeStoriesListPropTypes {
@@ -15,7 +15,7 @@ interface LargeStoriesListPropTypes {
   storiesVersion: number;
 }
 
-function LargeStoriesList({ stories, storiesVersion }: LargeStoriesListPropTypes) {
+export function LargeStoriesList({ stories, storiesVersion }: LargeStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
@@ -45,5 +45,3 @@ function LargeStoriesList({ stories, storiesVersion }: LargeStoriesListPropTypes
     />
   );
 }
-
-export default LargeStoriesList;

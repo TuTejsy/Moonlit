@@ -24,58 +24,58 @@ interface StoryPreviewPropTypes {
   title: string;
 }
 
-function StoryPreview({ description, isFree, previewURL, storyId, title }: StoryPreviewPropTypes) {
-  const styles = useMakeStyles(makeStyles);
-  const { colors } = useTheme();
+export const StoryPreview = React.memo(
+  ({ description, isFree, previewURL, storyId, title }: StoryPreviewPropTypes) => {
+    const styles = useMakeStyles(makeStyles);
+    const { colors } = useTheme();
 
-  const { handleImageLoad, isImageLoaded } = useImageLoaded();
+    const { handleImageLoad, isImageLoaded } = useImageLoaded();
 
-  const navigation = useNavigation<NavigationType>();
+    const navigation = useNavigation<NavigationType>();
 
-  const handlePreviewPress = useCallback(() => {
-    navigation.navigate(RootRoutes.STORY_PLAYER, {
-      storyId,
-    });
-  }, [navigation, storyId]);
+    const handlePreviewPress = useCallback(() => {
+      navigation.navigate(RootRoutes.STORY_PLAYER, {
+        storyId,
+      });
+    }, [navigation, storyId]);
 
-  return (
-    <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
-      {!isImageLoaded && (
-        <LinearGradient
-          angle={180}
-          colors={[colors.opacityBlack(0), colors.opacityBlack(1)]}
-          locations={[0, 1]}
-          pointerEvents='none'
-          style={styles.imageGradient}
-        />
-      )}
-
-      <ImageBackground
-        defaultSource={loonImage}
-        resizeMode={isImageLoaded ? 'cover' : 'center'}
-        source={{ uri: previewURL }}
-        style={styles.preview}
-        onLoad={handleImageLoad}
-      >
-        {isImageLoaded && (
+    return (
+      <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
+        {!isImageLoaded && (
           <LinearGradient
             angle={180}
-            colors={[colors.opacityBlack(0), colors.opacityBlack(0.8)]}
+            colors={[colors.opacityBlack(0), colors.opacityBlack(1)]}
             locations={[0, 1]}
             pointerEvents='none'
-            style={styles.previewGradient}
+            style={styles.imageGradient}
           />
         )}
 
-        {!isFree && <Icons.Lock style={styles.lockIcon} />}
+        <ImageBackground
+          defaultSource={loonImage}
+          resizeMode={isImageLoaded ? 'cover' : 'center'}
+          source={{ uri: previewURL }}
+          style={styles.preview}
+          onLoad={handleImageLoad}
+        >
+          {isImageLoaded && (
+            <LinearGradient
+              angle={180}
+              colors={[colors.opacityBlack(0), colors.opacityBlack(0.8)]}
+              locations={[0, 1]}
+              pointerEvents='none'
+              style={styles.previewGradient}
+            />
+          )}
 
-        <TextView style={styles.titleText}>{title}</TextView>
-        <TextView numberOfLines={2} style={styles.descriptionText}>
-          {description}
-        </TextView>
-      </ImageBackground>
-    </PressableView>
-  );
-}
+          {!isFree && <Icons.Lock style={styles.lockIcon} />}
 
-export default React.memo(StoryPreview);
+          <TextView style={styles.titleText}>{title}</TextView>
+          <TextView numberOfLines={2} style={styles.descriptionText}>
+            {description}
+          </TextView>
+        </ImageBackground>
+      </PressableView>
+    );
+  },
+);

@@ -2,19 +2,18 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import LinearGradient from 'react-native-linear-gradient';
 
+import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
-import SmallStoriesPlainList from '../../components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
-
-import DefaultSearchList from './components/DefaultSearchList/DefaultSearchList';
-import PopularSearch from './components/PopularSearch/PopularSearch';
-import SearchBar from './components/SearchBar/SearchBar';
+import { DefaultSearchList } from './components/DefaultSearchList/DefaultSearchList';
+import { PopularSearch } from './components/PopularSearch/PopularSearch';
+import { SearchBar } from './components/SearchBar/SearchBar';
 import { makeStyles } from './SearchScreen.styles';
 
-function SearchScreen() {
+export const SearchScreen = () => {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
 
@@ -96,6 +95,4 @@ function SearchScreen() {
       />
     </LinearGradient>
   );
-}
-
-export default SearchScreen;
+};

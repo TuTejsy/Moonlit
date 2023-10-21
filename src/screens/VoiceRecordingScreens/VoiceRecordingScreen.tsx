@@ -15,7 +15,7 @@ import {
 
 const UPLOAD_PATH = 'http://localhost:8080/uploadFile';
 
-function VoiceRecordingScreen() {
+export function VoiceRecordingScreen() {
   const voicePowerSharedValue = useSharedValue(4);
   const [isRecording, setIsRecording] = useState(false);
   const [file, setFile] = useState<AUDIO_RECORDER_FILE | null>(null);
@@ -123,5 +123,3 @@ const styles = StyleSheet.create({
     paddingTop: 200,
   },
 });
-
-export default VoiceRecordingScreen;

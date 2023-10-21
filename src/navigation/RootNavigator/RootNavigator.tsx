@@ -1,10 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { isSandbox } from '@/constants/common';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useInitApp } from '@/hooks/useInitApp';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
-import StoryPlayerScreen from '@/screens/StoryPlayerScreen/StoryPlayerScreen';
+import { StoryPlayerScreen } from '@/screens/StoryPlayerScreen/StoryPlayerScreen';
 import GetReadyToRecordScreen from '@/screens/VoiceRecordingScreens/GetReadyToRecordScreen/GetReadyToRecordScreen';
 
 import {

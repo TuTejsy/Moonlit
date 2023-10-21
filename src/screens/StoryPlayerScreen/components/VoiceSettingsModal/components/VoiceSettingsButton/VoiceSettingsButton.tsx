@@ -25,7 +25,7 @@ interface VoiceSettingsButtonProps {
   voiceName: string;
 }
 
-function VoiceSettingsButton({
+export function VoiceSettingsButton({
   isModalExpandedSharedValue,
   storyColor,
   voiceCoverUrl,
@@ -81,5 +81,3 @@ function VoiceSettingsButton({
     </Animated.View>
   );
 }
-
-export default VoiceSettingsButton;

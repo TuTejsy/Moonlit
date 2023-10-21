@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useCallback, useEffect, useState } from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { View, ViewProps } from 'react-native';
 
 import { GestureDetector } from 'react-native-gesture-handler';
@@ -6,10 +6,10 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import useMutableValue from '@/hooks/useMutableValue';
+import { useMutableValue } from '@/hooks/useMutableValue';
 import { formatSecondsToDuration } from '@/utils/formatters/formatSecondsToDuration';
 
-import useProgressBarGestureHandler from './hooks/useProgressBarGestureHandler';
+import { useProgressBarGestureHandler } from './hooks/useProgressBarGestureHandler';
 import { makeStyles } from './ProgressBar.styles';
 
 interface ProgressBarPropTypes extends ViewProps {
@@ -20,7 +20,7 @@ interface ProgressBarPropTypes extends ViewProps {
   setPlayedTime: (playedTime: number) => void;
 }
 
-function ProgressBar({
+export function ProgressBar({
   duration,
   isStoryPlaying,
   moveToTime,
@@ -132,5 +132,3 @@ function ProgressBar({
     </GestureDetector>
   );
 }
-
-export default ProgressBar;

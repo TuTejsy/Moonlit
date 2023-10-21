@@ -1,6 +1,6 @@
 import { ViewProps } from 'react-native';
 
-import { useDownloadStoriesPreviews } from './hooks/useDownloadStoriesPreviews';
+import { useDownloadStoriesPreviews } from './hooks/useDownloadStoriesPreviews/useDownloadStoriesPreviews';
 
 export const AppLogicProvider = ({ children }: ViewProps) => {
   useDownloadStoriesPreviews();

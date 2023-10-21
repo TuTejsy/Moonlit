@@ -1,6 +1,6 @@
 import Realm, { Results, ZRKRealmConfiguration } from 'realm';
 
-class RealmDB<ObjectType> {
+export class RealmDB<ObjectType> {
   protected instance: InstanceType<typeof Realm>;
 
   private realmPath: string;
@@ -250,5 +250,3 @@ class RealmDB<ObjectType> {
     }
   };
 }
-
-export default RealmDB;

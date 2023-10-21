@@ -27,9 +27,9 @@ interface TabBarStoryPlayerProps {
 export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   const { colors } = useTheme();
 
-  const [story, storyVersion] = useStory(storyId, ['name', 'small_preview_cover_cached_name']);
+  const [story, _storyVersion] = useStory(storyId, ['name', 'small_cover_cached_name']);
 
-  const { selectedAudioRecording, selectedAudioRecordingVersion } =
+  const { _selectedAudioRecordingVersion, selectedAudioRecording } =
     useSelectedAudioRecording(storyId);
 
   const storyColor = useMemo(() => {
@@ -50,16 +50,7 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
     [story],
   );
 
-  const {
-    isStoryPlaying,
-    isStoryPlayingSharedValue,
-    moveStoryPlayingToTime,
-    pauseStoryPlaying,
-    playedTime,
-    setPlayedTime,
-    startStoryPlaying,
-    storyPlayingSharedValue,
-  } = useStoryPlayer({
+  const { isStoryPlaying, pauseStoryPlaying, playedTime, startStoryPlaying } = useStoryPlayer({
     audioRecordingId: selectedAudioRecording?.id,
     coverPath: coverURL,
     storyId,
@@ -109,7 +100,7 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
           resizeMode='cover'
           style={styles.image}
           source={{
-            uri: `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story.small_preview_cover_cached_name}`,
+            uri: `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story.small_cover_cached_name}`,
           }}
         />
         <TextView style={styles.title} type='medium'>

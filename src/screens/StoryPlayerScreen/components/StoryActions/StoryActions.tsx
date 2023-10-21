@@ -25,12 +25,12 @@ interface StoryActionsPropTyps {
   storyTitle: string;
 }
 
-function StoryActions({
+export const StoryActions = ({
   startStoryPlaying,
   storyId,
   storyPlayingSharedValue,
   storyTitle,
-}: StoryActionsPropTyps) {
+}: StoryActionsPropTyps) => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
@@ -77,6 +77,4 @@ function StoryActions({
       </View>
     </Animated.View>
   );
-}
-
-export default StoryActions;
+};

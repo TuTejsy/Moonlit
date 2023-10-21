@@ -18,17 +18,17 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
-import StoryActions from './components/StoryActions/StoryActions';
-import StoryMeta from './components/StoryMeta/StoryMeta';
-import StoryPlayer from './components/StoryPlayer/StoryPlayer';
-import VoiceSettingsModal from './components/VoiceSettingsModal/VoiceSettingsModal';
+import { StoryActions } from './components/StoryActions/StoryActions';
+import { StoryMeta } from './components/StoryMeta/StoryMeta';
+import { StoryPlayer } from './components/StoryPlayer/StoryPlayer';
+import { VoiceSettingsModal } from './components/VoiceSettingsModal/VoiceSettingsModal';
 import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUpdate';
-import useStoryCoverAnimation from './hooks/useStoryCoverAnimation';
-import useStoryCoverGestureHandler from './hooks/useStoryCoverGestureHandler';
+import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
+import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
 import { makeStyles } from './StoryPlayerScreen.styles';
 import { NavigationType, RouteType } from './StoryPlayerScreen.types';
 
-function StoryPlayerScreen() {
+export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
   const storyContainerMinHeight =
     WINDOW_HEIGHT - DEFAULT_HEADER_HEIGHT - insets.top - insets.bottom - 102;
@@ -43,7 +43,7 @@ function StoryPlayerScreen() {
     'full_cover_url',
     'name',
     'description',
-    'small_preview_cover_cached_name',
+    'small_cover_cached_name',
   ]);
 
   const { selectedAudioRecording, selectedAudioRecordingVersion, setSelectedAudioRecording } =
@@ -201,6 +201,4 @@ function StoryPlayerScreen() {
       />
     </LinearGradient>
   );
-}
-
-export default StoryPlayerScreen;
+};

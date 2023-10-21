@@ -18,7 +18,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { generateMapStoriesToSaved } from '@/utils/generators/generateMapStoriesToSaved';
 
-import StoryPreview from './components/StoryPreview/StoryPreview';
+import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesPlainList.styles';
 
 interface SmallStoriesPlainListPropTypes
@@ -30,93 +30,93 @@ interface SmallStoriesPlainListPropTypes
   showSaveButton?: boolean;
 }
 
-function SmallStoriesPlainList({
-  onScroll,
-  showSaveButton = false,
-  stories,
-  storiesVersion,
-  ...props
-}: SmallStoriesPlainListPropTypes) {
-  const styles = useMakeStyles(makeStyles);
-  const insets = useSafeAreaInsets();
-  const [savedVersion, setSavedVersion] = useState(0);
+export const SmallStoriesPlainList = React.memo(
+  ({
+    onScroll,
+    showSaveButton = false,
+    stories,
+    storiesVersion,
+    ...props
+  }: SmallStoriesPlainListPropTypes) => {
+    const styles = useMakeStyles(makeStyles);
+    const insets = useSafeAreaInsets();
+    const [savedVersion, setSavedVersion] = useState(0);
 
-  const mapStoriesToSaved = useMemo(() => generateMapStoriesToSaved(stories), [stories]);
+    const mapStoriesToSaved = useMemo(() => generateMapStoriesToSaved(stories), [stories]);
 
-  const handleSaveStoryPress = useCallback(
-    (storyId: number) => {
-      const isSaved = mapStoriesToSaved.get(storyId);
+    const handleSaveStoryPress = useCallback(
+      (storyId: number) => {
+        const isSaved = mapStoriesToSaved.get(storyId);
 
-      mapStoriesToSaved.set(storyId, !isSaved);
-      setSavedVersion(savedVersion + 1);
-    },
-    [mapStoriesToSaved, savedVersion],
-  );
-
-  const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<StorySchema>) => {
-      return (
-        <StoryPreview
-          description={item.description}
-          isFree={item.is_free}
-          isSaved={mapStoriesToSaved.get(item.id)}
-          previewURL={formatServerFileURLToAbsolutePath(item.small_cover_url)}
-          showSaveButton={showSaveButton}
-          storyId={item.id}
-          title={item.name}
-          onSaveStoryPress={handleSaveStoryPress}
-        />
-      );
-    },
-    [handleSaveStoryPress, mapStoriesToSaved, showSaveButton],
-  );
-
-  const handleScrollToTop = useCallback(() => {
-    onScroll?.({
-      nativeEvent: {
-        contentOffset: { x: 0, y: 0 },
+        mapStoriesToSaved.set(storyId, !isSaved);
+        setSavedVersion(savedVersion + 1);
       },
-    } as NativeSyntheticEvent<NativeScrollEvent>);
-  }, [onScroll]);
+      [mapStoriesToSaved, savedVersion],
+    );
 
-  useEffect(() => {
-    handleScrollToTop();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useFocusEffect(
-    useCallback(
-      () => () => {
-        if (showSaveButton) {
-          const ids = Array.from(mapStoriesToSaved.keys()).filter(
-            (storyId) => !mapStoriesToSaved.get(storyId),
-          );
-
-          StoriesDB.update(ids, (story) => {
-            story.is_favorite = false;
-            story.saved_at_timestamp = undefined;
-          });
-        }
+    const renderItem = useCallback(
+      ({ item }: ListRenderItemInfo<StorySchema>) => {
+        return (
+          <StoryPreview
+            description={item.description}
+            isFree={item.is_free}
+            isSaved={mapStoriesToSaved.get(item.id)}
+            previewURL={formatServerFileURLToAbsolutePath(item.small_cover_url)}
+            showSaveButton={showSaveButton}
+            storyId={item.id}
+            title={item.name}
+            onSaveStoryPress={handleSaveStoryPress}
+          />
+        );
       },
+      [handleSaveStoryPress, mapStoriesToSaved, showSaveButton],
+    );
+
+    const handleScrollToTop = useCallback(() => {
+      onScroll?.({
+        nativeEvent: {
+          contentOffset: { x: 0, y: 0 },
+        },
+      } as NativeSyntheticEvent<NativeScrollEvent>);
+    }, [onScroll]);
+
+    useEffect(() => {
+      handleScrollToTop();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [],
-    ),
-  );
+    }, []);
 
-  return (
-    <FlatList
-      showsVerticalScrollIndicator
-      contentContainerStyle={styles.contentContainer}
-      data={stories}
-      extraData={storiesVersion + savedVersion}
-      indicatorStyle='white'
-      renderItem={renderItem}
-      scrollIndicatorInsets={{ top: DEFAULT_HEADER_HEIGHT + insets.top }}
-      onScroll={onScroll}
-      onScrollToTop={handleScrollToTop}
-      {...props}
-    />
-  );
-}
+    useFocusEffect(
+      useCallback(
+        () => () => {
+          if (showSaveButton) {
+            const ids = Array.from(mapStoriesToSaved.keys()).filter(
+              (storyId) => !mapStoriesToSaved.get(storyId),
+            );
 
-export default React.memo(SmallStoriesPlainList);
+            StoriesDB.update(ids, (story) => {
+              story.is_favorite = false;
+              story.saved_at_timestamp = undefined;
+            });
+          }
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [],
+      ),
+    );
+
+    return (
+      <FlatList
+        showsVerticalScrollIndicator
+        contentContainerStyle={styles.contentContainer}
+        data={stories}
+        extraData={storiesVersion + savedVersion}
+        indicatorStyle='white'
+        renderItem={renderItem}
+        scrollIndicatorInsets={{ top: DEFAULT_HEADER_HEIGHT + insets.top }}
+        onScroll={onScroll}
+        onScrollToTop={handleScrollToTop}
+        {...props}
+      />
+    );
+  },
+);
