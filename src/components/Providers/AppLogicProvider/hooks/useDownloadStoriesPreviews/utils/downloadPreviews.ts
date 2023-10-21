@@ -1,5 +1,4 @@
 import RNFS from 'react-native-fs';
-import { Results } from 'realm';
 import { getColorFromURL } from 'rn-dominant-color';
 
 import { StoryCoverType } from '@/constants/stories';
@@ -13,7 +12,7 @@ import { getStoryCachedNameFieldForCoverType } from './getStoryCachedNameFieldFo
 import { getStoryPreviewURLFieldForCoverType } from './getStoryPreviewURLFieldForCoverType';
 
 export async function downloadPreviews(
-  stories: Results<StorySchema>,
+  stories: Array<StorySchema>,
   sliceFrom: number,
   sliceTo: number,
   type: StoryCoverType,
@@ -23,10 +22,6 @@ export async function downloadPreviews(
 
   for (let j = sliceFrom ?? 0; j < (sliceTo ?? stories.length); j++) {
     try {
-      if (stories.isValid && !stories.isValid()) {
-        break;
-      }
-
       const story = stories[j];
 
       const cachedName = generateStoryCoverCachedName(story, type);

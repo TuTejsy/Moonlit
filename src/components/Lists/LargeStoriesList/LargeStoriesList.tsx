@@ -3,9 +3,9 @@ import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { Results } from 'realm';
 
+import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './LargeStoriesList.styles';
@@ -23,7 +23,8 @@ export function LargeStoriesList({ stories, storiesVersion }: LargeStoriesListPr
       <StoryPreview
         description={item.description}
         isFree={item.is_free}
-        previewURL={formatServerFileURLToAbsolutePath(item.full_cover_url)}
+        isImageLoaded={!!item.full_cover_cached_name}
+        previewURL={`file://${SANDBOX.DOCUMENTS.FULL_COVER}/${item.full_cover_cached_name}`}
         storyId={item.id}
         title={item.name}
       />

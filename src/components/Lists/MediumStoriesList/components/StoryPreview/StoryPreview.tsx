@@ -19,6 +19,7 @@ import { NavigationType } from './StoryPreview.types';
 interface StoryPreviewPropTypes {
   description: string;
   isFree: boolean;
+  isImageLoaded: boolean;
   previewURL: string;
   storyId: number;
   title: string;
@@ -27,6 +28,7 @@ interface StoryPreviewPropTypes {
 export function StoryPreview({
   description,
   isFree,
+  isImageLoaded,
   previewURL,
   storyId,
   title,
@@ -35,8 +37,6 @@ export function StoryPreview({
   const { colors } = useTheme();
 
   const navigation = useNavigation<NavigationType>();
-
-  const { handleImageLoad, isImageLoaded } = useImageLoaded();
 
   const handlePreviewPress = useCallback(() => {
     navigation.navigate(RootRoutes.STORY_PLAYER, {
@@ -59,7 +59,6 @@ export function StoryPreview({
         resizeMode={isImageLoaded ? 'cover' : 'center'}
         source={{ uri: previewURL }}
         style={styles.preview}
-        onLoad={handleImageLoad}
       />
 
       {!isFree && <Icons.Lock style={styles.lockIcon} />}

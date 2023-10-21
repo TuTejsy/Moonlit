@@ -37,7 +37,12 @@ export const SearchScreen = () => {
     sortDescriptor: 'played_count',
   });
   const [freeStories, freeStoriesVersion] = useStories('is_free = true');
-  const popularSearchItems = popularStories.slice(0, 5).map((story) => story.name);
+
+  const popularSearchItems = useMemo(
+    () => popularStories.slice(0, 5).map((story) => story.name),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [popularStoriesVersion],
+  );
 
   const handleSearchTextChange = useCallback((text: string) => {
     setSearchText(text);

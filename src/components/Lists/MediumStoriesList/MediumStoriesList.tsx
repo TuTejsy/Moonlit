@@ -3,9 +3,9 @@ import { FlatList, ListRenderItemInfo, ViewStyle } from 'react-native';
 
 import { Results } from 'realm';
 
+import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './MediumStoriesList.styles';
@@ -24,7 +24,8 @@ export function MediumStoriesList({ stories, storiesVersion, style }: MediumStor
       <StoryPreview
         description={item.description}
         isFree={item.is_free}
-        previewURL={formatServerFileURLToAbsolutePath(item.medium_cover_url)}
+        isImageLoaded={!!item.medium_cover_cached_name}
+        previewURL={`file://${SANDBOX.DOCUMENTS.MEDIUM_PREVIEW}/${item.medium_cover_cached_name}`}
         storyId={item.id}
         title={item.name}
       />

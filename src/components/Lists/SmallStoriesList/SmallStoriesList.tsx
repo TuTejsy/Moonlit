@@ -51,13 +51,15 @@ export function SmallStoriesList({
       return stories.slice(0, displayCount);
     }
     return stories;
-  }, [displayCount, stories]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayCount, stories, storiesVersion]);
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
     return (
       <StoryPreview
         description={item.description}
         isFree={item.is_free}
+        isImageLoaded={!!item.small_cover_cached_name}
         previewURL={`file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${item.small_cover_cached_name}`}
         storyId={item.id}
         title={item.name}
