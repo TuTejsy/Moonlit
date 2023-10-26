@@ -42,7 +42,11 @@ export const SmallStoriesPlainList = React.memo(
     const insets = useSafeAreaInsets();
     const [savedVersion, setSavedVersion] = useState(0);
 
-    const mapStoriesToSaved = useMemo(() => generateMapStoriesToSaved(stories), [stories]);
+    const mapStoriesToSaved = useMemo(
+      () => generateMapStoriesToSaved(stories),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [stories, storiesVersion],
+    );
 
     const handleSaveStoryPress = useCallback(
       (storyId: number) => {
@@ -100,7 +104,7 @@ export const SmallStoriesPlainList = React.memo(
           }
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [],
+        [mapStoriesToSaved],
       ),
     );
 

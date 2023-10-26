@@ -8,4 +8,8 @@ export const makeStyles = ({ colors }: MakeStylesProps) =>
       backgroundColor: colors.black,
       flex: 1,
     },
+    searchScreen: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: colors.black,
+    },
   });
