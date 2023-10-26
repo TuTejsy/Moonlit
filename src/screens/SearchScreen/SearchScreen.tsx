@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -67,28 +68,34 @@ export const SearchScreen = () => {
       locations={[0.3, 1]}
       style={styles.screen}
     >
+      <DefaultSearchList
+        allStories={allStories}
+        allStoriesVersion={allStoriesVersion}
+        freeStories={freeStories}
+        freeStoriesVersion={freeStoriesVersion}
+        popularStories={popularStories}
+        popularStoriesVersion={popularStoriesVersion}
+        onScroll={handleOpacityScroll}
+      />
+
       {searchText ? (
-        <SmallStoriesPlainList
-          stories={allStories}
-          storiesVersion={allStoriesVersion}
-          onScroll={handleOpacityScroll}
-        />
-      ) : isInputFocused ? (
-        <PopularSearch
-          popularSearchItems={popularSearchItems}
-          onPopularSearchItemSelected={handlePopularSearchItemSelected}
-          onScroll={handleOpacityScroll}
-        />
+        <View style={styles.searchScreen}>
+          <SmallStoriesPlainList
+            stories={allStories}
+            storiesVersion={allStoriesVersion}
+            onScroll={handleOpacityScroll}
+          />
+        </View>
       ) : (
-        <DefaultSearchList
-          allStories={allStories}
-          allStoriesVersion={allStoriesVersion}
-          freeStories={freeStories}
-          freeStoriesVersion={freeStoriesVersion}
-          popularStories={popularStories}
-          popularStoriesVersion={popularStoriesVersion}
-          onScroll={handleOpacityScroll}
-        />
+        isInputFocused && (
+          <View style={styles.searchScreen}>
+            <PopularSearch
+              popularSearchItems={popularSearchItems}
+              onPopularSearchItemSelected={handlePopularSearchItemSelected}
+              onScroll={handleOpacityScroll}
+            />
+          </View>
+        )
       )}
 
       <SearchBar

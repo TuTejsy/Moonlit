@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
+import { SANDBOX } from '@/constants/common';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
@@ -52,7 +53,7 @@ export const StoryPlayerScreen = () => {
   const [areRecordingsLoading] = useStoryAudioRecordingsUpdate(storyId);
 
   const coverURL = useMemo(
-    () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
+    () => (story ? `file://${SANDBOX.DOCUMENTS.FULL_COVER}/${story.full_cover_cached_name}` : ''),
     [story],
   );
 
