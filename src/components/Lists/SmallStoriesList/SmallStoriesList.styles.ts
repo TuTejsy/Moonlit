@@ -8,4 +8,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
     listContent: {
       paddingLeft: HORIZONTAL_PADDING,
     },
+    separator: {
+      height: 34,
+    },
   });

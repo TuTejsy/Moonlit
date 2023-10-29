@@ -30,7 +30,6 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       width: PREVIEW_SIZE,
     },
     previewContainer: {
-      marginBottom: 24,
       marginRight: 16,
       maxWidth: PREVIEW_SIZE,
       position: 'relative',

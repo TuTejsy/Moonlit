@@ -9,10 +9,15 @@ import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumSt
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import { FREE_STORIES_FILTER, POPULAR_STORIES_CONFIG } from '@/constants/stories';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { CategoriesList } from '@/screens/HomeScreen/components/CategoriesList/CategoriesList';
 import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
+import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
 import { makeStyles } from './DefaultSearchList.styles';
 
@@ -40,6 +45,26 @@ export const DefaultSearchList = React.memo(
 
     const insets = useSafeAreaInsets();
 
+    const navigation = useAppNavigation<SharedRoutes.SEARCH>();
+
+    const handleSeeAllTales = useCallback(() => {
+      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.SEARCH));
+    }, [navigation]);
+
+    const handleSeePopularTales = useCallback(() => {
+      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.SEARCH), {
+        storiesSortConfig: POPULAR_STORIES_CONFIG,
+        title: 'Popular tales',
+      });
+    }, [navigation]);
+
+    const handleSeeFreeTales = useCallback(() => {
+      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.SEARCH), {
+        storiesFilter: FREE_STORIES_FILTER,
+        title: 'Free tales',
+      });
+    }, [navigation]);
+
     const handleScrollToTop = useCallback(() => {
       onScroll?.({
         nativeEvent: {
@@ -63,7 +88,7 @@ export const DefaultSearchList = React.memo(
         onScroll={onScroll}
         onScrollToTop={handleScrollToTop}
       >
-        <SectionHeader title='Popular tales' onSeeAllPress={noop} />
+        <SectionHeader title='Popular tales' onSeeAllPress={handleSeePopularTales} />
         <MediumStoriesList
           stories={popularStories}
           storiesVersion={popularStoriesVersion}
@@ -74,14 +99,14 @@ export const DefaultSearchList = React.memo(
 
         <PromotionBanner style={styles.promotionBanner} />
 
-        <SectionHeader title='Free tales' onSeeAllPress={noop} />
+        <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
         <MediumStoriesList
           stories={freeStories}
           storiesVersion={freeStoriesVersion}
           style={styles.freeList}
         />
 
-        <SectionHeader title='All tales' onSeeAllPress={noop} />
+        <SectionHeader title='All tales' onSeeAllPress={handleSeeAllTales} />
         <SmallStoriesList
           displayCount={6}
           isScrollable={false}

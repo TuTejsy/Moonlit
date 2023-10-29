@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Image } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -23,50 +23,45 @@ interface StoryPreviewPropTypes {
   title: string;
 }
 
-export function StoryPreview({
-  description,
-  isFree,
-  isImageLoaded,
-  previewURL,
-  storyId,
-  title,
-}: StoryPreviewPropTypes) {
-  const styles = useMakeStyles(makeStyles);
-  const { colors } = useTheme();
+export const StoryPreview = memo(
+  ({ description, isFree, isImageLoaded, previewURL, storyId, title }: StoryPreviewPropTypes) => {
+    const styles = useMakeStyles(makeStyles);
+    const { colors } = useTheme();
 
-  const navigation = useAppNavigation();
+    const navigation = useAppNavigation();
 
-  const handlePreviewPress = useCallback(() => {
-    navigation.navigate(RootRoutes.STORY_PLAYER, {
-      storyId,
-    });
-  }, [navigation, storyId]);
+    const handlePreviewPress = useCallback(() => {
+      navigation.navigate(RootRoutes.STORY_PLAYER, {
+        storyId,
+      });
+    }, [navigation, storyId]);
 
-  return (
-    <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
-      <LinearGradient
-        angle={180}
-        colors={[colors.opacityBlack(0), colors.opacityBlack(0.7)]}
-        locations={[0, 1]}
-        pointerEvents='none'
-        style={styles.previewGradient}
-      />
+    return (
+      <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
+        <LinearGradient
+          angle={180}
+          colors={[colors.opacityBlack(0), colors.opacityBlack(0.7)]}
+          locations={[0, 1]}
+          pointerEvents='none'
+          style={styles.previewGradient}
+        />
 
-      <Image
-        defaultSource={loonImage}
-        resizeMode={isImageLoaded ? 'cover' : 'center'}
-        source={{ uri: previewURL }}
-        style={styles.preview}
-      />
+        <Image
+          defaultSource={loonImage}
+          resizeMode={isImageLoaded ? 'cover' : 'center'}
+          source={{ uri: previewURL }}
+          style={styles.preview}
+        />
 
-      {!isFree && <Icons.Lock style={styles.lockIcon} />}
+        {!isFree && <Icons.Lock style={styles.lockIcon} />}
 
-      <TextView numberOfLines={1} style={styles.titleText} type='bold'>
-        {title}
-      </TextView>
-      <TextView numberOfLines={2} style={styles.descriptionText}>
-        {description}
-      </TextView>
-    </PressableView>
-  );
-}
+        <TextView numberOfLines={1} style={styles.titleText} type='bold'>
+          {title}
+        </TextView>
+        <TextView numberOfLines={2} style={styles.descriptionText}>
+          {description}
+        </TextView>
+      </PressableView>
+    );
+  },
+);
