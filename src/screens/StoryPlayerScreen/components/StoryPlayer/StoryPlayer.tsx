@@ -29,7 +29,6 @@ interface StoryPlayerPropTypes {
   moveStoryPlayingToTime: (playedTime: number) => void;
   pauseStoryPlaying: () => void;
   playedTime: number;
-  setPlayedTime: (playedTime: number) => void;
   startStoryPlaying: () => void;
   storyId: number;
   storyPlayingSharedValue: SharedValue<number>;
@@ -44,7 +43,6 @@ export function StoryPlayer({
   moveStoryPlayingToTime,
   pauseStoryPlaying,
   playedTime,
-  setPlayedTime,
   startStoryPlaying,
   storyId,
   storyName,
@@ -143,7 +141,6 @@ export function StoryPlayer({
               isStoryPlaying={isStoryPlaying}
               moveToTime={moveStoryPlayingToTime}
               playedTime={playedTime}
-              setPlayedTime={setPlayedTime}
             />
 
             <View style={styles.playerControllsContainer}>

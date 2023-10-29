@@ -76,7 +76,6 @@ export const StoryPlayerScreen = () => {
     moveStoryPlayingToTime,
     pauseStoryPlaying,
     playedTime,
-    setPlayedTime,
     startStoryPlaying,
     storyPlayingSharedValue,
   } = useStoryPlayer({
@@ -184,7 +183,6 @@ export const StoryPlayerScreen = () => {
         moveStoryPlayingToTime={moveStoryPlayingToTime}
         pauseStoryPlaying={pauseStoryPlaying}
         playedTime={playedTime}
-        setPlayedTime={setPlayedTime}
         startStoryPlaying={startStoryPlaying}
         storyId={storyId}
         storyName={story?.name}
