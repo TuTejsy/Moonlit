@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import {
-  FlatList,
   FlatListProps,
   ListRenderItemInfo,
   NativeScrollEvent,
@@ -9,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { Results } from 'realm';
+import Animated from 'react-native-reanimated';
 
 import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
@@ -71,11 +70,13 @@ export function SmallStoriesList({
   const keyExtractor = useCallback((item: StorySchema) => `${item.id}`, []);
 
   const handleScrollToTop = useCallback(() => {
-    onScroll?.({
-      nativeEvent: {
-        contentOffset: { x: 0, y: 0 },
-      },
-    } as NativeSyntheticEvent<NativeScrollEvent>);
+    if (typeof onScroll === 'function') {
+      onScroll({
+        nativeEvent: {
+          contentOffset: { x: 0, y: 0 },
+        },
+      } as NativeSyntheticEvent<NativeScrollEvent>);
+    }
   }, [onScroll]);
 
   useEffect(() => {
@@ -84,8 +85,8 @@ export function SmallStoriesList({
   }, []);
 
   return (
-    <FlatList
-      ItemSeparatorComponent={<View style={styles.separator} />}
+    <Animated.FlatList
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
       ListHeaderComponent={ListHeaderComponent}
       contentContainerStyle={[styles.listContent, contentContainerStyle]}
       data={storiesToRender}
