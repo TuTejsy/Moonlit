@@ -5,7 +5,7 @@ import { CollectionChangeCallback, Results } from 'realm';
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
 
-interface SortConfig {
+export interface SortConfig {
   reverse: boolean;
   sortDescriptor: keyof StorySchema;
 }

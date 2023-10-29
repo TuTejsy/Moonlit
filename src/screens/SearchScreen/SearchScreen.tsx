@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
+import { FREE_STORIES_FILTER, POPULAR_STORIES_CONFIG } from '@/constants/stories';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -33,11 +34,8 @@ export const SearchScreen = () => {
   }, [searchText]);
 
   const [allStories, allStoriesVersion] = useStories(searchDecriptor);
-  const [popularStories, popularStoriesVersion] = useStories(undefined, {
-    reverse: true,
-    sortDescriptor: 'played_count',
-  });
-  const [freeStories, freeStoriesVersion] = useStories('is_free = true');
+  const [popularStories, popularStoriesVersion] = useStories(undefined, POPULAR_STORIES_CONFIG);
+  const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
 
   const popularSearchItems = useMemo(
     () => popularStories.slice(0, 5).map((story) => story.name),

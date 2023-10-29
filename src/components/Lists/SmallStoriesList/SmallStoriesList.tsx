@@ -5,6 +5,7 @@ import {
   ListRenderItemInfo,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  View,
   ViewStyle,
 } from 'react-native';
 
@@ -18,7 +19,7 @@ import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
-  stories: Results<StorySchema>;
+  stories: Array<StorySchema>;
   storiesVersion: number;
   ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
   contentContainerStyle?: ViewStyle;
@@ -84,6 +85,7 @@ export function SmallStoriesList({
 
   return (
     <FlatList
+      ItemSeparatorComponent={<View style={styles.separator} />}
       ListHeaderComponent={ListHeaderComponent}
       contentContainerStyle={[styles.listContent, contentContainerStyle]}
       data={storiesToRender}
