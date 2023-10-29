@@ -8,6 +8,7 @@ import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStori
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAnimatedScrollHandlerValue } from '@/hooks/useAnimatedScrollHandlerValue';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 
@@ -28,6 +29,8 @@ export const StoriesListScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const listStories = useMemo(() => stories.slice(2), [stories, storiesVersion]);
 
+  const { handleAnimatedScroll, scrollPositionSharedValue } = useAnimatedScrollHandlerValue();
+
   return (
     <LinearGradient
       angle={180}
@@ -35,7 +38,11 @@ export const StoriesListScreen = () => {
       locations={[0, 1]}
       style={styles.screen}
     >
-      <ScreenHeader title={title ?? 'All tales'} />
+      <ScreenHeader
+        color={colors.purple}
+        scrollPositionSharedValue={scrollPositionSharedValue}
+        title={title ?? 'All tales'}
+      />
 
       <SmallStoriesList
         contentContainerStyle={styles.smallList}
@@ -44,6 +51,7 @@ export const StoriesListScreen = () => {
         ListHeaderComponent={
           <StoriesWithPromotion stories={headerStories} storiesVersion={storiesVersion} />
         }
+        onScroll={handleAnimatedScroll}
       />
     </LinearGradient>
   );
