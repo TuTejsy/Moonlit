@@ -1,16 +1,15 @@
 import React, { ReactNode, useMemo, useState } from 'react';
 import { LayoutChangeEvent, StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
 import Animated from 'react-native-reanimated';
 
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 
 import { EXTRA_TOUCH_AREA } from '../Headers.constants';
-import { NavigationType } from '../Headers.types';
 
 import { makeStyles } from './ScreenHeader.styles';
 
@@ -39,7 +38,7 @@ export const ScreenHeader = ({
   titleNumberOfLines = 1,
   titleTextStyles,
 }: ScreenHeaderProps) => {
-  const navigation = useNavigation<NavigationType>();
+  const navigation = useAppNavigation();
 
   const [horizontalInset, setHorizontalInset] = useState(0);
   const stylesContext = useMemo(() => ({ horizontalInset }), [horizontalInset]);

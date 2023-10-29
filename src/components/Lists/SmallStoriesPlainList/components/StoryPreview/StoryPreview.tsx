@@ -1,16 +1,14 @@
 import React, { useCallback } from 'react';
 import { Image, View } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
-
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 
 import { makeStyles } from './StoryPreview.styles';
-import { NavigationType } from './StoryPreview.types';
 
 interface StoryPreviewPropTypes {
   description: string;
@@ -36,7 +34,7 @@ export const StoryPreview = React.memo(
   }: StoryPreviewPropTypes) => {
     const styles = useMakeStyles(makeStyles);
 
-    const navigation = useNavigation<NavigationType>();
+    const navigation = useAppNavigation();
 
     const handlePreviewPress = useCallback(() => {
       navigation.navigate(RootRoutes.STORY_PLAYER, {

@@ -1,35 +1,28 @@
-import { useNavigation } from '@react-navigation/native';
-
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 
 import { EXTRA_TOUCH_AREA } from '../Headers.constants';
-import { NavigationType } from '../Headers.types';
 import { ScreenHeader, ScreenHeaderProps } from '../ScreenHeader/ScreenHeader';
 
 export interface ModalHeaderProps extends ScreenHeaderProps {
   disableClose?: boolean;
   hideClose?: boolean;
   onClosePress?: () => void;
-  popCountStack?: number;
 }
 
 export const ModalHeader = ({
   disableClose,
   hideClose = false,
   onClosePress,
-  popCountStack,
   ...props
 }: ModalHeaderProps) => {
-  const navigation = useNavigation<NavigationType>();
+  const navigation = useAppNavigation();
 
   const handleClosePress = () => {
     if (onClosePress) {
       onClosePress();
-    } else if (popCountStack) {
-      navigation.pop(popCountStack);
-    } else {
-      navigation.goBack();
     }
+    navigation.goBack();
   };
 
   const renderRight = (
@@ -43,11 +36,5 @@ export const ModalHeader = ({
     </PressableView>
   );
 
-  return (
-    <ScreenHeader
-      renderLeft={popCountStack ? undefined : null}
-      renderRight={hideClose ? null : renderRight}
-      {...props}
-    />
-  );
+  return <ScreenHeader renderLeft={null} renderRight={hideClose ? null : renderRight} {...props} />;
 };

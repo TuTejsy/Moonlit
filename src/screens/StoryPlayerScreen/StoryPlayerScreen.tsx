@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { runOnJS, useAnimatedReaction, withTiming } from 'react-native-reanimated';
@@ -17,7 +16,9 @@ import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
-import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { useAppRoute } from '@/navigation/hooks/useAppRoute';
+import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 
 import { StoryActions } from './components/StoryActions/StoryActions';
 import { StoryMeta } from './components/StoryMeta/StoryMeta';
@@ -27,7 +28,6 @@ import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUp
 import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
 import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
 import { makeStyles } from './StoryPlayerScreen.styles';
-import { NavigationType, RouteType } from './StoryPlayerScreen.types';
 
 export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
@@ -36,8 +36,8 @@ export const StoryPlayerScreen = () => {
 
   const { colors } = useTheme();
 
-  const navigation = useNavigation<NavigationType>();
-  const route = useRoute<RouteType>();
+  const navigation = useAppNavigation<RootRoutes.STORY_PLAYER>();
+  const route = useAppRoute<RootRoutes.STORY_PLAYER>();
   const { storyId } = route.params;
 
   const [story, storyVersion] = useStory(storyId, [

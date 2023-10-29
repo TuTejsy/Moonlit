@@ -3,4 +3,5 @@ export enum SharedRoutes {
   FAVORITES = 'favorites',
   HOME = 'home',
   SEARCH = 'search',
+  STORIES_LIST = 'storiesList',
 }

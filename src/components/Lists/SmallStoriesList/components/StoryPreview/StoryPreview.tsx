@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
-import { Image, ImageSourcePropType } from 'react-native';
+import { Image } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
@@ -10,11 +9,10 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useImageLoaded } from '@/hooks/useImageLoaded';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 
 import { makeStyles } from './StoryPreview.styles';
-import { NavigationType } from './StoryPreview.types';
 
 interface StoryPreviewPropTypes {
   description: string;
@@ -36,7 +34,7 @@ export function StoryPreview({
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
-  const navigation = useNavigation<NavigationType>();
+  const navigation = useAppNavigation();
 
   const handlePreviewPress = useCallback(() => {
     navigation.navigate(RootRoutes.STORY_PLAYER, {
