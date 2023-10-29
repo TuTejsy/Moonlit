@@ -46,7 +46,7 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   const styles = useMakeStyles(makeStyles, stylesContext);
 
   const coverURL = useMemo(
-    () => (story ? formatServerFileURLToAbsolutePath(story.full_cover_url) : ''),
+    () => (story ? `file://${SANDBOX.DOCUMENTS.FULL_COVER}/${story.full_cover_cached_name}` : ''),
     [story],
   );
 

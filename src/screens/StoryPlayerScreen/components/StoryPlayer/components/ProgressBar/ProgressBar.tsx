@@ -17,7 +17,6 @@ interface ProgressBarPropTypes extends ViewProps {
   isStoryPlaying: boolean;
   moveToTime: (playedTime: number) => void;
   playedTime: number;
-  setPlayedTime: (playedTime: number) => void;
 }
 
 export function ProgressBar({
@@ -25,7 +24,6 @@ export function ProgressBar({
   isStoryPlaying,
   moveToTime,
   playedTime,
-  setPlayedTime,
 }: ProgressBarPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
@@ -54,6 +52,17 @@ export function ProgressBar({
     [duration],
   );
 
+  const setPlayedTimeTextForTime = useCallback(
+    (time: number) => {
+      const formattedPlayedTime = formatSecondsToDuration(time);
+      const formattedRemainedTime = `-${formatSecondsToDuration(duration - time)}`;
+
+      setPlayedText(formattedPlayedTime);
+      setRemainedTimeText(formattedRemainedTime);
+    },
+    [duration],
+  );
+
   const stopTimer = useCallback(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -69,18 +78,21 @@ export function ProgressBar({
           return;
         }
 
-        setPlayedTime(playedTimeRef.current + 1);
+        playedTimeRef.current += 1;
+        setPlayedTimeTextForTime(playedTimeRef.current);
       }, 1000);
 
       timerRef.current = interval;
     }
-  }, [duration, playedTimeRef, stopTimer, setPlayedTime]);
+  }, [playedTimeRef, duration, setPlayedTimeTextForTime, stopTimer]);
 
   const handleUpdatePlayPercent = useCallback(
     (playPercent: number) => {
-      moveToTime(duration * (playPercent / 100));
+      const timeToMove = duration * (playPercent / 100);
+      moveToTime(timeToMove);
+      playedTimeRef.current = timeToMove;
     },
-    [duration, moveToTime],
+    [duration, moveToTime, playedTimeRef],
   );
 
   const [gestureHandler, isGestureActiveRef] = useProgressBarGestureHandler(
@@ -107,11 +119,7 @@ export function ProgressBar({
   }, [isStoryPlaying, isGestureActiveRef, playedTime]);
 
   useEffect(() => {
-    const formattedPlayedTime = formatSecondsToDuration(playedTime);
-    const formattedRemainedTime = `-${formatSecondsToDuration(duration - playedTime)}`;
-
-    setPlayedText(formattedPlayedTime);
-    setRemainedTimeText(formattedRemainedTime);
+    setPlayedTimeTextForTime(playedTime);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playedTime]);
 

@@ -141,6 +141,7 @@ export function useStoryPlayer({
       const filePath = await downloadAudioRecording();
 
       await audioPlayer.setToPlayFile({ coverPath, filePath, fileTitle: title });
+
       await audioPlayer.startPlayingFromTime(playedTime);
     } catch (err) {
       console.error(err);
