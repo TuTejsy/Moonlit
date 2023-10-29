@@ -11,6 +11,8 @@ import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 
 import { CategoriesList } from './components/CategoriesList/CategoriesList';
 import { SectionHeader } from './components/SectionHeader/SectionHeader';
@@ -21,6 +23,8 @@ export const HomeScreen = () => {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
 
+  const navigation = useAppNavigation<SharedRoutes.HOME>();
+
   const [isRefreshing, updateStories] = useStoriesUpdate();
 
   const [allStories, allStoriesVersion] = useStories();
@@ -29,6 +33,8 @@ export const HomeScreen = () => {
     sortDescriptor: 'played_count',
   });
   const [freeStories, freeStoriesVersion] = useStories('is_free = true');
+
+  const handleSeeFeaturingTales = {};
 
   return (
     <LinearGradient

@@ -6,6 +6,8 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { FavoritesScreen } from '@/screens/FavoritesScreen/FavoritesScreen';
 import { HomeScreen } from '@/screens/HomeScreen/HomeScreen';
 import { SearchScreen } from '@/screens/SearchScreen/SearchScreen';
+import { StoriesListScreen } from '@/screens/StoriesListScreen/StoriesListScreen';
+import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
 import { TabRoutes } from '../TabNavigator/TabNavigator.routes';
 
@@ -34,11 +36,23 @@ export const SharedNavigator = memo(({ parentRoute }: Props) => {
   return (
     <Stack.Navigator initialRouteName={initialRouteName} screenOptions={commonOptions(theme)}>
       {parentRoute === TabRoutes.HOME && (
-        <Stack.Screen component={HomeScreen} name={SharedRoutes.HOME} />
+        <>
+          <Stack.Screen component={HomeScreen} name={SharedRoutes.HOME} />
+          <Stack.Screen
+            component={StoriesListScreen}
+            name={getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME)}
+          />
+        </>
       )}
 
       {parentRoute === TabRoutes.SEARCH && (
-        <Stack.Screen component={SearchScreen} name={SharedRoutes.SEARCH} />
+        <>
+          <Stack.Screen component={SearchScreen} name={SharedRoutes.SEARCH} />
+          <Stack.Screen
+            component={StoriesListScreen}
+            name={getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.SEARCH)}
+          />
+        </>
       )}
 
       {parentRoute === TabRoutes.FAVORITES && (
