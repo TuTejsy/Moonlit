@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from 'react-native';
 
-import { noop } from 'lodash';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Results } from 'realm';
 

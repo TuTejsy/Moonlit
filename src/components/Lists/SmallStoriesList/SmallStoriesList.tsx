@@ -18,7 +18,7 @@ import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
-  stories: Array<StorySchema>;
+  stories: ArrayLike<StorySchema>;
   storiesVersion: number;
   ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
   contentContainerStyle?: ViewStyle;

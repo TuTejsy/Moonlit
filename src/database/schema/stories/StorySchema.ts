@@ -16,6 +16,7 @@ export const StorySchema: ObjectSchema = {
       default: false,
       type: 'bool',
     },
+    is_featuring: 'bool',
     is_free: 'bool',
     medium_cover_cached_name: 'string?',
     medium_cover_url: 'string',

@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { SplashView } from '@/components/SplashView/SplashView';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useInitApp } from '@/hooks/useInitApp';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
@@ -21,9 +22,9 @@ export const RootNavigator = () => {
   const theme = useTheme();
   const { initialRouteName, isAppReady, onSplashAnimationEnd } = useInitApp();
 
-  // if (!isAppReady) {
-  //   return <SplashView onAppReady={onSplashAnimationEnd} />;
-  // }
+  if (!isAppReady) {
+    return <SplashView onAppReady={onSplashAnimationEnd} />;
+  }
 
   return (
     <RootStack.Navigator initialRouteName={initialRouteName} screenOptions={rootOptions(theme)}>
