@@ -7,4 +7,6 @@ export const POPULAR_STORIES_CONFIG: SortConfig = {
   sortDescriptor: 'played_count',
 };
 
+export const FEATURING_STORIES_FILTER = 'is_featuring = true';
+
 export const FREE_STORIES_FILTER = 'is_free = true';

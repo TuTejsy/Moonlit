@@ -24,6 +24,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
           description: story.description,
           full_cover_url: story.full_cover_url,
           id: story.id,
+          is_featuring: story.is_featuring,
           is_free: story.is_free,
           medium_cover_url: story.medium_cover_url,
           name: story.name,

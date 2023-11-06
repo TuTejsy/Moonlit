@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 
+#import <React/RCTRootView.h>
 #import <React/RCTBundleURLProvider.h>
 
 #import <AVFoundation/AVFoundation.h>
@@ -16,7 +17,15 @@
   
   [FileHelper shared];
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
+  BOOL result = [super application:application didFinishLaunchingWithOptions:launchOptions];
+  
+  if (result) {
+    RCTRootView *rootView = (RCTRootView *)self.window.rootViewController.view;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
+    [rootView setLoadingView:[[storyboard instantiateInitialViewController] view]];
+  }
+    
+  return result;
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

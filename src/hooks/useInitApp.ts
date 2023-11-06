@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 
 export const useInitApp = () => {
-  const [isSplashAnimationEnd, setIsSplashAnimationEnd] = useState(true);
+  const [isSplashAnimationEnd, setIsSplashAnimationEnd] = useState(false);
 
   const isAppReady = isSplashAnimationEnd;
 

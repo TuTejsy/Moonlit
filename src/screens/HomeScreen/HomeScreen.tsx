@@ -7,7 +7,11 @@ import { LargeStoriesList } from '@/components/Lists/LargeStoriesList/LargeStori
 import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumStoriesList';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
-import { FREE_STORIES_FILTER, POPULAR_STORIES_CONFIG } from '@/constants/stories';
+import {
+  FEATURING_STORIES_FILTER,
+  FREE_STORIES_FILTER,
+  POPULAR_STORIES_CONFIG,
+} from '@/constants/stories';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -31,11 +35,20 @@ export const HomeScreen = () => {
 
   const [allStories, allStoriesVersion] = useStories();
 
+  const [featuringStories, featuringStoriesVersion] = useStories(FEATURING_STORIES_FILTER);
+
   const [popularStories, popularStoriesVersion] = useStories(undefined, POPULAR_STORIES_CONFIG);
   const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
 
   const handleSeeAllTales = useCallback(() => {
     navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME));
+  }, [navigation]);
+
+  const handleSeeFeaturingTales = useCallback(() => {
+    navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
+      storiesFilter: FEATURING_STORIES_FILTER,
+      title: 'Featuring tales',
+    });
   }, [navigation]);
 
   const handleSeePopularTales = useCallback(() => {
@@ -76,9 +89,9 @@ export const HomeScreen = () => {
           locations={[0.2, 0.8]}
           style={styles.gradient}
         >
-          <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeAllTales} />
+          <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
 
-          <LargeStoriesList stories={allStories} storiesVersion={allStoriesVersion} />
+          <LargeStoriesList stories={featuringStories} storiesVersion={featuringStoriesVersion} />
           <CategoriesList />
 
           <SectionHeader title='Popular tales' onSeeAllPress={handleSeePopularTales} />
