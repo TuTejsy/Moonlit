@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 
+import Config from 'react-native-config';
 import RNFS from 'react-native-fs';
 
 import { getApplicationEnv } from '@/utils/getEnv';
@@ -10,8 +11,8 @@ export const Fonts = Object.freeze({
   PoppinsSemiBold: 'Poppins-SemiBold',
 });
 
-export const SERVER_URL = 'http://localhost:8080/';
-export const SUPABASE_URL = 'https://qkicekcbtfabthpftkxx.supabase.co/';
+export const { SERVER_URL } = Config;
+export const { SUPABASE_URL } = Config;
 
 export const IS_IOS = Platform.OS === 'ios';
 
