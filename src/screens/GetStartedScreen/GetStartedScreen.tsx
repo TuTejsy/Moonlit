@@ -1,9 +1,8 @@
 import { useCallback, useRef } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
-  Easing,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -23,7 +22,7 @@ import { storage } from '@/services/storage/storage';
 import { StorageKeys } from '@/services/storage/storage.constants';
 
 import { StepIndicator } from './components/StepIndicator/StepIndicator';
-import { STEPS } from './GetStartedScreen.constants';
+import { ANIMATION_DAMPING, STEPS } from './GetStartedScreen.constants';
 import { makeStyles } from './GetStartedScreen.styles';
 
 export const GetStartedScreen = () => {
@@ -40,24 +39,43 @@ export const GetStartedScreen = () => {
 
   const handleContinuePress = useCallback(() => {
     if (currentStepRef.current === STEPS.length - 1) {
-      currentStepRef.current = 0;
-      // storage.set(StorageKeys.isOnboarded, true);
-      // navigation.replace(RootRoutes.TAB, { screen: SharedRoutes.HOME });
+      storage.set(StorageKeys.isOnboarded, true);
+      navigation.replace(RootRoutes.TAB, { screen: SharedRoutes.HOME });
     } else {
       currentStepRef.current += 1;
     }
 
-    currentStepSharedValue.value = withTiming(currentStepRef.current, {
-      easing: Easing.cubic,
-    });
+    currentStepSharedValue.value = withTiming(currentStepRef.current);
   }, [currentStepSharedValue, navigation]);
+
+  const stepImagesAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: withSpring(currentTranslateXSharedValue.value, {
+          damping: ANIMATION_DAMPING,
+          mass: 1,
+        }),
+      },
+    ],
+  }));
+
+  const stepTagsAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: withSpring(currentTranslateXSharedValue.value, {
+          damping: ANIMATION_DAMPING,
+          mass: 1.2,
+        }),
+      },
+    ],
+  }));
 
   const stepTitlesAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
         translateX: withSpring(currentTranslateXSharedValue.value, {
-          damping: 100,
-          stiffness: 60,
+          damping: ANIMATION_DAMPING,
+          mass: 1.5,
         }),
       },
     ],
@@ -67,8 +85,8 @@ export const GetStartedScreen = () => {
     transform: [
       {
         translateX: withSpring(currentTranslateXSharedValue.value, {
-          damping: 100,
-          stiffness: 100,
+          damping: ANIMATION_DAMPING,
+          mass: 2,
         }),
       },
     ],
@@ -82,6 +100,26 @@ export const GetStartedScreen = () => {
       style={styles.screen}
     >
       <View style={styles.stepsContentContainer}>
+        <Animated.View style={[styles.stepImagesContainer, stepImagesAnimatedStyle]}>
+          {STEPS.map(({ image, title }, step) => (
+            <View key={title} style={styles.stepContainer}>
+              <Image source={image} style={[styles.image, step === 2 && styles.thirdImage]} />
+            </View>
+          ))}
+        </Animated.View>
+
+        <Animated.View style={[styles.stepTagsContainer, stepTagsAnimatedStyle]}>
+          {STEPS.map(({ tag }) => (
+            <View key={tag} style={styles.stepContainer}>
+              <View style={styles.tagContainer}>
+                <TextView style={styles.tag} type='medium'>
+                  {tag}
+                </TextView>
+              </View>
+            </View>
+          ))}
+        </Animated.View>
+
         <Animated.View style={[styles.stepTitlesContainer, stepTitlesAnimatedStyle]}>
           {STEPS.map(({ title }) => (
             <View key={title} style={styles.stepContainer}>
