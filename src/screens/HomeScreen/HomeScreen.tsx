@@ -116,7 +116,11 @@ export const HomeScreen = () => {
           style={styles.mediumList}
         />
 
-        <SectionHeader title='All tales' onSeeAllPress={handleSeeAllTales} />
+        <SectionHeader
+          style={styles.allTalesTitle}
+          title='All tales'
+          onSeeAllPress={handleSeeAllTales}
+        />
         <SmallStoriesList
           displayCount={6}
           isScrollable={false}
