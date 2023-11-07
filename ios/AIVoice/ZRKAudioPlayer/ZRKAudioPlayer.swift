@@ -26,8 +26,8 @@ class ZRKAudioPlayer: NSObject, AVAudioPlayerDelegate {
     
     do {
       audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+      try playingSession.setCategory(.playback)
       try playingSession.setActive(true)
-      try playingSession.setCategory(.playback, mode: .voicePrompt, options: [.mixWithOthers, .allowAirPlay, .allowBluetooth])
       
     } catch let error as NSError {
       initError = error
