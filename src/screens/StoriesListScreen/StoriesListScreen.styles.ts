@@ -9,6 +9,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       flex: 1,
     },
     smallList: {
-      paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
+      paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 16,
     },
   });

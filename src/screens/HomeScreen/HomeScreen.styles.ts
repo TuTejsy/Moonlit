@@ -5,6 +5,9 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
   StyleSheet.create({
+    allTalesTitle: {
+      marginTop: 38,
+    },
     content: {
       backgroundColor: colors.black,
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 20,
