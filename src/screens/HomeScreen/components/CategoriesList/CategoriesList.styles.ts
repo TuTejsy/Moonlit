@@ -6,8 +6,8 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     categoriesList: {
-      marginBottom: 32,
-      marginTop: 40,
+      marginBottom: 48,
+      marginTop: 64,
     },
     categoriesListContent: {
       paddingLeft: HORIZONTAL_PADDING,
@@ -20,12 +20,12 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       borderWidth: 1,
       height: 48,
       justifyContent: 'center',
-      marginBottom: 8,
+      marginBottom: 16,
       paddingHorizontal: 8,
-      width: 108,
+      width: 120,
     },
     categoryPreviewsContainer: {
-      marginRight: 8,
+      marginRight: 16,
     },
     cateogryText: {
       ...fonts.size_12,

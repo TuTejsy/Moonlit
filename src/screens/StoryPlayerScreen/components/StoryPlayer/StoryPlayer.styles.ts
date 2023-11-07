@@ -20,10 +20,8 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      maxWidth: 96,
       position: 'absolute',
       top: insets.top + DEFAULT_HEADER_HEIGHT + 42,
-      width: 96,
     },
     playerContainer: {
       alignItems: 'center',
@@ -37,6 +35,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginBottom: 48,
+      marginTop: 24,
       width: 216,
     },
     title: {

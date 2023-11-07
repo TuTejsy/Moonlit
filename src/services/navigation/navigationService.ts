@@ -3,7 +3,8 @@ import { NavigationContainerRef } from '@react-navigation/native';
 import { RootStackParams } from '@/navigation/RootNavigator/RootNavigator.types';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
-import { AllRoutes, NavigationAppProp } from '@/navigation/types';
+import { AllRoutes } from '@/navigation/types/allRoutes';
+import { NavigationAppProp } from '@/navigation/types/props';
 
 class NavigationService {
   private navigationRef: NavigationContainerRef<RootStackParams> | null = null;

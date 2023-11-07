@@ -23,7 +23,6 @@ import { makeStyles } from './StoryPlayer.styles';
 
 interface StoryPlayerPropTypes {
   audioRecordingDuration: number;
-  isStoryDownloaded: boolean;
   isStoryLoading: boolean;
   isStoryPlaying: boolean;
   moveStoryPlayingToTime: (playedTime: number) => void;
@@ -37,7 +36,6 @@ interface StoryPlayerPropTypes {
 
 export function StoryPlayer({
   audioRecordingDuration,
-  isStoryDownloaded,
   isStoryLoading,
   isStoryPlaying,
   moveStoryPlayingToTime,
@@ -122,8 +120,6 @@ export function StoryPlayer({
             isFavorite={isFavorite}
             onPress={handleStoryFavoritePress}
           />
-
-          <Icons.DownloadRound isDownloaded={isStoryDownloaded} />
         </Animated.View>
       )}
 

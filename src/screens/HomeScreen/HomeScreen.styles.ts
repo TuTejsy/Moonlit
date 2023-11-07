@@ -13,8 +13,10 @@ export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
       paddingTop: insets.top,
     },
     mediumList: {
-      marginBottom: 40,
       marginTop: 16,
+    },
+    popularTitle: {
+      marginTop: 48,
     },
     promotionBanner: {
       marginBottom: 40,
