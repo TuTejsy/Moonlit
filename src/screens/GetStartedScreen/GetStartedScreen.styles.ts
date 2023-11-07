@@ -1,9 +1,11 @@
 import { StyleSheet } from 'react-native';
 
+import _ from 'lodash';
+
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     continueButton: {
       borderColor: colors.opacityWhite(0.2),
@@ -18,6 +20,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     controls: {
       alignItems: 'center',
+      marginTop: dh(40),
       width: '100%',
     },
     description: {
@@ -26,33 +29,59 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       paddingHorizontal: 32,
       textAlign: 'center',
     },
-    image: {},
+    image: {
+      marginTop: insets.top,
+    },
     indicatorsContainer: {
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'center',
-      marginBottom: 17,
-      marginTop: 19,
+      marginBottom: dh(17),
+      marginTop: dh(19),
     },
     screen: {
       alignItems: 'flex-start',
       flex: 1,
+      justifyContent: 'flex-end',
       paddingBottom: insets.bottom,
-      paddingTop: insets.top,
     },
     stepContainer: {
+      alignItems: 'center',
       width: WINDOW_WIDTH,
     },
     stepDescriptionsContainer: {
       flexDirection: 'row',
-      marginTop: 16,
+      marginTop: dh(16),
+    },
+    stepImagesContainer: {
+      flexDirection: 'row',
+      position: 'absolute',
+      top: 0,
+    },
+    stepTagsContainer: {
+      flexDirection: 'row',
     },
     stepTitlesContainer: {
       flexDirection: 'row',
+      marginTop: dh(18),
     },
     stepsContentContainer: {
       alignItems: 'flex-start',
       flex: 1,
+      justifyContent: 'flex-end',
+    },
+    tag: {
+      ...fonts.size_12,
+      color: colors.white,
+    },
+    tagContainer: {
+      backgroundColor: colors.opacityWhite(0.1),
+      borderRadius: 10,
+      paddingHorizontal: 15,
+      paddingVertical: 2,
+    },
+    thirdImage: {
+      marginTop: 0,
     },
     title: {
       ...fonts.size_32,
