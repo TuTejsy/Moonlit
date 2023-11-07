@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 
-import { createStackNavigator, StackCardStyleInterpolator } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { useTheme } from '@/hooks/theme/useTheme';
 import { FavoritesScreen } from '@/screens/FavoritesScreen/FavoritesScreen';
@@ -21,12 +21,6 @@ const Stack = createStackNavigator<SharedStackParams>();
 interface Props {
   parentRoute: TabRoutes;
 }
-
-const forFade: StackCardStyleInterpolator = ({ current }) => ({
-  cardStyle: {
-    opacity: current.progress,
-  },
-});
 
 export const SharedNavigator = memo(({ parentRoute }: Props) => {
   const theme = useTheme();

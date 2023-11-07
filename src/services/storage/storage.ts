@@ -11,9 +11,11 @@ type StorageDataReturn = { [key in StorageKeys]: number | string | boolean | und
 
 export const getStorageData = (): StorageDataReturn => {
   const devMode = storage.getBoolean(StorageKeys.DevMode);
+  const isOnboarded = storage.getBoolean(StorageKeys.isOnboarded);
 
   return {
     [StorageKeys.DevMode]: devMode,
+    [StorageKeys.isOnboarded]: isOnboarded,
   };
 };
 

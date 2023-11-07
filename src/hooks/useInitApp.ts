@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { getStorageData } from '@/services/storage/storage';
 
 export const useInitApp = () => {
   const [isSplashAnimationEnd, setIsSplashAnimationEnd] = useState(false);
@@ -8,7 +9,7 @@ export const useInitApp = () => {
   const isAppReady = isSplashAnimationEnd;
 
   const initialRouteName = useMemo(() => {
-    return RootRoutes.TAB;
+    return getStorageData().isOnboarded ? RootRoutes.TAB : RootRoutes.GET_STARTED_SCREEN;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

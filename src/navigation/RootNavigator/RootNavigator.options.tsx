@@ -24,6 +24,6 @@ export const storyPlayerOptions: StackNavigationOptions = {
   headerShown: false,
 };
 
-export const getStartedToRecord: StackNavigationOptions = {
+export const getStartedScreenOptions: StackNavigationOptions = {
   headerShown: false,
 };
