@@ -92,14 +92,19 @@ export const HomeScreen = () => {
           <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
 
           <LargeStoriesList stories={featuringStories} storiesVersion={featuringStoriesVersion} />
-          <CategoriesList />
 
-          <SectionHeader title='Popular tales' onSeeAllPress={handleSeePopularTales} />
+          <SectionHeader
+            style={styles.popularTitle}
+            title='Popular tales'
+            onSeeAllPress={handleSeePopularTales}
+          />
           <MediumStoriesList
             stories={popularStories}
             storiesVersion={popularStoriesVersion}
             style={styles.mediumList}
           />
+
+          <CategoriesList />
         </LinearGradient>
 
         <PromotionBanner style={styles.promotionBanner} />

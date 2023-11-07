@@ -19,7 +19,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
 
         return {
           author: story.author,
-          category_ids: [story.category_ids], // , .split(', ').map((value) => Number(value)),
+          category_ids: [1, 2, 3], // , .split(', ').map((value) => Number(value)),
           created_at_timestamp: createdDate.getTime(),
           description: story.description,
           full_cover_url: story.full_cover_url,

@@ -50,6 +50,13 @@ export const StoryActions = ({
       </TextView>
 
       <View style={styles.actions}>
+        <PressableView style={styles.listenButton} onPress={startStoryPlaying}>
+          <Icons.PlaySmall style={styles.playIcon} />
+          <TextView style={styles.listenText} type='bold'>
+            Listen Story
+          </TextView>
+        </PressableView>
+
         <PressableView onPress={handleStoryFavoritePress}>
           <BlurView
             blurAmount={5}
@@ -59,20 +66,6 @@ export const StoryActions = ({
           >
             <Icons.Favorite isFavorite={isFavorite} />
           </BlurView>
-        </PressableView>
-        <BlurView
-          blurAmount={5}
-          blurType='light'
-          reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-          style={styles.button}
-        >
-          <Icons.Download />
-        </BlurView>
-        <PressableView style={styles.listenButton} onPress={startStoryPlaying}>
-          <Icons.PlaySmall />
-          <TextView style={styles.listenText} type='bold'>
-            Listen Story
-          </TextView>
         </PressableView>
       </View>
     </Animated.View>

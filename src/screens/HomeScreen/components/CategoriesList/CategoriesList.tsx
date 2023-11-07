@@ -1,29 +1,55 @@
 import React, { useCallback } from 'react';
 import { FlatList, View, ListRenderItemInfo } from 'react-native';
 
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { CATEGORY_IDS, CATEGORY_NAMES } from '@/constants/stories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { navigationService } from '@/services/navigation/navigationService';
+import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
 import { makeStyles } from './CategoriesList.styles';
 
 const CATEGORIES = [
-  ['Magical Creatures', 'Wishes and Magic'],
-  ['Enchanted Forests', 'Friendship and Teamwork'],
-  ['Nautical Adventures', 'Princes and Princesses'],
-  ["The Hero's Adventure", 'Animal Adventures'],
+  [CATEGORY_IDS.CLASSIC_TRANSFORMATIONS, CATEGORY_IDS.FOREST_ADVENTURES],
+  [CATEGORY_IDS.MAGICAL_JOURNEYS, CATEGORY_IDS.KINGDOMS_AND_CASTELS],
+  [CATEGORY_IDS.MYSTERIES_AND_ENIGMAS, CATEGORY_IDS.HEROIC_TALES],
+  [CATEGORY_IDS.ANIMAL_TALES, CATEGORY_IDS.TALES_OF_LOVE_AND_FRIENDSHIP],
+  [CATEGORY_IDS.TALES_OF_MAGICAL_OBJECTS, CATEGORY_IDS.TALES_OF_WIZARDS_AND_WITCHES],
+  [CATEGORY_IDS.TALES_OF_OVERCOMING, CATEGORY_IDS.MAGICAL_CREATURES_AND_HELPERS],
 ];
 
 export const CategoriesList = () => {
   const styles = useMakeStyles(makeStyles);
 
+  const navigation = useAppNavigation<SharedRoutes.HOME | SharedRoutes.SEARCH>();
+
+  const handleCategoryPress = useCallback(
+    (categoryId: CATEGORY_IDS) => {
+      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, navigationService.activeTab), {
+        storiesFilter: `ANY category_ids == ${categoryId}`,
+        title: CATEGORY_NAMES[categoryId],
+      });
+    },
+    [navigation],
+  );
+
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<(typeof CATEGORIES)[0]>) => {
       return (
         <View key={`${item[0]}-${item[1]}`} style={styles.categoryPreviewsContainer}>
-          {item.map((category) => (
-            <View key={category} style={styles.categoryPreview}>
-              <TextView style={styles.cateogryText}>{category}</TextView>
-            </View>
+          {item.map((categoryId) => (
+            <PressableView
+              key={categoryId}
+              style={styles.categoryPreview}
+              onPress={() => handleCategoryPress(categoryId)}
+            >
+              <TextView numberOfLines={2} style={styles.cateogryText}>
+                {CATEGORY_NAMES[categoryId]}
+              </TextView>
+            </PressableView>
           ))}
         </View>
       );

@@ -1,21 +1,26 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ViewProps } from 'react-native';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './SectionHeader.styles';
 
-interface SectionHeaderPropTypes {
+interface SectionHeaderPropTypes extends ViewProps {
   onSeeAllPress: () => void;
   title: string;
 }
 
-export const SectionHeader = ({ onSeeAllPress, title }: SectionHeaderPropTypes) => {
+export const SectionHeader = ({
+  onSeeAllPress,
+  style,
+  title,
+  ...props
+}: SectionHeaderPropTypes) => {
   const styles = useMakeStyles(makeStyles);
 
   return (
-    <View style={styles.sectionHeaderContainer}>
+    <View style={[styles.sectionHeaderContainer, style]} {...props}>
       <TextView style={styles.titleText} type='bold'>
         {title}
       </TextView>
