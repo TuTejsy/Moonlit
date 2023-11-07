@@ -4,11 +4,11 @@ import { SplashView } from '@/components/SplashView/SplashView';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useInitApp } from '@/hooks/useInitApp';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
+import { GetStartedScreen } from '@/screens/GetStartedScreen/GetStartedScreen';
 import { StoryPlayerScreen } from '@/screens/StoryPlayerScreen/StoryPlayerScreen';
-import GetReadyToRecordScreen from '@/screens/VoiceRecordingScreens/GetReadyToRecordScreen/GetReadyToRecordScreen';
 
 import {
-  getStartedToRecord,
+  getStartedScreenOptions,
   rootOptions,
   storyPlayerOptions,
   tabOptions,
@@ -36,9 +36,9 @@ export const RootNavigator = () => {
       />
 
       <RootStack.Screen
-        component={GetReadyToRecordScreen}
-        name={RootRoutes.GET_STARTED_TO_RECORD}
-        options={getStartedToRecord}
+        component={GetStartedScreen}
+        name={RootRoutes.GET_STARTED_SCREEN}
+        options={getStartedScreenOptions}
       />
     </RootStack.Navigator>
   );

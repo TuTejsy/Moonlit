@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { StackNavigationOptions } from '@react-navigation/stack';
 
 import { IS_ANDROID } from '@/constants/common';

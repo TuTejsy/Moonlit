@@ -2,10 +2,8 @@ import { useEffect } from 'react';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
-  Easing,
   interpolate,
   runOnJS,
-  SlideOutRight,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
