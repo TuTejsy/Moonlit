@@ -64,7 +64,7 @@ export const GetStartedScreen = () => {
       {
         translateX: withSpring(currentTranslateXSharedValue.value, {
           damping: ANIMATION_DAMPING,
-          mass: 1.2,
+          mass: 1.3,
         }),
       },
     ],
@@ -75,7 +75,7 @@ export const GetStartedScreen = () => {
       {
         translateX: withSpring(currentTranslateXSharedValue.value, {
           damping: ANIMATION_DAMPING,
-          mass: 1.5,
+          mass: 1.3,
         }),
       },
     ],
@@ -86,7 +86,7 @@ export const GetStartedScreen = () => {
       {
         translateX: withSpring(currentTranslateXSharedValue.value, {
           damping: ANIMATION_DAMPING,
-          mass: 2,
+          mass: 1.7,
         }),
       },
     ],
