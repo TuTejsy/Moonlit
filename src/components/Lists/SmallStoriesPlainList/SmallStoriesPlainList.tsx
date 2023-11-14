@@ -25,8 +25,8 @@ interface SmallStoriesPlainListPropTypes
   extends Omit<FlatListProps<StorySchema>, 'data' | 'renderItem'> {
   stories: Results<StorySchema>;
   storiesVersion: number;
-  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   showSaveButton?: boolean;
 }
 
