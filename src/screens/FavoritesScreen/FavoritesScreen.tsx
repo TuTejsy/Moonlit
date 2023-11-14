@@ -10,6 +10,7 @@ import Animated, {
   useScrollViewOffset,
 } from 'react-native-reanimated';
 
+import { Empty } from '@/components/Empty/Empty';
 import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
 import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
@@ -155,14 +156,17 @@ export const FavoritesScreen = () => {
         <View style={styles.listContainer}>
           <SmallStoriesPlainList
             showSaveButton
+            ListEmptyComponent={<Empty text={`You don't have any\nsaved stories`} />}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
             stories={savedStories}
             storiesVersion={savedStoriesVersion}
             ListHeaderComponent={
-              <TextView style={styles.listTitleText} type='bold'>
-                Your saved tales
-              </TextView>
+              savedStories.length ? (
+                <TextView style={styles.listTitleText} type='bold'>
+                  Your saved tales
+                </TextView>
+              ) : undefined
             }
             onScroll={handleFirstTabScroll}
           />
@@ -171,14 +175,17 @@ export const FavoritesScreen = () => {
         <View style={styles.listContainer}>
           <SmallStoriesPlainList
             showsHorizontalScrollIndicator
+            ListEmptyComponent={<Empty text={`You don't have any\nrecent played stories`} />}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
             stories={recentlyPlayedStories}
             storiesVersion={recentlyPlayedStoriesVersion}
             ListHeaderComponent={
-              <TextView style={styles.listTitleText} type='bold'>
-                Recent Played
-              </TextView>
+              recentlyPlayedStories.length ? (
+                <TextView style={styles.listTitleText} type='bold'>
+                  Recent Played
+                </TextView>
+              ) : undefined
             }
             onScroll={handleSecondTabScroll}
           />
