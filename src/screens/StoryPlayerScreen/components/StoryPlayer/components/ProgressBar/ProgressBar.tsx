@@ -2,7 +2,12 @@ import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { View, ViewProps } from 'react-native';
 
 import { GestureDetector } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -108,6 +113,7 @@ export function ProgressBar({
       if (isStoryPlaying) {
         progressSharedValue.value = withTiming(100, {
           duration: (duration - playedTime) * 1000,
+          easing: Easing.linear,
         });
 
         startTimer();
