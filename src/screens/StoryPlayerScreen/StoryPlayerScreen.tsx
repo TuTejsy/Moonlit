@@ -159,6 +159,13 @@ export const StoryPlayerScreen = () => {
               pointerEvents='none'
               style={styles.bottomGradient}
             />
+            <LinearGradient
+              angle={180}
+              colors={[colors.opacityBlack(0), colors.opacityBlack(0.2)]}
+              locations={[0, 1]}
+              pointerEvents='none'
+              style={styles.bottomGradient}
+            />
 
             <StoryActions
               startStoryPlaying={startStoryPlaying}
