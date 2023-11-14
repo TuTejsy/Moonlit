@@ -116,6 +116,7 @@ export const SmallStoriesPlainList = React.memo(
         extraData={storiesVersion + savedVersion}
         indicatorStyle='white'
         renderItem={renderItem}
+        scrollEventThrottle={16}
         scrollIndicatorInsets={{ top: DEFAULT_HEADER_HEIGHT + insets.top }}
         onScroll={onScroll}
         onScrollToTop={handleScrollToTop}

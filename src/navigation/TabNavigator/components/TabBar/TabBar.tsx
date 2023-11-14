@@ -12,6 +12,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { navigationService } from '@/services/navigation/navigationService';
+import { getHitSlop } from '@/utils/getHitSlop';
 
 import { TabBarStoryPlayer } from './components/TabBarStoryPlayer/TabBarStoryPlayer';
 import { makeStyles } from './TabBar.styles';
@@ -100,6 +101,7 @@ export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) =>
                       accessibilityLabel={options.tabBarAccessibilityLabel}
                       accessibilityRole='button'
                       accessibilityState={isFocused ? { selected: true } : {}}
+                      hitSlop={getHitSlop(20)}
                       onPress={onPress}
                     >
                       <View style={styles.tabContainer}>

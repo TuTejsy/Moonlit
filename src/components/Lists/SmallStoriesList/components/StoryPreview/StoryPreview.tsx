@@ -3,6 +3,8 @@ import { Image } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
+import { makeStyles } from './StoryPreview.styles';
+
 import { Icons } from '@/assets/icons/Icons';
 import loonImage from '@/assets/images/moon/moon.png';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
@@ -11,8 +13,6 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
-
-import { makeStyles } from './StoryPreview.styles';
 
 interface StoryPreviewPropTypes {
   description: string;

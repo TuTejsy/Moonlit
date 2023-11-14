@@ -100,6 +100,7 @@ export const DefaultList = React.memo(
         contentContainerStyle={styles.content}
         indicatorStyle='white'
         keyboardDismissMode='on-drag'
+        scrollEventThrottle={16}
         scrollIndicatorInsets={{ top: DEFAULT_HEADER_HEIGHT + insets.top }}
         refreshControl={
           <RefreshControl

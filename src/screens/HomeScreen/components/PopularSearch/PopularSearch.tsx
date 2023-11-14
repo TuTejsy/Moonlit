@@ -33,6 +33,7 @@ export const PopularSearch = React.memo(
       <ScrollView
         contentContainerStyle={styles.popularSearchContainer}
         keyboardShouldPersistTaps='always'
+        scrollEventThrottle={16}
         onScroll={onScroll}
         onScrollToTop={handleScrollToTop}
       >

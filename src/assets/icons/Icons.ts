@@ -1,13 +1,17 @@
 import { Check } from './common/Check';
 import { Clock } from './common/Clock';
+import { Doc } from './common/Doc';
 import { Download } from './common/Download';
 import { DownloadRound } from './common/DownloadRound';
 import { Favorite } from './common/Favorite';
 import { FavoriteBig } from './common/FavoriteBig';
+import { Info } from './common/Info';
 import { Loader } from './common/Loader';
 import { Lock } from './common/Lock';
+import { Privacy } from './common/Privacy';
 import { Search } from './common/Search';
 import { Share } from './common/Share';
+import { Star } from './common/Star';
 import { Unlock } from './common/Unlock';
 import { Waveframe } from './common/Waveframe';
 import { ArrowBack } from './navigation/ArrowBack';
@@ -28,6 +32,7 @@ export const Icons = {
   Check,
   Clock,
   Close,
+  Doc,
   Download,
   DownloadRound,
   Favorite,
@@ -36,16 +41,19 @@ export const Icons = {
   GoBack,
   GoForward,
   HomeTab,
+  Info,
   Loader,
   Lock,
   PauseBig,
   PauseSmall,
   PlayBig,
   PlaySmall,
+  Privacy,
   RoundClose,
   Search,
   SettingsTab,
   Share,
+  Star,
   Unlock,
   Waveframe,
 };
