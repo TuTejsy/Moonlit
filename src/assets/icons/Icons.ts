@@ -15,7 +15,7 @@ import { Close } from './navigation/Close';
 import { FavoritesTab } from './navigation/FavoritesTab';
 import { HomeTab } from './navigation/HomeTab';
 import { RoundClose } from './navigation/RoundClose';
-import { SearchTab } from './navigation/SearchTab';
+import { SettingsTab } from './navigation/SettingsTab';
 import { GoBack } from './player/GoBack';
 import { GoForward } from './player/GoForward';
 import { PauseBig } from './player/PauseBig';
@@ -44,7 +44,7 @@ export const Icons = {
   PlaySmall,
   RoundClose,
   Search,
-  SearchTab,
+  SettingsTab,
   Share,
   Unlock,
   Waveframe,

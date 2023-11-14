@@ -12,11 +12,10 @@ import { ScreenHeader, ScreenHeaderProps } from '../ScreenHeader/ScreenHeader';
 export interface SearchHeaderProps extends ScreenHeaderProps {}
 
 export const SearchHeader = (props: SearchHeaderProps) => {
-
   const navigation = useAppNavigation();
 
   const onPressSearch = () => {
-    navigation.navigate(getRouteNameForTab(SharedRoutes.SEARCH, navigationService.activeTab));
+    navigation.navigate(getRouteNameForTab(SharedRoutes.HOME, navigationService.activeTab));
   };
 
   const renderRight = (

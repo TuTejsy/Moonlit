@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { FavoritesScreen } from '@/screens/FavoritesScreen/FavoritesScreen';
 import { HomeScreen } from '@/screens/HomeScreen/HomeScreen';
-import { SearchScreen } from '@/screens/SearchScreen/SearchScreen';
+import { SettingsScreen } from '@/screens/SettingsScreen/SettingsScreen';
 import { StoriesListScreen } from '@/screens/StoriesListScreen/StoriesListScreen';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
@@ -39,18 +39,12 @@ export const SharedNavigator = memo(({ parentRoute }: Props) => {
         </>
       )}
 
-      {parentRoute === TabRoutes.SEARCH && (
-        <>
-          <Stack.Screen component={SearchScreen} name={SharedRoutes.SEARCH} />
-          <Stack.Screen
-            component={StoriesListScreen}
-            name={getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.SEARCH)}
-          />
-        </>
-      )}
-
       {parentRoute === TabRoutes.FAVORITES && (
         <Stack.Screen component={FavoritesScreen} name={SharedRoutes.FAVORITES} />
+      )}
+
+      {parentRoute === TabRoutes.SETTINGS && (
+        <Stack.Screen component={SettingsScreen} name={SharedRoutes.SETTINGS} />
       )}
     </Stack.Navigator>
   );

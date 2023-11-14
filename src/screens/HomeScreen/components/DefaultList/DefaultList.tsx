@@ -1,16 +1,23 @@
 import React, { useCallback, useEffect } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Results } from 'realm';
 
+import { LargeStoriesList } from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumStoriesList';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
-import { FREE_STORIES_FILTER, POPULAR_STORIES_CONFIG } from '@/constants/stories';
+import {
+  FEATURING_STORIES_FILTER,
+  FREE_STORIES_FILTER,
+  POPULAR_STORIES_CONFIG,
+} from '@/constants/stories';
 import { StorySchema } from '@/database/schema/stories/types';
+import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
@@ -18,47 +25,57 @@ import { CategoriesList } from '@/screens/HomeScreen/components/CategoriesList/C
 import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
-import { makeStyles } from './DefaultSearchList.styles';
+import { useStoriesUpdate } from '../../hooks/useStoriesUpdate';
 
-interface DefaultSearchListPropTypes {
+import { makeStyles } from './DefaultList.styles';
+
+interface DefaultListPropTypes {
   allStories: Results<StorySchema>;
   allStoriesVersion: number;
-  freeStories: Results<StorySchema>;
-  freeStoriesVersion: number;
   popularStories: Results<StorySchema>;
   popularStoriesVersion: number;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
 
-export const DefaultSearchList = React.memo(
+export const DefaultList = React.memo(
   ({
     allStories,
     allStoriesVersion,
-    freeStories,
-    freeStoriesVersion,
     onScroll,
     popularStories,
     popularStoriesVersion,
-  }: DefaultSearchListPropTypes) => {
+  }: DefaultListPropTypes) => {
     const styles = useMakeStyles(makeStyles);
+    const { colors } = useTheme();
 
     const insets = useSafeAreaInsets();
+    const navigation = useAppNavigation<SharedRoutes.HOME>();
 
-    const navigation = useAppNavigation<SharedRoutes.SEARCH>();
+    const [isRefreshing, updateStories] = useStoriesUpdate();
+
+    const [featuringStories, featuringStoriesVersion] = useStories(FEATURING_STORIES_FILTER);
+    const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
+
+    const handleSeeFeaturingTales = useCallback(() => {
+      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
+        storiesFilter: FEATURING_STORIES_FILTER,
+        title: 'Featuring tales',
+      });
+    }, [navigation]);
 
     const handleSeeAllTales = useCallback(() => {
-      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.SEARCH));
+      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME));
     }, [navigation]);
 
     const handleSeePopularTales = useCallback(() => {
-      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.SEARCH), {
+      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
         storiesSortConfig: POPULAR_STORIES_CONFIG,
         title: 'Popular tales',
       });
     }, [navigation]);
 
     const handleSeeFreeTales = useCallback(() => {
-      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.SEARCH), {
+      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
         storiesFilter: FREE_STORIES_FILTER,
         title: 'Free tales',
       });
@@ -84,17 +101,29 @@ export const DefaultSearchList = React.memo(
         indicatorStyle='white'
         keyboardDismissMode='on-drag'
         scrollIndicatorInsets={{ top: DEFAULT_HEADER_HEIGHT + insets.top }}
+        refreshControl={
+          <RefreshControl
+            progressViewOffset={insets.top + DEFAULT_HEADER_HEIGHT}
+            refreshing={isRefreshing}
+            tintColor={colors.white}
+            onRefresh={updateStories}
+          />
+        }
         onScroll={onScroll}
         onScrollToTop={handleScrollToTop}
       >
+        <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
+
+        <LargeStoriesList stories={featuringStories} storiesVersion={featuringStoriesVersion} />
+
+        <CategoriesList />
+
         <SectionHeader title='Popular tales' onSeeAllPress={handleSeePopularTales} />
         <MediumStoriesList
           stories={popularStories}
           storiesVersion={popularStoriesVersion}
           style={styles.popularList}
         />
-
-        <CategoriesList />
 
         <PromotionBanner style={styles.promotionBanner} />
 

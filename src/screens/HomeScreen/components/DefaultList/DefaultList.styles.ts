@@ -7,7 +7,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     content: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 20,
-      paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 48,
+      paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 40,
     },
     freeList: {
       marginBottom: 40,
@@ -20,8 +20,8 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       marginTop: 16,
     },
     promotionBanner: {
-      marginBottom: 40,
       marginHorizontal: HORIZONTAL_PADDING,
+      marginVertical: 40,
     },
     smallList: {
       marginTop: 16,

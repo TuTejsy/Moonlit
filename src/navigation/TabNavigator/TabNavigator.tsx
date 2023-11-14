@@ -12,15 +12,15 @@ import { TabStackParams } from './TabNavigator.types';
 const Tab = createBottomTabNavigator<TabStackParams>();
 
 export const TabNavigator = () => {
-  const Main = useCallback(() => <SharedNavigator parentRoute={TabRoutes.HOME} />, []);
-  const Search = useCallback(() => <SharedNavigator parentRoute={TabRoutes.SEARCH} />, []);
+  const Home = useCallback(() => <SharedNavigator parentRoute={TabRoutes.HOME} />, []);
   const Favorites = useCallback(() => <SharedNavigator parentRoute={TabRoutes.FAVORITES} />, []);
+  const Settings = useCallback(() => <SharedNavigator parentRoute={TabRoutes.SETTINGS} />, []);
 
   return (
     <Tab.Navigator backBehavior='history' screenOptions={rootTabOptions} tabBar={renderTabBar}>
-      <Tab.Screen component={Main} name={TabRoutes.HOME} />
-      <Tab.Screen component={Search} name={TabRoutes.SEARCH} />
+      <Tab.Screen component={Home} name={TabRoutes.HOME} />
       <Tab.Screen component={Favorites} name={TabRoutes.FAVORITES} />
+      <Tab.Screen component={Settings} name={TabRoutes.SETTINGS} />
     </Tab.Navigator>
   );
 };
