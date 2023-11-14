@@ -177,7 +177,6 @@ export const StoryPlayerScreen = () => {
 
       <StoryPlayer
         audioRecordingDuration={selectedAudioRecording?.duration || 0}
-        isStoryDownloaded={!!selectedAudioRecording?.cached_name}
         isStoryLoading={isStoryLoading}
         isStoryPlaying={isStoryPlaying}
         moveStoryPlayingToTime={moveStoryPlayingToTime}

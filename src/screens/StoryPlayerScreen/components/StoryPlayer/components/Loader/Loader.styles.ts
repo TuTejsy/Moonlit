@@ -7,7 +7,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     loaderContainer: {
       alignItems: 'center',
       flex: 1,
-      marginBottom: 44,
+      marginBottom: 68,
     },
     text: {
       ...fonts.size_16,

@@ -1,134 +1,105 @@
-import React, { useCallback, useMemo } from 'react';
-import { ScrollView, RefreshControl } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import { LargeStoriesList } from '@/components/Lists/LargeStoriesList/LargeStoriesList';
-import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumStoriesList';
-import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
-import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
-import {
-  FEATURING_STORIES_FILTER,
-  FREE_STORIES_FILTER,
-  POPULAR_STORIES_CONFIG,
-} from '@/constants/stories';
+import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
+import { POPULAR_STORIES_CONFIG } from '@/constants/stories';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
-import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
-import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
-import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
+import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
-import { CategoriesList } from './components/CategoriesList/CategoriesList';
-import { SectionHeader } from './components/SectionHeader/SectionHeader';
+import { DefaultList } from './components/DefaultList/DefaultList';
+import { PopularSearch } from './components/PopularSearch/PopularSearch';
+import { SearchBar } from './components/SearchBar/SearchBar';
 import { makeStyles } from './HomeScreen.styles';
-import { useStoriesUpdate } from './hooks/useStoriesUpdate';
 
 export const HomeScreen = () => {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
 
-  const navigation = useAppNavigation<SharedRoutes.HOME>();
+  const [searchText, setSearchText] = useState('');
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
-  const [isRefreshing, updateStories] = useStoriesUpdate();
+  const { handleOpacityScroll, opacityAnimStyle } = useScrollOpacity();
 
-  const [allStories, allStoriesVersion] = useStories();
+  const searchDecriptor = useMemo(() => {
+    const trimmedSeacrhText = searchText.trim();
 
-  const [featuringStories, featuringStoriesVersion] = useStories(FEATURING_STORIES_FILTER);
+    if (trimmedSeacrhText) {
+      return `name CONTAINS[c] "${trimmedSeacrhText}"`;
+    }
+    return undefined;
+  }, [searchText]);
 
+  const [allStories, allStoriesVersion] = useStories(searchDecriptor);
   const [popularStories, popularStoriesVersion] = useStories(undefined, POPULAR_STORIES_CONFIG);
-  const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
 
-  const handleSeeAllTales = useCallback(() => {
-    navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME));
-  }, [navigation]);
+  const popularSearchItems = useMemo(
+    () => popularStories.slice(0, 5).map((story) => story.name),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [popularStoriesVersion],
+  );
 
-  const handleSeeFeaturingTales = useCallback(() => {
-    navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
-      storiesFilter: FEATURING_STORIES_FILTER,
-      title: 'Featuring tales',
-    });
-  }, [navigation]);
+  const handleSearchTextChange = useCallback((text: string) => {
+    setSearchText(text);
+  }, []);
 
-  const handleSeePopularTales = useCallback(() => {
-    navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
-      storiesSortConfig: POPULAR_STORIES_CONFIG,
-      title: 'Popular tales',
-    });
-  }, [navigation]);
+  const handleInputBlur = useCallback(() => {
+    setIsInputFocused(false);
+  }, []);
 
-  const handleSeeFreeTales = useCallback(() => {
-    navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
-      storiesFilter: FREE_STORIES_FILTER,
-      title: 'Free tales',
-    });
-  }, [navigation]);
+  const handleInputFocus = useCallback(() => {
+    setIsInputFocused(true);
+  }, []);
+
+  const handlePopularSearchItemSelected = useCallback((item: string) => {
+    setSearchText(item);
+  }, []);
 
   return (
     <LinearGradient
       angle={180}
       colors={[colors.purple, colors.darkPurple]}
-      locations={[0.5, 0.5]}
+      locations={[0.3, 1]}
       style={styles.screen}
     >
-      <ScrollView
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            tintColor={colors.white}
-            onRefresh={updateStories}
+      <DefaultList
+        allStories={allStories}
+        allStoriesVersion={allStoriesVersion}
+        popularStories={popularStories}
+        popularStoriesVersion={popularStoriesVersion}
+        onScroll={handleOpacityScroll}
+      />
+
+      {searchText ? (
+        <View style={styles.homeScreen}>
+          <SmallStoriesPlainList
+            stories={allStories}
+            storiesVersion={allStoriesVersion}
+            onScroll={handleOpacityScroll}
           />
-        }
-      >
-        <LinearGradient
-          angle={180}
-          colors={[colors.purple, colors.darkPurple]}
-          locations={[0.2, 0.8]}
-          style={styles.gradient}
-        >
-          <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
+        </View>
+      ) : (
+        isInputFocused && (
+          <View style={styles.homeScreen}>
+            <PopularSearch
+              popularSearchItems={popularSearchItems}
+              onPopularSearchItemSelected={handlePopularSearchItemSelected}
+              onScroll={handleOpacityScroll}
+            />
+          </View>
+        )
+      )}
 
-          <LargeStoriesList stories={featuringStories} storiesVersion={featuringStoriesVersion} />
-
-          <SectionHeader
-            style={styles.popularTitle}
-            title='Popular tales'
-            onSeeAllPress={handleSeePopularTales}
-          />
-          <MediumStoriesList
-            stories={popularStories}
-            storiesVersion={popularStoriesVersion}
-            style={styles.mediumList}
-          />
-
-          <CategoriesList />
-        </LinearGradient>
-
-        <PromotionBanner style={styles.promotionBanner} />
-
-        <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
-        <MediumStoriesList
-          stories={freeStories}
-          storiesVersion={freeStoriesVersion}
-          style={styles.mediumList}
-        />
-
-        <SectionHeader
-          style={styles.allTalesTitle}
-          title='All tales'
-          onSeeAllPress={handleSeeAllTales}
-        />
-        <SmallStoriesList
-          displayCount={6}
-          isScrollable={false}
-          stories={allStories}
-          storiesVersion={allStoriesVersion}
-          style={styles.smallList}
-        />
-      </ScrollView>
+      <SearchBar
+        opacityAnimStyle={opacityAnimStyle}
+        value={searchText}
+        onChangeText={handleSearchTextChange}
+        onInputBlur={handleInputBlur}
+        onInputFocus={handleInputFocus}
+      />
     </LinearGradient>
   );
 };

@@ -18,8 +18,8 @@ import { makeStyles } from './TabBar.styles';
 
 const MAP_ICON_AND_TITLE_BY_ROUTE: { [key: string]: [typeof Icons.HomeTab, string] } = {
   [TabRoutes.HOME]: [Icons.HomeTab, 'Home'],
-  [TabRoutes.SEARCH]: [Icons.SearchTab, 'Explore'],
   [TabRoutes.FAVORITES]: [Icons.FavoritesTab, 'Saved'],
+  [TabRoutes.SETTINGS]: [Icons.SettingsTab, 'Settings'],
 };
 
 export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
