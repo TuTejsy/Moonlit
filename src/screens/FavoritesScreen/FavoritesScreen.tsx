@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -29,6 +29,8 @@ export const FavoritesScreen = () => {
 
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffsetSharedValue = useScrollViewOffset(scrollViewRef);
+
+  const startScrollPositionRef = useRef(0);
 
   const [isFirstTabScrolled, setIsFirstTabScrolled] = useState(false);
   const [isSecondTabScrolled, setIsSecondTabScrolled] = useState(false);
@@ -97,12 +99,27 @@ export const FavoritesScreen = () => {
     changeBarColor(isSecondTabScrolled);
   }, [changeBarColor, isSecondTabScrolled, scrollViewRef]);
 
+  const handleBeginEndDrag = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { contentOffset } = event.nativeEvent;
+    startScrollPositionRef.current = contentOffset.x;
+  }, []);
+
   const handleScrollEndDrag = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const { contentOffset } = event.nativeEvent;
       const scrollPosition = Math.round(contentOffset.x / SCREEN_WIDTH);
 
-      scrollViewRef.current?.scrollTo({ x: scrollPosition * SCREEN_WIDTH });
+      const scrollDiff = contentOffset.x - startScrollPositionRef.current;
+
+      if (Math.abs(scrollDiff) > 70) {
+        if (scrollDiff > 0) {
+          scrollViewRef.current?.scrollTo({ x: SCREEN_WIDTH });
+        } else {
+          scrollViewRef.current?.scrollTo({ x: 0 });
+        }
+      } else {
+        scrollViewRef.current?.scrollTo({ x: scrollPosition * SCREEN_WIDTH });
+      }
 
       const isScrolled = scrollPosition === 1 ? isSecondTabScrolled : isFirstTabScrolled;
       changeBarColor(isScrolled);
@@ -151,6 +168,7 @@ export const FavoritesScreen = () => {
         ref={scrollViewRef}
         horizontal
         scrollEventThrottle={16}
+        onScrollBeginDrag={handleBeginEndDrag}
         onScrollEndDrag={handleScrollEndDrag}
       >
         <View style={styles.listContainer}>
