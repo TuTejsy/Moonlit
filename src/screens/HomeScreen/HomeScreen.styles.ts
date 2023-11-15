@@ -6,10 +6,8 @@ export const makeStyles = ({ colors }: MakeStylesProps) =>
   StyleSheet.create({
     homeScreen: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: colors.black,
     },
     screen: {
-      backgroundColor: colors.black,
       flex: 1,
     },
   });

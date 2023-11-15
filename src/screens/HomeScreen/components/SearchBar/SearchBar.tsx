@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { TextInput, View } from 'react-native';
 
+import { BlurView } from '@react-native-community/blur';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -94,6 +95,17 @@ export const SearchBar = React.memo(
           <ScrollShadow opacityAnimStyle={opacityAnimStyle} />
 
           <Animated.View style={[styles.inputContainer, inputContainerAnimatedStyle]}>
+            <Animated.View style={[styles.blurContainer, opacityAnimStyle]}>
+              <BlurView
+                blurAmount={5}
+                blurRadius={5}
+                blurType='dark'
+                overlayColor={colors.black}
+                reducedTransparencyFallbackColor={colors.opacityBlack(0.2)}
+                style={styles.inputBlur}
+              />
+            </Animated.View>
+
             <Icons.Search style={styles.searchIcon} />
             <TextInput
               ref={inputRef}
