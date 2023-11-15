@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -32,6 +32,7 @@ import { makeStyles } from './DefaultList.styles';
 interface DefaultListPropTypes {
   allStories: Results<StorySchema>;
   allStoriesVersion: number;
+  isListVisible: boolean;
   popularStories: Results<StorySchema>;
   popularStoriesVersion: number;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -41,6 +42,7 @@ export const DefaultList = React.memo(
   ({
     allStories,
     allStoriesVersion,
+    isListVisible,
     onScroll,
     popularStories,
     popularStoriesVersion,
@@ -52,6 +54,7 @@ export const DefaultList = React.memo(
     const navigation = useAppNavigation<SharedRoutes.HOME>();
 
     const [isRefreshing, updateStories] = useStoriesUpdate();
+    const currentScrollRef = useRef(0);
 
     const [featuringStories, featuringStoriesVersion] = useStories(FEATURING_STORIES_FILTER);
     const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
@@ -80,7 +83,6 @@ export const DefaultList = React.memo(
         title: 'Free tales',
       });
     }, [navigation]);
-
     const handleScrollToTop = useCallback(() => {
       onScroll?.({
         nativeEvent: {
@@ -89,10 +91,24 @@ export const DefaultList = React.memo(
       } as NativeSyntheticEvent<NativeScrollEvent>);
     }, [onScroll]);
 
-    useEffect(() => {
-      handleScrollToTop();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    const handleScrollEndDrag = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      currentScrollRef.current = event.nativeEvent.contentOffset.y;
     }, []);
+
+    const handleCurrentScroll = useCallback(() => {
+      onScroll?.({
+        nativeEvent: {
+          contentOffset: { x: 0, y: currentScrollRef.current },
+        },
+      } as NativeSyntheticEvent<NativeScrollEvent>);
+    }, [onScroll]);
+
+    useEffect(() => {
+      if (isListVisible) {
+        handleCurrentScroll();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isListVisible]);
 
     return (
       <ScrollView
@@ -111,6 +127,7 @@ export const DefaultList = React.memo(
           />
         }
         onScroll={onScroll}
+        onScrollEndDrag={handleScrollEndDrag}
         onScrollToTop={handleScrollToTop}
       >
         <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />

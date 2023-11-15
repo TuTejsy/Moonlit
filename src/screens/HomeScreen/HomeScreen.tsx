@@ -42,6 +42,8 @@ export const HomeScreen = () => {
     [popularStoriesVersion],
   );
 
+  const isDefaultListVisible = !searchText && !isInputFocused;
+
   const handleSearchTextChange = useCallback((text: string) => {
     setSearchText(text);
   }, []);
@@ -68,28 +70,39 @@ export const HomeScreen = () => {
       <DefaultList
         allStories={allStories}
         allStoriesVersion={allStoriesVersion}
+        isListVisible={isDefaultListVisible}
         popularStories={popularStories}
         popularStoriesVersion={popularStoriesVersion}
         onScroll={handleOpacityScroll}
       />
 
       {searchText ? (
-        <View style={styles.homeScreen}>
+        <LinearGradient
+          angle={180}
+          colors={[colors.purple, colors.darkPurple]}
+          locations={[0.3, 1]}
+          style={styles.homeScreen}
+        >
           <SmallStoriesPlainList
             stories={allStories}
             storiesVersion={allStoriesVersion}
             onScroll={handleOpacityScroll}
           />
-        </View>
+        </LinearGradient>
       ) : (
         isInputFocused && (
-          <View style={styles.homeScreen}>
+          <LinearGradient
+            angle={180}
+            colors={[colors.purple, colors.darkPurple]}
+            locations={[0.3, 1]}
+            style={styles.homeScreen}
+          >
             <PopularSearch
               popularSearchItems={popularSearchItems}
               onPopularSearchItemSelected={handlePopularSearchItemSelected}
               onScroll={handleOpacityScroll}
             />
-          </View>
+          </LinearGradient>
         )
       )}
 

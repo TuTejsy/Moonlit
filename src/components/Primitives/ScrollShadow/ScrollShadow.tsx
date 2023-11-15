@@ -23,17 +23,17 @@ export const ScrollShadow = ({ gradientStyle, opacityAnimStyle }: Props) => {
       <LinearGradient
         angle={180}
         colors={[colors.opacityDarkPurple(1), colors.opacityDarkPurple(0)]}
-        locations={[0, 1]}
+        locations={[0.3, 1]}
       >
         <LinearGradient
           angle={180}
           colors={[colors.opacityDarkPurple(1), colors.opacityDarkPurple(0)]}
-          locations={[0, 1]}
+          locations={[0.3, 1]}
         >
           <LinearGradient
             angle={180}
             colors={[colors.opacityDarkPurple(1), colors.opacityDarkPurple(0)]}
-            locations={[0, 1]}
+            locations={[0.3, 1]}
             style={[gradientStyle, styles.gradient, gradientStyle]}
           />
         </LinearGradient>

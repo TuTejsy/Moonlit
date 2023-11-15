@@ -13,6 +13,13 @@ export const makeStyles = (
   { isInputFocused }: Context,
 ) =>
   StyleSheet.create({
+    blurContainer: {
+      height: 48,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: SCREEN_WIDTH,
+    },
     closeButton: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.2),
@@ -38,16 +45,20 @@ export const makeStyles = (
       position: 'relative',
       width: SCREEN_WIDTH,
     },
+    inputBlur: {
+      flex: 1,
+    },
     inputContainer: {
       alignItems: 'center',
-      backgroundColor: colors.opacityBlack(0.2),
       borderColor: isInputFocused ? colors.white : colors.opacityWhite(0.2),
       borderRadius: 8,
       borderWidth: 1,
       flexDirection: 'row',
       height: 48,
       justifyContent: 'flex-start',
+      overflow: 'hidden',
       paddingHorizontal: 4,
+      position: 'relative',
     },
     searchBar: {
       position: 'absolute',
