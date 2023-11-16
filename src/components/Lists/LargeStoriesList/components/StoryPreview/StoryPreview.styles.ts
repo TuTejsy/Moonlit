@@ -11,6 +11,9 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       color: colors.opacityWhite(0.6),
       marginTop: 4,
     },
+    emptyImageStyle: {
+      marginBottom: 83,
+    },
     imageGradient: {
       backgroundColor: colors.imagePurple,
       height: PREVIEW_HEIGHT,
