@@ -29,3 +29,4 @@ export const STEPS = [
 export const MAX_STEP = STEPS.length - 1;
 
 export const ANIMATION_DAMPING = 100;
+export const ANIMATION_STIFFNESS = 100;

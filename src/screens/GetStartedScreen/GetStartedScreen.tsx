@@ -22,7 +22,7 @@ import { storage } from '@/services/storage/storage';
 import { StorageKeys } from '@/services/storage/storage.constants';
 
 import { StepIndicator } from './components/StepIndicator/StepIndicator';
-import { ANIMATION_DAMPING, STEPS } from './GetStartedScreen.constants';
+import { ANIMATION_DAMPING, ANIMATION_STIFFNESS, STEPS } from './GetStartedScreen.constants';
 import { makeStyles } from './GetStartedScreen.styles';
 
 export const GetStartedScreen = () => {
@@ -65,6 +65,7 @@ export const GetStartedScreen = () => {
         translateX: withSpring(currentTranslateXSharedValue.value, {
           damping: ANIMATION_DAMPING,
           mass: 1.3,
+          stiffness: ANIMATION_STIFFNESS,
         }),
       },
     ],
@@ -76,6 +77,7 @@ export const GetStartedScreen = () => {
         translateX: withSpring(currentTranslateXSharedValue.value, {
           damping: ANIMATION_DAMPING,
           mass: 1.3,
+          stiffness: ANIMATION_STIFFNESS,
         }),
       },
     ],
@@ -87,6 +89,7 @@ export const GetStartedScreen = () => {
         translateX: withSpring(currentTranslateXSharedValue.value, {
           damping: ANIMATION_DAMPING,
           mass: 1.7,
+          stiffness: ANIMATION_STIFFNESS,
         }),
       },
     ],
@@ -103,7 +106,10 @@ export const GetStartedScreen = () => {
         <Animated.View style={[styles.stepImagesContainer, stepImagesAnimatedStyle]}>
           {STEPS.map(({ image, title }, step) => (
             <View key={title} style={styles.stepContainer}>
-              <Image source={image} style={[styles.image, step === 2 && styles.thirdImage]} />
+              <Image
+                source={image}
+                style={[styles.image, styles[`image${step + 1}` as 'image1' | 'image2' | 'image3']]}
+              />
             </View>
           ))}
         </Animated.View>

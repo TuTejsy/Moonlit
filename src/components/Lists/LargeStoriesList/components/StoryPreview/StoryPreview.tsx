@@ -50,6 +50,7 @@ export const StoryPreview = React.memo(
 
         <ImageBackground
           defaultSource={loonImage}
+          imageStyle={!isImageLoaded && styles.emptyImageStyle}
           resizeMode={isImageLoaded ? 'cover' : 'center'}
           source={{ uri: previewURL }}
           style={styles.preview}

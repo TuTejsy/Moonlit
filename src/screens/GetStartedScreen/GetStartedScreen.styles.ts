@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     continueButton: {
       borderColor: colors.opacityWhite(0.2),
@@ -20,6 +20,7 @@ export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
     },
     controls: {
       alignItems: 'center',
+      marginBottom: dh(16),
       marginTop: dh(40),
       width: '100%',
     },
@@ -31,6 +32,17 @@ export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
     },
     image: {
       marginTop: insets.top,
+      width: '100%',
+    },
+    image1: {
+      height: dw(483),
+    },
+    image2: {
+      height: dw(540),
+    },
+    image3: {
+      height: dw(617),
+      marginTop: 0,
     },
     indicatorsContainer: {
       alignItems: 'center',
@@ -79,9 +91,6 @@ export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
       borderRadius: 10,
       paddingHorizontal: 15,
       paddingVertical: 2,
-    },
-    thirdImage: {
-      marginTop: 0,
     },
     title: {
       ...fonts.size_32,
