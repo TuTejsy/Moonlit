@@ -17,11 +17,11 @@ export const makeStyles = (
 ) =>
   StyleSheet.create({
     subTitle: {
-      ...fonts.size_12,
+      ...fonts.size_14,
       color: colors.opacityWhite(0.5),
     },
     title: {
-      ...fonts.size_16,
+      ...fonts.size_14,
       color: colors.white,
     },
     titleContainer: {

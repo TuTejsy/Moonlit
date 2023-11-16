@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
-import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { STORY_CONTAINER_MIN_WIDTH, STORY_COVER_MIN_HEIGHT } from './StoryPlayerScreen.constants';
