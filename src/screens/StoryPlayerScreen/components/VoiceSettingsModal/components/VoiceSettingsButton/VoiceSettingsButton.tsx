@@ -67,11 +67,11 @@ export function VoiceSettingsButton({
 
           <View style={styles.titleContainer}>
             <TextView style={styles.title} type='bold'>
-              {voiceName} Voice
+              Select voice
             </TextView>
 
             <TextView style={styles.subTitle} type='regular'>
-              Select voice
+              {voiceName} Voice
             </TextView>
           </View>
         </BlurView>
