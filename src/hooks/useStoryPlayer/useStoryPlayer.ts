@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { EmitterSubscription, NativeEventEmitter } from 'react-native';
+import { AppState, EmitterSubscription, NativeEventEmitter } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import RNFS from 'react-native-fs';
@@ -227,12 +227,28 @@ export function useStoryPlayer({
   useFocusEffect(
     useCallback(
       () => {
-        audioPlayer.getCurrentPlayingTime().then((playingTime) => {
+        audioPlayer.getCurrentState().then(({ isPlaying, playingTime }) => {
           setPlayedTime(playingTime);
+
+          if (isPlaying) {
+            if (selectedAudioRecording?.id) {
+              reduxDispatch(startPlaying(selectedAudioRecording?.id));
+            }
+          } else {
+            reduxDispatch(stopPlaying());
+          }
         });
 
         return () => {
-          audioPlayer.getCurrentPlayingTime().then((playingTime) => {
+          audioPlayer.getCurrentState().then(({ isPlaying, playingTime }) => {
+            if (isPlaying) {
+              if (selectedAudioRecording?.id) {
+                reduxDispatch(startPlaying(selectedAudioRecording?.id));
+              }
+            } else {
+              reduxDispatch(stopPlaying());
+            }
+
             AudioRecordingsDB.modify(() => {
               if (selectedAudioRecording) {
                 selectedAudioRecording.played_time = playingTime;
@@ -244,6 +260,38 @@ export function useStoryPlayer({
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [selectedAudioRecording?.id],
     ),
+  );
+
+  useEffect(
+    () => {
+      const appActiveListener = AppState.addEventListener('change', (state) => {
+        if (state === 'active') {
+          audioPlayer.getCurrentState().then(({ isPlaying, playingTime }) => {
+            setPlayedTime(playingTime);
+
+            if (isPlaying) {
+              if (selectedAudioRecording?.id) {
+                reduxDispatch(startPlaying(selectedAudioRecording?.id));
+              }
+            } else {
+              reduxDispatch(stopPlaying());
+            }
+
+            AudioRecordingsDB.modify(() => {
+              if (selectedAudioRecording) {
+                selectedAudioRecording.played_time = playingTime;
+              }
+            });
+          });
+        }
+      });
+
+      return () => {
+        appActiveListener.remove();
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedAudioRecording?.id],
   );
 
   return {

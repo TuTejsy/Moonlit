@@ -31,18 +31,72 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
   }
   
   func setupRemoteTransportControls() {
-    // Get the shared MPRemoteCommandCenter
     let commandCenter = MPRemoteCommandCenter.shared()
+    commandCenter.skipForwardCommand.isEnabled = true
+    commandCenter.skipForwardCommand.preferredIntervals = [15]
+    commandCenter.skipBackwardCommand.isEnabled = true
+    commandCenter.skipBackwardCommand.preferredIntervals = [15]
+    commandCenter.nextTrackCommand.isEnabled = false
+    commandCenter.previousTrackCommand.isEnabled = false
     
-    // Add handler for Play Command
     commandCenter.playCommand.addTarget { [unowned self] event in
+      MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = audioPlayer.playingTime
+      
       let result = audioPlayer.play(audioPlayer.playingTime)
+
+      
       return result ? .success : .commandFailed
     }
     
-    // Add handler for Pause Command
     commandCenter.pauseCommand.addTarget { [unowned self] event in
       let result = audioPlayer.pause()
+      
+      MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = audioPlayer.playingTime
+      return result ? .success : .commandFailed
+    }
+    
+    commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
+      let time = (event as? MPChangePlaybackPositionCommandEvent)?.positionTime ?? 0
+      
+      let result = audioPlayer.play(time)
+      
+      MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = time
+
+      return result ? .success : .commandFailed
+    }
+    
+    commandCenter.skipForwardCommand.addTarget { [unowned self] event in
+      let skipInterval = (event as? MPSkipIntervalCommandEvent)?.interval ?? 0
+      
+      var time = audioPlayer.playingTime + skipInterval
+      if (time > audioPlayer.duration) {
+        time = 0
+        let result = audioPlayer.stop()
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = audioPlayer.playingTime
+
+        return result ? .success : .commandFailed
+      } else {
+        let result = audioPlayer.play(time)
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = audioPlayer.playingTime
+
+        return result ? .success : .commandFailed
+      }
+    }
+    
+    commandCenter.skipBackwardCommand.addTarget { [unowned self] event in
+      let skipInterval = (event as? MPSkipIntervalCommandEvent)?.interval ?? 0
+      
+      var time = audioPlayer.playingTime - skipInterval
+      if (time < 0) {
+        time = 0
+      }
+      
+      let result = audioPlayer.play(time)
+      
+      MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = time
+      
       return result ? .success : .commandFailed
     }
   }
@@ -55,6 +109,8 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
     // Define Now Playing Info
     var nowPlayingInfo = [String : Any]()
     nowPlayingInfo[MPMediaItemPropertyTitle] = title
+    nowPlayingInfo[MPMediaItemPropertyArtist] = "Moonlit"
+    nowPlayingInfo[MPMediaItemPropertyAlbumTrackCount] = 1
     
     do {
       let url = URL(string: coverRemotePath)
@@ -107,6 +163,7 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
     if isPlayingStarted {
       resolve(true)
       
+      MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = time
       //            ZRKKeepAwake.activate()
     } else {
       reject(nil, nil, nil)
@@ -127,9 +184,10 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
     }
   }
   
-  @objc func getCurrentPlayingTime(_ resolve: RCTPromiseResolveBlock,
+  @objc func getCurrentState(_ resolve: RCTPromiseResolveBlock,
                                  rejecter reject: RCTPromiseRejectBlock) {
-    resolve(audioPlayer.playingTime)
+    resolve(["playingTime": audioPlayer.playingTime,
+             "isPlaying": audioPlayer.isPlaying])
   }
   
   @objc func rewindPlayingToTime(_ time: Double,

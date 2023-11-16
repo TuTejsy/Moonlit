@@ -22,7 +22,7 @@ RCT_EXTERN_METHOD(pausePlaying: (RCTPromiseResolveBlock)resolve
                   rejecter: (RCTPromiseRejectBlock)reject
                   )
 
-RCT_EXTERN_METHOD(getCurrentPlayingTime: (RCTPromiseResolveBlock)resolve
+RCT_EXTERN_METHOD(getCurrentState: (RCTPromiseResolveBlock)resolve
                   rejecter: (RCTPromiseRejectBlock)reject)
 
 

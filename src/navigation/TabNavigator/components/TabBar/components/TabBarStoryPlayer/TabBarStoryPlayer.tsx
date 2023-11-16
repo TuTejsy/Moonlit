@@ -45,14 +45,15 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
 
   const styles = useMakeStyles(makeStyles, stylesContext);
 
-  const coverURL = useMemo(
-    () => (story ? `file://${SANDBOX.DOCUMENTS.FULL_COVER}/${story.full_cover_cached_name}` : ''),
+  const smallCoverURL = useMemo(
+    () =>
+      story ? `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story.small_cover_cached_name}` : '',
     [story],
   );
 
   const { isStoryPlaying, pauseStoryPlaying, playedTime, startStoryPlaying } = useStoryPlayer({
     audioRecordingId: selectedAudioRecording?.id,
-    coverPath: coverURL,
+    coverPath: smallCoverURL,
     storyId,
     title: story?.name ?? '',
   });

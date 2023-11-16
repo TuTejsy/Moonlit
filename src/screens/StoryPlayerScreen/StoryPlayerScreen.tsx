@@ -57,6 +57,12 @@ export const StoryPlayerScreen = () => {
     [story],
   );
 
+  const smallCoverURL = useMemo(
+    () =>
+      story ? `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story.small_cover_cached_name}` : '',
+    [story],
+  );
+
   const gradientColor = useMemo(
     () => story?.colors?.primary ?? colors.imagePurple,
     [colors.imagePurple, story?.colors?.primary],
@@ -80,7 +86,7 @@ export const StoryPlayerScreen = () => {
     storyPlayingSharedValue,
   } = useStoryPlayer({
     audioRecordingId: selectedAudioRecording?.id,
-    coverPath: coverURL,
+    coverPath: smallCoverURL,
     storyId,
     title: story?.name ?? '',
   });

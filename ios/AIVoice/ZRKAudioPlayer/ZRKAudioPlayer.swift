@@ -19,6 +19,10 @@ class ZRKAudioPlayer: NSObject, AVAudioPlayerDelegate {
     audioPlayer?.duration ?? 0
   }
   
+  var isPlaying: Bool {
+    audioPlayer?.isPlaying ?? false
+  }
+  
   var playingTime: Double { audioPlayer?.currentTime ?? 0 }
   
   func initFileToPlay(at path: String) -> NSError? {
