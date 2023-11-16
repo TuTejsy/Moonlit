@@ -1,4 +1,13 @@
-import { Extrapolate, SharedValue, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import {
+  Extrapolate,
+  SharedValue,
+  interpolate,
+  useAnimatedReaction,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
@@ -11,6 +20,7 @@ export function useStoryCoverAnimation(
   storyContainerMinHeight: number,
 ) {
   const insets = useSafeAreaInsets();
+  const imageScaleSharedValue = useSharedValue(1);
 
   const storyContainerAnimatedStyles = useAnimatedStyle(() => {
     return {
@@ -40,11 +50,30 @@ export function useStoryCoverAnimation(
       height: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
-        [STORY_COVER_MIN_HEIGHT, SCREEN_HEIGHT - insets.bottom],
+        [STORY_COVER_MIN_HEIGHT, SCREEN_HEIGHT],
         Extrapolate.CLAMP,
       ),
+      transform: [{ scale: imageScaleSharedValue.value }],
     };
   });
+
+  useAnimatedReaction(
+    () => {
+      return storyPlayingSharedValue.value;
+    },
+    (storyPlayingSharedValue, previousStoryPlayingSharedValue) => {
+      if (storyPlayingSharedValue === 1) {
+        imageScaleSharedValue.value = withRepeat(withTiming(1.05, { duration: 3000 }), -1, true);
+      } else if (
+        storyPlayingSharedValue === 0 ||
+        (previousStoryPlayingSharedValue &&
+          storyPlayingSharedValue < previousStoryPlayingSharedValue)
+      ) {
+        imageScaleSharedValue.value = withTiming(1);
+      }
+    },
+    [],
+  );
 
   return {
     coverAnimatedStyles,
