@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { StoriesDB } from '@/database';
+import { AudioRecordingsDB, StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
 import { StoriesRepository } from '@/services/repositories/stories/stories';
+import { removeStoryCache } from '@/utils/documents/removeStoryCache';
 
 export function useStoriesUpdate(): [boolean, () => void] {
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -11,13 +12,18 @@ export function useStoriesUpdate(): [boolean, () => void] {
     try {
       setIsRefreshing(true);
       const stories = await StoriesRepository.getStories();
-      const formattedStories = stories.map((story) => {
-        const { created_at_timestamp, updated_at_timestamp } = story;
+      const formattedStories: StorySchema[] = [];
+
+      stories.forEach(async (story) => {
+        const { created_at_timestamp, id, revision, updated_at_timestamp } = story;
+
+        const currentStory = StoriesDB.object(id);
+        const isRevisionChanged = currentStory && revision > currentStory.revision;
 
         const createdDate = new Date(created_at_timestamp);
         const updatedDate = new Date(updated_at_timestamp);
 
-        return {
+        const formattedStory = {
           author: story.author,
           category_ids: [1, 2, 3], // , .split(', ').map((value) => Number(value)),
           created_at_timestamp: createdDate.getTime(),
@@ -34,6 +40,16 @@ export function useStoriesUpdate(): [boolean, () => void] {
           type: story.type,
           updated_at_timestamp: updatedDate.getTime(),
         } as StorySchema;
+
+        if (isRevisionChanged) {
+          formattedStory.full_cover_cached_name = null;
+          formattedStory.medium_cover_cached_name = null;
+          formattedStory.small_cover_cached_name = null;
+
+          await removeStoryCache(currentStory);
+        }
+
+        formattedStories.push(formattedStory);
       });
 
       const [_upserted, notUpserted] = await StoriesDB.upsert(formattedStories);
