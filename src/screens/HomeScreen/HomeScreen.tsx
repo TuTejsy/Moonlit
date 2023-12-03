@@ -5,10 +5,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
 import { POPULAR_STORIES_CONFIG } from '@/constants/stories';
 import { useStories } from '@/hooks/database/useStories';
+import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
-import { useShowPaywallModal } from '@/utils/navigation/useShowPaywallModal';
 
 import { DefaultList } from './components/DefaultList/DefaultList';
 import { PopularSearch } from './components/PopularSearch/PopularSearch';
