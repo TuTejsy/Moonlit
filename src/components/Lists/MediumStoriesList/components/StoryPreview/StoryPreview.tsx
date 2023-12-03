@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Image } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -7,11 +7,10 @@ import { Icons } from '@/assets/icons/Icons';
 import loonImage from '@/assets/images/moon/moon.png';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
-import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './StoryPreview.styles';
@@ -38,13 +37,7 @@ export function StoryPreview({
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
-  const navigation = useAppNavigation();
-
-  const handlePreviewPress = useCallback(() => {
-    navigation.navigate(RootRoutes.STORY_PLAYER, {
-      storyId,
-    });
-  }, [navigation, storyId]);
+  const handlePreviewPress = useHandleStoryPlayerNavigate({ isFree, storyId });
 
   return (
     <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>

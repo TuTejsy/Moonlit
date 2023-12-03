@@ -6,6 +6,8 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './AudioRecording.styles';
@@ -32,9 +34,15 @@ export function AudioRecording({
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
+  const navigation = useAppNavigation();
+
   const handleSelect = useCallback(() => {
-    onSelect(recordingId);
-  }, [onSelect, recordingId]);
+    if (!isFullVersion && !isFree) {
+      navigation.navigate(RootRoutes.PAYWALL_MODAL);
+    } else {
+      onSelect(recordingId);
+    }
+  }, [isFree, isFullVersion, navigation, onSelect, recordingId]);
 
   return (
     <PressableView style={styles.audioRecordingContainer} onPress={handleSelect}>

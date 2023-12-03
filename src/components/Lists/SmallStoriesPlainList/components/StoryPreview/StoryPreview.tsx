@@ -4,10 +4,9 @@ import { Image, View } from 'react-native';
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
-import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './StoryPreview.styles';
@@ -38,13 +37,7 @@ export const StoryPreview = React.memo(
 
     const isFullVersion = useAppSelector(selectIsFullVersion);
 
-    const navigation = useAppNavigation();
-
-    const handlePreviewPress = useCallback(() => {
-      navigation.navigate(RootRoutes.STORY_PLAYER, {
-        storyId,
-      });
-    }, [navigation, storyId]);
+    const handlePreviewPress = useHandleStoryPlayerNavigate({ isFree, storyId });
 
     const handleStoryFavoritePress = useCallback(() => {
       onSaveStoryPress?.(storyId);
