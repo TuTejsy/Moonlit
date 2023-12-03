@@ -9,8 +9,10 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './StoryPreview.styles';
 
@@ -33,6 +35,8 @@ export function StoryPreview({
 }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+
+  const isFullVersion = useAppSelector(selectIsFullVersion);
 
   const navigation = useAppNavigation();
 
@@ -59,7 +63,7 @@ export function StoryPreview({
         style={styles.preview}
       />
 
-      {!isFree && <Icons.Lock style={styles.lockIcon} />}
+      {!isFree && !isFullVersion && <Icons.Lock style={styles.lockIcon} />}
 
       <TextView numberOfLines={1} style={styles.titleText}>
         {title}

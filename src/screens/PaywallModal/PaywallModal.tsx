@@ -4,8 +4,10 @@ import { ImageBackground, View, Image } from 'react-native';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { unlockFullVersion } from '@/store/user/user.slice';
 
 import backgroundImage from './images/background/background.png';
 import voicesImage from './images/voices/voices.png';
@@ -15,10 +17,15 @@ export const PaywallModal = () => {
   const styles = useMakeStyles(makeStyles);
 
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
+  const dispatch = useAppDispatch();
 
   const handleSkipPress = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
+
+  const handleUnlockPress = useCallback(() => {
+    dispatch(unlockFullVersion());
+  }, [dispatch]);
 
   return (
     <View style={styles.screen}>
@@ -47,7 +54,7 @@ export const PaywallModal = () => {
           The trial version can be canceled at any time
         </TextView>
 
-        <PressableView style={styles.unlockButton}>
+        <PressableView style={styles.unlockButton} onPress={handleUnlockPress}>
           <TextView style={styles.unlockButtonText} type='bold'>
             Get 3 days free
           </TextView>

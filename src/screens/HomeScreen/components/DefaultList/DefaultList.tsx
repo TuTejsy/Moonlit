@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -18,11 +18,13 @@ import { StorySchema } from '@/database/schema/stories/types';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { CategoriesList } from '@/screens/HomeScreen/components/CategoriesList/CategoriesList';
 import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
 import { useStoriesUpdate } from '../../hooks/useStoriesUpdate';
@@ -47,7 +49,11 @@ export const DefaultList = React.memo(
     popularStories,
     popularStoriesVersion,
   }: DefaultListPropTypes) => {
-    const styles = useMakeStyles(makeStyles);
+    const isFullVersion = useAppSelector(selectIsFullVersion);
+
+    const stylesContext = useMemo(() => ({ isFullVersion }), [isFullVersion]);
+
+    const styles = useMakeStyles(makeStyles, stylesContext);
     const { colors } = useTheme();
 
     const insets = useSafeAreaInsets();
@@ -143,15 +149,18 @@ export const DefaultList = React.memo(
           style={styles.popularList}
         />
 
-        <PromotionBanner style={styles.promotionBanner} />
+        {!isFullVersion && (
+          <>
+            <PromotionBanner style={styles.promotionBanner} />
 
-        <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
-        <MediumStoriesList
-          stories={freeStories}
-          storiesVersion={freeStoriesVersion}
-          style={styles.freeList}
-        />
-
+            <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
+            <MediumStoriesList
+              stories={freeStories}
+              storiesVersion={freeStoriesVersion}
+              style={styles.freeList}
+            />
+          </>
+        )}
         <SectionHeader title='All tales' onSeeAllPress={handleSeeAllTales} />
         <SmallStoriesList
           displayCount={6}

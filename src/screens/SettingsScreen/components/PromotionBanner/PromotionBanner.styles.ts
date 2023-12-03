@@ -25,7 +25,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       height: 94,
       justifyContent: 'space-between',
       marginBottom: 48,
-      marginTop: 24,
       overflow: 'hidden',
       paddingHorizontal: HORIZONTAL_PADDING,
     },

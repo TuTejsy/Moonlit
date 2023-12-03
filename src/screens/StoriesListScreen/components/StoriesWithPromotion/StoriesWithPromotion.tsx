@@ -9,6 +9,8 @@ import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './StoriesWithPromotion.styles';
 
@@ -21,6 +23,8 @@ export const StoriesWithPromotion = memo(
   ({ stories, storiesVersion }: StoriesWithPromotionProps) => {
     const styles = useMakeStyles(makeStyles);
     const { colors } = useTheme();
+
+    const isFullVersion = useAppSelector(selectIsFullVersion);
 
     return (
       <View style={styles.container}>
@@ -38,24 +42,28 @@ export const StoriesWithPromotion = memo(
           ))}
         </View>
 
-        <LinearGradient
-          angle={180}
-          locations={[0, 0.5, 1]}
-          style={styles.promotionContainer}
-          colors={[
-            colors.opacityLightPurple(0),
-            colors.opacityLightPurple(1),
-            colors.opacityLightPurple(0),
-          ]}
-        >
-          <View style={styles.separator} />
+        {isFullVersion ? (
+          <View style={styles.storiesSeparator} />
+        ) : (
+          <LinearGradient
+            angle={180}
+            locations={[0, 0.5, 1]}
+            style={styles.promotionContainer}
+            colors={[
+              colors.opacityLightPurple(0),
+              colors.opacityLightPurple(1),
+              colors.opacityLightPurple(0),
+            ]}
+          >
+            <View style={styles.separator} />
 
-          <UnlockButton style={styles.unlockButton} theme='light'>
-            Try 7 days for free
-          </UnlockButton>
+            <UnlockButton style={styles.unlockButton} theme='light'>
+              Try 7 days for free
+            </UnlockButton>
 
-          <View style={styles.separator} />
-        </LinearGradient>
+            <View style={styles.separator} />
+          </LinearGradient>
+        )}
       </View>
     );
   },

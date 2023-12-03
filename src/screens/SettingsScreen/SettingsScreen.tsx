@@ -6,6 +6,8 @@ import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { MenuItem } from './components/MenuItem/MenuItem';
 import { PromotionBanner } from './components/PromotionBanner/PromotionBanner';
@@ -14,6 +16,8 @@ import { makeStyles } from './SettingsScreen.styles';
 export const SettingsScreen = () => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+
+  const isFullVersion = useAppSelector(selectIsFullVersion);
 
   return (
     <LinearGradient
@@ -26,7 +30,7 @@ export const SettingsScreen = () => {
         Settings
       </TextView>
 
-      <PromotionBanner />
+      {!isFullVersion && <PromotionBanner />}
 
       <MenuItem icon={<Icons.Info />} title='Help & Support' />
       <MenuItem icon={<Icons.Doc />} title='Terms of service' />

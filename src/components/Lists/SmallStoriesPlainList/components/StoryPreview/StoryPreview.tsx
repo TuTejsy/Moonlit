@@ -5,8 +5,10 @@ import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './StoryPreview.styles';
 
@@ -34,6 +36,8 @@ export const StoryPreview = React.memo(
   }: StoryPreviewPropTypes) => {
     const styles = useMakeStyles(makeStyles);
 
+    const isFullVersion = useAppSelector(selectIsFullVersion);
+
     const navigation = useAppNavigation();
 
     const handlePreviewPress = useCallback(() => {
@@ -50,7 +54,7 @@ export const StoryPreview = React.memo(
       <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
         <View style={styles.imageContainer}>
           <Image source={{ uri: previewURL }} style={styles.preview} />
-          {!isFree && <Icons.Lock style={styles.lockIcon} />}
+          {!isFree && !isFullVersion && <Icons.Lock style={styles.lockIcon} />}
         </View>
         <View style={styles.content}>
           <TextView numberOfLines={1} style={styles.titleText} type='bold'>
