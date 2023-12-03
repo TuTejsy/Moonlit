@@ -15,6 +15,8 @@ import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import { AudioRecording } from './components/AudioRecording/AudioRecording';
@@ -44,10 +46,10 @@ export function VoiceSettingsModal({
   storyId,
 }: VoiceSettingsModalProps) {
   const { colors } = useTheme();
-
   const stylesContext = useMemo(() => ({ storyColor }), [storyColor]);
-
   const styles = useMakeStyles(makeStyles, stylesContext);
+
+  const isFullVersion = useAppSelector(selectIsFullVersion);
 
   const isModalExpandedSharedValue = useSharedValue(0);
 
@@ -133,7 +135,9 @@ export function VoiceSettingsModal({
             style={styles.gradient}
           />
 
-          <UnlockButton style={styles.unlockButton}>Unlock all voices</UnlockButton>
+          {!isFullVersion && (
+            <UnlockButton style={styles.unlockButton}>Unlock all voices</UnlockButton>
+          )}
         </BlurView>
       </Animated.View>
 

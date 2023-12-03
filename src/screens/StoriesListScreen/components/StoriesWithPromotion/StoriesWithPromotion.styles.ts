@@ -23,6 +23,9 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       flex: 1,
       flexDirection: 'row',
     },
+    storiesSeparator: {
+      height: 34,
+    },
     unlockButton: {
       marginBottom: 24,
       marginTop: 24,

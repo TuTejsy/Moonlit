@@ -5,6 +5,8 @@ import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './AudioRecording.styles';
 
@@ -28,6 +30,8 @@ export function AudioRecording({
   const stylesContext = useMemo(() => ({ isSelected }), [isSelected]);
   const styles = useMakeStyles(makeStyles, stylesContext);
 
+  const isFullVersion = useAppSelector(selectIsFullVersion);
+
   const handleSelect = useCallback(() => {
     onSelect(recordingId);
   }, [onSelect, recordingId]);
@@ -37,7 +41,7 @@ export function AudioRecording({
       <View style={styles.indicatorsContainer}>
         {isSelected ? (
           <>
-            {isFree && (
+            {isFree && !isFullVersion && (
               <TextView style={styles.freeLabel} type='medium'>
                 Free
               </TextView>
@@ -45,7 +49,7 @@ export function AudioRecording({
             <Icons.Check style={styles.rightIcon} />
           </>
         ) : (
-          !isFree && <Icons.Lock style={styles.rightIcon} />
+          !isFree && !isFullVersion && <Icons.Lock style={styles.rightIcon} />
         )}
       </View>
       <Image source={{ uri: coverUrl }} style={styles.voiceAvatar} />

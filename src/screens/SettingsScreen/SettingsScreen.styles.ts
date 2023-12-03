@@ -19,6 +19,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     title: {
       ...fonts.size_24,
       color: colors.white,
+      marginBottom: 24,
       marginTop: 16,
     },
   });

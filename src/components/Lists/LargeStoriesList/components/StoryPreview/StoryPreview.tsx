@@ -9,8 +9,10 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './StoryPreview.styles';
 
@@ -27,6 +29,8 @@ export const StoryPreview = React.memo(
   ({ description, isFree, isImageLoaded, previewURL, storyId, title }: StoryPreviewPropTypes) => {
     const styles = useMakeStyles(makeStyles);
     const { colors } = useTheme();
+
+    const isFullVersion = useAppSelector(selectIsFullVersion);
 
     const navigation = useAppNavigation();
 
@@ -65,7 +69,7 @@ export const StoryPreview = React.memo(
             />
           )}
 
-          {!isFree && <Icons.Lock style={styles.lockIcon} />}
+          {!isFree && !isFullVersion && <Icons.Lock style={styles.lockIcon} />}
 
           <TextView style={styles.titleText}>{title}</TextView>
           <TextView numberOfLines={2} style={styles.descriptionText}>

@@ -3,16 +3,18 @@ import { Image } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import { makeStyles } from './StoryPreview.styles';
-
 import { Icons } from '@/assets/icons/Icons';
 import loonImage from '@/assets/images/moon/moon.png';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { selectIsFullVersion } from '@/store/user/user.selector';
+
+import { makeStyles } from './StoryPreview.styles';
 
 interface StoryPreviewPropTypes {
   description: string;
@@ -27,6 +29,8 @@ export const StoryPreview = memo(
   ({ description, isFree, isImageLoaded, previewURL, storyId, title }: StoryPreviewPropTypes) => {
     const styles = useMakeStyles(makeStyles);
     const { colors } = useTheme();
+
+    const isFullVersion = useAppSelector(selectIsFullVersion);
 
     const navigation = useAppNavigation();
 
@@ -53,7 +57,7 @@ export const StoryPreview = memo(
           style={styles.preview}
         />
 
-        {!isFree && <Icons.Lock style={styles.lockIcon} />}
+        {!isFree && !isFullVersion && <Icons.Lock style={styles.lockIcon} />}
 
         <TextView numberOfLines={1} style={styles.titleText} type='bold'>
           {title}

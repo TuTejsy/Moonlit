@@ -3,7 +3,11 @@ import { StyleSheet } from 'react-native';
 import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING, TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+interface Context {
+  isFullVersion: boolean;
+}
+
+export const makeStyles = ({ insets }: MakeStylesProps, { isFullVersion }: Context) =>
   StyleSheet.create({
     content: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 20,
@@ -17,6 +21,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       paddingTop: insets.top,
     },
     popularList: {
+      marginBottom: isFullVersion ? 40 : 0,
       marginTop: 16,
     },
     promotionBanner: {
