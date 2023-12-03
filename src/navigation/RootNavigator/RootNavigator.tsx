@@ -5,10 +5,12 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { useInitApp } from '@/hooks/useInitApp';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
 import { GetStartedScreen } from '@/screens/GetStartedScreen/GetStartedScreen';
+import { PaywallModal } from '@/screens/PaywallModal/PaywallModal';
 import { StoryPlayerScreen } from '@/screens/StoryPlayerScreen/StoryPlayerScreen';
 
 import {
   getStartedScreenOptions,
+  rootModalOptions,
   rootOptions,
   storyPlayerOptions,
   tabOptions,
@@ -40,6 +42,10 @@ export const RootNavigator = () => {
         name={RootRoutes.GET_STARTED_SCREEN}
         options={getStartedScreenOptions}
       />
+
+      <RootStack.Group screenOptions={rootModalOptions(theme)}>
+        <RootStack.Screen component={PaywallModal} name={RootRoutes.PAYWALL_MODAL} />
+      </RootStack.Group>
     </RootStack.Navigator>
   );
 };
