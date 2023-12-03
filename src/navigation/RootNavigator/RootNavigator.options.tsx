@@ -15,6 +15,15 @@ export const rootOptions = ({ colors }: ITheme): StackNavigationOptions => ({
   presentation: IS_ANDROID ? 'transparentModal' : 'card',
 });
 
+export const rootModalOptions = ({ colors }: ITheme): StackNavigationOptions => ({
+  cardStyle: {
+    backgroundColor: colors.white,
+  },
+  headerShadowVisible: false,
+  headerShown: false,
+  presentation: 'transparentModal',
+});
+
 export const tabOptions: StackNavigationOptions = {
   headerShown: false,
   presentation: 'transparentModal',

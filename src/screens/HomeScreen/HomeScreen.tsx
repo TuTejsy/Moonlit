@@ -9,6 +9,7 @@ import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
+import { useShowPaywallModal } from '@/utils/navigation/useShowPaywallModal';
 
 import { DefaultList } from './components/DefaultList/DefaultList';
 import { PopularSearch } from './components/PopularSearch/PopularSearch';
@@ -59,6 +60,8 @@ export const HomeScreen = () => {
   const handlePopularSearchItemSelected = useCallback((item: string) => {
     setSearchText(item);
   }, []);
+
+  useShowPaywallModal();
 
   return (
     <LinearGradient
