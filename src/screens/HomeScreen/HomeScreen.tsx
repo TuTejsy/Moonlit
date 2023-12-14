@@ -11,6 +11,7 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
 import { DefaultList } from './components/DefaultList/DefaultList';
+import { EmptySearch } from './components/EmptySearch/EmptySearch';
 import { PopularSearch } from './components/PopularSearch/PopularSearch';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { makeStyles } from './HomeScreen.styles';
@@ -86,6 +87,7 @@ export const HomeScreen = () => {
           style={styles.homeScreen}
         >
           <SmallStoriesPlainList
+            ListEmptyComponent={<EmptySearch />}
             stories={allStories}
             storiesVersion={allStoriesVersion}
             onScroll={handleOpacityScroll}
