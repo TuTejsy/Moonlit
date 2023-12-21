@@ -5,6 +5,7 @@ import { StatusBar } from 'react-native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { withIAPContext } from 'react-native-iap';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import RealmPlugin from 'realm-flipper-plugin-device';
@@ -63,4 +64,4 @@ function App(): JSX.Element {
   );
 }
 
-export default App;
+export default withIAPContext(App);
