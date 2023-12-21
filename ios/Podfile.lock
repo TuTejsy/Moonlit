@@ -444,6 +444,8 @@ PODS:
     - React-Core
   - RNGestureHandler (2.9.0):
     - React-Core
+  - RNIap (12.12.1):
+    - React-Core
   - RNReanimated (2.12.0):
     - DoubleConversion
     - FBLazyVector
@@ -551,6 +553,7 @@ DEPENDENCIES:
   - RNDominantColor (from `../node_modules/rn-dominant-color`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -665,6 +668,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -734,6 +739,7 @@ SPEC CHECKSUMS:
   RNDominantColor: 7c17c31201566a592ba4b2fbe2bb7e00df468753
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
+  RNIap: 31bf0cfb84ec19a9e5cc6b53b88d159c5adb3c68
   RNReanimated: dca939a830ba6101b6a9a21b1839b7362e28fd8f
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
@@ -743,4 +749,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 8ed8197d5284a0f0994994aeecf36a5793cb07ed
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.3

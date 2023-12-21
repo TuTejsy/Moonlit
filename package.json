@@ -30,6 +30,7 @@
     "react-native-config": "^1.5.0",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-iap": "^12.12.1",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-mmkv": "^2.8.0",
     "react-native-reanimated": "2.12.0",

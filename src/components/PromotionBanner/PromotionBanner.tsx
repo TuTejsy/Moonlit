@@ -11,8 +11,12 @@ import Animated, {
 
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 
 import { UnlockButton } from '../Buttons/UnlockButton/UnlockButton';
+import { PressableView } from '../Primitives/PressableView/PressableView';
 import { TextView } from '../Primitives/TextView/TextView';
 
 import bannerImage from './images/banner/banner.png';
@@ -24,8 +28,9 @@ interface PromotionBannerPropTypes extends ViewProps {}
 
 export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   const styles = useMakeStyles(makeStyles);
-
   const { colors } = useTheme();
+
+  const navigation = useAppNavigation<SharedRoutes.HOME>();
 
   const [imageWidth, setImageWidth] = useState(0);
 
@@ -39,6 +44,10 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   const imageAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: imageTranslateXSharedValue.value }],
   }));
+
+  const handleBannerPress = useCallback(() => {
+    navigation.navigate(RootRoutes.PAYWALL_MODAL);
+  }, [navigation]);
 
   useEffect(() => {
     if (imageWidth > PROMOTION_BANNER_WIDTH && imageTranslateXSharedValue.value === 0) {
@@ -55,7 +64,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   }, [imageTranslateXSharedValue, imageTranslateXSharedValue.value, imageWidth]);
 
   return (
-    <View style={[styles.container, style]}>
+    <PressableView style={[styles.container, style]} onPress={handleBannerPress}>
       <Animated.Image
         resizeMode='cover'
         source={bannerImage}
@@ -81,6 +90,6 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
         <UnlockButton>Get 3 days free</UnlockButton>
       </View>
-    </View>
+    </PressableView>
   );
 }
