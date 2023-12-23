@@ -19,7 +19,7 @@ export interface AudioRecording {
 
 export interface Story {
   author: string;
-  category_ids: number;
+  category_ids: Array<number>;
   created_at_timestamp: string;
   description: string;
   full_cover_url: string;

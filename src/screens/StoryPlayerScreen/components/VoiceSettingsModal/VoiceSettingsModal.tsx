@@ -1,11 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   interpolate,
+  runOnJS,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -51,10 +53,19 @@ export function VoiceSettingsModal({
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
+  const [arePointerEventsEnabled, setArePointerEventsEnabled] = useState(false);
+
   const isModalExpandedSharedValue = useSharedValue(0);
 
+  useDerivedValue(() => {
+    if (isModalExpandedSharedValue.value === 0) {
+      runOnJS(setArePointerEventsEnabled)(false);
+    } else {
+      runOnJS(setArePointerEventsEnabled)(true);
+    }
+  });
+
   const modalContainerAnimatedStyle = useAnimatedStyle(() => ({
-    display: isModalExpandedSharedValue.value === 0 ? 'none' : 'flex',
     opacity: interpolate(isModalExpandedSharedValue.value, [0, 1], [0, 1]),
   }));
 
@@ -108,7 +119,10 @@ export function VoiceSettingsModal({
 
   return (
     <>
-      <Animated.View style={[styles.modalContainer, modalContainerAnimatedStyle]}>
+      <Animated.View
+        pointerEvents={arePointerEventsEnabled ? 'auto' : 'none'}
+        style={[styles.modalContainer, modalContainerAnimatedStyle]}
+      >
         <BlurView
           blurAmount={15}
           blurType='dark'
