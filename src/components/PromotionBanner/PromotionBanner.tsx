@@ -9,11 +9,9 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
-import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
-import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 
 import { UnlockButton } from '../Buttons/UnlockButton/UnlockButton';
 import { PressableView } from '../Primitives/PressableView/PressableView';
@@ -30,8 +28,6 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
-  const navigation = useAppNavigation<SharedRoutes.HOME>();
-
   const [imageWidth, setImageWidth] = useState(0);
 
   const imageTranslateXSharedValue = useSharedValue(0);
@@ -45,9 +41,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
     transform: [{ translateX: imageTranslateXSharedValue.value }],
   }));
 
-  const handleBannerPress = useCallback(() => {
-    navigation.navigate(RootRoutes.PAYWALL_MODAL);
-  }, [navigation]);
+  const { showPaywallModal } = useShowPaywallModal();
 
   useEffect(() => {
     if (imageWidth > PROMOTION_BANNER_WIDTH && imageTranslateXSharedValue.value === 0) {
@@ -64,7 +58,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   }, [imageTranslateXSharedValue, imageTranslateXSharedValue.value, imageWidth]);
 
   return (
-    <PressableView style={[styles.container, style]} onPress={handleBannerPress}>
+    <PressableView style={[styles.container, style]} onPress={showPaywallModal}>
       <Animated.Image
         resizeMode='cover'
         source={bannerImage}

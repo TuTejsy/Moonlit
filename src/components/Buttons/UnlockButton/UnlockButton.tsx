@@ -1,12 +1,11 @@
-import { memo, useCallback, useMemo } from 'react';
-import { View, ViewProps } from 'react-native';
+import { memo, useMemo } from 'react';
+import { ViewProps } from 'react-native';
 
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
-import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 
 import { makeStyles } from './UnlockButton.styles';
 import { UnlockButtonTheme } from './UnlockButton.types';
@@ -20,14 +19,10 @@ export const UnlockButton = memo(
     const styleContext = useMemo(() => ({ theme }), [theme]);
     const styles = useMakeStyles(makeStyles, styleContext);
 
-    const navigation = useAppNavigation();
-
-    const handleBannerPress = useCallback(() => {
-      navigation.navigate(RootRoutes.PAYWALL_MODAL);
-    }, [navigation]);
+    const { showPaywallModal } = useShowPaywallModal();
 
     return (
-      <PressableView style={[styles.button, style]} onPress={handleBannerPress}>
+      <PressableView style={[styles.button, style]} onPress={showPaywallModal}>
         <TextView style={styles.buttonText} type='bold'>
           {children}
         </TextView>
