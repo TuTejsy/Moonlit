@@ -25,7 +25,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
 
         const formattedStory = {
           author: story.author,
-          category_ids: [1, 2, 3], // , .split(', ').map((value) => Number(value)),
+          category_ids: story.category_ids,
           created_at_timestamp: createdDate.getTime(),
           description: story.description,
           full_cover_url: story.full_cover_url,
@@ -37,7 +37,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
           played_count: story.played_count,
           revision: story.revision,
           small_cover_url: story.small_cover_url,
-          type: story.type,
+          type: 1,
           updated_at_timestamp: updatedDate.getTime(),
         } as StorySchema;
 
