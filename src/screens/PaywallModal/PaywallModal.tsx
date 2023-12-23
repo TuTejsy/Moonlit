@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { ImageBackground, View, Image } from 'react-native';
 
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
@@ -6,6 +6,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { unlockFullVersion } from '@/store/user/user.slice';
 
@@ -17,14 +18,28 @@ export const PaywallModal = () => {
   const styles = useMakeStyles(makeStyles);
 
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
+  const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
   const dispatch = useAppDispatch();
+
+  const {
+    subscription: {
+      introductoryPriceNumberOfPeriodsIOS,
+      localizedPrice,
+      subscriptionPeriodUnitIOS,
+    },
+  } = params;
+
+  const formattedSubscriptionPeriod = useMemo(
+    () => subscriptionPeriodUnitIOS?.toLocaleLowerCase(),
+    [subscriptionPeriodUnitIOS],
+  );
 
   const handleSkipPress = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
 
   const handleUnlockPress = useCallback(() => {
-    dispatch(unlockFullVersion());
+    // dispatch(unlockFullVersion());
   }, [dispatch]);
 
   return (
@@ -35,7 +50,7 @@ export const PaywallModal = () => {
         </TextView>
 
         <TextView style={styles.title} type='bold'>
-          Try 3 days for free
+          Try {introductoryPriceNumberOfPeriodsIOS} days for free
         </TextView>
 
         <TextView style={styles.subtitle} type='regular'>
@@ -47,7 +62,8 @@ export const PaywallModal = () => {
         <View style={styles.separator} />
 
         <TextView style={styles.promotionTitle} type='regular'>
-          Try 3 days free and then{`\n`}$5.99 per week
+          Try {introductoryPriceNumberOfPeriodsIOS} days free and then{`\n`}
+          {localizedPrice} per {formattedSubscriptionPeriod}
         </TextView>
 
         <TextView style={styles.promotionSubtitle} type='regular'>
@@ -56,7 +72,7 @@ export const PaywallModal = () => {
 
         <PressableView style={styles.unlockButton} onPress={handleUnlockPress}>
           <TextView style={styles.unlockButtonText} type='bold'>
-            Get 3 days free
+            Get {introductoryPriceNumberOfPeriodsIOS} days free
           </TextView>
         </PressableView>
 

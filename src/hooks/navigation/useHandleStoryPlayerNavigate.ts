@@ -6,6 +6,8 @@ import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { useAppSelector } from '../useAppSelector';
 
+import { useShowPaywallModal } from './useShowPaywallModal';
+
 interface UseHandleStoryPlayerNavigateProps {
   isFree: boolean;
   storyId: number;
@@ -16,18 +18,19 @@ export const useHandleStoryPlayerNavigate = ({
   storyId,
 }: UseHandleStoryPlayerNavigateProps) => {
   const isFullVersion = useAppSelector(selectIsFullVersion);
-
   const navigation = useAppNavigation();
+
+  const { showPaywallModal } = useShowPaywallModal();
 
   const handleStoryPlayerNavigate = useCallback(() => {
     if (!isFullVersion && !isFree) {
-      navigation.navigate(RootRoutes.PAYWALL_MODAL);
+      showPaywallModal();
     } else {
       navigation.navigate(RootRoutes.STORY_PLAYER, {
         storyId,
       });
     }
-  }, [isFree, isFullVersion, navigation, storyId]);
+  }, [isFree, isFullVersion, navigation, showPaywallModal, storyId]);
 
   return handleStoryPlayerNavigate;
 };

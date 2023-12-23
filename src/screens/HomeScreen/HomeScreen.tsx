@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -45,6 +45,8 @@ export const HomeScreen = () => {
 
   const isDefaultListVisible = !searchText && !isInputFocused;
 
+  const { isSubscriptionAvailable, showPaywallModal } = useShowPaywallModal();
+
   const handleSearchTextChange = useCallback((text: string) => {
     setSearchText(text);
   }, []);
@@ -61,7 +63,12 @@ export const HomeScreen = () => {
     setSearchText(item);
   }, []);
 
-  useShowPaywallModal();
+  useEffect(() => {
+    if (isSubscriptionAvailable) {
+      showPaywallModal();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubscriptionAvailable]);
 
   return (
     <LinearGradient
