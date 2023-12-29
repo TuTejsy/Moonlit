@@ -1,7 +1,8 @@
 import { useCallback, useEffect } from 'react';
 
-import { useIAP } from 'react-native-iap';
+import { SubscriptionIOS, useIAP } from 'react-native-iap';
 
+import { PRODUCT_ID } from '@/constants/common';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { selectIsFullVersion } from '@/store/user/user.selector';
@@ -17,7 +18,7 @@ export const useShowPaywallModal = () => {
   const isSubscriptionAvailable = connected && subscription && !isFullVerion;
 
   useEffect(() => {
-    getSubscriptions({ skus: ['moonlit_full_access'] });
+    getSubscriptions({ skus: [PRODUCT_ID] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -25,7 +26,9 @@ export const useShowPaywallModal = () => {
     const [subscription] = subscriptions;
 
     if (isSubscriptionAvailable) {
-      navigation.navigate(RootRoutes.PAYWALL_MODAL, { subscription });
+      navigation.navigate(RootRoutes.PAYWALL_MODAL, {
+        subscription: subscription as SubscriptionIOS,
+      });
     }
   }, [isSubscriptionAvailable, navigation, subscriptions]);
 

@@ -1,14 +1,16 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { ImageBackground, View, Image } from 'react-native';
+
+import { requestSubscription } from 'react-native-iap';
 
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
-import { unlockFullVersion } from '@/store/user/user.slice';
+import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import backgroundImage from './images/background/background.png';
 import voicesImage from './images/voices/voices.png';
@@ -19,12 +21,14 @@ export const PaywallModal = () => {
 
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
-  const dispatch = useAppDispatch();
+
+  const isFullVersion = useAppSelector(selectIsFullVersion);
 
   const {
     subscription: {
       introductoryPriceNumberOfPeriodsIOS,
       localizedPrice,
+      productId,
       subscriptionPeriodUnitIOS,
     },
   } = params;
@@ -39,8 +43,14 @@ export const PaywallModal = () => {
   }, [navigation]);
 
   const handleUnlockPress = useCallback(() => {
-    // dispatch(unlockFullVersion());
-  }, [dispatch]);
+    requestSubscription({ sku: productId });
+  }, [productId]);
+
+  useEffect(() => {
+    if (isFullVersion) {
+      navigation.goBack();
+    }
+  }, [isFullVersion, navigation]);
 
   return (
     <View style={styles.screen}>
