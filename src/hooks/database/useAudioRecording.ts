@@ -49,6 +49,11 @@ export function useAudioRecording(
           setAudioRecordingVersion(audioRecordingVersionRef.current + 1);
           setAudioRecording(nextaudioRecording);
         }
+
+        if (deleted) {
+          setAudioRecordingVersion(audioRecordingVersionRef.current + 1);
+          setAudioRecording(null);
+        }
       };
 
       AudioRecordingsDB.performAfterTransactionComplete(() =>

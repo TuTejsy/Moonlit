@@ -12,7 +12,7 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
       setIsLoading(true);
       const audioRecordings = await StoriesRepository.getAudioRecordings(storyId);
       const formattedAudioRecordings: Array<AudioRecordingSchema> = [];
-      const formattedAudioRecordingsSet = new Set<number>();
+      // const formattedAudioRecordingsSet = new Set<number>();
 
       audioRecordings.forEach((audioRecording) => {
         const { created_at_timestamp, id, updated_at_timestamp } = audioRecording;
@@ -36,7 +36,7 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
         };
 
         formattedAudioRecordings.push(formattedAudioRecording);
-        formattedAudioRecordingsSet.add(id);
+        // formattedAudioRecordingsSet.add(id);
       });
 
       const [_upserted, notUpserted] = await AudioRecordingsDB.upsert(formattedAudioRecordings);
@@ -45,11 +45,11 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
         notUpserted.forEach(({ err }) => console.error(err));
       }
 
-      const audioRecordingsToDelete = AudioRecordingsDB.objects().filter(
-        (audioRecording) => !formattedAudioRecordingsSet.has(audioRecording.id),
-      );
+      // const audioRecordingsToDelete = AudioRecordingsDB.objects().filter(
+      //   (audioRecording) => !formattedAudioRecordingsSet.has(audioRecording.id),
+      // );
 
-      AudioRecordingsDB.delete(audioRecordingsToDelete);
+      // AudioRecordingsDB.delete(audioRecordingsToDelete);
     } catch (err) {
       console.error(err);
     } finally {

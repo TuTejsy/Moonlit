@@ -13,24 +13,23 @@ export const useShowPaywallModal = () => {
   const navigation = useAppNavigation();
   const isFullVerion = useAppSelector(selectIsFullVersion);
 
-  const { connected, getSubscriptions, subscriptions } = useIAP();
-  const [subscription] = subscriptions;
-  const isSubscriptionAvailable = connected && subscription && !isFullVerion;
+  // const { connected, getSubscriptions, subscriptions } = useIAP();
+  // const [subscription] = subscriptions;
+  // const isSubscriptionAvailable = connected && subscription && !isFullVerion;
 
   useEffect(() => {
-    getSubscriptions({ skus: [PRODUCT_ID] });
+    // getSubscriptions({ skus: [PRODUCT_ID] });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const showPaywallModal = useCallback(() => {
-    const [subscription] = subscriptions;
+    // const [subscription] = subscriptions;
+    // if (isSubscriptionAvailable) {
+    //   navigation.navigate(RootRoutes.PAYWALL_MODAL, {
+    //     subscription: subscription as SubscriptionIOS,
+    //   });
+    // }
+  }, []);
 
-    if (isSubscriptionAvailable) {
-      navigation.navigate(RootRoutes.PAYWALL_MODAL, {
-        subscription: subscription as SubscriptionIOS,
-      });
-    }
-  }, [isSubscriptionAvailable, navigation, subscriptions]);
-
-  return { isSubscriptionAvailable, showPaywallModal };
+  return { isSubscriptionAvailable: false, showPaywallModal };
 };
