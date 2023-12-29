@@ -22,6 +22,8 @@ export const isSandbox = () => getApplicationEnv() === 'sandbox';
 
 export const IS_JEST_ENV = process.env.JEST_WORKER_ID;
 
+export const PRODUCT_ID = 'moonlit_full_access';
+
 export const SANDBOX = {
   DOCUMENTS: {
     get FULL_COVER() {

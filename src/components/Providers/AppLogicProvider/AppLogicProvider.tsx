@@ -1,11 +1,11 @@
 import { ViewProps } from 'react-native';
 
+import { useCheckSubscription } from './hooks/useCheckSubscription';
 import { useDownloadStoriesPreviews } from './hooks/useDownloadStoriesPreviews/useDownloadStoriesPreviews';
-import { useFullAccessSubscription } from './hooks/useFullAccessSubscription';
 
 export const AppLogicProvider = ({ children }: ViewProps) => {
+  useCheckSubscription();
   useDownloadStoriesPreviews();
-  useFullAccessSubscription();
 
   return children as JSX.Element;
 };
