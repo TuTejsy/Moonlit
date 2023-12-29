@@ -48,11 +48,13 @@ export async function downloadPreviews(
 
     for (let i = 0; i < filesCachedNames.length; i++) {
       try {
-        const cachedName = filesCachedNames[i];
-        const colorURL = `file://${getSandboxPathForCoverType(type)}/${cachedName}`;
+        if (results[i].statusCode === 200 && filesCachedNames[i]) {
+          const cachedName = filesCachedNames[i];
+          const colorURL = `file://${getSandboxPathForCoverType(type)}/${cachedName}`;
 
-        const storyColors = await getColorFromURL(colorURL);
-        colors.push(storyColors);
+          const storyColors = await getColorFromURL(colorURL);
+          colors.push(storyColors);
+        }
       } catch (err) {
         if (!colors[i]) {
           colors[i] = null;

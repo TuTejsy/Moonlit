@@ -6,16 +6,24 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { unlockFullVersion } from '@/store/user/user.slice';
 
 export const useCheckSubscription = () => {
-  const { currentPurchase, currentPurchaseError, finishTransaction } = useIAP();
-
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (currentPurchase?.transactionReceipt) {
-      dispatch(unlockFullVersion);
-
-      finishTransaction({ isConsumable: true, purchase: currentPurchase });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPurchase, currentPurchaseError]);
+  // const {
+  //   currentPurchase,
+  //   currentPurchaseError,
+  //   finishTransaction,
+  //   getPurchaseHistory,
+  //   purchaseHistory,
+  // } = useIAP();
+  // const dispatch = useAppDispatch();
+  // console.log('purchaseHistory: ', purchaseHistory);
+  // useEffect(() => {
+  //   getPurchaseHistory();
+  // }, []);
+  // useEffect(() => {
+  //   console.log('currentPurchase: ', currentPurchase);
+  //   if (currentPurchase?.transactionReceipt) {
+  //     dispatch(unlockFullVersion);
+  //     finishTransaction({ isConsumable: true, purchase: currentPurchase });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [currentPurchase, currentPurchaseError]);
 };

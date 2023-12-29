@@ -8,7 +8,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { withIAPContext } from 'react-native-iap';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
-import RealmPlugin from 'realm-flipper-plugin-device';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { AppLogicProvider } from '@/components/Providers/AppLogicProvider/AppLogicProvider';
@@ -50,7 +49,9 @@ function App(): JSX.Element {
                 >
                   <BottomSheetModalProvider>
                     <AppLogicProvider>
-                      {__DEV__ && <RealmPlugin realms={[StoriesDB.realm]} />}
+                      {/* {__DEV__ && (
+                        <RealmPlugin realms={[StoriesDB.realm, AudioRecordingsDB.realm]} />
+                      )} */}
                       <RootNavigator />
                     </AppLogicProvider>
                   </BottomSheetModalProvider>

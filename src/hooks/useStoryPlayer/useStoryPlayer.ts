@@ -230,7 +230,7 @@ export function useStoryPlayer({
         audioPlayer.getCurrentState().then(({ isPlaying, playingTime }) => {
           setPlayedTime(playingTime);
 
-          if (isPlaying) {
+          if (isPlaying && (isCurrentStoryPlaying || !isStoryPlaying)) {
             if (selectedAudioRecording?.id) {
               reduxDispatch(startPlaying(selectedAudioRecording?.id));
             }
@@ -241,7 +241,7 @@ export function useStoryPlayer({
 
         return () => {
           audioPlayer.getCurrentState().then(({ isPlaying, playingTime }) => {
-            if (isPlaying) {
+            if (isPlaying && (isCurrentStoryPlaying || !isStoryPlaying)) {
               if (selectedAudioRecording?.id) {
                 reduxDispatch(startPlaying(selectedAudioRecording?.id));
               }
