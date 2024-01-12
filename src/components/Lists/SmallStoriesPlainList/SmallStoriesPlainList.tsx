@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   FlatList,
   FlatListProps,
@@ -16,6 +16,7 @@ import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useRenderVersion } from '@/hooks/useRenderVersion';
 import { generateMapStoriesToSaved } from '@/utils/generators/generateMapStoriesToSaved';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
@@ -40,7 +41,8 @@ export const SmallStoriesPlainList = React.memo(
   }: SmallStoriesPlainListPropTypes) => {
     const styles = useMakeStyles(makeStyles);
     const insets = useSafeAreaInsets();
-    const [savedVersion, setSavedVersion] = useState(0);
+
+    const { increaseRenderVersion, renderVersion } = useRenderVersion();
 
     const mapStoriesToSaved = useMemo(
       () => generateMapStoriesToSaved(stories),
@@ -53,9 +55,9 @@ export const SmallStoriesPlainList = React.memo(
         const isSaved = mapStoriesToSaved.get(storyId);
 
         mapStoriesToSaved.set(storyId, !isSaved);
-        setSavedVersion(savedVersion + 1);
+        increaseRenderVersion();
       },
-      [mapStoriesToSaved, savedVersion],
+      [increaseRenderVersion, mapStoriesToSaved],
     );
 
     const renderItem = useCallback(
@@ -113,7 +115,7 @@ export const SmallStoriesPlainList = React.memo(
         showsVerticalScrollIndicator
         contentContainerStyle={styles.contentContainer}
         data={stories}
-        extraData={storiesVersion + savedVersion}
+        extraData={storiesVersion + renderVersion}
         indicatorStyle='white'
         renderItem={renderItem}
         scrollEventThrottle={16}
