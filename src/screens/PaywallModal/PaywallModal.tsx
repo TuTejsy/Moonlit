@@ -31,7 +31,6 @@ export const PaywallModal = () => {
 
   const unlockFullAccess = useCallback(
     (profile: AdaptyProfile) => {
-      console.log('profile: ', profile);
       const isSubscribed = profile.accessLevels?.premium?.isActive;
 
       if (isSubscribed) {
