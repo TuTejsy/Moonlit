@@ -27,10 +27,10 @@
     "qs": "^6.11.1",
     "react": "18.2.0",
     "react-native": "0.71.6",
+    "react-native-adapty": "^2.6.1-canary.1",
     "react-native-config": "^1.5.0",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.9.0",
-    "react-native-iap": "^12.12.1",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-mmkv": "^2.8.0",
     "react-native-reanimated": "2.12.0",
@@ -42,7 +42,7 @@
     "realm": "^11.7.0",
     "redux-persist": "^6.0.0",
     "rn-dominant-color": "^1.7.2",
-    "yarn": "^1.22.19"
+    "yarn": "^1.22.21"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

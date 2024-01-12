@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import LinearGradient from 'react-native-linear-gradient';
 
 import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
 import { POPULAR_STORIES_CONFIG } from '@/constants/stories';
 import { useStories } from '@/hooks/database/useStories';
-import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
@@ -45,8 +44,6 @@ export const HomeScreen = () => {
 
   const isDefaultListVisible = !searchText && !isInputFocused;
 
-  const { isSubscriptionAvailable, showPaywallModal } = useShowPaywallModal();
-
   const handleSearchTextChange = useCallback((text: string) => {
     setSearchText(text);
   }, []);
@@ -62,13 +59,6 @@ export const HomeScreen = () => {
   const handlePopularSearchItemSelected = useCallback((item: string) => {
     setSearchText(item);
   }, []);
-
-  useEffect(() => {
-    if (isSubscriptionAvailable) {
-      showPaywallModal();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubscriptionAvailable]);
 
   return (
     <LinearGradient

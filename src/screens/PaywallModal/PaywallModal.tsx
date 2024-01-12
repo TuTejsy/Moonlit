@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { ImageBackground, View, Image } from 'react-native';
 
-import { requestSubscription } from 'react-native-iap';
+import { adapty, AdaptyProfile } from 'react-native-adapty';
 
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
-import { selectIsFullVersion } from '@/store/user/user.selector';
+import { unlockFullVersion } from '@/store/user/user.slice';
 
 import backgroundImage from './images/background/background.png';
 import voicesImage from './images/voices/voices.png';
@@ -22,20 +22,24 @@ export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
 
-  const isFullVersion = useAppSelector(selectIsFullVersion);
+  const { product } = params;
+  const { price, subscriptionDetails } = product;
 
-  const {
-    subscription: {
-      introductoryPriceNumberOfPeriodsIOS,
-      localizedPrice,
-      productId,
-      subscriptionPeriodUnitIOS,
+  const dispatch = useAppDispatch();
+
+  const offerDays = subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
+
+  const unlockFullAccess = useCallback(
+    (profile: AdaptyProfile) => {
+      console.log('profile: ', profile);
+      const isSubscribed = profile.accessLevels?.premium?.isActive;
+
+      if (isSubscribed) {
+        dispatch(unlockFullVersion);
+        navigation.goBack();
+      }
     },
-  } = params;
-
-  const formattedSubscriptionPeriod = useMemo(
-    () => subscriptionPeriodUnitIOS?.toLocaleLowerCase(),
-    [subscriptionPeriodUnitIOS],
+    [dispatch, navigation],
   );
 
   const handleSkipPress = useCallback(() => {
@@ -43,14 +47,12 @@ export const PaywallModal = () => {
   }, [navigation]);
 
   const handleUnlockPress = useCallback(() => {
-    requestSubscription({ sku: productId });
-  }, [productId]);
+    adapty.makePurchase(product).then(unlockFullAccess).catch(console.error);
+  }, [product, unlockFullAccess]);
 
-  useEffect(() => {
-    if (isFullVersion) {
-      navigation.goBack();
-    }
-  }, [isFullVersion, navigation]);
+  const handleRestorePress = useCallback(() => {
+    adapty.restorePurchases().then(unlockFullAccess).catch(console.error);
+  }, [unlockFullAccess]);
 
   return (
     <View style={styles.screen}>
@@ -60,7 +62,7 @@ export const PaywallModal = () => {
         </TextView>
 
         <TextView style={styles.title} type='bold'>
-          Try {introductoryPriceNumberOfPeriodsIOS} days for free
+          Try {offerDays} days for free
         </TextView>
 
         <TextView style={styles.subtitle} type='regular'>
@@ -72,8 +74,8 @@ export const PaywallModal = () => {
         <View style={styles.separator} />
 
         <TextView style={styles.promotionTitle} type='regular'>
-          Try {introductoryPriceNumberOfPeriodsIOS} days free and then{`\n`}
-          {localizedPrice} per {formattedSubscriptionPeriod}
+          Try {offerDays} days free and then{`\n`}
+          {price?.localizedString} per week
         </TextView>
 
         <TextView style={styles.promotionSubtitle} type='regular'>
@@ -82,14 +84,16 @@ export const PaywallModal = () => {
 
         <PressableView style={styles.unlockButton} onPress={handleUnlockPress}>
           <TextView style={styles.unlockButtonText} type='bold'>
-            Get {introductoryPriceNumberOfPeriodsIOS} days free
+            Get {offerDays} days free
           </TextView>
         </PressableView>
 
         <View style={styles.actions}>
           <TextView style={styles.action}>Terms</TextView>
           <TextView style={styles.action}>Privacy</TextView>
-          <TextView style={styles.action}>Restore</TextView>
+          <TextView style={styles.action} onPress={handleRestorePress}>
+            Restore
+          </TextView>
         </View>
       </ImageBackground>
     </View>

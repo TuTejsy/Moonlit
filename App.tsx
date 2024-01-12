@@ -4,8 +4,8 @@ import { StatusBar } from 'react-native';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
+import { adapty } from 'react-native-adapty';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { withIAPContext } from 'react-native-iap';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -30,6 +30,8 @@ StoriesDB.open();
 AudioRecordingsDB.open();
 // StoriesDB.open().then(() => StoriesDB.dropDatabase());
 // AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
+
+adapty.activate('public_live_f9QzhFlB.vAmyFLiD39fXZJjW6UXh');
 
 function App(): JSX.Element {
   const theme = useInitTheme();
@@ -65,4 +67,4 @@ function App(): JSX.Element {
   );
 }
 
-export default withIAPContext(App);
+export default App;
