@@ -1,5 +1,5 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { SubscriptionIOS } from 'react-native-iap';
+import { AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { TabStackParams } from '../TabNavigator/TabNavigator.types';
 
@@ -13,6 +13,6 @@ export interface RootStackParams extends Record<string, object | undefined> {
   };
 
   [RootRoutes.PAYWALL_MODAL]: {
-    subscription: SubscriptionIOS;
+    product: AdaptyPaywallProduct;
   };
 }

@@ -1,29 +1,28 @@
 import { useEffect } from 'react';
 
-import { useIAP } from 'react-native-iap';
+import { adapty } from 'react-native-adapty';
 
+import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { unlockFullVersion } from '@/store/user/user.slice';
+import { useMutableValue } from '@/hooks/useMutableValue';
+import { lockFullVersion, unlockFullVersion } from '@/store/user/user.slice';
 
 export const useCheckSubscription = () => {
-  // const {
-  //   currentPurchase,
-  //   currentPurchaseError,
-  //   finishTransaction,
-  //   getPurchaseHistory,
-  //   purchaseHistory,
-  // } = useIAP();
-  // const dispatch = useAppDispatch();
-  // console.log('purchaseHistory: ', purchaseHistory);
-  // useEffect(() => {
-  //   getPurchaseHistory();
-  // }, []);
-  // useEffect(() => {
-  //   console.log('currentPurchase: ', currentPurchase);
-  //   if (currentPurchase?.transactionReceipt) {
-  //     dispatch(unlockFullVersion);
-  //     finishTransaction({ isConsumable: true, purchase: currentPurchase });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [currentPurchase, currentPurchaseError]);
+  const dispatch = useAppDispatch();
+  const { showPaywallModal } = useShowPaywallModal();
+  const showPaywallModalRef = useMutableValue(showPaywallModal);
+
+  useEffect(() => {
+    adapty.getProfile().then((profile) => {
+      const isActive = profile?.accessLevels?.premium?.isActive;
+
+      if (isActive) {
+        dispatch(unlockFullVersion());
+      } else {
+        dispatch(lockFullVersion());
+        showPaywallModalRef.current();
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 };
