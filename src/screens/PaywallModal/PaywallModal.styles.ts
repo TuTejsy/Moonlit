@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
@@ -14,6 +15,13 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       justifyContent: 'center',
       marginTop: dh(16),
     },
+    bottomOverlayGradient: {
+      bottom: 0,
+      height: (WINDOW_HEIGHT * 2) / 3,
+      left: 0,
+      position: 'absolute',
+      width: WINDOW_WIDTH,
+    },
     content: {
       alignItems: 'center',
       borderTopLeftRadius: 20,
@@ -26,6 +34,12 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       paddingHorizontal: 34,
       paddingTop: 24,
       position: 'relative',
+    },
+    image: {
+      height: WINDOW_HEIGHT - insets.top - insets.bottom - 120,
+      left: 0,
+      position: 'absolute',
+      top: 0,
     },
     promotionSubtitle: {
       ...fonts.size_12,
@@ -63,6 +77,13 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     title: {
       ...fonts.size_32,
       color: colors.white,
+    },
+    topOverlayGradient: {
+      height: (WINDOW_HEIGHT * 2) / 3,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: WINDOW_WIDTH,
     },
     unlockButton: {
       backgroundColor: colors.white,

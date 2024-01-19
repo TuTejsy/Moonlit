@@ -1,12 +1,18 @@
-import React, { useCallback } from 'react';
-import { ImageBackground, View, Image } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, Image } from 'react-native';
 
 import { adapty, AdaptyProfile } from 'react-native-adapty';
+import LinearGradient from 'react-native-linear-gradient';
+import Animated from 'react-native-reanimated';
 
+import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { WINDOW_WIDTH } from '@/constants/layout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useImageSlideAnimation } from '@/hooks/useImageSlideAnimation';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
@@ -18,6 +24,7 @@ import { makeStyles } from './PaywallModal.styles';
 
 export const PaywallModal = () => {
   const styles = useMakeStyles(makeStyles);
+  const { colors } = useTheme();
 
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
@@ -25,7 +32,11 @@ export const PaywallModal = () => {
   const { product } = params;
   const { price, subscriptionDetails } = product;
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useAppDispatch();
+
+  const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(WINDOW_WIDTH);
 
   const offerDays = subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
 
@@ -46,16 +57,51 @@ export const PaywallModal = () => {
   }, [navigation]);
 
   const handleUnlockPress = useCallback(() => {
-    adapty.makePurchase(product).then(unlockFullAccess).catch(console.error);
+    setIsLoading(true);
+
+    adapty
+      .makePurchase(product)
+      .then(unlockFullAccess)
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [product, unlockFullAccess]);
 
   const handleRestorePress = useCallback(() => {
-    adapty.restorePurchases().then(unlockFullAccess).catch(console.error);
+    setIsLoading(true);
+
+    adapty
+      .restorePurchases()
+      .then(unlockFullAccess)
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [unlockFullAccess]);
 
   return (
     <View style={styles.screen}>
-      <ImageBackground source={backgroundImage} style={styles.content}>
+      <View style={styles.content}>
+        <Animated.Image
+          resizeMode='cover'
+          source={backgroundImage}
+          style={[styles.image, imageAnimatedStyle]}
+          onLayout={handleImageLayout}
+        />
+        <LinearGradient
+          angle={180}
+          colors={[colors.opacityLightGradientPurple(0.3), colors.lightGradientPurple]}
+          locations={[0, 1]}
+          style={styles.topOverlayGradient}
+        />
+        <LinearGradient
+          angle={180}
+          colors={[colors.opacityLightPurple(0), colors.darkGradientPurple]}
+          locations={[0, 0.5]}
+          style={styles.bottomOverlayGradient}
+        />
+
         <TextView style={styles.skipText} type='regular' onPress={handleSkipPress}>
           Skip
         </TextView>
@@ -94,7 +140,9 @@ export const PaywallModal = () => {
             Restore
           </TextView>
         </View>
-      </ImageBackground>
+      </View>
+
+      <AbsoluteSpinnerView show={isLoading} />
     </View>
   );
 };
