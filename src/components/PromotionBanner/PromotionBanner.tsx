@@ -1,17 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Image, ViewProps, LayoutChangeEvent } from 'react-native';
+import React from 'react';
+import { View, Image, ViewProps } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useImageSlideAnimation } from '@/hooks/useImageSlideAnimation';
 
 import { UnlockButton } from '../Buttons/UnlockButton/UnlockButton';
 import { PressableView } from '../Primitives/PressableView/PressableView';
@@ -28,34 +24,9 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
-  const [imageWidth, setImageWidth] = useState(0);
-
-  const imageTranslateXSharedValue = useSharedValue(0);
-
-  const handleImageLayout = useCallback((event: LayoutChangeEvent) => {
-    const { width } = event.nativeEvent.layout;
-    setImageWidth(width);
-  }, []);
-
-  const imageAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: imageTranslateXSharedValue.value }],
-  }));
+  const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(PROMOTION_BANNER_WIDTH);
 
   const { showPaywallModal } = useShowPaywallModal();
-
-  useEffect(() => {
-    if (imageWidth > PROMOTION_BANNER_WIDTH && imageTranslateXSharedValue.value === 0) {
-      const widthDiff = imageWidth - PROMOTION_BANNER_WIDTH;
-
-      imageTranslateXSharedValue.value = withRepeat(
-        withTiming(-(imageWidth - PROMOTION_BANNER_WIDTH), {
-          duration: widthDiff * 100,
-        }),
-        -1,
-        true,
-      );
-    }
-  }, [imageTranslateXSharedValue, imageTranslateXSharedValue.value, imageWidth]);
 
   return (
     <PressableView style={[styles.container, style]} onPress={showPaywallModal}>
