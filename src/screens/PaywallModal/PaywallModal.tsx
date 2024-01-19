@@ -34,7 +34,7 @@ export const PaywallModal = () => {
       const isSubscribed = profile.accessLevels?.premium?.isActive;
 
       if (isSubscribed) {
-        dispatch(unlockFullVersion);
+        dispatch(unlockFullVersion());
         navigation.goBack();
       }
     },

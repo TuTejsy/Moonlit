@@ -42,7 +42,7 @@ export const SmallStoriesPlainList = React.memo(
     const styles = useMakeStyles(makeStyles);
     const insets = useSafeAreaInsets();
 
-    const { increaseRenderVersion, renderVersion } = useRenderVersion();
+    const { increaseRenderVersion, renderVersion } = useRenderVersion(storiesVersion);
 
     const mapStoriesToSaved = useMemo(
       () => generateMapStoriesToSaved(stories),
@@ -115,7 +115,7 @@ export const SmallStoriesPlainList = React.memo(
         showsVerticalScrollIndicator
         contentContainerStyle={styles.contentContainer}
         data={stories}
-        extraData={storiesVersion + renderVersion}
+        extraData={renderVersion}
         indicatorStyle='white'
         renderItem={renderItem}
         scrollEventThrottle={16}

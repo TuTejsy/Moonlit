@@ -6,7 +6,6 @@ import { Results } from 'realm';
 import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useRenderVersion } from '@/hooks/useRenderVersion';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './MediumStoriesList.styles';
@@ -19,8 +18,6 @@ interface MediumStoriesListPropTypes {
 
 export function MediumStoriesList({ stories, storiesVersion, style }: MediumStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
-
-  const { renderVersion } = useRenderVersion();
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
     return (
@@ -42,7 +39,7 @@ export function MediumStoriesList({ stories, storiesVersion, style }: MediumStor
       horizontal
       contentContainerStyle={styles.listContent}
       data={stories}
-      extraData={storiesVersion + renderVersion}
+      extraData={storiesVersion}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
