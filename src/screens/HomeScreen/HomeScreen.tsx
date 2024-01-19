@@ -7,6 +7,7 @@ import { POPULAR_STORIES_CONFIG } from '@/constants/stories';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useCheckSubscription } from '@/hooks/useCheckSubscription';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
 import { DefaultList } from './components/DefaultList/DefaultList';
@@ -59,6 +60,8 @@ export const HomeScreen = () => {
   const handlePopularSearchItemSelected = useCallback((item: string) => {
     setSearchText(item);
   }, []);
+
+  useCheckSubscription();
 
   return (
     <LinearGradient
