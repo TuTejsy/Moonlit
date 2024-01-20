@@ -15,7 +15,6 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { navigationService } from '@/services/navigation/navigationService';
-import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { getHitSlop } from '@/utils/getHitSlop';
 
 import { makeStyles } from './TabBarStoryPlayer.styles';
