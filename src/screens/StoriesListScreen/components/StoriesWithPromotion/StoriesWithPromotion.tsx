@@ -5,12 +5,12 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
 import { StoryPreview } from '@/components/Lists/SmallStoriesList/components/StoryPreview/StoryPreview';
-import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { selectIsFullVersion } from '@/store/user/user.selector';
+import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { makeStyles } from './StoriesWithPromotion.styles';
 
@@ -35,7 +35,7 @@ export const StoriesWithPromotion = memo(
               description={story.description}
               isFree={story.is_free}
               isImageLoaded={!!story.small_cover_cached_name}
-              previewURL={`file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story.small_cover_cached_name}`}
+              previewURL={getImageFilePathForStory(story, 'small')}
               storyId={story.id}
               title={story.name}
             />

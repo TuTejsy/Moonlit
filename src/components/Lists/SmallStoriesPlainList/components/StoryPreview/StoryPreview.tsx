@@ -14,7 +14,7 @@ import { makeStyles } from './StoryPreview.styles';
 interface StoryPreviewPropTypes {
   description: string;
   isFree: boolean;
-  previewURL: string;
+  previewURL: string | undefined;
   storyId: number;
   title: string;
   isSaved?: boolean;

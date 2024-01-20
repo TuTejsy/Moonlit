@@ -18,6 +18,7 @@ import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useRenderVersion } from '@/hooks/useRenderVersion';
 import { generateMapStoriesToSaved } from '@/utils/generators/generateMapStoriesToSaved';
+import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesPlainList.styles';
@@ -67,7 +68,7 @@ export const SmallStoriesPlainList = React.memo(
             description={item.description}
             isFree={item.is_free}
             isSaved={mapStoriesToSaved.get(item.id)}
-            previewURL={`file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${item.small_cover_cached_name}`}
+            previewURL={getImageFilePathForStory(item, 'small')}
             showSaveButton={showSaveButton}
             storyId={item.id}
             title={item.name}

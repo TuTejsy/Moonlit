@@ -6,10 +6,9 @@ import { StoriesDB } from '@/database';
 import { ColorSchema, StorySchema } from '@/database/schema/stories/types';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { generateStoryCoverCachedName } from '@/utils/generators/generateStoryCoverCachedName';
-
-import { getSandboxPathForCoverType } from './getSandboxPathForCoverType';
-import { getStoryCachedNameFieldForCoverType } from './getStoryCachedNameFieldForCoverType';
-import { getStoryPreviewURLFieldForCoverType } from './getStoryPreviewURLFieldForCoverType';
+import { getSandboxPathForCoverType } from '@/utils/urls/getSandboxPathForCoverType';
+import { getStoryCachedNameFieldForCoverType } from '@/utils/urls/getStoryCachedNameFieldForCoverType';
+import { getStoryPreviewURLFieldForCoverType } from '@/utils/urls/getStoryPreviewURLFieldForCoverType';
 
 export async function downloadPreviews(
   stories: Array<StorySchema>,
