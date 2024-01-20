@@ -1,6 +1,7 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
 
+import { BlurView } from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
@@ -19,7 +20,7 @@ interface StoryPreviewPropTypes {
   description: string;
   isFree: boolean;
   isImageLoaded: boolean;
-  previewURL: string;
+  previewURL: string | undefined;
   storyId: number;
   title: string;
 }
@@ -35,20 +36,29 @@ export const StoryPreview = React.memo(
 
     return (
       <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
-        {!isImageLoaded && (
-          <LinearGradient
-            angle={180}
-            colors={[colors.opacityBlack(0), colors.opacityBlack(1)]}
-            locations={[0, 1]}
-            pointerEvents='none'
-            style={styles.imageGradient}
-          />
-        )}
+        {!isImageLoaded &&
+          (previewURL ? (
+            <BlurView
+              blurAmount={5}
+              blurRadius={10}
+              blurType='dark'
+              reducedTransparencyFallbackColor={colors.opacityBlack(0.2)}
+              style={styles.blurView}
+            />
+          ) : (
+            <LinearGradient
+              angle={180}
+              colors={[colors.opacityBlack(0), colors.opacityBlack(1)]}
+              locations={[0, 1]}
+              pointerEvents='none'
+              style={styles.imageGradient}
+            />
+          ))}
 
         <ImageBackground
           defaultSource={loonImage}
-          imageStyle={!isImageLoaded && styles.emptyImageStyle}
-          resizeMode={isImageLoaded ? 'cover' : 'center'}
+          imageStyle={!isImageLoaded && !previewURL && styles.emptyImageStyle}
+          resizeMode={previewURL ? 'cover' : 'center'}
           source={{ uri: previewURL }}
           style={styles.preview}
         >

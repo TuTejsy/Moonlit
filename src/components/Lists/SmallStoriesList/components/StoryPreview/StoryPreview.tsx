@@ -19,7 +19,7 @@ interface StoryPreviewPropTypes {
   description: string;
   isFree: boolean;
   isImageLoaded: boolean;
-  previewURL: string;
+  previewURL: string | undefined;
   storyId: number;
   title: string;
 }

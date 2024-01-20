@@ -10,15 +10,15 @@ import {
 
 import Animated from 'react-native-reanimated';
 
-import { SANDBOX } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
-  stories: ArrayLike<StorySchema>;
+  stories: Array<StorySchema>;
   storiesVersion: number;
   ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
   contentContainerStyle?: ViewStyle;
@@ -60,7 +60,7 @@ export function SmallStoriesList({
         description={item.description}
         isFree={item.is_free}
         isImageLoaded={!!item.small_cover_cached_name}
-        previewURL={`file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${item.small_cover_cached_name}`}
+        previewURL={getImageFilePathForStory(item, 'small')}
         storyId={item.id}
         title={item.name}
       />

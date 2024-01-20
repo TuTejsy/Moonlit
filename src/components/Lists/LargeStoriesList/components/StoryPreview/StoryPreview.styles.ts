@@ -4,8 +4,16 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { PREVIEW_HEIGHT, PREVIEW_WIDTH } from './StoryPreview.constants';
 
-export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts, zIndex }: MakeStylesProps) =>
   StyleSheet.create({
+    blurView: {
+      left: 0,
+      minHeight: PREVIEW_HEIGHT,
+      minWidth: PREVIEW_WIDTH,
+      position: 'absolute',
+      top: 0,
+      zIndex: zIndex.overMain,
+    },
     descriptionText: {
       ...fonts.size_15,
       color: colors.opacityWhite(0.6),
