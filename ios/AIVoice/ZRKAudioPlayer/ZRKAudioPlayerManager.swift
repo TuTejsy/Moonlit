@@ -187,7 +187,8 @@ class ZRKAudioPlayerManager: RCTEventEmitter, ZRKAudioPlayerDelegate {
   @objc func getCurrentState(_ resolve: RCTPromiseResolveBlock,
                                  rejecter reject: RCTPromiseRejectBlock) {
     resolve(["playingTime": audioPlayer.playingTime,
-             "isPlaying": audioPlayer.isPlaying])
+             "isPlaying": audioPlayer.isPlaying,
+             "filePath": audioPlayer.filePath.value])
   }
   
   @objc func rewindPlayingToTime(_ time: Double,

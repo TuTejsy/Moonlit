@@ -23,6 +23,8 @@ class ZRKAudioPlayer: NSObject, AVAudioPlayerDelegate {
     audioPlayer?.isPlaying ?? false
   }
   
+  var filePath: String?
+  
   var playingTime: Double { audioPlayer?.currentTime ?? 0 }
   
   func initFileToPlay(at path: String) -> NSError? {
@@ -32,7 +34,7 @@ class ZRKAudioPlayer: NSObject, AVAudioPlayerDelegate {
       audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
       try playingSession.setCategory(.playback)
       try playingSession.setActive(true)
-      
+      self.filePath = path
     } catch let error as NSError {
       initError = error
       audioPlayer = nil
