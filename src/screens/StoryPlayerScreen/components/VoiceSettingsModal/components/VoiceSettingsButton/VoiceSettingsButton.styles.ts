@@ -36,7 +36,7 @@ export const makeStyles = (
     },
     voiceSettingsButton: {
       alignItems: 'center',
-      backgroundColor: convertHEXtoRGBA(storyColor, 0.7),
+      backgroundColor: convertHEXtoRGBA(storyColor, 0.3),
       borderRadius: 16,
       flexDirection: 'row',
       height: BUTTON_HEIGHT,

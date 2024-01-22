@@ -14,7 +14,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       color: colors.opacityWhite(0.7),
     },
     storyMetaContainer: {
-      backgroundColor: colors.opacityBlack(0.2),
+      backgroundColor: colors.opacityBlack(0.4),
       flex: 1,
       paddingHorizontal: 16,
       paddingTop: 32,
