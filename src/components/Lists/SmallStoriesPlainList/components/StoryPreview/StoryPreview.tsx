@@ -53,7 +53,7 @@ export const StoryPreview = React.memo(
           <TextView numberOfLines={1} style={styles.titleText} type='bold'>
             {title}
           </TextView>
-          <TextView numberOfLines={1} style={styles.descriptionText}>
+          <TextView numberOfLines={2} style={styles.descriptionText}>
             {description}
           </TextView>
         </View>
