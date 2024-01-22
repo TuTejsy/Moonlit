@@ -16,6 +16,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { getHitSlop } from '@/utils/getHitSlop';
 
 import { Loader } from './components/Loader/Loader';
 import { ProgressBar } from './components/ProgressBar/ProgressBar';
@@ -115,11 +116,9 @@ export function StoryPlayer({
 
       {!isStoryLoading && (
         <Animated.View style={[styles.playerActionsContainer, animatedActionsContainerStyle]}>
-          <Icons.FavoriteBig
-            inactiveOpacity={0.5}
-            isFavorite={isFavorite}
-            onPress={handleStoryFavoritePress}
-          />
+          <PressableView hitSlop={getHitSlop(10)} onPress={handleStoryFavoritePress}>
+            <Icons.FavoriteBig inactiveOpacity={0.5} isFavorite={isFavorite} />
+          </PressableView>
         </Animated.View>
       )}
 

@@ -10,6 +10,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       borderRadius: 16,
       height: 32,
       justifyContent: 'center',
+      marginLeft: 16,
       width: 32,
     },
     content: {
