@@ -3,6 +3,7 @@ export interface StorySchema {
   category_ids: number[];
   created_at_timestamp: number;
   description: string;
+  description_large: string;
   full_cover_url: string;
   id: number;
   is_favorite: boolean;

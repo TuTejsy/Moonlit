@@ -9,7 +9,7 @@ import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './LargeStoriesList.styles';
 
 interface LargeStoriesListPropTypes {
-  stories: Array<StorySchema>;
+  stories: ArrayLike<StorySchema>;
   storiesVersion: number;
 }
 

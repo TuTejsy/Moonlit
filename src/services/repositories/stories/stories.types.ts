@@ -22,6 +22,7 @@ export interface Story {
   category_ids: Array<number>;
   created_at_timestamp: string;
   description: string;
+  description_large: string;
   full_cover_url: string;
   id: number;
   is_featuring: boolean;

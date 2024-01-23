@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
 
-import { shuffle } from 'lodash';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Results } from 'realm';
 
@@ -11,6 +10,7 @@ import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStori
 import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import {
+  FEATURING_STORIES_CONFIG,
   FEATURING_STORIES_FILTER,
   FREE_STORIES_FILTER,
   POPULAR_STORIES_CONFIG,
@@ -63,14 +63,11 @@ export const DefaultList = React.memo(
     const [isRefreshing, updateStories] = useStoriesUpdate();
     const currentScrollRef = useRef(0);
 
-    const [featuringStories, featuringStoriesVersion] = useStories(FEATURING_STORIES_FILTER);
-    const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
-
-    const shuffledFeaturingStories = useMemo(
-      () => shuffle(featuringStories),
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      [featuringStoriesVersion],
+    const [featuringStories, featuringStoriesVersion] = useStories(
+      FEATURING_STORIES_FILTER,
+      FEATURING_STORIES_CONFIG,
     );
+    const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
 
     const handleSeeFeaturingTales = useCallback(() => {
       navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
@@ -145,10 +142,7 @@ export const DefaultList = React.memo(
       >
         <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
 
-        <LargeStoriesList
-          stories={shuffledFeaturingStories}
-          storiesVersion={featuringStoriesVersion}
-        />
+        <LargeStoriesList stories={featuringStories} storiesVersion={featuringStoriesVersion} />
 
         <CategoriesList />
 

@@ -9,6 +9,7 @@ export const StorySchema: ObjectSchema = {
     colors: 'ColorSchema?',
     created_at_timestamp: 'int',
     description: 'string',
+    description_large: 'string',
     full_cover_cached_name: 'string?',
     full_cover_url: 'string',
     id: 'int',
