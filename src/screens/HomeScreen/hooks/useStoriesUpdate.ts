@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { AudioRecordingsDB, StoriesDB } from '@/database';
+import { AxiosError } from 'axios';
+
+import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
 import { StoriesRepository } from '@/services/repositories/stories/stories';
 import { removeStoryCache } from '@/utils/documents/removeStoryCache';
@@ -13,8 +15,11 @@ export function useStoriesUpdate(): [boolean, () => void] {
       setIsRefreshing(true);
       const stories = await StoriesRepository.getStories();
       const formattedStories: StorySchema[] = [];
+      const storiesIdsSet = new Set<number>();
 
-      stories.forEach(async (story) => {
+      for (let i = 0; i < stories.length; i++) {
+        const story = stories[i];
+
         const { created_at_timestamp, id, revision, updated_at_timestamp } = story;
 
         const currentStory = StoriesDB.object(id);
@@ -50,14 +55,30 @@ export function useStoriesUpdate(): [boolean, () => void] {
         }
 
         formattedStories.push(formattedStory);
-      });
+        storiesIdsSet.add(story.id);
+      }
 
       const [_upserted, notUpserted] = await StoriesDB.upsert(formattedStories);
 
       if (notUpserted.length) {
         notUpserted.forEach(({ err }) => console.error(err));
       }
+
+      const storiesIdsToRemove: Array<number> = [];
+      const allStories = StoriesDB.objects();
+
+      for (let i = 0; i < allStories.length; i++) {
+        const story = allStories[i];
+
+        if (!storiesIdsSet.has(story.id)) {
+          storiesIdsToRemove.push(story.id);
+          await removeStoryCache(story);
+        }
+      }
+
+      await StoriesDB.delete(storiesIdsToRemove);
     } catch (err) {
+      console.log((err as AxiosError).request);
       console.error(err);
     } finally {
       setIsRefreshing(false);

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
 
+import { shuffle } from 'lodash';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Results } from 'realm';
 
@@ -64,6 +65,12 @@ export const DefaultList = React.memo(
 
     const [featuringStories, featuringStoriesVersion] = useStories(FEATURING_STORIES_FILTER);
     const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
+
+    const shuffledFeaturingStories = useMemo(
+      () => shuffle(featuringStories),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [featuringStoriesVersion],
+    );
 
     const handleSeeFeaturingTales = useCallback(() => {
       navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
@@ -138,7 +145,10 @@ export const DefaultList = React.memo(
       >
         <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
 
-        <LargeStoriesList stories={featuringStories} storiesVersion={featuringStoriesVersion} />
+        <LargeStoriesList
+          stories={shuffledFeaturingStories}
+          storiesVersion={featuringStoriesVersion}
+        />
 
         <CategoriesList />
 
