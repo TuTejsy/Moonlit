@@ -181,7 +181,7 @@ export const StoryPlayerScreen = () => {
             />
           </View>
           <StoryMeta
-            description={story?.description ?? ''}
+            description={story?.description_large ?? ''}
             duration={selectedAudioRecording?.duration ?? 0}
             storyPlayingSharedValue={storyPlayingSharedValue}
           />

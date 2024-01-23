@@ -33,6 +33,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
           category_ids: story.category_ids,
           created_at_timestamp: createdDate.getTime(),
           description: story.description,
+          description_large: story.description_large,
           full_cover_url: story.full_cover_url,
           id: story.id,
           is_featuring: story.is_featuring,
