@@ -1,5 +1,8 @@
-import { View } from 'react-native';
+import { useCallback } from 'react';
+import { Linking, View } from 'react-native';
 
+import { openComposer } from 'react-native-email-link';
+import InAppReview from 'react-native-in-app-review';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
@@ -8,6 +11,8 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { selectIsFullVersion } from '@/store/user/user.selector';
+import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
+import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
 
 import { MenuItem } from './components/MenuItem/MenuItem';
 import { PromotionBanner } from './components/PromotionBanner/PromotionBanner';
@@ -18,6 +23,22 @@ export const SettingsScreen = () => {
   const { colors } = useTheme();
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
+
+  const handleHelpAndSupportPress = useCallback(() => {
+    openComposer({ subject: 'Help & Support', to: 'SUPPORT_EMAIL' }).catch((error: Error) => {
+      if (error?.message === 'No email apps available') {
+        Linking.openURL('https://apps.apple.com/app/mail/id1108187098');
+      }
+    });
+  }, []);
+
+  const handleRateAppPress = useCallback(() => {
+    InAppReview.RequestInAppReview().then((reviewShown) => {
+      if (!reviewShown) {
+        Linking.openURL('https://apps.apple.com/app/moonlit-tales/id6471524142');
+      }
+    });
+  }, []);
 
   return (
     <LinearGradient
@@ -32,13 +53,13 @@ export const SettingsScreen = () => {
 
       {!isFullVersion && <PromotionBanner />}
 
-      <MenuItem icon={<Icons.Info />} title='Help & Support' />
-      <MenuItem icon={<Icons.Doc />} title='Terms of service' />
-      <MenuItem icon={<Icons.Privacy />} title='Privacy policy' />
+      <MenuItem icon={<Icons.Info />} title='Help & Support' onPress={handleHelpAndSupportPress} />
+      <MenuItem icon={<Icons.Doc />} title='Terms of service' onPress={openTermsAndConditions} />
+      <MenuItem icon={<Icons.Privacy />} title='Privacy policy' onPress={openPrivacyPolicy} />
 
       <View style={styles.separator} />
 
-      <MenuItem icon={<Icons.Star />} title='Rate App' />
+      <MenuItem icon={<Icons.Star />} title='Rate App' onPress={handleRateAppPress} />
     </LinearGradient>
   );
 };

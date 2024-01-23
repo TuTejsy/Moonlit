@@ -17,6 +17,8 @@ import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { unlockFullVersion } from '@/store/user/user.slice';
+import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
+import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
 
 import backgroundImage from './images/background/background.png';
 import voicesImage from './images/voices/voices.png';
@@ -134,8 +136,12 @@ export const PaywallModal = () => {
         </PressableView>
 
         <View style={styles.actions}>
-          <TextView style={styles.action}>Terms</TextView>
-          <TextView style={styles.action}>Privacy</TextView>
+          <TextView style={styles.action} onPress={openTermsAndConditions}>
+            Terms
+          </TextView>
+          <TextView style={styles.action} onPress={openPrivacyPolicy}>
+            Privacy
+          </TextView>
           <TextView style={styles.action} onPress={handleRestorePress}>
             Restore
           </TextView>
