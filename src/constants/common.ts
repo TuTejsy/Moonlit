@@ -24,6 +24,10 @@ export const IS_JEST_ENV = process.env.JEST_WORKER_ID;
 
 export const PLACEMENT_ID = 'FULL_ACCESS';
 
+export const BUNDLE_PATH = RNFS.MainBundlePath;
+
+export const SUPPORT_EMAIL = 'appmoonlit@gmail.com';
+
 export const SANDBOX = {
   DOCUMENTS: {
     get FULL_COVER() {
