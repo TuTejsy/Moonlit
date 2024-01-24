@@ -2,13 +2,14 @@ import { useCallback, useMemo, useRef } from 'react';
 
 import { AudioRecordingsDB, StoriesDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
+import { cloneRealmObject } from '@/utils/realm/cloneRealmObject';
 
 import { useAudioRecordings } from './useAudioRecordings';
 import { useStory } from './useStory';
 
 export function useSelectedAudioRecording(storyId: number) {
   const [story, storyVersion] = useStory(storyId, ['selected_audio_recording_id']);
-  const [audioRecordings, audioRecordingsVersions] = useAudioRecordings(`story_id = '${storyId}'`);
+  const [audioRecordings, audioRecordingsVersion] = useAudioRecordings(`story_id = '${storyId}'`);
 
   const selectedAudioRecordingVersionRef = useRef(0);
 
@@ -25,9 +26,9 @@ export function useSelectedAudioRecording(storyId: number) {
 
     selectedAudioRecordingVersionRef.current++;
 
-    return [recordingToReturn, selectedAudioRecordingVersionRef.current];
+    return [cloneRealmObject(recordingToReturn), selectedAudioRecordingVersionRef.current];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storyVersion, audioRecordingsVersions]);
+  }, [storyVersion, audioRecordingsVersion]);
 
   const setSelectedAudioRecording = useCallback(
     (selectedAudioRecordingId: number) => {

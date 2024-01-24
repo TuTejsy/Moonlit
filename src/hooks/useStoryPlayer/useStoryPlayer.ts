@@ -96,21 +96,28 @@ export function useStoryPlayer({
 
       const selectedAudioRecordingCachedName =
         generateAudioRecordingCachedName(selectedAudioRecording);
+
+      if (!selectedAudioRecordingCachedName) {
+        throw new Error('selectedAudioRecordingCachedName is null');
+      }
+
       const filePath = `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedName}`;
 
       try {
-        if (!(await RNFS.exists(filePath))) {
-          const result = await RNFS.downloadFile({
-            fromUrl: formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
-            toFile: filePath,
-          });
-
-          await result.promise;
-
-          await AudioRecordingsDB.modify(() => {
-            selectedAudioRecording.cached_name = selectedAudioRecordingCachedName;
-          });
+        if (await RNFS.exists(filePath)) {
+          await RNFS.unlink(filePath);
         }
+
+        const result = await RNFS.downloadFile({
+          fromUrl: formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
+          toFile: filePath,
+        });
+
+        await result.promise;
+
+        await AudioRecordingsDB.modify(() => {
+          selectedAudioRecording.cached_name = selectedAudioRecordingCachedName;
+        });
       } catch (error) {
         console.error(error);
       }
@@ -135,21 +142,20 @@ export function useStoryPlayer({
       }
     }
 
-    reduxDispatch(startPlaying(selectedAudioRecording.id));
-
     try {
       const filePath = await downloadAudioRecording();
 
       await audioPlayer.setToPlayFile({ coverPath, filePath, fileTitle: title });
-
       await audioPlayer.startPlayingFromTime(playedTime);
+
+      reduxDispatch(startPlaying(selectedAudioRecording.id));
+
+      if (!isStoryPlayNotifiedRef.current) {
+        isStoryPlayNotifiedRef.current = true;
+        notifyStoryPlay(storyId);
+      }
     } catch (err) {
       console.error(err);
-    }
-
-    if (!isStoryPlayNotifiedRef.current) {
-      isStoryPlayNotifiedRef.current = true;
-      notifyStoryPlay(storyId);
     }
   }, [
     selectedAudioRecording,

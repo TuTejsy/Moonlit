@@ -7,6 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { MOONLIT_APP_LINK } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -35,7 +36,7 @@ export const SettingsScreen = () => {
   const handleRateAppPress = useCallback(() => {
     InAppReview.RequestInAppReview().then((reviewShown) => {
       if (!reviewShown) {
-        Linking.openURL('https://apps.apple.com/app/moonlit-tales/id6471524142');
+        Linking.openURL(MOONLIT_APP_LINK);
       }
     });
   }, []);

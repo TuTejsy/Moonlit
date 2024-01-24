@@ -24,7 +24,7 @@ const CATEGORIES = [
 export const CategoriesList = () => {
   const styles = useMakeStyles(makeStyles);
 
-  const navigation = useAppNavigation<SharedRoutes.HOME | SharedRoutes.SEARCH>();
+  const navigation = useAppNavigation<SharedRoutes.HOME>();
 
   const handleCategoryPress = useCallback(
     (categoryId: CATEGORY_IDS) => {
@@ -54,7 +54,12 @@ export const CategoriesList = () => {
         </View>
       );
     },
-    [styles.categoryPreview, styles.categoryPreviewsContainer, styles.cateogryText],
+    [
+      handleCategoryPress,
+      styles.categoryPreview,
+      styles.categoryPreviewsContainer,
+      styles.cateogryText,
+    ],
   );
 
   return (
