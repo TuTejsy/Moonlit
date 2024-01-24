@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { MOONLIT_APP_LINK } from '@/constants/common';
+import { MOONLIT_APP_LINK, SUPPORT_EMAIL } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -26,7 +26,11 @@ export const SettingsScreen = () => {
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
   const handleHelpAndSupportPress = useCallback(() => {
-    openComposer({ subject: 'Help & Support', to: 'SUPPORT_EMAIL' }).catch((error: Error) => {
+    openComposer({
+      defaultEmailLabel: 'Mail',
+      subject: 'Help and Support',
+      to: SUPPORT_EMAIL,
+    }).catch((error: Error) => {
       if (error?.message === 'No email apps available') {
         Linking.openURL('https://apps.apple.com/app/mail/id1108187098');
       }

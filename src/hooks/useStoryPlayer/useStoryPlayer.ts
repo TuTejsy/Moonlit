@@ -91,11 +91,12 @@ export function useStoryPlayer({
   }, [reduxDispatch, setPlayedTime]);
 
   const downloadAudioRecording = useCallback(async () => {
+    let selectedAudioRecordingCachedName = selectedAudioRecording?.cached_name;
+
     if (selectedAudioRecording && !selectedAudioRecording.cached_name) {
       setIsLoading(true);
 
-      const selectedAudioRecordingCachedName =
-        generateAudioRecordingCachedName(selectedAudioRecording);
+      selectedAudioRecordingCachedName = generateAudioRecordingCachedName(selectedAudioRecording);
 
       if (!selectedAudioRecordingCachedName) {
         throw new Error('selectedAudioRecordingCachedName is null');
@@ -104,20 +105,20 @@ export function useStoryPlayer({
       const filePath = `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedName}`;
 
       try {
-        if (await RNFS.exists(filePath)) {
-          await RNFS.unlink(filePath);
+        const isFileExist = await RNFS.exists(filePath);
+
+        if (!isFileExist) {
+          const result = await RNFS.downloadFile({
+            fromUrl: formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
+            toFile: filePath,
+          });
+
+          await result.promise;
+
+          await AudioRecordingsDB.modify(() => {
+            selectedAudioRecording.cached_name = selectedAudioRecordingCachedName;
+          });
         }
-
-        const result = await RNFS.downloadFile({
-          fromUrl: formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
-          toFile: filePath,
-        });
-
-        await result.promise;
-
-        await AudioRecordingsDB.modify(() => {
-          selectedAudioRecording.cached_name = selectedAudioRecordingCachedName;
-        });
       } catch (error) {
         console.error(error);
       }
@@ -125,7 +126,7 @@ export function useStoryPlayer({
       setIsLoading(false);
     }
 
-    return `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecording?.cached_name}`;
+    return `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedName}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAudioRecording?.cached_name]);
 
@@ -142,19 +143,20 @@ export function useStoryPlayer({
       }
     }
 
+    reduxDispatch(startPlaying(selectedAudioRecording.id));
+
     try {
       const filePath = await downloadAudioRecording();
 
       await audioPlayer.setToPlayFile({ coverPath, filePath, fileTitle: title });
       await audioPlayer.startPlayingFromTime(playedTime);
 
-      reduxDispatch(startPlaying(selectedAudioRecording.id));
-
       if (!isStoryPlayNotifiedRef.current) {
         isStoryPlayNotifiedRef.current = true;
         notifyStoryPlay(storyId);
       }
     } catch (err) {
+      reduxDispatch(stopPlaying());
       console.error(err);
     }
   }, [
