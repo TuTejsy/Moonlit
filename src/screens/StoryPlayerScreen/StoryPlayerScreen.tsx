@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { View } from 'react-native';
+import { View, Share } from 'react-native';
 
 import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,9 +8,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
-import { SANDBOX } from '@/constants/common';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
+import { MOONLIT_APP_LINK, SANDBOX } from '@/constants/common';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import { CATEGORY_IDS, CATEGORY_NAMES } from '@/constants/stories';
 import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
 import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -19,6 +21,7 @@ import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { getHitSlop } from '@/utils/getHitSlop';
 
 import { StoryActions } from './components/StoryActions/StoryActions';
 import { StoryMeta } from './components/StoryMeta/StoryMeta';
@@ -63,6 +66,11 @@ export const StoryPlayerScreen = () => {
     [story],
   );
 
+  const storyCategories = useMemo(
+    () => story?.category_ids.map((categoryId: CATEGORY_IDS) => CATEGORY_NAMES[categoryId]),
+    [story?.category_ids],
+  );
+
   const gradientColor = useMemo(
     () => story?.colors?.primary ?? colors.imagePurple,
     [colors.imagePurple, story?.colors?.primary],
@@ -101,6 +109,13 @@ export const StoryPlayerScreen = () => {
   const handleGoBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
+
+  const handleSharePress = useCallback(() => {
+    Share.share({
+      message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_APP_LINK}`,
+      url: smallCoverURL,
+    });
+  }, [story?.name, smallCoverURL]);
 
   const handleSelectAudioRecording = useCallback(
     (audioRecordingId: number) => {
@@ -142,10 +157,14 @@ export const StoryPlayerScreen = () => {
       style={styles.screen}
     >
       <ScreenHeader
-        renderRight={<Icons.Share />}
         style={styles.header}
-        subtitle='Wishes and Magic'
+        subtitle={storyCategories?.[0]}
         title={story?.name}
+        renderRight={
+          <PressableView hitSlop={getHitSlop(10)} onPress={handleSharePress}>
+            <Icons.Share />
+          </PressableView>
+        }
         onGoBack={handleGoBack}
       />
 

@@ -31,7 +31,9 @@ class ZRKAudioPlayer: NSObject, AVAudioPlayerDelegate {
     var initError: NSError?
     
     do {
-      audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+      let fileURL = URL(fileURLWithPath: path)
+      
+      audioPlayer = try AVAudioPlayer(contentsOf: fileURL)
       try playingSession.setCategory(.playback)
       try playingSession.setActive(true)
       self.filePath = path
