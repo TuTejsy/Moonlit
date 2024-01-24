@@ -9,7 +9,7 @@ import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { selectIsFullVersion } from '@/store/user/user.selector';
+import { selectFreeOfferDays, selectIsFullVersion } from '@/store/user/user.selector';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { makeStyles } from './StoriesWithPromotion.styles';
@@ -25,6 +25,7 @@ export const StoriesWithPromotion = memo(
     const { colors } = useTheme();
 
     const isFullVersion = useAppSelector(selectIsFullVersion);
+    const freeOfferDays = useAppSelector(selectFreeOfferDays);
 
     return (
       <View style={styles.container}>
@@ -58,7 +59,7 @@ export const StoriesWithPromotion = memo(
             <View style={styles.separator} />
 
             <UnlockButton style={styles.unlockButton} theme='light'>
-              Try 7 days for free
+              Try {freeOfferDays} days for free
             </UnlockButton>
 
             <View style={styles.separator} />

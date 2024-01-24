@@ -7,7 +7,9 @@ import Animated from 'react-native-reanimated';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { useImageSlideAnimation } from '@/hooks/useImageSlideAnimation';
+import { selectFreeOfferDays } from '@/store/user/user.selector';
 
 import { UnlockButton } from '../Buttons/UnlockButton/UnlockButton';
 import { PressableView } from '../Primitives/PressableView/PressableView';
@@ -23,6 +25,8 @@ interface PromotionBannerPropTypes extends ViewProps {}
 export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+
+  const freeOfferDays = useAppSelector(selectFreeOfferDays);
 
   const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(PROMOTION_BANNER_WIDTH);
 
@@ -45,7 +49,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
       <View style={styles.content}>
         <TextView style={styles.title} type='bold'>
-          Try 3 days{'\n'}for free
+          Try {freeOfferDays} days{'\n'}for free
         </TextView>
         <TextView style={styles.subtitle}>
           and discover a library{'\n'}of stories and unique voiceovers
@@ -53,7 +57,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
         <Image source={voicesImage} style={styles.voicesImage} />
 
-        <UnlockButton>Get 3 days free</UnlockButton>
+        <UnlockButton>Get {freeOfferDays} days free</UnlockButton>
       </View>
     </PressableView>
   );
