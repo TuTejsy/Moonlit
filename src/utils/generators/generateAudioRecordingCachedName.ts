@@ -6,7 +6,7 @@ export function generateAudioRecordingCachedName(audioRecording: AudioRecordingS
   const fileExtension = getFileExtension(audioRecording.audio_url);
 
   if (!fileExtension || !audioRecording.audio_url) {
-    return null;
+    return undefined;
   }
 
   return `${audioRecording.id}.${fileExtension}`;
