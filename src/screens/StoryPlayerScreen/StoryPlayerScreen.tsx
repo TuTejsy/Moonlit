@@ -112,10 +112,10 @@ export const StoryPlayerScreen = () => {
 
   const handleSharePress = useCallback(() => {
     Share.share({
-      message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_APP_LINK}`,
-      url: smallCoverURL,
+      message: `Explore ${story?.name} and more amazing stories in the Moonlit app.`,
+      url: MOONLIT_APP_LINK,
     });
-  }, [story?.name, smallCoverURL]);
+  }, [story?.name]);
 
   const handleSelectAudioRecording = useCallback(
     (audioRecordingId: number) => {
