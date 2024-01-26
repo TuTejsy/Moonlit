@@ -38,11 +38,15 @@ export const SettingsScreen = () => {
   }, []);
 
   const handleRateAppPress = useCallback(() => {
-    InAppReview.RequestInAppReview().then((reviewShown) => {
-      if (!reviewShown) {
+    InAppReview.RequestInAppReview()
+      .then((reviewShown) => {
+        if (!reviewShown) {
+          Linking.openURL(MOONLIT_APP_LINK);
+        }
+      })
+      .catch((err) => {
         Linking.openURL(MOONLIT_APP_LINK);
-      }
-    });
+      });
   }, []);
 
   return (

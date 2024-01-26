@@ -108,17 +108,15 @@ export function useStoryPlayer({
         const isFileExist = await RNFS.exists(filePath);
 
         if (!isFileExist) {
-          const result = await RNFS.downloadFile({
+          await RNFS.downloadFile({
             fromUrl: formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
             toFile: filePath,
-          });
-
-          await result.promise;
-
-          await AudioRecordingsDB.modify(() => {
-            selectedAudioRecording.cached_name = selectedAudioRecordingCachedName;
-          });
+          }).promise;
         }
+
+        await AudioRecordingsDB.modify(() => {
+          selectedAudioRecording.cached_name = selectedAudioRecordingCachedName;
+        });
       } catch (error) {
         console.error(error);
       }
