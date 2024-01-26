@@ -42,7 +42,7 @@ export const makeStyles = (
     },
     screen: {
       alignItems: 'center',
-      backgroundColor: gradientColor,
+      backgroundColor: colors.black,
       flex: 1,
       maxHeight: SCREEN_HEIGHT,
       maxWidth: SCREEN_WIDTH,

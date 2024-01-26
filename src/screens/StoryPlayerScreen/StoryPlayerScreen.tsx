@@ -21,6 +21,7 @@ import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 import { getHitSlop } from '@/utils/getHitSlop';
 
 import { StoryActions } from './components/StoryActions/StoryActions';
@@ -75,6 +76,8 @@ export const StoryPlayerScreen = () => {
     () => story?.colors?.primary ?? colors.imagePurple,
     [colors.imagePurple, story?.colors?.primary],
   );
+
+  const backgroundColor = useMemo(() => convertHEXtoRGBA(gradientColor, 0.3), [gradientColor]);
 
   const stylesContext = useMemo(
     () => ({ gradientColor, storyContainerMinHeight }),
@@ -152,7 +155,7 @@ export const StoryPlayerScreen = () => {
   return (
     <LinearGradient
       angle={180}
-      colors={[gradientColor, colors.black]}
+      colors={[backgroundColor, colors.black]}
       locations={[0, 1]}
       style={styles.screen}
     >
