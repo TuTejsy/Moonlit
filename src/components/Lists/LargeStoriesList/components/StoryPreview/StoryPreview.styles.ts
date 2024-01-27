@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { PREVIEW_HEIGHT, PREVIEW_WIDTH } from './StoryPreview.constants';
@@ -40,8 +41,8 @@ export const makeStyles = ({ colors, fonts, zIndex }: MakeStylesProps) =>
       backgroundColor: colors.transparent,
       flex: 1,
       justifyContent: 'flex-end',
-      paddingHorizontal: 16,
-      paddingVertical: 16,
+      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingVertical: HORIZONTAL_PADDING,
       position: 'relative',
     },
     previewContainer: {

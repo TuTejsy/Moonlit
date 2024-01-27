@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { LARGE_TITLE_HEIGHT } from './ScreenHeader.constants';
@@ -11,7 +11,7 @@ interface Context {
 }
 
 export const makeStyles = (
-  { colors, fonts, insets }: MakeStylesProps,
+  { colors, fonts, insets, zIndex }: MakeStylesProps,
   { color, horizontalInset }: Context,
 ) => {
   const HEADER_HEIGHT = DEFAULT_HEADER_HEIGHT;
@@ -19,8 +19,12 @@ export const makeStyles = (
   return StyleSheet.create({
     container: {
       backgroundColor: color ?? colors.transparent,
-      paddingHorizontal: 16,
+      paddingHorizontal: HORIZONTAL_PADDING,
       paddingTop: insets.top,
+      position: 'relative',
+    },
+    controls: {
+      flex: 1,
     },
     headerContainer: {
       alignItems: 'center',
@@ -28,19 +32,15 @@ export const makeStyles = (
       flexDirection: 'row',
       height: HEADER_HEIGHT,
       justifyContent: 'space-between',
-      zIndex: 2,
+      position: 'relative',
+      zIndex: zIndex.overMain,
     },
     largeTitle: {
       ...fonts.size_24,
+      bottom: -LARGE_TITLE_HEIGHT + 16,
       color: colors.white,
-      textAlign: 'center',
-    },
-    largeTitleContainer: {
-      alignItems: 'flex-start',
-      height: LARGE_TITLE_HEIGHT,
-      justifyContent: 'flex-end',
-      paddingBottom: 16,
-      zIndex: 1,
+      left: HORIZONTAL_PADDING,
+      position: 'absolute',
     },
     subtitleText: {
       ...fonts.size_14,
@@ -52,7 +52,6 @@ export const makeStyles = (
       alignItems: 'center',
       flex: 1,
       justifyContent: 'center',
-      marginHorizontal: 24 + horizontalInset,
       marginTop: 2,
     },
     titleText: {

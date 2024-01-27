@@ -2,16 +2,25 @@
 import React, { useMemo } from 'react';
 import { StyleProp, Text, TextProps, TextStyle } from 'react-native';
 
+import Animated from 'react-native-reanimated';
+
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './TextView.styles';
 
 export interface TextViewProps extends TextProps {
+  animated?: boolean;
   style?: StyleProp<TextStyle> | StyleProp<TextStyle>[];
   type?: 'bold' | 'regular' | 'medium';
 }
 
-export const TextView = ({ children, style, type = 'regular', ...props }: TextViewProps) => {
+export const TextView = ({
+  animated = false,
+  children,
+  style,
+  type = 'regular',
+  ...props
+}: TextViewProps) => {
   const styles = useMakeStyles(makeStyles);
 
   const textStyle = useMemo(() => {
@@ -30,8 +39,10 @@ export const TextView = ({ children, style, type = 'regular', ...props }: TextVi
     }
   }, [styles.bold, styles.medium, styles.regular, type]);
 
+  const TextComponent = animated ? Animated.Text : Text;
+
   return (
-    <Text
+    <TextComponent
       suppressHighlighting
       allowFontScaling={false}
       style={[styles.text, textStyle, style]}
@@ -39,6 +50,6 @@ export const TextView = ({ children, style, type = 'regular', ...props }: TextVi
       {...props}
     >
       {children}
-    </Text>
+    </TextComponent>
   );
 };

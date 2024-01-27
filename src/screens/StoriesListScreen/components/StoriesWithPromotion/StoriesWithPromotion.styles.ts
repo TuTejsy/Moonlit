@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { LARGE_TITLE_HEIGHT } from '@/components/Headers/ScreenHeader/ScreenHeader.constants';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
@@ -7,6 +8,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     container: {
       flex: 1,
+      paddingTop: LARGE_TITLE_HEIGHT,
     },
     promotionContainer: {
       flex: 1,

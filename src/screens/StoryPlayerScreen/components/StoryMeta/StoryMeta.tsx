@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   SharedValue,
   interpolate,
   useAnimatedStyle,
@@ -26,7 +26,7 @@ export function StoryMeta({ description, duration, storyPlayingSharedValue }: St
 
   const animatedTextStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], Extrapolate.CLAMP),
+      opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], Extrapolation.CLAMP),
     };
   });
 

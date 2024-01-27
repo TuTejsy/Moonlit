@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
+import { LARGE_TITLE_HEIGHT } from '@/components/Headers/ScreenHeader/ScreenHeader.constants';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -29,7 +29,8 @@ export const StoriesListScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const listStories = useMemo(() => stories.slice(2), [stories, storiesVersion]);
 
-  const { handleAnimatedScroll, scrollPositionSharedValue } = useAnimatedScrollHandlerValue();
+  const { handleAnimatedScroll, scrollPositionSharedValue } =
+    useAnimatedScrollHandlerValue(LARGE_TITLE_HEIGHT);
 
   return (
     <LinearGradient
