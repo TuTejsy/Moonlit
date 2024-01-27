@@ -46,7 +46,7 @@ export const StoriesListScreen = () => {
       />
 
       <SmallStoriesList
-        contentContainerStyle={styles.smallList}
+        contentContainerStyle={styles.smallListContainerStyle}
         stories={listStories}
         storiesVersion={storiesVersion}
         ListHeaderComponent={
