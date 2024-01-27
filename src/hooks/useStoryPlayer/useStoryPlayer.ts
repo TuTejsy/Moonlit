@@ -94,8 +94,6 @@ export function useStoryPlayer({
     let selectedAudioRecordingCachedName = selectedAudioRecording?.cached_name;
 
     if (selectedAudioRecording && !selectedAudioRecording.cached_name) {
-      setIsLoading(true);
-
       selectedAudioRecordingCachedName = generateAudioRecordingCachedName(selectedAudioRecording);
 
       if (!selectedAudioRecordingCachedName) {
@@ -108,6 +106,8 @@ export function useStoryPlayer({
         const isFileExist = await RNFS.exists(filePath);
 
         if (!isFileExist) {
+          setIsLoading(true);
+
           await RNFS.downloadFile({
             fromUrl: formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
             toFile: filePath,
