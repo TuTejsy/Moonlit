@@ -89,38 +89,37 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   }
 
   return (
-    <BlurView
-      blurAmount={5}
-      blurType='light'
-      reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-      style={styles.blurView}
-    >
-      <PressableView style={styles.container} onPress={handlePreviewPress}>
-        <Image
-          resizeMode='cover'
-          style={styles.image}
-          source={{
-            uri: `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story.small_cover_cached_name}`,
-          }}
-        />
-        <TextView style={styles.title} type='medium'>
-          {story.name}
-        </TextView>
+    <PressableView style={styles.container} onPress={handlePreviewPress}>
+      <BlurView
+        blurAmount={5}
+        blurType='light'
+        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+        style={styles.blurView}
+      />
+      <Image
+        resizeMode='cover'
+        style={styles.image}
+        source={{
+          uri: `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story.small_cover_cached_name}`,
+        }}
+      />
+      <TextView style={styles.title} type='medium'>
+        {story.name}
+      </TextView>
 
-        {isStoryPlaying ? (
-          <PressableView hitSlop={getHitSlop(10)} onPress={pauseStoryPlaying}>
-            <Icons.PauseSmall fillCirlce={colors.opacityWhite(0.1)} />
-          </PressableView>
-        ) : (
-          <PressableView hitSlop={getHitSlop(10)} onPress={startStoryPlaying}>
-            <Icons.PlaySmall fillCirlce={colors.opacityWhite(0.1)} hitSlop={getHitSlop(10)} />
-          </PressableView>
-        )}
+      {isStoryPlaying ? (
+        <PressableView hitSlop={getHitSlop(10)} onPress={pauseStoryPlaying}>
+          <Icons.PauseSmall fillCirlce={colors.opacityWhite(0.1)} />
+        </PressableView>
+      ) : (
+        <PressableView hitSlop={getHitSlop(10)} onPress={startStoryPlaying}>
+          <Icons.PlaySmall fillCirlce={colors.opacityWhite(0.1)} hitSlop={getHitSlop(10)} />
+        </PressableView>
+      )}
 
-        <View style={styles.progressBar}>
-          <Animated.View style={[styles.progressBarValue, animatedProgressStyle]} />
-        </View>
-      </PressableView>
-    </BlurView>
+      <View style={styles.progressBar}>
+        <Animated.View style={[styles.progressBarValue, animatedProgressStyle]} />
+      </View>
+    </PressableView>
   );
 });

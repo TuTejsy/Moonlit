@@ -17,6 +17,13 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStyles
       paddingHorizontal: HORIZONTAL_PADDING - dw(7.5),
       paddingTop: 10,
     },
+    blurView: {
+      height: SCREEN_HEIGHT,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: SCREEN_WIDTH,
+    },
     bottomBar: {
       height: 64,
       marginBottom: insets.bottom,
@@ -29,21 +36,12 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStyles
     bottomText: {
       ...fonts.size_16,
     },
-    content: {
-      flex: 1,
-      justifyContent: 'space-between',
-    },
     gradient: {
       bottom: 0,
       height: dh(306),
       left: 0,
       position: 'absolute',
       width: '100%',
-    },
-    modal: {
-      height: SCREEN_HEIGHT,
-      position: 'relative',
-      width: SCREEN_WIDTH,
     },
     modalContainer: {
       height: SCREEN_HEIGHT,

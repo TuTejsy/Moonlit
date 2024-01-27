@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-unused-styles */
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
 import Svg, { SvgProps, G, Rect, Path } from 'react-native-svg';
@@ -11,11 +11,20 @@ import { useTheme } from '@/hooks/theme/useTheme';
 const makeStyles = ({ colors }: MakeStylesProps) =>
   StyleSheet.create({
     blurView: {
-      alignItems: 'center',
       backgroundColor: colors.opacityBlack(0.4),
+      height: 24,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: 24,
+    },
+    container: {
+      alignItems: 'center',
       borderRadius: 12,
       height: 24,
       justifyContent: 'center',
+      overflow: 'hidden',
+      position: 'relative',
       width: 24,
     },
   });
@@ -26,12 +35,13 @@ export const Lock = ({ style, ...props }: SvgProps) => {
   const styles = useMakeStyles(makeStyles);
 
   return (
-    <BlurView
-      blurAmount={2}
-      blurType='light'
-      reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-      style={[styles.blurView, style]}
-    >
+    <View style={[styles.container, style]}>
+      <BlurView
+        blurAmount={2}
+        blurType='light'
+        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+        style={styles.blurView}
+      />
       <Svg height={24} viewBox='0 0 24 24' width={24} {...props}>
         <G filter='url(#filter0_b_186_1263)'>
           <Rect fill={colors.white} fillOpacity={0.2} height={24} rx={12} width={24} />
@@ -41,6 +51,6 @@ export const Lock = ({ style, ...props }: SvgProps) => {
           />
         </G>
       </Svg>
-    </BlurView>
+    </View>
   );
 };

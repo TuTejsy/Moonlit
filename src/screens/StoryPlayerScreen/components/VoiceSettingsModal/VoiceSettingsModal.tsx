@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo, View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
@@ -133,32 +133,32 @@ export function VoiceSettingsModal({
           blurAmount={15}
           blurType='dark'
           reducedTransparencyFallbackColor={colors.opacityBlack(0.6)}
-          style={styles.modal}
-        >
-          <Header onCloseIconPress={handleClosePress} />
+          style={styles.blurView}
+        />
 
-          <FlatList
-            contentContainerStyle={styles.audioRecordingsListContainer}
-            data={flatListData}
-            extraData={auidioRecoridngsVersion + selectedAudioRecordingVersion}
-            keyExtractor={keyExtractor}
-            numColumns={2}
-            renderItem={renderItem}
-            style={styles.audioRecordingsList}
-          />
+        <Header onCloseIconPress={handleClosePress} />
 
-          <LinearGradient
-            angle={180}
-            colors={[colors.opacityLightPurple(0), colors.opacityLightPurple(1)]}
-            locations={[0, 1]}
-            pointerEvents='none'
-            style={styles.gradient}
-          />
+        <FlatList
+          contentContainerStyle={styles.audioRecordingsListContainer}
+          data={flatListData}
+          extraData={auidioRecoridngsVersion + selectedAudioRecordingVersion}
+          keyExtractor={keyExtractor}
+          numColumns={2}
+          renderItem={renderItem}
+          style={styles.audioRecordingsList}
+        />
 
-          {!isFullVersion && (
-            <UnlockButton style={styles.unlockButton}>Unlock all voices</UnlockButton>
-          )}
-        </BlurView>
+        <LinearGradient
+          angle={180}
+          colors={[colors.opacityLightPurple(0), colors.opacityLightPurple(1)]}
+          locations={[0, 1]}
+          pointerEvents='none'
+          style={styles.gradient}
+        />
+
+        {!isFullVersion && (
+          <UnlockButton style={styles.unlockButton}>Unlock all voices</UnlockButton>
+        )}
       </Animated.View>
 
       <VoiceSettingsButton

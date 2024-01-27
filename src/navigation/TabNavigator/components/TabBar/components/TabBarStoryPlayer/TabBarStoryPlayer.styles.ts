@@ -13,19 +13,24 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
   StyleSheet.create({
     blurView: {
       backgroundColor: storyColor ? convertHEXtoRGBA(storyColor, 0.3) : colors.imagePurple,
-      borderRadius: 16,
-      bottom: insets.bottom + TAB_BAR_STORY_PLAYER_HEIGHT + 3,
       height: TAB_BAR_STORY_PLAYER_HEIGHT,
-      left: 7,
+      left: 0,
       position: 'absolute',
+      top: 0,
       width: WINDOW_WIDTH - 14,
     },
     container: {
       alignItems: 'center',
+      borderRadius: 16,
+      bottom: insets.bottom + TAB_BAR_STORY_PLAYER_HEIGHT + 3,
       flex: 1,
       flexDirection: 'row',
+      height: TAB_BAR_STORY_PLAYER_HEIGHT,
+      left: 7,
+      overflow: 'hidden',
       paddingHorizontal: 12,
-      position: 'relative',
+      position: 'absolute',
+      width: WINDOW_WIDTH - 14,
     },
     image: {
       borderRadius: 16,

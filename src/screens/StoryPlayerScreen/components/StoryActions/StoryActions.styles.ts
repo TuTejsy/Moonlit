@@ -22,6 +22,14 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       borderRadius: 24,
       height: 48,
       justifyContent: 'center',
+      overflow: 'hidden',
+      width: 48,
+    },
+    buttonBlurView: {
+      height: 48,
+      left: 0,
+      position: 'absolute',
+      top: 0,
       width: 48,
     },
     listenButton: {

@@ -56,25 +56,25 @@ export function VoiceSettingsButton({
     <Animated.View
       style={[styles.voiceSettingsButtonContainer, voiceSettingsButtonContainerAnimatedStyle]}
     >
-      <PressableView onPress={handleVoiceSettingsButtonPress}>
+      <PressableView style={styles.voiceSettingsButton} onPress={handleVoiceSettingsButtonPress}>
         <BlurView
           blurAmount={5}
           blurType='light'
           reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-          style={styles.voiceSettingsButton}
-        >
-          <Icons.Waveframe />
+          style={styles.blurView}
+        />
 
-          <View style={styles.titleContainer}>
-            <TextView style={styles.title} type='bold'>
-              Select voice
-            </TextView>
+        <Icons.Waveframe />
 
-            <TextView style={styles.subTitle} type='regular'>
-              {voiceName} Voice
-            </TextView>
-          </View>
-        </BlurView>
+        <View style={styles.titleContainer}>
+          <TextView style={styles.title} type='bold'>
+            Select voice
+          </TextView>
+
+          <TextView style={styles.subTitle} type='regular'>
+            {voiceName} Voice
+          </TextView>
+        </View>
 
         <Image source={{ uri: voiceCoverUrl }} style={styles.voiceAvatar} />
       </PressableView>

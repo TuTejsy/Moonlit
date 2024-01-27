@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import { VibrancyView } from '@react-native-community/blur';
 
 import { Spinner } from '@/components/Spinner/Spinner';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -26,9 +26,9 @@ export const AbsoluteSpinnerView = memo(
     }
 
     return (
-      <BlurView blurAmount={5} blurType='extraDark' style={[styles.spinnerContainer, style]}>
+      <VibrancyView blurAmount={5} blurType='dark' style={[styles.spinnerContainer, style]}>
         <Spinner style={spinnerStyle} />
-      </BlurView>
+      </VibrancyView>
     );
   },
 );
