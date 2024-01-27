@@ -16,6 +16,15 @@ export const makeStyles = (
   { storyColor }: Context,
 ) =>
   StyleSheet.create({
+    blurView: {
+      backgroundColor: convertHEXtoRGBA(storyColor, 0.3),
+      borderRadius: 16,
+      height: BUTTON_HEIGHT,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+    },
     subTitle: {
       ...fonts.size_14,
       color: colors.opacityWhite(0.5),
@@ -36,11 +45,11 @@ export const makeStyles = (
     },
     voiceSettingsButton: {
       alignItems: 'center',
-      backgroundColor: convertHEXtoRGBA(storyColor, 0.3),
       borderRadius: 16,
       flexDirection: 'row',
       height: BUTTON_HEIGHT,
       paddingLeft: 12,
+      position: 'relative',
       width: '100%',
     },
     voiceSettingsButtonContainer: {

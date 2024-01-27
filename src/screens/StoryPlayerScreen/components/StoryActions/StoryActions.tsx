@@ -57,15 +57,14 @@ export const StoryActions = ({
           </TextView>
         </PressableView>
 
-        <PressableView onPress={handleStoryFavoritePress}>
+        <PressableView style={styles.button} onPress={handleStoryFavoritePress}>
           <BlurView
             blurAmount={5}
             blurType='light'
             reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-            style={styles.button}
-          >
-            <Icons.Favorite isFavorite={isFavorite} />
-          </BlurView>
+            style={styles.buttonBlurView}
+          />
+          <Icons.Favorite isFavorite={isFavorite} />
         </PressableView>
       </View>
     </Animated.View>
