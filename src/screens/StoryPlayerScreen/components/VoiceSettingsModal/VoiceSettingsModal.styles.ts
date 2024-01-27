@@ -49,7 +49,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStyles
       position: 'absolute',
       top: 0,
       width: SCREEN_WIDTH,
-      zIndex: zIndex.max,
+      zIndex: zIndex.overMain,
     },
     unlockButton: {
       marginBottom: insets.bottom + 17,
