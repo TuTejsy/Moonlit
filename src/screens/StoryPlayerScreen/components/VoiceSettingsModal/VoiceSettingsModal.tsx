@@ -13,11 +13,13 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
+import { ANIMATION_DURATION } from '@/constants/ui';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useDelayedValue } from '@/hooks/useDelayedValue';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
@@ -54,6 +56,10 @@ export function VoiceSettingsModal({
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
   const [arePointerEventsEnabled, setArePointerEventsEnabled] = useState(false);
+  const delayedSelectedAudioRecordingId = useDelayedValue(
+    selectedAudioRecordingId,
+    ANIMATION_DURATION,
+  );
 
   const isModalExpandedSharedValue = useSharedValue(0);
 
@@ -102,14 +108,14 @@ export function VoiceSettingsModal({
         <AudioRecording
           coverUrl={formatServerFileURLToAbsolutePath(audioRecording.cover_url)}
           isFree={audioRecording.is_free}
-          isSelected={selectedAudioRecordingId === item.id}
+          isSelected={delayedSelectedAudioRecordingId === item.id}
           name={audioRecording.voice_name}
           recordingId={audioRecording.id}
           onSelect={handleSelectAudioRecording}
         />
       );
     },
-    [handleSelectAudioRecording, selectedAudioRecordingId],
+    [delayedSelectedAudioRecordingId, handleSelectAudioRecording],
   );
 
   const keyExtractor = useCallback(
