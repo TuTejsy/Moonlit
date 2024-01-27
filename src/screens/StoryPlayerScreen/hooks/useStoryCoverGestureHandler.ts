@@ -1,6 +1,6 @@
 import { Gesture } from 'react-native-gesture-handler';
 import {
-  Extrapolate,
+  Extrapolation,
   SharedValue,
   interpolate,
   runOnJS,
@@ -26,7 +26,7 @@ export function useStoryCoverGestureHandler(
           e.translationY,
           [-10, -110],
           [1, 0],
-          Extrapolate.CLAMP,
+          Extrapolation.CLAMP,
         );
       }
     })

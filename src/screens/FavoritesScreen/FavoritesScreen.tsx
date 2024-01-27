@@ -3,7 +3,7 @@ import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
@@ -54,7 +54,7 @@ export const FavoritesScreen = () => {
       scrollOffsetSharedValue.value,
       [0, SCREEN_WIDTH],
       [4, TAB_WIDTH - 4],
-      Extrapolate.CLAMP,
+      Extrapolation.CLAMP,
     ),
   }));
 
@@ -63,7 +63,7 @@ export const FavoritesScreen = () => {
       scrollOffsetSharedValue.value,
       [0, SCREEN_WIDTH],
       [1, 0.5],
-      Extrapolate.CLAMP,
+      Extrapolation.CLAMP,
     ),
   }));
 
@@ -72,7 +72,7 @@ export const FavoritesScreen = () => {
       scrollOffsetSharedValue.value,
       [0, SCREEN_WIDTH],
       [0.5, 1],
-      Extrapolate.CLAMP,
+      Extrapolation.CLAMP,
     ),
   }));
 

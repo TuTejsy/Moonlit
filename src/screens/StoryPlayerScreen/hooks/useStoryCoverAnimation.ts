@@ -1,5 +1,5 @@
 import {
-  Extrapolate,
+  Extrapolation,
   SharedValue,
   interpolate,
   useAnimatedReaction,
@@ -28,19 +28,19 @@ export function useStoryCoverAnimation(
         storyPlayingSharedValue.value,
         [0, 1],
         [storyContainerMinHeight, SCREEN_HEIGHT],
-        Extrapolate.CLAMP,
+        Extrapolation.CLAMP,
       ),
       marginTop: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
         [DEFAULT_HEADER_HEIGHT + insets.top + 8, 0],
-        Extrapolate.CLAMP,
+        Extrapolation.CLAMP,
       ),
       width: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
         [STORY_CONTAINER_MIN_WIDTH, SCREEN_WIDTH],
-        Extrapolate.CLAMP,
+        Extrapolation.CLAMP,
       ),
     };
   });
@@ -51,7 +51,7 @@ export function useStoryCoverAnimation(
         storyPlayingSharedValue.value,
         [0, 1],
         [STORY_COVER_MIN_HEIGHT, SCREEN_HEIGHT],
-        Extrapolate.CLAMP,
+        Extrapolation.CLAMP,
       ),
       transform: [{ scale: imageScaleSharedValue.value }],
     };

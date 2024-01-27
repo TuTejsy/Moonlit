@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react';
 
 import { ComposedGesture, Gesture } from 'react-native-gesture-handler';
-import { Extrapolate, SharedValue, interpolate, runOnJS } from 'react-native-reanimated';
+import { Extrapolation, SharedValue, interpolate, runOnJS } from 'react-native-reanimated';
 
 import { SCREEN_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
@@ -44,7 +44,7 @@ export function useProgressBarGestureHandler(
         e.allTouches[0].absoluteX,
         [HORIZONTAL_PADDING, SCREEN_WIDTH - HORIZONTAL_PADDING],
         [0, 100],
-        Extrapolate.CLAMP,
+        Extrapolation.CLAMP,
       );
     })
     .onFinalize(() => {
@@ -64,7 +64,7 @@ export function useProgressBarGestureHandler(
         e.absoluteX,
         [HORIZONTAL_PADDING, SCREEN_WIDTH - HORIZONTAL_PADDING],
         [0, 100],
-        Extrapolate.CLAMP,
+        Extrapolation.CLAMP,
       );
 
       runOnJS(setPlayedTimeText)(progressSharedValue.value);

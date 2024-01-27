@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { SCREEN_WIDTH } from '@/constants/layout';
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
@@ -16,7 +17,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     storyMetaContainer: {
       backgroundColor: colors.opacityBlack(0.4),
       flex: 1,
-      paddingHorizontal: 16,
+      paddingHorizontal: HORIZONTAL_PADDING,
       paddingTop: 32,
       width: SCREEN_WIDTH - 32,
     },

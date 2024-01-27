@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
-import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
@@ -26,7 +26,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     playerContainer: {
       alignItems: 'center',
       justifyContent: 'center',
-      paddingHorizontal: 16,
+      paddingHorizontal: HORIZONTAL_PADDING,
       position: 'absolute',
       width: WINDOW_WIDTH,
     },

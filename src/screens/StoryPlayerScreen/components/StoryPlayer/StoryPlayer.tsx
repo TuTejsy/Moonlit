@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   SharedValue,
   interpolate,
   useAnimatedStyle,
@@ -67,7 +67,7 @@ export function StoryPlayer({
         storyPlayingSharedValue.value,
         [0, 1],
         [insets.bottom + 60, insets.bottom + 100],
-        Extrapolate.CLAMP,
+        Extrapolation.CLAMP,
       ),
       display: storyPlayingSharedValue.value === 0 ? 'none' : 'flex',
       opacity: storyPlayingSharedValue.value,
@@ -84,7 +84,7 @@ export function StoryPlayer({
             storyPlayingSharedValue.value,
             [0, 1],
             [30, 0],
-            Extrapolate.CLAMP,
+            Extrapolation.CLAMP,
           ),
         },
       ],

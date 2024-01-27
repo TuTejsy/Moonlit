@@ -2,7 +2,7 @@ import React, { ReactNode, useMemo, useState } from 'react';
 import { LayoutChangeEvent, StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 
 import Animated, {
-  Extrapolate,
+  Extrapolation,
   SharedValue,
   interpolate,
   useAnimatedStyle,
@@ -25,7 +25,7 @@ export interface ScreenHeaderProps {
   renderLeft?: ReactNode;
   renderRight?: ReactNode;
   scrollPositionSharedValue?: SharedValue<number>;
-  style?: StyleProp<Animated.AnimateStyle<StyleProp<ViewStyle>>>;
+  style?: StyleProp<ViewStyle> | undefined;
   subtitle?: string;
   subtitleNumberOfLines?: number;
   subtitleTextStyles?: StyleProp<TextStyle>;
@@ -61,20 +61,32 @@ export const ScreenHeader = ({
           scrollPositionSharedValue.value,
           [0, LARGE_TITLE_HEIGHT],
           [0, 1],
-          Extrapolate.CLAMP,
+          Extrapolation.CLAMP,
         )
       : 1,
   }));
 
   const largeTitleAnimatedStyle = useAnimatedStyle(() => ({
-    marginTop: scrollPositionSharedValue
+    opacity: scrollPositionSharedValue
       ? interpolate(
           scrollPositionSharedValue.value,
           [0, LARGE_TITLE_HEIGHT],
-          [0, -LARGE_TITLE_HEIGHT],
-          Extrapolate.CLAMP,
+          [1, 0],
+          Extrapolation.CLAMP,
         )
-      : 0,
+      : 1,
+    transform: [
+      {
+        translateY: scrollPositionSharedValue
+          ? interpolate(
+              scrollPositionSharedValue.value,
+              [0, LARGE_TITLE_HEIGHT],
+              [0, -LARGE_TITLE_HEIGHT],
+              Extrapolation.CLAMP,
+            )
+          : 0,
+      },
+    ],
   }));
 
   const onLayout = ({ nativeEvent }: LayoutChangeEvent) => {
@@ -93,7 +105,7 @@ export const ScreenHeader = ({
   return (
     <Animated.View style={[styles.container, style]}>
       <View style={styles.headerContainer}>
-        <View onLayout={onLayout}>
+        <View style={styles.controls} onLayout={onLayout}>
           {renderLeft === undefined ? (
             <PressableView hitSlop={EXTRA_TOUCH_AREA} onPress={goBackHandler}>
               <Icons.ArrowBack />
@@ -122,11 +134,14 @@ export const ScreenHeader = ({
       </View>
 
       {!!scrollPositionSharedValue && (
-        <Animated.View style={[styles.largeTitleContainer, largeTitleAnimatedStyle]}>
-          <TextView numberOfLines={titleNumberOfLines} style={styles.largeTitle} type='bold'>
-            {title}
-          </TextView>
-        </Animated.View>
+        <TextView
+          animated
+          numberOfLines={titleNumberOfLines}
+          style={[styles.largeTitle, largeTitleAnimatedStyle]}
+          type='bold'
+        >
+          {title}
+        </TextView>
       )}
     </Animated.View>
   );

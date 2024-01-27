@@ -96,7 +96,6 @@ export function SmallStoriesList({
       numColumns={2}
       renderItem={renderItem}
       scrollEnabled={isScrollable}
-      scrollEventThrottle={16}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       style={style}
