@@ -11,7 +11,7 @@ interface Context {
 }
 
 export const makeStyles = (
-  { colors }: MakeStylesProps,
+  { colors, zIndex }: MakeStylesProps,
   { gradientColor, storyContainerMinHeight }: Context,
 ) =>
   StyleSheet.create({
@@ -30,7 +30,7 @@ export const makeStyles = (
       position: 'absolute',
       top: 0,
       width: '100%',
-      zIndex: 10,
+      zIndex: zIndex.main,
     },
     imageContainer: {
       alignItems: 'center',
