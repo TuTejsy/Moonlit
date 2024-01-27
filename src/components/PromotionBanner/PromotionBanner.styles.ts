@@ -44,6 +44,5 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     voicesImage: {
       marginTop: 24,
-      paddingHorizontal: 18,
     },
   });

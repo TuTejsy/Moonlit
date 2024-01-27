@@ -34,8 +34,6 @@ export const makeStyles = ({ colors, fonts, zIndex }: MakeStylesProps) =>
       justifyContent: 'flex-end',
       maxHeight: PREVIEW_HEIGHT,
       maxWidth: PREVIEW_WIDTH,
-      paddingHorizontal: 16,
-      paddingVertical: 16,
       width: PREVIEW_WIDTH,
     },
     previewContainer: {
