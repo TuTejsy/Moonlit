@@ -17,6 +17,9 @@
 		3DA6C76D80A248CA81D4C170 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E02D01CA4B1487E8FA88458 /* Poppins-Medium.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-AIVoice-AIVoiceTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-AIVoice-AIVoiceTests.a */; };
 		88286A4B2AF956E400D85031 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88286A4A2AF956E400D85031 /* LaunchScreen.storyboard */; };
+		8828EF482B65AB79006D4AED /* MNTAudioPlayerManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8828EF462B65AB79006D4AED /* MNTAudioPlayerManager.mm */; };
+		8828EF572B65D561006D4AED /* MNTAudioPlayerSpecJSI-generated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8828EF562B65D561006D4AED /* MNTAudioPlayerSpecJSI-generated.cpp */; };
+		8828EF5A2B65D569006D4AED /* MNTAudioPlayerSpec-generated.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8828EF582B65D568006D4AED /* MNTAudioPlayerSpec-generated.mm */; };
 		883424AA2A93C26700AED6E9 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883424A92A93C26700AED6E9 /* GradientView.swift */; };
 		883424AC2A93C37B00AED6E9 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 883424AB2A93C37B00AED6E9 /* Colors.xcassets */; };
 		88AC29952B5F97E90092EFF3 /* Terms_and_Conditions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AC29932B5F97E80092EFF3 /* Terms_and_Conditions.pdf */; };
@@ -24,9 +27,7 @@
 		88E122BA29E1BC8A00C30444 /* ZRKAudioRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */; };
 		88E122BB29E1BC8A00C30444 /* ZRKAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */; };
 		88E122BC29E1BC8A00C30444 /* ZRKAudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */; };
-		88E122BD29E1BC8A00C30444 /* ZRKAudioPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B729E1BC8A00C30444 /* ZRKAudioPlayerManager.m */; };
-		88E122BE29E1BC8A00C30444 /* ZRKAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B829E1BC8A00C30444 /* ZRKAudioPlayer.swift */; };
-		88E122BF29E1BC8A00C30444 /* ZRKAudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B929E1BC8A00C30444 /* ZRKAudioPlayerManager.swift */; };
+		88E122BE29E1BC8A00C30444 /* MNTAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B829E1BC8A00C30444 /* MNTAudioPlayer.swift */; };
 		88E122C329E1BDCD00C30444 /* ZRKKeepAwake.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122C129E1BDCD00C30444 /* ZRKKeepAwake.m */; };
 		88E122CA29E1C1BF00C30444 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122C929E1C1BF00C30444 /* FileHelper.swift */; };
 		88E122CD29E1C1CB00C30444 /* ZRKNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122CC29E1C1CB00C30444 /* ZRKNative.m */; };
@@ -65,6 +66,12 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-AIVoice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AIVoice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88286A4A2AF956E400D85031 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8828EF462B65AB79006D4AED /* MNTAudioPlayerManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MNTAudioPlayerManager.mm; path = AIVoice/MNTAudioPlayer/MNTAudioPlayerManager.mm; sourceTree = SOURCE_ROOT; };
+		8828EF472B65AB79006D4AED /* MNTAudioPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MNTAudioPlayerManager.h; path = AIVoice/MNTAudioPlayer/MNTAudioPlayerManager.h; sourceTree = SOURCE_ROOT; };
+		8828EF552B65D560006D4AED /* MNTAudioPlayerSpecJSI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNTAudioPlayerSpecJSI.h; sourceTree = "<group>"; };
+		8828EF562B65D561006D4AED /* MNTAudioPlayerSpecJSI-generated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "MNTAudioPlayerSpecJSI-generated.cpp"; sourceTree = "<group>"; };
+		8828EF582B65D568006D4AED /* MNTAudioPlayerSpec-generated.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "MNTAudioPlayerSpec-generated.mm"; sourceTree = "<group>"; };
+		8828EF592B65D569006D4AED /* MNTAudioPlayerSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNTAudioPlayerSpec.h; sourceTree = "<group>"; };
 		883424A92A93C26700AED6E9 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		883424AB2A93C37B00AED6E9 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		88AC29932B5F97E80092EFF3 /* Terms_and_Conditions.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Terms_and_Conditions.pdf; sourceTree = "<group>"; };
@@ -72,9 +79,7 @@
 		88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZRKAudioRecorderManager.m; sourceTree = "<group>"; };
 		88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioRecorder.swift; sourceTree = "<group>"; };
 		88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioRecorderManager.swift; sourceTree = "<group>"; };
-		88E122B729E1BC8A00C30444 /* ZRKAudioPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZRKAudioPlayerManager.m; sourceTree = "<group>"; };
-		88E122B829E1BC8A00C30444 /* ZRKAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioPlayer.swift; sourceTree = "<group>"; };
-		88E122B929E1BC8A00C30444 /* ZRKAudioPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioPlayerManager.swift; sourceTree = "<group>"; };
+		88E122B829E1BC8A00C30444 /* MNTAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNTAudioPlayer.swift; sourceTree = "<group>"; };
 		88E122C129E1BDCD00C30444 /* ZRKKeepAwake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZRKKeepAwake.m; sourceTree = "<group>"; };
 		88E122C229E1BDCD00C30444 /* ZRKKeepAwake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZRKKeepAwake.h; sourceTree = "<group>"; };
 		88E122C729E1C07E00C30444 /* AIVoice-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AIVoice-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -133,12 +138,12 @@
 		13B07FAE1A68108700A75B9A /* AIVoice */ = {
 			isa = PBXGroup;
 			children = (
+				8828EF3E2B65AA7E006D4AED /* MNTAudioPlayer */,
 				88AC298E2B5F953C0092EFF3 /* Files */,
 				883424A72A93C23400AED6E9 /* Views */,
 				88E122D329E1C47D00C30444 /* Helpers */,
 				88E122CE29E1C3E300C30444 /* Extensions */,
 				88E122C029E1BDCD00C30444 /* ZRKKeepAwake */,
-				88E122B629E1BC8A00C30444 /* ZRKAudioPlayer */,
 				88E122B229E1BC8A00C30444 /* ZRKAudioRecorder */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -197,6 +202,29 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8828EF3E2B65AA7E006D4AED /* MNTAudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				88E122B829E1BC8A00C30444 /* MNTAudioPlayer.swift */,
+				8828EF472B65AB79006D4AED /* MNTAudioPlayerManager.h */,
+				8828EF462B65AB79006D4AED /* MNTAudioPlayerManager.mm */,
+				8828EF402B65AB24006D4AED /* MNTAudioPlayerSpec */,
+			);
+			name = MNTAudioPlayer;
+			path = AIVoice/MNTAudioPlayer;
+			sourceTree = "<group>";
+		};
+		8828EF402B65AB24006D4AED /* MNTAudioPlayerSpec */ = {
+			isa = PBXGroup;
+			children = (
+				8828EF582B65D568006D4AED /* MNTAudioPlayerSpec-generated.mm */,
+				8828EF592B65D569006D4AED /* MNTAudioPlayerSpec.h */,
+				8828EF562B65D561006D4AED /* MNTAudioPlayerSpecJSI-generated.cpp */,
+				8828EF552B65D560006D4AED /* MNTAudioPlayerSpecJSI.h */,
+			);
+			path = MNTAudioPlayerSpec;
+			sourceTree = "<group>";
+		};
 		883424A72A93C23400AED6E9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -231,17 +259,6 @@
 			);
 			name = ZRKAudioRecorder;
 			path = AIVoice/ZRKAudioRecorder;
-			sourceTree = "<group>";
-		};
-		88E122B629E1BC8A00C30444 /* ZRKAudioPlayer */ = {
-			isa = PBXGroup;
-			children = (
-				88E122B729E1BC8A00C30444 /* ZRKAudioPlayerManager.m */,
-				88E122B829E1BC8A00C30444 /* ZRKAudioPlayer.swift */,
-				88E122B929E1BC8A00C30444 /* ZRKAudioPlayerManager.swift */,
-			);
-			name = ZRKAudioPlayer;
-			path = AIVoice/ZRKAudioPlayer;
 			sourceTree = "<group>";
 		};
 		88E122C029E1BDCD00C30444 /* ZRKKeepAwake */ = {
@@ -557,19 +574,20 @@
 				88E122BB29E1BC8A00C30444 /* ZRKAudioRecorder.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				88E122BD29E1BC8A00C30444 /* ZRKAudioPlayerManager.m in Sources */,
 				88E122CD29E1C1CB00C30444 /* ZRKNative.m in Sources */,
 				883424AA2A93C26700AED6E9 /* GradientView.swift in Sources */,
+				8828EF482B65AB79006D4AED /* MNTAudioPlayerManager.mm in Sources */,
 				88E122DA29E1C61500C30444 /* Extensions+optional.swift in Sources */,
 				88E122D829E1C59000C30444 /* NSString+Helper.m in Sources */,
 				88E122BC29E1BC8A00C30444 /* ZRKAudioRecorderManager.swift in Sources */,
 				88E122C329E1BDCD00C30444 /* ZRKKeepAwake.m in Sources */,
+				8828EF5A2B65D569006D4AED /* MNTAudioPlayerSpec-generated.mm in Sources */,
 				88E122D229E1C44200C30444 /* Extensions+UIColor.swift in Sources */,
 				88E122BA29E1BC8A00C30444 /* ZRKAudioRecorderManager.m in Sources */,
 				88E122D029E1C3F400C30444 /* Extensions+String.swift in Sources */,
-				88E122BE29E1BC8A00C30444 /* ZRKAudioPlayer.swift in Sources */,
+				88E122BE29E1BC8A00C30444 /* MNTAudioPlayer.swift in Sources */,
 				88E122D529E1C49200C30444 /* FileTypeChecker.swift in Sources */,
-				88E122BF29E1BC8A00C30444 /* ZRKAudioPlayerManager.swift in Sources */,
+				8828EF572B65D561006D4AED /* MNTAudioPlayerSpecJSI-generated.cpp in Sources */,
 				88E122CA29E1C1BF00C30444 /* FileHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
