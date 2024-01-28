@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Results } from 'realm';
+import Realm from 'realm';
 
 import { LargeStoriesList } from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumStoriesList';
@@ -33,10 +33,10 @@ import { useStoriesUpdate } from '../../hooks/useStoriesUpdate';
 import { makeStyles } from './DefaultList.styles';
 
 interface DefaultListPropTypes {
-  allStories: Results<StorySchema>;
+  allStories: Realm.Results<StorySchema>;
   allStoriesVersion: number;
   isListVisible: boolean;
-  popularStories: Results<StorySchema>;
+  popularStories: Realm.Results<StorySchema>;
   popularStoriesVersion: number;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }

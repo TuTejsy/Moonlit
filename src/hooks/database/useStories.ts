@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 
-import { CollectionChangeCallback, Results } from 'realm';
+import Realm, { CollectionChangeCallback } from 'realm';
 
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
@@ -13,7 +13,7 @@ export interface SortConfig {
 export function useStories(
   filter?: string,
   sortConfig?: SortConfig,
-): [Results<StorySchema>, number] {
+): [Realm.Results<StorySchema>, number] {
   const stories = useMemo(() => {
     let result = StoriesDB.objects();
 

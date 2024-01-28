@@ -87,8 +87,8 @@ export const StoryPlayerScreen = () => {
   const styles = useMakeStyles(makeStyles, stylesContext);
 
   const {
+    isCurrentStoryPlaying,
     isStoryLoading,
-    isStoryPlaying,
     isStoryPlayingSharedValue,
     moveStoryPlayingToTime,
     pauseStoryPlaying,
@@ -124,11 +124,11 @@ export const StoryPlayerScreen = () => {
     (audioRecordingId: number) => {
       setSelectedAudioRecording(audioRecordingId);
 
-      if (isStoryPlaying) {
+      if (isCurrentStoryPlaying) {
         pauseStoryPlaying();
       }
     },
-    [pauseStoryPlaying, setSelectedAudioRecording, isStoryPlaying],
+    [pauseStoryPlaying, setSelectedAudioRecording, isCurrentStoryPlaying],
   );
 
   useAnimatedReaction(
@@ -146,11 +146,11 @@ export const StoryPlayerScreen = () => {
   );
 
   useEffect(() => {
-    if (isStoryPlaying) {
+    if (isCurrentStoryPlaying) {
       storyPlayingSharedValue.value = withTiming(1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isStoryPlaying]);
+  }, [isCurrentStoryPlaying]);
 
   return (
     <LinearGradient
@@ -213,7 +213,7 @@ export const StoryPlayerScreen = () => {
       <StoryPlayer
         audioRecordingDuration={selectedAudioRecording?.duration || 0}
         isStoryLoading={isStoryLoading}
-        isStoryPlaying={isStoryPlaying}
+        isStoryPlaying={isCurrentStoryPlaying}
         moveStoryPlayingToTime={moveStoryPlayingToTime}
         pauseStoryPlaying={pauseStoryPlaying}
         playedTime={playedTime}

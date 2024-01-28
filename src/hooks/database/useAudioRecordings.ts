@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 
-import { CollectionChangeCallback, Results } from 'realm';
+import Realm, { CollectionChangeCallback } from 'realm';
 
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
@@ -13,7 +13,7 @@ interface SortConfig {
 export function useAudioRecordings(
   filter?: string,
   sortConfig?: SortConfig,
-): [Results<AudioRecordingSchema>, number] {
+): [Realm.Results<AudioRecordingSchema>, number] {
   const audioRecordings = useMemo(() => {
     let result = AudioRecordingsDB.objects();
 

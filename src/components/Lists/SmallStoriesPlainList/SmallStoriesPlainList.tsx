@@ -9,9 +9,8 @@ import {
 
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Results } from 'realm';
+import Realm from 'realm';
 
-import { SANDBOX } from '@/constants/common';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
@@ -25,7 +24,7 @@ import { makeStyles } from './SmallStoriesPlainList.styles';
 
 interface SmallStoriesPlainListPropTypes
   extends Omit<FlatListProps<StorySchema>, 'data' | 'renderItem'> {
-  stories: Results<StorySchema>;
+  stories: Realm.Results<StorySchema>;
   storiesVersion: number;
 
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
