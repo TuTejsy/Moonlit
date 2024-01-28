@@ -47,6 +47,7 @@ export const StoriesListScreen = () => {
 
       <SmallStoriesList
         contentContainerStyle={styles.smallListContainerStyle}
+        isScrollable={!!listStories.length}
         stories={listStories}
         storiesVersion={storiesVersion}
         ListHeaderComponent={

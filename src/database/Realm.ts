@@ -1,4 +1,6 @@
-import Realm, { Results, ZRKRealmConfiguration } from 'realm';
+import Realm from 'realm';
+
+import { ZRKRealmConfiguration } from './types';
 
 export class RealmDB<ObjectType> {
   protected instance: InstanceType<typeof Realm>;
@@ -152,7 +154,9 @@ export class RealmDB<ObjectType> {
       });
     });
 
-  delete = (input: Array<ObjectType | number> | Results<ObjectType> | ObjectType | number) => {
+  delete = (
+    input: Array<ObjectType | number> | Realm.Results<ObjectType> | ObjectType | number,
+  ) => {
     if (!input) {
       return;
     }

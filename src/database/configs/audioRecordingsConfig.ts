@@ -1,6 +1,5 @@
-import { ZRKRealmConfiguration } from 'realm';
-
 import { AudioRecordingSchema } from '../schema/audioRecordings/AudioRecordingSchema';
+import { ZRKRealmConfiguration } from '../types';
 
 export const audioRecordingsConfig: ZRKRealmConfiguration = {
   deleteCache: () => {},

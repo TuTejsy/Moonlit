@@ -244,7 +244,7 @@ export function useStoryPlayer({
           if (selectedAudioRecording?.id) {
             reduxDispatch(startPlaying(selectedAudioRecording?.id));
           }
-        } else {
+        } else if (!isPlaying) {
           reduxDispatch(stopPlaying());
         }
 
@@ -262,7 +262,7 @@ export function useStoryPlayer({
             if (selectedAudioRecording?.id) {
               reduxDispatch(startPlaying(selectedAudioRecording?.id));
             }
-          } else {
+          } else if (!isPlaying) {
             reduxDispatch(stopPlaying());
           }
 
@@ -316,8 +316,9 @@ export function useStoryPlayer({
 
   return {
     downloadAudioRecording,
+    isCurrentStoryPlaying,
     isStoryLoading: isLoading,
-    isStoryPlaying: isCurrentStoryPlaying,
+    isStoryPlaying,
     isStoryPlayingSharedValue,
     moveStoryPlayingToTime,
     pauseStoryPlaying,

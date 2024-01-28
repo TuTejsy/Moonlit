@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { FlatList, ListRenderItemInfo, ViewStyle } from 'react-native';
 
-import { Results } from 'realm';
+import Realm from 'realm';
 
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -11,7 +11,7 @@ import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './MediumStoriesList.styles';
 
 interface MediumStoriesListPropTypes {
-  stories: Results<StorySchema>;
+  stories: Realm.Results<StorySchema>;
   storiesVersion: number;
   style?: ViewStyle;
 }
