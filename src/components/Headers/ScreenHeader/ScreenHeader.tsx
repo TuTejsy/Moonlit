@@ -1,6 +1,7 @@
 import React, { ReactNode, useMemo, useState } from 'react';
 import { LayoutChangeEvent, StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
   SharedValue,
@@ -9,7 +10,6 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Icons } from '@/assets/icons/Icons';
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
@@ -107,9 +107,9 @@ export const ScreenHeader = ({
       <View style={styles.headerContainer}>
         <View style={styles.controls} onLayout={onLayout}>
           {renderLeft === undefined ? (
-            <PressableView hitSlop={EXTRA_TOUCH_AREA} onPress={goBackHandler}>
+            <TouchableOpacity hitSlop={EXTRA_TOUCH_AREA} onPress={goBackHandler}>
               <Icons.ArrowBack />
-            </PressableView>
+            </TouchableOpacity>
           ) : (
             renderLeft
           )}
