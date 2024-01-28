@@ -12,5 +12,4 @@
 #import <React/RCTBackedTextInputDelegate.h>
 
 #import "ZRKKeepAwake.h"
-#import "ZRKNative.h"
 #import "NSString+Helper.h"
