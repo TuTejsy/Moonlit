@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { FlatList, View, ListRenderItemInfo } from 'react-native';
 
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { CATEGORY_IDS, CATEGORY_NAMES } from '@/constants/stories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -41,7 +42,7 @@ export const CategoriesList = () => {
       return (
         <View key={`${item[0]}-${item[1]}`} style={styles.categoryPreviewsContainer}>
           {item.map((categoryId) => (
-            <PressableView
+            <TouchableHighlight
               key={categoryId}
               style={styles.categoryPreview}
               onPress={() => handleCategoryPress(categoryId)}
@@ -49,7 +50,7 @@ export const CategoriesList = () => {
               <TextView numberOfLines={2} style={styles.cateogryText}>
                 {CATEGORY_NAMES[categoryId]}
               </TextView>
-            </PressableView>
+            </TouchableHighlight>
           ))}
         </View>
       );

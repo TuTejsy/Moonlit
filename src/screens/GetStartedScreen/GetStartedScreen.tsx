@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react';
 import { View, Image } from 'react-native';
 
+import { TouchableHighlight } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   useAnimatedStyle,
@@ -10,7 +11,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -148,11 +148,11 @@ export const GetStartedScreen = () => {
       </View>
 
       <View style={styles.controls}>
-        <PressableView style={styles.continueButton} onPress={handleContinuePress}>
+        <TouchableHighlight style={styles.continueButton} onPress={handleContinuePress}>
           <TextView style={styles.continueText} type='bold'>
             Continue
           </TextView>
-        </PressableView>
+        </TouchableHighlight>
 
         <View style={styles.indicatorsContainer}>
           {STEPS.map(({ title }, step) => (

@@ -2,11 +2,11 @@ import React from 'react';
 import { Image } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import loonImage from '@/assets/images/moon/moon.png';
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -41,7 +41,7 @@ export function StoryPreview({
   const handlePreviewPress = useHandleStoryPlayerNavigate({ isFree, storyId });
 
   return (
-    <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
+    <TouchableWithoutFeedback style={styles.previewContainer} onPress={handlePreviewPress}>
       {previewURL && !isImageLoaded ? (
         <BlurView
           blurAmount={5}
@@ -75,6 +75,6 @@ export function StoryPreview({
       <TextView numberOfLines={2} style={styles.descriptionText}>
         {description}
       </TextView>
-    </PressableView>
+    </TouchableWithoutFeedback>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { View, Share } from 'react-native';
 
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { runOnJS, useAnimatedReaction, withTiming } from 'react-native-reanimated';
@@ -8,7 +9,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { MOONLIT_APP_LINK, SANDBOX } from '@/constants/common';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
@@ -164,9 +164,9 @@ export const StoryPlayerScreen = () => {
         subtitle={storyCategories?.[0]}
         title={story?.name}
         renderRight={
-          <PressableView hitSlop={getHitSlop(10)} onPress={handleSharePress}>
+          <TouchableOpacity hitSlop={getHitSlop(10)} onPress={handleSharePress}>
             <Icons.Share />
-          </PressableView>
+          </TouchableOpacity>
         }
         onGoBack={handleGoBack}
       />

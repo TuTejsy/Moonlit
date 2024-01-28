@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, ViewProps } from 'react-native';
 
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
@@ -24,9 +26,9 @@ export const SectionHeader = ({
       <TextView style={styles.titleText} type='bold'>
         {title}
       </TextView>
-      <TextView style={styles.seeAllText} onPress={onSeeAllPress}>
-        See all
-      </TextView>
+      <TouchableOpacity onPress={onSeeAllPress}>
+        <TextView style={styles.seeAllText}>See all</TextView>
+      </TouchableOpacity>
     </View>
   );
 };
