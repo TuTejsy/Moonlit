@@ -117,6 +117,7 @@ export const SmallStoriesPlainList = React.memo(
         data={stories}
         extraData={renderVersion}
         indicatorStyle='white'
+        keyboardDismissMode='on-drag'
         renderItem={renderItem}
         scrollEventThrottle={16}
         scrollIndicatorInsets={{ top: DEFAULT_HEADER_HEIGHT + insets.top }}

@@ -56,14 +56,14 @@ export function VoiceSettingsButton({
     <Animated.View
       style={[styles.voiceSettingsButtonContainer, voiceSettingsButtonContainerAnimatedStyle]}
     >
-      <PressableView style={styles.voiceSettingsButton} onPress={handleVoiceSettingsButtonPress}>
-        <BlurView
-          blurAmount={5}
-          blurType='light'
-          reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-          style={styles.blurView}
-        />
+      <BlurView
+        blurAmount={5}
+        blurType='light'
+        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+        style={styles.blurView}
+      />
 
+      <PressableView style={styles.voiceSettingsButton} onPress={handleVoiceSettingsButtonPress}>
         <Icons.Waveframe />
 
         <View style={styles.titleContainer}>

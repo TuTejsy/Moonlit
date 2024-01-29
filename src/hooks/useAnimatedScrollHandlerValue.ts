@@ -8,7 +8,7 @@ export const useAnimatedScrollHandlerValue = (maxHeight?: number) => {
       onScroll: (event) => {
         const { contentOffset, contentSize, layoutMeasurement } = event;
 
-        if (maxHeight && contentSize.height - layoutMeasurement.height > maxHeight) {
+        if (!maxHeight || contentSize.height - layoutMeasurement.height > maxHeight) {
           scrollPositionSharedValue.value = contentOffset.y;
         }
       },

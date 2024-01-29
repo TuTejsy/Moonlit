@@ -29,8 +29,7 @@ export const StoriesListScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const listStories = useMemo(() => stories.slice(2), [stories, storiesVersion]);
 
-  const { handleAnimatedScroll, scrollPositionSharedValue } =
-    useAnimatedScrollHandlerValue(LARGE_TITLE_HEIGHT);
+  const { handleAnimatedScroll, scrollPositionSharedValue } = useAnimatedScrollHandlerValue();
 
   return (
     <LinearGradient
