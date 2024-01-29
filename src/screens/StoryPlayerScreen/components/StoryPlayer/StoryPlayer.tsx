@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
   SharedValue,
@@ -16,6 +17,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { MOVE_TO_PROPS } from '@/hooks/useStoryPlayer/useStoryPlayers.types';
 import { getHitSlop } from '@/utils/getHitSlop';
 
 import { Loader } from './components/Loader/Loader';
@@ -26,7 +28,7 @@ interface StoryPlayerPropTypes {
   audioRecordingDuration: number;
   isStoryLoading: boolean;
   isStoryPlaying: boolean;
-  moveStoryPlayingToTime: (playedTime: number) => void;
+  moveStoryPlayingToTime: (props: MOVE_TO_PROPS) => void;
   pauseStoryPlaying: () => void;
   playedTime: number;
   startStoryPlaying: () => void;
@@ -92,12 +94,12 @@ export function StoryPlayer({
   });
 
   const handleGoBackPress = useCallback(() => {
-    moveStoryPlayingToTime(playedTime - 15);
-  }, [moveStoryPlayingToTime, playedTime]);
+    moveStoryPlayingToTime({ moveGap: -15 });
+  }, [moveStoryPlayingToTime]);
 
   const handleGoForwardPress = useCallback(() => {
-    moveStoryPlayingToTime(playedTime + 15);
-  }, [moveStoryPlayingToTime, playedTime]);
+    moveStoryPlayingToTime({ moveGap: +15 });
+  }, [moveStoryPlayingToTime]);
 
   return (
     <>
@@ -139,9 +141,9 @@ export function StoryPlayer({
             />
 
             <View style={styles.playerControllsContainer}>
-              <PressableView onPress={handleGoBackPress}>
+              <TouchableOpacity onPress={handleGoBackPress}>
                 <Icons.GoBack />
-              </PressableView>
+              </TouchableOpacity>
 
               {isStoryPlaying ? (
                 <Icons.PauseBig onPress={pauseStoryPlaying} />
@@ -149,9 +151,9 @@ export function StoryPlayer({
                 <Icons.PlayBig onPress={startStoryPlaying} />
               )}
 
-              <PressableView onPress={handleGoForwardPress}>
+              <TouchableOpacity onPress={handleGoForwardPress}>
                 <Icons.GoForward />
-              </PressableView>
+              </TouchableOpacity>
             </View>
           </>
         )}

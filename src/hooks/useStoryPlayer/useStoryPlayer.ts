@@ -20,14 +20,8 @@ import { useAudioRecording } from '../database/useAudioRecording';
 import { useAppDispatch } from '../useAppDispatch';
 import { useAppSelector } from '../useAppSelector';
 
+import { MOVE_TO_PROPS, useStoryPlayerProps } from './useStoryPlayers.types';
 import { notifyStoryPlay } from './utils/notifyStoryPlay';
-
-interface useStoryPlayerProps {
-  coverPath: string;
-  storyId: number;
-  title: string;
-  audioRecordingId?: number;
-}
 
 export function useStoryPlayer({
   audioRecordingId,
@@ -39,6 +33,7 @@ export function useStoryPlayer({
   const audioPlayerDidFinishPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
   const audioPlayerDidInterruptPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
   const isStoryPlayNotifiedRef = useRef(false);
+  const currentPlayCallPromise = useRef<Promise<void> | null>(null);
 
   const [selectedAudioRecording, selectedAudioRecordingVersion] = useAudioRecording(
     audioRecordingId,
@@ -128,7 +123,7 @@ export function useStoryPlayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAudioRecording?.id, selectedAudioRecording?.cached_name]);
 
-  const startStoryPlaying = useCallback(async () => {
+  const downloadAndPlayStory = useCallback(async () => {
     if (!selectedAudioRecording || !audioPlayer) {
       return;
     }
@@ -138,11 +133,12 @@ export function useStoryPlayer({
     }
 
     try {
+      reduxDispatch(startPlaying(selectedAudioRecording.id));
+
       const filePath = await downloadAudioRecording();
 
       audioPlayer.setToPlayFile({ coverPath, filePath, fileTitle: title });
       audioPlayer.startPlayingFromTime(playedTime);
-      reduxDispatch(startPlaying(selectedAudioRecording.id));
 
       if (!isStoryPlayNotifiedRef.current) {
         isStoryPlayNotifiedRef.current = true;
@@ -164,33 +160,65 @@ export function useStoryPlayer({
     storyId,
   ]);
 
+  const startStoryPlaying = useCallback(() => {
+    const updatePromise = () => {
+      currentPlayCallPromise.current = downloadAndPlayStory().finally(() => {
+        currentPlayCallPromise.current = null;
+      });
+    };
+
+    if (currentPlayCallPromise.current) {
+      currentPlayCallPromise.current.then(() => {
+        stopPlaying();
+        updatePromise();
+      });
+    } else {
+      updatePromise();
+    }
+  }, [downloadAndPlayStory]);
+
   const moveStoryPlayingToTime = useCallback(
-    (playedTime: number) => {
+    ({ exactTime, moveGap }: MOVE_TO_PROPS) => {
       if (!selectedAudioRecording) {
         return;
       }
 
       try {
-        if (playedTime >= selectedAudioRecording.duration) {
-          stopStoryPlaying();
-          setPlayedTime(0);
-          return;
-        }
-
         let playedTimeToSet = playedTime;
 
-        if (playedTimeToSet < 0) {
-          playedTimeToSet = 0;
-        } else if (isCurrentStoryPlaying) {
-          audioPlayer?.startPlayingFromTime(playedTime);
+        if (audioPlayer) {
+          const { isPlaying, playingTime } = audioPlayer.getCurrentState();
+
+          if (moveGap !== undefined) {
+            playedTimeToSet = playingTime + moveGap;
+          } else if (exactTime !== undefined) {
+            playedTimeToSet = exactTime;
+          }
+
+          if (playedTimeToSet < 0) {
+            playedTimeToSet = 0;
+
+            if (playedTime === 0 || !isPlaying) {
+              stopStoryPlaying();
+              setPlayedTime(0);
+              return;
+            }
+          } else if (playedTimeToSet >= selectedAudioRecording.duration) {
+            stopStoryPlaying();
+            setPlayedTime(0);
+            return;
+          }
         }
 
+        audioPlayer?.startPlayingFromTime(playedTimeToSet);
+
+        reduxDispatch(startPlaying(selectedAudioRecording?.id));
         setPlayedTime(playedTimeToSet);
       } catch (err) {
         console.error(err);
       }
     },
-    [selectedAudioRecording, isCurrentStoryPlaying, setPlayedTime, stopStoryPlaying],
+    [selectedAudioRecording, playedTime, isCurrentStoryPlaying, reduxDispatch, stopStoryPlaying],
   );
 
   useEffect(() => {

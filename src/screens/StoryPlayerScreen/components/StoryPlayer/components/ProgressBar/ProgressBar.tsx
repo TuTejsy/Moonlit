@@ -12,6 +12,7 @@ import Animated, {
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useMutableValue } from '@/hooks/useMutableValue';
+import { MOVE_TO_PROPS } from '@/hooks/useStoryPlayer/useStoryPlayers.types';
 import { formatSecondsToDuration } from '@/utils/formatters/formatSecondsToDuration';
 
 import { useProgressBarGestureHandler } from './hooks/useProgressBarGestureHandler';
@@ -20,7 +21,7 @@ import { makeStyles } from './ProgressBar.styles';
 interface ProgressBarPropTypes extends ViewProps {
   duration: number;
   isStoryPlaying: boolean;
-  moveToTime: (playedTime: number) => void;
+  moveToTime: (props: MOVE_TO_PROPS) => void;
   playedTime: number;
 }
 
@@ -68,33 +69,10 @@ export function ProgressBar({
     [duration],
   );
 
-  const stopTimer = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  }, []);
-
-  const startTimer = useCallback(() => {
-    if (!timerRef.current) {
-      const interval = setInterval(() => {
-        if (playedTimeRef.current >= duration) {
-          stopTimer();
-          return;
-        }
-
-        playedTimeRef.current += 1;
-        setPlayedTimeTextForTime(playedTimeRef.current);
-      }, 1000);
-
-      timerRef.current = interval;
-    }
-  }, [playedTimeRef, duration, setPlayedTimeTextForTime, stopTimer]);
-
   const handleUpdatePlayPercent = useCallback(
     (playPercent: number) => {
       const timeToMove = duration * (playPercent / 100);
-      moveToTime(timeToMove);
+      moveToTime({ exactTime: timeToMove });
       playedTimeRef.current = timeToMove;
     },
     [duration, moveToTime, playedTimeRef],
@@ -105,6 +83,31 @@ export function ProgressBar({
     handleUpdatePlayPercent,
     setPlayedTimeText,
   );
+
+  const stopTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const startTimer = useCallback(() => {
+    if (!timerRef.current) {
+      const interval = setInterval(() => {
+        if (!isGestureActiveRef.current) {
+          if (playedTimeRef.current >= duration) {
+            stopTimer();
+            return;
+          }
+
+          playedTimeRef.current += 1;
+          setPlayedTimeTextForTime(playedTimeRef.current);
+        }
+      }, 1000);
+
+      timerRef.current = interval;
+    }
+  }, [isGestureActiveRef, playedTimeRef, duration, setPlayedTimeTextForTime, stopTimer]);
 
   useEffect(() => {
     if (!isGestureActiveRef.current) {
@@ -126,8 +129,9 @@ export function ProgressBar({
 
   useEffect(() => {
     setPlayedTimeTextForTime(playedTime);
+    playedTimeRef.current = playedTime;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playedTime]);
+  }, [playedTime, isStoryPlaying]);
 
   return (
     <GestureDetector gesture={gestureHandler}>
