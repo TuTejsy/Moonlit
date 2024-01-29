@@ -179,14 +179,15 @@ export const StoryPlayerScreen = () => {
             <LinearGradient
               angle={180}
               colors={[colors.opacityBlack(0), gradientColor]}
-              locations={[0, 1]}
+              locations={[0.5, 1]}
               pointerEvents='none'
               style={styles.bottomGradient}
             />
+
             <LinearGradient
               angle={180}
               colors={[colors.opacityBlack(0), colors.opacityBlack(0.4)]}
-              locations={[0, 1]}
+              locations={[0.5, 1]}
               pointerEvents='none'
               style={styles.bottomGradient}
             />
@@ -202,6 +203,7 @@ export const StoryPlayerScreen = () => {
             description={story?.description_large ?? ''}
             duration={selectedAudioRecording?.duration ?? 0}
             storyPlayingSharedValue={storyPlayingSharedValue}
+            style={styles.storyMeta}
           />
         </Animated.View>
       </GestureDetector>

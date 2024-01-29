@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { View, Image } from 'react-native';
 
 import { adapty, AdaptyProfile } from 'react-native-adapty';
-import { TouchableHighlight } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
 
@@ -137,17 +137,17 @@ export const PaywallModal = () => {
         </PressableView>
 
         <View style={styles.actions}>
-          <TouchableHighlight onPress={openTermsAndConditions}>
+          <TouchableOpacity onPress={openTermsAndConditions}>
             <TextView style={styles.action}>Terms</TextView>
-          </TouchableHighlight>
+          </TouchableOpacity>
 
-          <TouchableHighlight onPress={openPrivacyPolicy}>
+          <TouchableOpacity onPress={openPrivacyPolicy}>
             <TextView style={styles.action}>Privacy</TextView>
-          </TouchableHighlight>
+          </TouchableOpacity>
 
-          <TouchableHighlight onPress={handleRestorePress}>
+          <TouchableOpacity onPress={handleRestorePress}>
             <TextView style={styles.action}>Restore</TextView>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </View>
 
