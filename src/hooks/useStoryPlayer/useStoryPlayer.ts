@@ -114,8 +114,8 @@ export function useStoryPlayer({
           }).promise;
         }
 
-        await AudioRecordingsDB.modify(() => {
-          selectedAudioRecording.cached_name = selectedAudioRecordingCachedName;
+        await AudioRecordingsDB.update([selectedAudioRecording.id], (recording) => {
+          recording.cached_name = selectedAudioRecordingCachedName;
         });
       } catch (error) {
         console.error(error);
@@ -126,7 +126,7 @@ export function useStoryPlayer({
 
     return `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedName}`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedAudioRecording?.cached_name]);
+  }, [selectedAudioRecording?.id, selectedAudioRecording?.cached_name]);
 
   const startStoryPlaying = useCallback(async () => {
     if (!selectedAudioRecording || !audioPlayer) {
@@ -217,11 +217,11 @@ export function useStoryPlayer({
   }, [reduxDispatch, setPlayedTime]);
 
   useEffect(() => {
-    AudioRecordingsDB.modify(() => {
-      if (selectedAudioRecording) {
-        selectedAudioRecording.played_time = playedTime;
-      }
-    });
+    if (selectedAudioRecording?.id) {
+      AudioRecordingsDB.update([selectedAudioRecording.id], (recording) => {
+        recording.played_time = playedTime;
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playedTime, selectedAudioRecording?.id]);
 
@@ -266,15 +266,15 @@ export function useStoryPlayer({
             reduxDispatch(stopPlaying());
           }
 
-          AudioRecordingsDB.modify(() => {
-            if (selectedAudioRecording) {
-              selectedAudioRecording.played_time = playingTime;
-            }
-          });
+          if (selectedAudioRecording?.id) {
+            AudioRecordingsDB.update([selectedAudioRecording.id], (recording) => {
+              recording.played_time = playedTime;
+            });
+          }
         };
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [selectedAudioRecording?.id],
+      [selectedAudioRecording?.id, selectedAudioRecording?.cached_name],
     ),
   );
 
@@ -298,11 +298,11 @@ export function useStoryPlayer({
             reduxDispatch(stopPlaying());
           }
 
-          AudioRecordingsDB.modify(() => {
-            if (selectedAudioRecording) {
-              selectedAudioRecording.played_time = playingTime;
-            }
-          });
+          if (selectedAudioRecording?.id) {
+            AudioRecordingsDB.update([selectedAudioRecording.id], (recording) => {
+              recording.played_time = playedTime;
+            });
+          }
         }
       });
 
