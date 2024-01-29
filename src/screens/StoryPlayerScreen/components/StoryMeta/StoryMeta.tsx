@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { ViewStyle } from 'react-native';
 
 import Animated, {
   Extrapolation,
@@ -17,9 +18,15 @@ interface StoryMetaPropTypes {
   description: string;
   duration: number;
   storyPlayingSharedValue: SharedValue<number>;
+  style?: ViewStyle;
 }
 
-export function StoryMeta({ description, duration, storyPlayingSharedValue }: StoryMetaPropTypes) {
+export function StoryMeta({
+  description,
+  duration,
+  storyPlayingSharedValue,
+  style,
+}: StoryMetaPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const formattedDuration = useMemo(() => formatSecondsToMins(duration), [duration]);
@@ -31,7 +38,7 @@ export function StoryMeta({ description, duration, storyPlayingSharedValue }: St
   });
 
   return (
-    <Animated.View style={[styles.storyMetaContainer, animatedTextStyle]}>
+    <Animated.View style={[styles.storyMetaContainer, style, animatedTextStyle]}>
       <TextView style={styles.durationTitle}>
         Story duration: <TextView style={styles.durationText}>{formattedDuration} min</TextView>
       </TextView>

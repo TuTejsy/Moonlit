@@ -23,6 +23,7 @@
     RCTRootView *rootView = (RCTRootView *)self.window.rootViewController.view;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
     [rootView setLoadingView:[[storyboard instantiateInitialViewController] view]];
+    [rootView setBackgroundColor: [UIColor colorNamed:@"Purple"]];
   }
     
   return result;
