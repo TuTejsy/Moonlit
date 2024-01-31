@@ -1,4 +1,4 @@
-import { StackNavigationOptions } from '@react-navigation/stack';
+import { StackNavigationOptions, TransitionPresets } from '@react-navigation/stack';
 
 import { IS_ANDROID } from '@/constants/common';
 import { ITheme } from '@/hooks/theme/useTheme';
@@ -23,6 +23,12 @@ export const rootModalOptions = ({ colors }: ITheme): StackNavigationOptions => 
   headerShown: false,
   presentation: 'transparentModal',
 });
+
+export const paywallOptions: StackNavigationOptions = {
+  presentation: 'card',
+  ...TransitionPresets.ModalSlideFromBottomIOS,
+  gestureEnabled: false,
+};
 
 export const tabOptions: StackNavigationOptions = {
   headerShown: false,
