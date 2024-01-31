@@ -1,10 +1,13 @@
 import { useMemo } from 'react';
 
 import LinearGradient from 'react-native-linear-gradient';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import { LARGE_TITLE_HEIGHT } from '@/components/Headers/ScreenHeader/ScreenHeader.constants';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
+import { WINDOW_HEIGHT } from '@/constants/layout';
+import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -22,6 +25,8 @@ export const StoriesListScreen = () => {
   const { params } = useAppRoute<SharedRoutes.STORIES_LIST>();
   const { storiesFilter, title } = params || {};
 
+  const insets = useSafeAreaInsets();
+
   const [stories, storiesVersion] = useStories(storiesFilter);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,13 +34,17 @@ export const StoriesListScreen = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const listStories = useMemo(() => stories.slice(2), [stories, storiesVersion]);
 
+  const gradientStartLocation = useMemo(() => {
+    return (DEFAULT_HEADER_HEIGHT + insets.top) / WINDOW_HEIGHT;
+  }, [insets.top]);
+
   const { handleAnimatedScroll, scrollPositionSharedValue } = useAnimatedScrollHandlerValue();
 
   return (
     <LinearGradient
       angle={180}
       colors={[colors.purple, colors.darkPurple]}
-      locations={[0, 1]}
+      locations={[gradientStartLocation, 1]}
       style={styles.screen}
     >
       <ScreenHeader
