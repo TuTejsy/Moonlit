@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { View, Share } from 'react-native';
+import { View } from 'react-native';
 
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { GestureDetector } from 'react-native-gesture-handler';
@@ -18,6 +18,7 @@ import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
+import { Share } from '@/native_modules/MNTShare/ts/NativeShareManager';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
@@ -114,8 +115,10 @@ export const StoryPlayerScreen = () => {
   }, [navigation]);
 
   const handleSharePress = useCallback(() => {
-    Share.share({
+    Share?.share({
       message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_APP_LINK}`,
+      subtitle: 'and more amazing stories in the Moonlit app.',
+      title: `Explore ${story?.name}`,
       url: smallCoverURL,
     });
   }, [smallCoverURL, story?.name]);
