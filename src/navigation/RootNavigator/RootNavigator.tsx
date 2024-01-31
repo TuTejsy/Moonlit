@@ -10,6 +10,7 @@ import { StoryPlayerScreen } from '@/screens/StoryPlayerScreen/StoryPlayerScreen
 
 import {
   getStartedScreenOptions,
+  paywallOptions,
   rootModalOptions,
   rootOptions,
   storyPlayerOptions,
@@ -44,7 +45,11 @@ export const RootNavigator = () => {
       />
 
       <RootStack.Group screenOptions={rootModalOptions(theme)}>
-        <RootStack.Screen component={PaywallModal} name={RootRoutes.PAYWALL_MODAL} />
+        <RootStack.Screen
+          component={PaywallModal}
+          name={RootRoutes.PAYWALL_MODAL}
+          options={paywallOptions}
+        />
       </RootStack.Group>
     </RootStack.Navigator>
   );
