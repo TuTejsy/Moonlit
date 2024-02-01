@@ -38,7 +38,6 @@ export const StoryActions = ({
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
-      display: storyPlayingSharedValue.value === 1 ? 'none' : 'flex',
       opacity: interpolate(storyPlayingSharedValue.value, [0, 1], [1, 0], Extrapolation.CLAMP),
     };
   });

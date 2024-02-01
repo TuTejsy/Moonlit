@@ -27,7 +27,7 @@ class MNTActivityItemSource: NSObject, UIActivityItemSource {
   }
   
   @objc func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-    return text
+    return url
   }
   
   @objc func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {

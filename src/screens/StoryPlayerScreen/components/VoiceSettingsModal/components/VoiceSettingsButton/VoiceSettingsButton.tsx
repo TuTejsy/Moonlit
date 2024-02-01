@@ -42,7 +42,6 @@ export function VoiceSettingsButton({
   const { colors } = useTheme();
 
   const voiceSettingsButtonContainerAnimatedStyle = useAnimatedStyle(() => ({
-    display: isModalExpandedSharedValue.value === 1 ? 'none' : 'flex',
     opacity: interpolate(isModalExpandedSharedValue.value, [0, 1], [1, 0]),
   }));
 
