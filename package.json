@@ -10,7 +10,8 @@
     "test": "jest",
     "restart": "yarn cache clean && yarn reinstall && yarn start --reset-cache",
     "pod-reinstall": "cd ./ios && rm -rf ~/Library/Caches/CocoaPods && rm -rf Pods && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install --repo-update && cd ..",
-    "reinstall": "rm -rf node_modules && watchman watch-del-all && yarn && yarn pod-reinstall"
+    "postinstall": "patch-package && node ./patches/patch.js",
+    "reinstall": "rm -rf node_modules && watchman watch-del-all && yarn && yarn postinstall && yarn pod-reinstall"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.4.5",
@@ -78,6 +79,7 @@
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-typescript-sort-keys": "^2.1.0",
     "jest": "^29.6.3",
+    "patch-package": "^8.0.0",
     "prettier": "^2.8.8",
     "react-native-flipper": "^0.164.0",
     "react-test-renderer": "18.2.0",

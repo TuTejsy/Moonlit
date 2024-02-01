@@ -130,7 +130,7 @@ export const DefaultList = React.memo(
         scrollIndicatorInsets={{ top: DEFAULT_HEADER_HEIGHT + insets.top }}
         refreshControl={
           <RefreshControl
-            progressViewOffset={insets.top + DEFAULT_HEADER_HEIGHT}
+            progressViewOffset={-(insets.top + DEFAULT_HEADER_HEIGHT + 8)}
             refreshing={isRefreshing}
             tintColor={colors.white}
             onRefresh={updateStories}
