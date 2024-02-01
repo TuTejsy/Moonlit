@@ -60,7 +60,6 @@ export const SearchBar = React.memo(
     }));
 
     const closeButtonAnimatedStyle = useAnimatedStyle(() => ({
-      display: isInputFocusedSharedValue.value === 0 ? 'none' : 'flex',
       marginLeft: CLOSE_BUTTON_MARGIN_LEFT,
       opacity: isInputFocusedSharedValue.value,
       width: CLOSE_BUTTON_WIDTH,

@@ -67,12 +67,21 @@ export function useStoryPlayer({
   const isStoryPlayingSharedValue = useDerivedValue(() => storyPlayingSharedValue.value > 0);
 
   const stopStoryPlaying = useCallback(() => {
-    if (!audioPlayer) {
-      return;
-    }
+    const stop = () => {
+      if (!audioPlayer) {
+        return;
+      }
+      audioPlayer.stopPlaying();
+      reduxDispatch(stopPlaying());
+    };
 
-    audioPlayer.stopPlaying();
-    reduxDispatch(stopPlaying());
+    if (currentPlayCallPromise.current) {
+      currentPlayCallPromise.current.then(() => {
+        stop();
+      });
+    } else {
+      stop();
+    }
   }, [reduxDispatch]);
 
   const pauseStoryPlaying = useCallback(() => {
@@ -80,11 +89,15 @@ export function useStoryPlayer({
       return;
     }
 
-    const { playingTime } = audioPlayer.pausePlaying();
-    reduxDispatch(stopPlaying());
+    const { isPlaying } = audioPlayer.getCurrentState();
 
-    if (playingTime) {
-      setPlayedTime(playingTime);
+    if (isPlaying) {
+      const { playingTime } = audioPlayer.pausePlaying();
+      reduxDispatch(stopPlaying());
+
+      if (playingTime) {
+        setPlayedTime(playingTime);
+      }
     }
   }, [reduxDispatch, setPlayedTime]);
 
@@ -132,8 +145,11 @@ export function useStoryPlayer({
         return;
       }
 
-      if (selectedAudioRecordingId && selectedAudioRecordingId !== storySelectedAudioRecordingId) {
-        stopStoryPlaying();
+      if (
+        audioRecordingIdRef.current &&
+        audioRecordingIdRef.current !== storySelectedAudioRecordingId
+      ) {
+        pauseStoryPlaying();
       }
 
       try {
@@ -142,7 +158,7 @@ export function useStoryPlayer({
         const filePath = await downloadAudioRecording();
 
         if (storySelectedAudioRecordingId !== audioRecordingIdRef.current) {
-          stopStoryPlaying();
+          pauseStoryPlaying();
           return;
         }
 
@@ -159,8 +175,7 @@ export function useStoryPlayer({
       }
     },
     [
-      selectedAudioRecordingId,
-      stopStoryPlaying,
+      pauseStoryPlaying,
       reduxDispatch,
       downloadAudioRecording,
       audioRecordingIdRef,
@@ -186,13 +201,13 @@ export function useStoryPlayer({
 
     if (currentPlayCallPromise.current) {
       currentPlayCallPromise.current.then(() => {
-        stopPlaying();
+        pauseStoryPlaying();
         updatePromise();
       });
     } else {
       updatePromise();
     }
-  }, [downloadAndPlayStory, selectedAudioRecording?.id]);
+  }, [downloadAndPlayStory, selectedAudioRecording?.id, pauseStoryPlaying]);
 
   const moveStoryPlayingToTime = useCallback(
     ({ exactTime, moveGap }: MOVE_TO_PROPS) => {
@@ -204,7 +219,7 @@ export function useStoryPlayer({
         let playedTimeToSet = playedTime;
 
         if (audioPlayer) {
-          const { isPlaying, playingTime } = audioPlayer.getCurrentState();
+          const { playingTime } = audioPlayer.getCurrentState();
 
           if (moveGap !== undefined) {
             playedTimeToSet = playingTime + moveGap;
@@ -215,7 +230,7 @@ export function useStoryPlayer({
           if (playedTimeToSet < 0) {
             playedTimeToSet = 0;
 
-            if (playedTime === 0 || !isPlaying) {
+            if (playedTime === 0) {
               stopStoryPlaying();
               setPlayedTime(0);
               return;
@@ -227,15 +242,17 @@ export function useStoryPlayer({
           }
         }
 
-        audioPlayer?.startPlayingFromTime(playedTimeToSet);
+        if (isCurrentStoryPlaying) {
+          audioPlayer?.startPlayingFromTime(playedTimeToSet);
+          reduxDispatch(startPlaying(selectedAudioRecording?.id));
+        }
 
-        reduxDispatch(startPlaying(selectedAudioRecording?.id));
         setPlayedTime(playedTimeToSet);
       } catch (err) {
         console.error(err);
       }
     },
-    [selectedAudioRecording, playedTime, reduxDispatch, stopStoryPlaying],
+    [selectedAudioRecording, playedTime, isCurrentStoryPlaying, reduxDispatch, stopStoryPlaying],
   );
 
   useEffect(() => {
@@ -272,7 +289,7 @@ export function useStoryPlayer({
 
   useEffect(() => {
     if (isCurrentStoryPlaying && isStoryPlayNotifiedRef.current) {
-      stopStoryPlaying();
+      pauseStoryPlaying();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioRecordingId]);

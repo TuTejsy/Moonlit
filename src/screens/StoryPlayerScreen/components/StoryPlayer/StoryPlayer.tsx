@@ -58,7 +58,6 @@ export function StoryPlayer({
 
   const animatedBlurViewContainerStyle = useAnimatedStyle(() => {
     return {
-      display: storyPlayingSharedValue.value === 0 ? 'none' : 'flex',
       opacity: storyPlayingSharedValue.value,
     };
   });
@@ -71,14 +70,12 @@ export function StoryPlayer({
         [insets.bottom + 60, insets.bottom + 100],
         Extrapolation.CLAMP,
       ),
-      display: storyPlayingSharedValue.value === 0 ? 'none' : 'flex',
       opacity: storyPlayingSharedValue.value,
     };
   });
 
   const animatedActionsContainerStyle = useAnimatedStyle(() => {
     return {
-      display: storyPlayingSharedValue.value === 0 ? 'none' : 'flex',
       opacity: storyPlayingSharedValue.value,
       transform: [
         {

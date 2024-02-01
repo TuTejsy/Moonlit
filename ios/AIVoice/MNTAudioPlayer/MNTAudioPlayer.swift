@@ -219,5 +219,6 @@ class MNTAudioPlayer: NSObject, AVAudioPlayerDelegate {
   func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
     self.delegate?.playerDidFinishPlaying()
   }
+  
 }
 
