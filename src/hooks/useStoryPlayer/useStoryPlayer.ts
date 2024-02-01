@@ -99,7 +99,7 @@ export function useStoryPlayer({
         setPlayedTime(playingTime);
       }
     }
-  }, [reduxDispatch, setPlayedTime]);
+  }, [reduxDispatch]);
 
   const downloadAudioRecording = useCallback(async () => {
     let selectedAudioRecordingCachedName = selectedAudioRecording?.cached_name;
@@ -174,16 +174,8 @@ export function useStoryPlayer({
         console.error(err);
       }
     },
-    [
-      pauseStoryPlaying,
-      reduxDispatch,
-      downloadAudioRecording,
-      audioRecordingIdRef,
-      coverPath,
-      title,
-      playedTime,
-      storyId,
-    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pauseStoryPlaying, downloadAudioRecording, coverPath, title, playedTime, storyId],
   );
 
   const startStoryPlaying = useCallback(() => {
@@ -242,7 +234,7 @@ export function useStoryPlayer({
           }
         }
 
-        if (isCurrentStoryPlaying) {
+        if (isCurrentStoryPlayingMutableValue.current) {
           audioPlayer?.startPlayingFromTime(playedTimeToSet);
           reduxDispatch(startPlaying(selectedAudioRecording?.id));
         }
@@ -252,7 +244,8 @@ export function useStoryPlayer({
         console.error(err);
       }
     },
-    [selectedAudioRecording, playedTime, isCurrentStoryPlaying, reduxDispatch, stopStoryPlaying],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedAudioRecording, playedTime, stopStoryPlaying],
   );
 
   useEffect(() => {
@@ -276,7 +269,7 @@ export function useStoryPlayer({
       audioPlayerDidFinishPlayingSubscriptionRef.current?.remove();
       audioPlayerDidInterruptPlayingSubscriptionRef.current?.remove();
     };
-  }, [reduxDispatch, setPlayedTime]);
+  }, [reduxDispatch]);
 
   useEffect(() => {
     if (audioRecordingId) {
