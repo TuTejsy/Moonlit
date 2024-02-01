@@ -126,8 +126,9 @@ export const StoryPlayerScreen = () => {
   const handleSelectAudioRecording = useCallback(
     (audioRecordingId: number) => {
       setSelectedAudioRecording(audioRecordingId);
+      pauseStoryPlaying();
     },
-    [setSelectedAudioRecording],
+    [pauseStoryPlaying, setSelectedAudioRecording],
   );
 
   useAnimatedReaction(
