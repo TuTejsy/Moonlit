@@ -23,7 +23,11 @@
     RCTRootView *rootView = (RCTRootView *)self.window.rootViewController.view;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
     [rootView setLoadingView:[[storyboard instantiateInitialViewController] view]];
-    [rootView setBackgroundColor: [UIColor colorNamed:@"Purple"]];
+    
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = rootView.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorNamed:@"Purple"] CGColor], (id)[[UIColor colorNamed:@"DarkPurple"] CGColor], nil];
+    [rootView.layer insertSublayer:gradient atIndex:0];
   }
     
   return result;
