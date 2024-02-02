@@ -1,14 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { View, Image } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
-import Animated, {
-  Easing,
-  SharedValue,
-  interpolate,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
 
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
@@ -19,14 +12,14 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { makeStyles } from './VoiceSettingsButton.styles';
 
 interface VoiceSettingsButtonProps {
-  isModalExpandedSharedValue: SharedValue<number>;
+  onPress: () => void;
   storyColor: string;
   voiceCoverUrl: string;
   voiceName: string;
 }
 
 export function VoiceSettingsButton({
-  isModalExpandedSharedValue,
+  onPress,
   storyColor,
   voiceCoverUrl,
   voiceName,
@@ -41,20 +34,8 @@ export function VoiceSettingsButton({
   const styles = useMakeStyles(makeStyles, stylesContext);
   const { colors } = useTheme();
 
-  const voiceSettingsButtonContainerAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(isModalExpandedSharedValue.value, [0, 1], [1, 0]),
-  }));
-
-  const handleVoiceSettingsButtonPress = useCallback(() => {
-    isModalExpandedSharedValue.value = withTiming(1, {
-      easing: Easing.in(Easing.ease),
-    });
-  }, [isModalExpandedSharedValue]);
-
   return (
-    <Animated.View
-      style={[styles.voiceSettingsButtonContainer, voiceSettingsButtonContainerAnimatedStyle]}
-    >
+    <View style={styles.voiceSettingsButtonContainer}>
       <BlurView
         blurAmount={5}
         blurType='light'
@@ -62,7 +43,7 @@ export function VoiceSettingsButton({
         style={styles.blurView}
       />
 
-      <PressableView style={styles.voiceSettingsButton} onPress={handleVoiceSettingsButtonPress}>
+      <PressableView style={styles.voiceSettingsButton} onPress={onPress}>
         <Icons.Waveframe />
 
         <View style={styles.titleContainer}>
@@ -77,6 +58,6 @@ export function VoiceSettingsButton({
 
         <Image source={{ uri: voiceCoverUrl }} style={styles.voiceAvatar} />
       </PressableView>
-    </Animated.View>
+    </View>
   );
 }

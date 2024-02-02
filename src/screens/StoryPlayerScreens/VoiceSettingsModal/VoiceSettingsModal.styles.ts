@@ -21,7 +21,6 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStyles
       height: SCREEN_HEIGHT,
       left: 0,
       position: 'absolute',
-      top: 0,
       width: SCREEN_WIDTH,
     },
     bottomBar: {
@@ -44,12 +43,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStyles
       width: '100%',
     },
     modalContainer: {
-      height: SCREEN_HEIGHT,
-      left: 0,
-      position: 'absolute',
-      top: 0,
-      width: SCREEN_WIDTH,
-      zIndex: zIndex.overMain,
+      flex: 1,
     },
     unlockButton: {
       marginBottom: insets.bottom + 17,

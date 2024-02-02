@@ -17,22 +17,26 @@ export const rootOptions = ({ colors }: ITheme): StackNavigationOptions => ({
 
 export const rootModalOptions = ({ colors }: ITheme): StackNavigationOptions => ({
   cardStyle: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.transparent,
   },
   headerShadowVisible: false,
   headerShown: false,
   presentation: 'transparentModal',
+  ...TransitionPresets.ModalSlideFromBottomIOS,
 });
 
 export const paywallOptions: StackNavigationOptions = {
-  presentation: 'card',
-  ...TransitionPresets.ModalSlideFromBottomIOS,
   gestureEnabled: false,
+};
+
+export const voiceSettingsModalOptions: StackNavigationOptions = {
+  cardOverlay: () => null,
+  cardOverlayEnabled: false,
+  presentation: 'transparentModal',
 };
 
 export const tabOptions: StackNavigationOptions = {
   headerShown: false,
-  presentation: 'transparentModal',
 };
 
 export const storyPlayerOptions: StackNavigationOptions = {

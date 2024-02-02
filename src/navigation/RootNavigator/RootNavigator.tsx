@@ -6,7 +6,8 @@ import { useInitApp } from '@/hooks/useInitApp';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
 import { GetStartedScreen } from '@/screens/GetStartedScreen/GetStartedScreen';
 import { PaywallModal } from '@/screens/PaywallModal/PaywallModal';
-import { StoryPlayerScreen } from '@/screens/StoryPlayerScreen/StoryPlayerScreen';
+import { StoryPlayerScreen } from '@/screens/StoryPlayerScreens/StoryPlayerScreen/StoryPlayerScreen';
+import { VoiceSettingsModal } from '@/screens/StoryPlayerScreens/VoiceSettingsModal/VoiceSettingsModal';
 
 import {
   getStartedScreenOptions,
@@ -15,6 +16,7 @@ import {
   rootOptions,
   storyPlayerOptions,
   tabOptions,
+  voiceSettingsModalOptions,
 } from './RootNavigator.options';
 import { RootRoutes } from './RootNavigator.routes';
 import { RootStackParams } from './RootNavigator.types';
@@ -49,6 +51,11 @@ export const RootNavigator = () => {
           component={PaywallModal}
           name={RootRoutes.PAYWALL_MODAL}
           options={paywallOptions}
+        />
+        <RootStack.Screen
+          component={VoiceSettingsModal}
+          name={RootRoutes.VOICE_SETTINGS_MODAL}
+          options={voiceSettingsModalOptions}
         />
       </RootStack.Group>
     </RootStack.Navigator>

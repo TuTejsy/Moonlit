@@ -15,4 +15,11 @@ export interface RootStackParams extends Record<string, object | undefined> {
   [RootRoutes.PAYWALL_MODAL]: {
     product: AdaptyPaywallProduct;
   };
+
+  [RootRoutes.VOICE_SETTINGS_MODAL]: {
+    onSelectAudioRecording: (selectedAudioRecordingId: number) => void;
+    selectedAudioRecordingId: number;
+    storyColor: string;
+    storyId: number;
+  };
 }

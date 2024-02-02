@@ -3,15 +3,15 @@ import { StyleSheet } from 'react-native';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     button: {
       backgroundColor: colors.orange,
-      borderRadius: 32,
+      borderRadius: dh(32),
       flex: 0,
-      marginHorizontal: 8,
+      marginHorizontal: dh(8),
       paddingHorizontal: 32,
-      paddingVertical: 8,
+      paddingVertical: dh(8),
     },
     buttonText: {
       ...fonts.size_12,
@@ -20,11 +20,11 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     container: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.05),
-      borderRadius: 16,
+      borderRadius: dh(16),
       flexDirection: 'row',
-      height: 94,
+      height: dh(94),
       justifyContent: 'space-between',
-      marginBottom: 48,
+      marginBottom: dh(48),
       overflow: 'hidden',
       paddingHorizontal: HORIZONTAL_PADDING,
     },

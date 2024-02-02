@@ -23,12 +23,13 @@ import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
+import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { getHitSlop } from '@/utils/getHitSlop';
 
 import { StoryActions } from './components/StoryActions/StoryActions';
 import { StoryMeta } from './components/StoryMeta/StoryMeta';
 import { StoryPlayer } from './components/StoryPlayer/StoryPlayer';
-import { VoiceSettingsModal } from './components/VoiceSettingsModal/VoiceSettingsModal';
+import { VoiceSettingsButton } from './components/VoiceSettingsButton/VoiceSettingsButton';
 import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUpdate';
 import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
 import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
@@ -123,13 +124,26 @@ export const StoryPlayerScreen = () => {
     });
   }, [smallCoverURL, story?.name]);
 
-  const handleSelectAudioRecording = useCallback(
-    (audioRecordingId: number) => {
-      setSelectedAudioRecording(audioRecordingId);
-      pauseStoryPlaying();
-    },
-    [pauseStoryPlaying, setSelectedAudioRecording],
-  );
+  const handleVoiceSettingsPress = useCallback(() => {
+    if (selectedAudioRecording) {
+      navigation.navigate(RootRoutes.VOICE_SETTINGS_MODAL, {
+        onSelectAudioRecording: (audioRecordingId: number) => {
+          setSelectedAudioRecording(audioRecordingId);
+          pauseStoryPlaying();
+        },
+        selectedAudioRecordingId: selectedAudioRecording.id,
+        storyColor: gradientColor,
+        storyId,
+      });
+    }
+  }, [
+    gradientColor,
+    navigation,
+    pauseStoryPlaying,
+    selectedAudioRecording,
+    setSelectedAudioRecording,
+    storyId,
+  ]);
 
   useAnimatedReaction(
     () => {
@@ -225,14 +239,14 @@ export const StoryPlayerScreen = () => {
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
 
-      <VoiceSettingsModal
-        selectedAudioRecordingId={selectedAudioRecording?.id}
-        selectedAudioRecordingName={selectedAudioRecording?.voice_name}
-        selectedAudioRecordingVersion={selectedAudioRecordingVersion}
-        selectedVoiceCoverUrl={selectedAudioRecording?.cover_url}
+      <VoiceSettingsButton
         storyColor={gradientColor}
-        storyId={storyId}
-        onSelectAudioRecording={handleSelectAudioRecording}
+        voiceName={selectedAudioRecording?.voice_name}
+        voiceCoverUrl={
+          selectedAudioRecording &&
+          formatServerFileURLToAbsolutePath(selectedAudioRecording.cover_url)
+        }
+        onPress={handleVoiceSettingsPress}
       />
     </LinearGradient>
   );
