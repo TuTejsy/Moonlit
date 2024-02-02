@@ -2,14 +2,14 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     container: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.05),
-      borderRadius: 8,
+      borderRadius: dh(8),
       flexDirection: 'row',
-      marginVertical: 8,
+      marginVertical: dh(8),
       padding: 16,
     },
     title: {

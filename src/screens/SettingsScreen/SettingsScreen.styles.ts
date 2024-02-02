@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     screen: {
       flex: 1,
@@ -13,13 +13,13 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     separator: {
       backgroundColor: colors.opacityWhite(0.1),
       height: 1,
-      marginVertical: 32,
+      marginVertical: dh(32),
       width: '100%',
     },
     title: {
       ...fonts.size_24,
       color: colors.white,
-      marginBottom: 24,
-      marginTop: 16,
+      marginBottom: dh(24),
+      marginTop: dh(16),
     },
   });

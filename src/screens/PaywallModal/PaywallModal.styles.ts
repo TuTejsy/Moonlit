@@ -32,7 +32,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       overflow: 'hidden',
       paddingBottom: insets.bottom + dh(8),
       paddingHorizontal: 34,
-      paddingTop: 24,
+      paddingTop: dh(24),
       position: 'relative',
     },
     image: {

@@ -6,4 +6,5 @@ export enum RootRoutes {
   GET_STARTED_SCREEN = 'getStartedScreen',
 
   PAYWALL_MODAL = 'paywallModal',
+  VOICE_SETTINGS_MODAL = 'voiceSettingsModal',
 }
