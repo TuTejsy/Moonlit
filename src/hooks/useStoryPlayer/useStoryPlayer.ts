@@ -162,8 +162,15 @@ export function useStoryPlayer({
           return;
         }
 
+        let timeToStart = playedTime;
+
+        if (selectedAudioRecording?.duration && timeToStart >= selectedAudioRecording?.duration) {
+          timeToStart = 0;
+          setPlayedTime(0);
+        }
+
         audioPlayer.setToPlayFile({ coverPath, filePath, fileTitle: title });
-        audioPlayer.startPlayingFromTime(playedTime);
+        audioPlayer.startPlayingFromTime(timeToStart);
 
         if (!isStoryPlayNotifiedRef.current) {
           isStoryPlayNotifiedRef.current = true;
@@ -175,7 +182,16 @@ export function useStoryPlayer({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pauseStoryPlaying, downloadAudioRecording, coverPath, title, playedTime, storyId],
+    [
+      reduxDispatch,
+      downloadAudioRecording,
+      playedTime,
+      selectedAudioRecording?.duration,
+      coverPath,
+      title,
+      pauseStoryPlaying,
+      storyId,
+    ],
   );
 
   const startStoryPlaying = useCallback(() => {
@@ -289,11 +305,11 @@ export function useStoryPlayer({
 
         const { filePath, isPlaying, playingTime } = audioPlayer.getCurrentState();
 
+        setPlayedTime(playingTime);
+
         if (filePath !== `${selectedAudioRecordingCachedNameMutableValue.current}`) {
           return;
         }
-
-        setPlayedTime(playingTime);
 
         if (isPlaying && !isCurrentStoryPlayingMutableValue.current) {
           if (selectedAudioRecordingIdMutableValue.current) {
@@ -328,7 +344,7 @@ export function useStoryPlayer({
             AudioRecordingsDB.update(
               [selectedAudioRecordingIdMutableValue.current],
               (recording) => {
-                recording.played_time = playedTime;
+                recording.played_time = playingTime;
               },
             );
           }
@@ -345,11 +361,11 @@ export function useStoryPlayer({
         if (state === 'active' && audioPlayer) {
           const { filePath, isPlaying, playingTime } = audioPlayer.getCurrentState();
 
+          setPlayedTime(playingTime);
+
           if (filePath !== `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecording?.cached_name}`) {
             return;
           }
-
-          setPlayedTime(playingTime);
 
           if (isPlaying) {
             if (selectedAudioRecording?.id) {
@@ -361,7 +377,7 @@ export function useStoryPlayer({
 
           if (selectedAudioRecording?.id) {
             AudioRecordingsDB.update([selectedAudioRecording.id], (recording) => {
-              recording.played_time = playedTime;
+              recording.played_time = playingTime;
             });
           }
         }
