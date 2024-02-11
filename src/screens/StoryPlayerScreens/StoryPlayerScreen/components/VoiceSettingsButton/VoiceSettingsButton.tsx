@@ -56,7 +56,7 @@ export function VoiceSettingsButton({
           </TextView>
         </View>
 
-        <Image source={{ uri: voiceCoverUrl }} style={styles.voiceAvatar} />
+        <Image source={{ cache: 'force-cache', uri: voiceCoverUrl }} style={styles.voiceAvatar} />
       </PressableView>
     </View>
   );
