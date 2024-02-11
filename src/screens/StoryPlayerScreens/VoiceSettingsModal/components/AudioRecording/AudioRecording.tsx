@@ -59,7 +59,7 @@ export function AudioRecording({
           !isFree && !isFullVersion && <Icons.Lock style={styles.rightIcon} />
         )}
       </View>
-      <Image source={{ uri: coverUrl }} style={styles.voiceAvatar} />
+      <Image source={{ cache: 'force-cache', uri: coverUrl }} style={styles.voiceAvatar} />
       <TextView style={styles.text} type='bold'>
         {name}
       </TextView>
