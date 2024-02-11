@@ -227,10 +227,10 @@ export function useStoryPlayer({
         let playedTimeToSet = playedTime;
 
         if (audioPlayer) {
-          const { playingTime } = audioPlayer.getCurrentState();
+          const { isPlaying, playingTime } = audioPlayer.getCurrentState();
 
           if (moveGap !== undefined) {
-            playedTimeToSet = playingTime + moveGap;
+            playedTimeToSet = (isPlaying ? playingTime : playedTime) + moveGap;
           } else if (exactTime !== undefined) {
             playedTimeToSet = exactTime;
           }
