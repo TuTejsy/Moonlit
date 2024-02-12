@@ -5,24 +5,24 @@ import thirdStepImage from './images/thirdStep/thirdStep.png';
 export const STEPS = [
   {
     description:
-      'Create personalized audio stories, making bedtime stories more engaging and memorable',
+      'Pick the perfect voice to make each story feel like home and turn bedtime into an enchanting dream journey.',
     image: firstStepImage,
     tag: 'Unique voices',
-    title: 'Make Storytime\nSpecial',
+    title: 'Enliven bedtime\ntales',
   },
   {
     description:
-      'Download stories for offline access, to create the perfect storytelling experience for your child',
+      'Download your favorite tales and let your child drift into dreamland without distractions.',
     image: secondStepImage,
     tag: 'Play offline',
-    title: 'Enjoy Anytime,\nAnywhere',
+    title: 'Storytime, anytime',
   },
   {
     description:
-      "Explore a growing library of children's stories, keeping your children entertained and fostering a love for reading.",
+      'Rediscover timeless stories that captivate and soothe, sparking imagination and sweet dreams.',
     image: thirdStepImage,
     tag: 'Audio stories',
-    title: 'Discover a World\nof Stories',
+    title: 'A treasury of\ntimeless tales',
   },
 ];
 
