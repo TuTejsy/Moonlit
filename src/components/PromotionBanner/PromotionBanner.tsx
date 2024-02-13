@@ -49,10 +49,10 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
       <View style={styles.content}>
         <TextView style={styles.title} type='bold'>
-          Try {freeOfferDays} days{'\n'}for free
+          Unlock all fairytales
         </TextView>
         <TextView style={styles.subtitle}>
-          and discover a library{'\n'}of stories and unique voiceovers
+          and calming voices to{`\n`}gently lull your little one to sleep
         </TextView>
 
         <Image source={voicesImage} style={styles.voicesImage} />

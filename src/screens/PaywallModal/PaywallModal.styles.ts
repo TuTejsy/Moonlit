@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
+import { SCREEN_WIDTH, WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
@@ -13,7 +14,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     actions: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginTop: dh(16),
+      marginTop: dh(24),
     },
     bottomOverlayGradient: {
       bottom: 0,
@@ -35,31 +36,48 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       paddingTop: dh(24),
       position: 'relative',
     },
+    freeTrialContainer: {
+      alignItems: 'center',
+      backgroundColor: colors.opacityWhite(0.1),
+      borderRadius: 16,
+      flexDirection: 'row',
+      height: dw(72),
+      marginTop: dh(24),
+      paddingLeft: HORIZONTAL_PADDING,
+      paddingRight: 24,
+      width: SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
+    },
+    freeTrialSubtitle: {
+      ...fonts.size_12,
+      color: colors.opacityWhite(0.5),
+      marginTop: dh(4),
+    },
+    freeTrialSwitch: {
+      height: 28,
+      width: 52,
+    },
+    freeTrialTextContainer: {
+      flex: 1,
+    },
+    freeTrialTitle: {
+      ...fonts.size_16,
+      color: colors.white,
+    },
     image: {
       height: WINDOW_HEIGHT - insets.top - insets.bottom - 120,
       left: 0,
       position: 'absolute',
       top: 0,
     },
-    promotionSubtitle: {
-      ...fonts.size_12,
-      color: colors.opacityWhite(0.5),
-      marginTop: dh(8),
-    },
-    promotionTitle: {
+    promotionText: {
       ...fonts.size_14,
       color: colors.white,
-      marginTop: dh(24),
+      marginTop: dh(16),
       textAlign: 'center',
     },
     screen: {
       backgroundColor: colors.purple,
       flex: 1,
-    },
-    separator: {
-      backgroundColor: colors.opacityWhite(0.1),
-      height: 1,
-      width: '100%',
     },
     skipText: {
       ...fonts.size_14,
@@ -75,8 +93,9 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       textAlign: 'center',
     },
     title: {
-      ...fonts.size_32,
+      ...fonts.size_40,
       color: colors.white,
+      textAlign: 'center',
     },
     topOverlayGradient: {
       height: (WINDOW_HEIGHT * 2) / 3,
@@ -86,20 +105,22 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       width: WINDOW_WIDTH,
     },
     unlockButton: {
-      backgroundColor: colors.white,
-      borderRadius: 32,
       marginTop: dh(16),
-      paddingHorizontal: 34,
-      paddingVertical: 13,
+    },
+    unlockButtonGradient: {
+      alignItems: 'center',
+      borderRadius: 32,
+      height: dw(48),
+      justifyContent: 'center',
+      width: SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
     },
     unlockButtonText: {
       ...fonts.size_16,
-      color: colors.darkPurple,
+      color: colors.white,
     },
     voicesImage: {
-      height: dw(72),
-      marginBottom: dh(40),
-      marginTop: dh(24),
-      width: dw(308),
+      height: dw(140),
+      marginTop: dh(16),
+      width: WINDOW_WIDTH,
     },
   });

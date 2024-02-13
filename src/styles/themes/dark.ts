@@ -44,7 +44,7 @@ export const darkNavTheme: Theme = {
     background: commonColors.black,
     card: commonColors.white,
     primary: commonColors.white,
-    text: darkColors.white,
+    text: commonColors.white,
   },
   dark: true,
 };
