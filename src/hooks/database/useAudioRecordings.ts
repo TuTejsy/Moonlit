@@ -10,6 +10,11 @@ interface SortConfig {
   sortDescriptor: keyof AudioRecordingSchema;
 }
 
+const DEFAULT_SORT_CONFIG: SortConfig = {
+  reverse: true,
+  sortDescriptor: 'is_free',
+};
+
 export function useAudioRecordings(
   filter?: string,
   sortConfig?: SortConfig,
@@ -21,10 +26,7 @@ export function useAudioRecordings(
       result = result.filtered(filter);
     }
 
-    const config = sortConfig ?? {
-      reverse: false,
-      sortDescriptor: 'voice_id',
-    };
+    const config = sortConfig ?? DEFAULT_SORT_CONFIG;
 
     result = result.sorted(config.sortDescriptor, config.reverse);
 
