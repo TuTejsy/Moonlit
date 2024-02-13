@@ -28,7 +28,6 @@ export const SettingsScreen = () => {
   const handleHelpAndSupportPress = useCallback(() => {
     openComposer({
       defaultEmailLabel: 'Mail',
-      subject: 'Help and Support',
       to: SUPPORT_EMAIL,
     }).catch((error: Error) => {
       if (error?.message === 'No email apps available') {
@@ -62,7 +61,7 @@ export const SettingsScreen = () => {
 
       {!isFullVersion && <PromotionBanner />}
 
-      <MenuItem icon={<Icons.Info />} title='Help & Support' onPress={handleHelpAndSupportPress} />
+      <MenuItem icon={<Icons.Info />} title='Contact us' onPress={handleHelpAndSupportPress} />
       <MenuItem icon={<Icons.Doc />} title='Terms of service' onPress={openTermsAndConditions} />
       <MenuItem icon={<Icons.Privacy />} title='Privacy policy' onPress={openPrivacyPolicy} />
 
