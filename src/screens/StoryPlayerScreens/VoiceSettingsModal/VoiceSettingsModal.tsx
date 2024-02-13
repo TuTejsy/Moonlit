@@ -35,10 +35,7 @@ export function VoiceSettingsModal() {
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
-  const [audioRecordings, auidioRecoridngsVersion] = useAudioRecordings(`story_id = '${storyId}'`, {
-    reverse: true,
-    sortDescriptor: 'is_free',
-  });
+  const [audioRecordings, auidioRecoridngsVersion] = useAudioRecordings(`story_id = '${storyId}'`);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const flatListData = useMemo(
