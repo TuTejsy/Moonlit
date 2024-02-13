@@ -10,5 +10,9 @@ export const commonColors = {
   shadowDropIn: 'rgba(41, 44, 51, 0.04)',
   shadowDropOut: 'rgba(41, 44, 51, 0.08)',
   transparent: 'transparent',
+  unlockButtonGradientEnd: 'rgba(205, 160, 243, 1)',
+
+  unlockButtonGradientMiddle: 'rgba(162, 67, 239, 1)',
+  unlockButtonGradientStart: 'rgba(212, 75, 237, 1)',
   white: '#FFFFFF',
 };

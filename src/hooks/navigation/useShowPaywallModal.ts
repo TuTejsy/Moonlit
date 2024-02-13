@@ -20,15 +20,16 @@ export const useShowPaywallModal = () => {
   const showPaywallModal = useCallback(async () => {
     try {
       const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en');
-      const [product] = await adapty.getPaywallProducts(paywall);
+      const products = await adapty.getPaywallProducts(paywall);
 
-      if (!isFullVerion && product) {
+      if (!isFullVerion && products) {
         navigation.navigate(RootRoutes.PAYWALL_MODAL, {
-          product,
+          products,
         });
 
-        const offerDays =
-          product.subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
+        const offerDays = products.find(
+          (product) => !!product.subscriptionDetails?.introductoryOffers?.[0],
+        )?.subscriptionDetails?.introductoryOffers?.[0]?.subscriptionPeriod.numberOfUnits;
 
         if (offerDays) {
           dispatch(setFreeOfferDays(offerDays));

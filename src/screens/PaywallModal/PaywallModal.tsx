@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { View, Image } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { View, Image, Switch } from 'react-native';
 
 import { adapty, AdaptyProfile } from 'react-native-adapty';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -32,16 +32,50 @@ export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
 
-  const { product } = params;
-  const { price, subscriptionDetails } = product;
+  const { products } = params;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isFreeTrialEnabled, setIsFreeTrialEnabled] = useState(false);
 
   const dispatch = useAppDispatch();
 
-  const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(WINDOW_WIDTH);
+  const trialProduct = useMemo(
+    () => products.find((product) => !!product.subscriptionDetails?.introductoryOffers?.length),
+    [products],
+  );
 
-  const offerDays = subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
+  const fullProduct = useMemo(
+    () => products.find((product) => !product.subscriptionDetails?.introductoryOffers?.length),
+    [products],
+  );
+
+  const productText = useMemo(() => {
+    if (isFreeTrialEnabled) {
+      const offerDays =
+        trialProduct?.subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
+
+      const price = trialProduct?.price?.amount;
+      const currencyCode = trialProduct?.price?.currencyCode;
+
+      return `${offerDays} days free, then ${price} ${currencyCode}/week`;
+    }
+    const price = fullProduct?.price?.amount;
+    const currencyCode = fullProduct?.price?.currencyCode;
+
+    const subscriptionPeriod = fullProduct?.subscriptionDetails?.subscriptionPeriod.unit;
+
+    return `Try it now, just ${price} ${currencyCode}/${subscriptionPeriod}`;
+  }, [
+    fullProduct?.price?.amount,
+    fullProduct?.price?.currencyCode,
+    fullProduct?.subscriptionDetails?.subscriptionPeriod.unit,
+    isFreeTrialEnabled,
+    trialProduct?.price?.amount,
+    trialProduct?.price?.currencyCode,
+    trialProduct?.subscriptionDetails?.introductoryOffers,
+  ]);
+
+  const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(WINDOW_WIDTH);
 
   const unlockFullAccess = useCallback(
     (profile: AdaptyProfile) => {
@@ -60,16 +94,20 @@ export const PaywallModal = () => {
   }, [navigation]);
 
   const handleUnlockPress = useCallback(() => {
-    setIsLoading(true);
+    const product = isFreeTrialEnabled ? trialProduct : fullProduct;
 
-    adapty
-      .makePurchase(product)
-      .then(unlockFullAccess)
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [product, unlockFullAccess]);
+    if (product) {
+      setIsLoading(true);
+
+      adapty
+        .makePurchase(product)
+        .then(unlockFullAccess)
+        .catch(console.error)
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [fullProduct, isFreeTrialEnabled, trialProduct, unlockFullAccess]);
 
   const handleRestorePress = useCallback(() => {
     setIsLoading(true);
@@ -95,7 +133,7 @@ export const PaywallModal = () => {
         <LinearGradient
           angle={180}
           colors={[colors.opacityLightGradientPurple(0.3), colors.lightGradientPurple]}
-          locations={[0, 1]}
+          locations={[0, 0.8]}
           style={styles.topOverlayGradient}
         />
         <LinearGradient
@@ -110,30 +148,56 @@ export const PaywallModal = () => {
         </TextView>
 
         <TextView style={styles.title} type='bold'>
-          Try {offerDays} days for free
+          Get access to{`\n`}all tales
         </TextView>
 
         <TextView style={styles.subtitle} type='regular'>
-          and discover a library of stories{`\n`}and unique voices
+          Discover unique voices and{`\n`}listen classic fary tales
         </TextView>
 
         <Image source={voicesImage} style={styles.voicesImage} />
 
-        <View style={styles.separator} />
-
-        <TextView style={styles.promotionTitle} type='regular'>
-          Try {offerDays} days free and then{`\n`}
-          {price?.localizedString} per week
+        <TextView style={styles.promotionText} type='regular'>
+          {productText}
+          {`\n`}
+          Auto-renewable. Cancel anytime
         </TextView>
 
-        <TextView style={styles.promotionSubtitle} type='regular'>
-          The trial version can be canceled at any time
-        </TextView>
+        <View style={styles.freeTrialContainer}>
+          <View style={styles.freeTrialTextContainer}>
+            <TextView style={styles.freeTrialTitle} type='bold'>
+              Not shure yet
+            </TextView>
+            <TextView style={styles.freeTrialSubtitle}>Enable free trial</TextView>
+          </View>
+
+          <Switch
+            style={styles.freeTrialSwitch}
+            value={isFreeTrialEnabled}
+            trackColor={{
+              false: colors.opacityWhite(0.2),
+              true: colors.unlockButtonGradientStart,
+            }}
+            onValueChange={setIsFreeTrialEnabled}
+          />
+        </View>
 
         <PressableView style={styles.unlockButton} onPress={handleUnlockPress}>
-          <TextView style={styles.unlockButtonText} type='bold'>
-            Get {offerDays} days free
-          </TextView>
+          <LinearGradient
+            useAngle
+            angle={45}
+            locations={[0, 0.5, 1]}
+            style={styles.unlockButtonGradient}
+            colors={[
+              colors.unlockButtonGradientStart,
+              colors.unlockButtonGradientMiddle,
+              colors.unlockButtonGradientEnd,
+            ]}
+          >
+            <TextView style={styles.unlockButtonText} type='bold'>
+              Go to lisen stories
+            </TextView>
+          </LinearGradient>
         </PressableView>
 
         <View style={styles.actions}>

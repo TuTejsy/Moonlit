@@ -13,7 +13,7 @@ export interface RootStackParams extends Record<string, object | undefined> {
   };
 
   [RootRoutes.PAYWALL_MODAL]: {
-    product: AdaptyPaywallProduct;
+    products: AdaptyPaywallProduct[];
   };
 
   [RootRoutes.VOICE_SETTINGS_MODAL]: {
