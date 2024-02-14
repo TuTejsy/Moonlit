@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import firstStepImage from './images/firstStep/firstStep.png';
 import secondStepImage from './images/secondStep/secondStep.png';
 import thirdStepImage from './images/thirdStep/thirdStep.png';
@@ -21,7 +22,7 @@ export const STEPS = [
     description:
       'Rediscover timeless stories that captivate and soothe, sparking imagination and sweet dreams.',
     image: thirdStepImage,
-    tag: 'Audio stories',
+    tag: 'Rich collection',
     title: 'A treasury of\ntimeless tales',
   },
 ];
