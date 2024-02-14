@@ -28,7 +28,10 @@ export function useAudioRecordings(
 
     const config = sortConfig ?? DEFAULT_SORT_CONFIG;
 
-    result = result.sorted(config.sortDescriptor, config.reverse);
+    result = result.sorted([
+      [config.sortDescriptor, config.reverse],
+      ['voice_id', false],
+    ]);
 
     return result;
     // eslint-disable-next-line react-hooks/exhaustive-deps
