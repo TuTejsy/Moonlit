@@ -13,6 +13,7 @@ export interface SortConfig {
 export function useStories(
   filter?: string,
   sortConfig?: SortConfig,
+  maxNum?: number,
 ): [Realm.Results<StorySchema>, number] {
   const stories = useMemo(() => {
     let result = StoriesDB.objects();
@@ -47,5 +48,8 @@ export function useStories(
     };
   }, [stories]);
 
-  return [stories, storiesVersion];
+  return [
+    (maxNum ? stories.slice(0, maxNum) : stories) as unknown as Realm.Results<StorySchema>,
+    storiesVersion,
+  ];
 }

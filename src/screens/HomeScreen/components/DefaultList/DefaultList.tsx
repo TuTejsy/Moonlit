@@ -67,7 +67,7 @@ export const DefaultList = React.memo(
       FEATURING_STORIES_FILTER,
       FEATURING_STORIES_CONFIG,
     );
-    const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER);
+    const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER, undefined, 5);
 
     const handleSeeFeaturingTales = useCallback(() => {
       navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
