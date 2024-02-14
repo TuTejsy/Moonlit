@@ -35,10 +35,10 @@ export const HomeScreen = () => {
   }, [searchText]);
 
   const [allStories, allStoriesVersion] = useStories(searchDecriptor);
-  const [popularStories, popularStoriesVersion] = useStories(undefined, POPULAR_STORIES_CONFIG);
+  const [popularStories, popularStoriesVersion] = useStories(undefined, POPULAR_STORIES_CONFIG, 5);
 
   const popularSearchItems = useMemo(
-    () => popularStories.slice(0, 5).map((story) => story.name),
+    () => popularStories.map((story) => story.name),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [popularStoriesVersion],
   );

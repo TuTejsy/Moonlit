@@ -4,7 +4,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
-import { LARGE_TITLE_HEIGHT } from '@/components/Headers/ScreenHeader/ScreenHeader.constants';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
@@ -23,11 +22,11 @@ export const StoriesListScreen = () => {
   const { colors } = useTheme();
 
   const { params } = useAppRoute<SharedRoutes.STORIES_LIST>();
-  const { storiesFilter, title } = params || {};
+  const { storiesFilter, storiesSortConfig, title } = params || {};
 
   const insets = useSafeAreaInsets();
 
-  const [stories, storiesVersion] = useStories(storiesFilter);
+  const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfig);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const headerStories = useMemo(() => stories.slice(0, 2), [stories, storiesVersion]);
