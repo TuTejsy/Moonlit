@@ -1,0 +1,27 @@
+diff --git a/node_modules/react-native/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm b/node_modules/react-native/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
+index 231777c..f3bfdb3 100644
+--- a/node_modules/react-native/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
++++ b/node_modules/react-native/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
+@@ -1,5 +1,5 @@
+-/*
+- * Copyright (c) Meta Platforms, Inc. and affiliates.
++
++/* Copyright (c) Meta Platforms, Inc. and affiliates.
+  *
+  * This source code is licensed under the MIT license found in the
+  * LICENSE file in the root directory of this source tree.
+@@ -78,6 +78,14 @@ - (void)updateProps:(const Props::Shared &)props oldProps:(const Props::Shared &
+     needsUpdateTitle = YES;
+   }
+     
++  if (newConcreteProps.tintColor != oldConcreteProps.tintColor) {
++    [_refreshControl setTintColor: RCTUIColorFromSharedColor(newConcreteProps.tintColor)];
++  }
++    
++  if (newConcreteProps.progressViewOffset != oldConcreteProps.progressViewOffset) {
++    [_refreshControl setBounds:CGRectMake(_refreshControl.bounds.origin.x, newConcreteProps.progressViewOffset, _refreshControl.bounds.size.width, _refreshControl.bounds.size.height)];
++  }
++
+   if (needsUpdateTitle) {
+     [self _updateTitle];
+   }
