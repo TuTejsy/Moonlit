@@ -4,6 +4,9 @@ import MediaPlayer
 
 @objc protocol MNTAudioPlayerDelegate {
   func playerDidFinishPlaying()
+  func playerDidStartPlaying(playingTime: Double)
+  func playerDidPausedPlaying(playingTime: Double)
+
 }
 
 @objc(MNTAudioPlayer)
@@ -123,7 +126,7 @@ class MNTAudioPlayer: NSObject, AVAudioPlayerDelegate {
       MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playingTime
       
       let result = play(playingTime)
-
+      self.delegate?.playerDidStartPlaying(playingTime: playingTime)
       
       return result ? .success : .commandFailed
     }
@@ -132,6 +135,8 @@ class MNTAudioPlayer: NSObject, AVAudioPlayerDelegate {
       let result = pause()
       
       MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = playingTime
+      self.delegate?.playerDidPausedPlaying(playingTime: playingTime)
+      
       return result ? .success : .commandFailed
     }
     

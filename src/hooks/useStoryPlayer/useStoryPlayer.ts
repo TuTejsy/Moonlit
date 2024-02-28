@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { AppState, EmitterSubscription, NativeEventEmitter } from 'react-native';
+import { AppState, NativeEventEmitter } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
 import RNFS from 'react-native-fs';
@@ -31,8 +31,6 @@ export function useStoryPlayer({
   title,
 }: useStoryPlayerProps) {
   const eventEmmiterRef = useRef(new NativeEventEmitter(audioPlayer));
-  const audioPlayerDidFinishPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
-  const audioPlayerDidInterruptPlayingSubscriptionRef = useRef<EmitterSubscription | null>(null);
   const isStoryPlayNotifiedRef = useRef(false);
   const currentPlayCallPromise = useRef<Promise<void> | null>(null);
 
@@ -265,7 +263,7 @@ export function useStoryPlayer({
   );
 
   useEffect(() => {
-    audioPlayerDidFinishPlayingSubscriptionRef.current = eventEmmiterRef.current?.addListener(
+    const audioPlayerDidFinishPlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_FINISH,
       () => {
         reduxDispatch(stopPlaying());
@@ -273,7 +271,7 @@ export function useStoryPlayer({
       },
     );
 
-    audioPlayerDidInterruptPlayingSubscriptionRef.current = eventEmmiterRef.current?.addListener(
+    const audioPlayerDidInterruptPlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_INTERRUPT,
       ({ playingTime }) => {
         reduxDispatch(stopPlaying());
@@ -281,11 +279,31 @@ export function useStoryPlayer({
       },
     );
 
+    const audioPlayerDidPausePlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
+      AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_PAUSE,
+      ({ playingTime }) => {
+        reduxDispatch(stopPlaying());
+        setPlayedTime(playingTime);
+      },
+    );
+
+    const audioPlayerDidStartPlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
+      AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_START,
+      ({ playingTime }) => {
+        if (selectedAudioRecordingIdMutableValue.current) {
+          reduxDispatch(startPlaying(selectedAudioRecordingIdMutableValue.current));
+          setPlayedTime(playingTime);
+        }
+      },
+    );
+
     return () => {
-      audioPlayerDidFinishPlayingSubscriptionRef.current?.remove();
-      audioPlayerDidInterruptPlayingSubscriptionRef.current?.remove();
+      audioPlayerDidFinishPlayingSubscriptionRef.remove();
+      audioPlayerDidInterruptPlayingSubscriptionRef.remove();
+      audioPlayerDidStartPlayingSubscriptionRef.remove();
+      audioPlayerDidPausePlayingSubscriptionRef.remove();
     };
-  }, [reduxDispatch]);
+  }, [reduxDispatch, selectedAudioRecordingIdMutableValue]);
 
   useEffect(() => {
     if (audioRecordingId) {
