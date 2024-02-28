@@ -72,7 +72,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     promotionText: {
       ...fonts.size_14,
       color: colors.white,
-      marginTop: dh(16),
+      marginTop: dh(32),
       textAlign: 'center',
     },
     screen: {
@@ -89,7 +89,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     subtitle: {
       ...fonts.size_16,
       color: colors.opacityWhite(0.7),
-      marginTop: dh(8),
+      marginTop: dh(16),
       textAlign: 'center',
     },
     title: {
@@ -120,7 +120,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     },
     voicesImage: {
       height: dw(140),
-      marginTop: dh(16),
+      marginTop: dh(40),
       width: WINDOW_WIDTH,
     },
   });
