@@ -52,9 +52,7 @@ export const DefaultList = React.memo(
   }: DefaultListPropTypes) => {
     const isFullVersion = useAppSelector(selectIsFullVersion);
 
-    const stylesContext = useMemo(() => ({ isFullVersion }), [isFullVersion]);
-
-    const styles = useMakeStyles(makeStyles, stylesContext);
+    const styles = useMakeStyles(makeStyles);
     const { colors } = useTheme();
 
     const insets = useSafeAreaInsets();
@@ -146,6 +144,19 @@ export const DefaultList = React.memo(
 
         <CategoriesList />
 
+        {!isFullVersion && (
+          <>
+            <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
+            <MediumStoriesList
+              stories={freeStories}
+              storiesVersion={freeStoriesVersion}
+              style={styles.freeList}
+            />
+
+            <PromotionBanner style={styles.promotionBanner} />
+          </>
+        )}
+
         <SectionHeader title='Popular tales' onSeeAllPress={handleSeePopularTales} />
         <MediumStoriesList
           stories={popularStories}
@@ -153,18 +164,6 @@ export const DefaultList = React.memo(
           style={styles.popularList}
         />
 
-        {!isFullVersion && (
-          <>
-            <PromotionBanner style={styles.promotionBanner} />
-
-            <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
-            <MediumStoriesList
-              stories={freeStories}
-              storiesVersion={freeStoriesVersion}
-              style={styles.freeList}
-            />
-          </>
-        )}
         <SectionHeader title='All tales' onSeeAllPress={handleSeeAllTales} />
         <SmallStoriesList
           displayCount={6}

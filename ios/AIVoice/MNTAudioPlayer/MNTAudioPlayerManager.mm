@@ -44,7 +44,9 @@ RCT_EXPORT_MODULE()
   return @
   [
     @"PLAYING_DID_FINISH",
-    @"PLAYING_DID_INTERRUPT"
+    @"PLAYING_DID_INTERRUPT",
+    @"PLAYING_DID_START",
+    @"PLAYING_DID_PAUSE"
   ];
 }
 
@@ -120,8 +122,15 @@ RCT_EXPORT_MODULE()
 #pragma mark - MNTAudioPlayerDelegate
 
 - (void)playerDidFinishPlaying {
-  
   [self sendEventWithName:@"PLAYING_DID_FINISH" body: @{}];
+}
+
+- (void)playerDidStartPlayingWithPlayingTime:(double)playingTime {
+  [self sendEventWithName:@"PLAYING_DID_START" body:@{ @"playingTime": @(playingTime)}];
+}
+
+- (void)playerDidPausedPlayingWithPlayingTime:(double)playingTime {
+  [self sendEventWithName:@"PLAYING_DID_PAUSE" body:@{ @"playingTime": @(playingTime)}];
 }
 
 @end

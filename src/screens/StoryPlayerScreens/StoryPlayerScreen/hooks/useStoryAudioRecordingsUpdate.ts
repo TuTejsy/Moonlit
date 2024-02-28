@@ -47,18 +47,20 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
         notUpserted.forEach(({ err }) => console.error(err));
       }
 
-      const audioRecordingIdsToRemove: Array<number> = [];
-      const allAudioRecordings = AudioRecordingsDB.objects();
+      if (audioRecordings.length) {
+        const audioRecordingIdsToRemove: Array<number> = [];
+        const allAudioRecordings = AudioRecordingsDB.objects();
 
-      for (let i = 0; i < allAudioRecordings.length; i++) {
-        const audioRecording = allAudioRecordings[i];
+        for (let i = 0; i < allAudioRecordings.length; i++) {
+          const audioRecording = allAudioRecordings[i];
 
-        if (!audioRecordingsIdsSet.has(audioRecording.id)) {
-          audioRecordingIdsToRemove.push(audioRecording.id);
+          if (!audioRecordingsIdsSet.has(audioRecording.id)) {
+            audioRecordingIdsToRemove.push(audioRecording.id);
+          }
         }
-      }
 
-      await AudioRecordingsDB.delete(audioRecordingIdsToRemove);
+        await AudioRecordingsDB.delete(audioRecordingIdsToRemove);
+      }
     } catch (err) {
       console.error(err);
     } finally {
