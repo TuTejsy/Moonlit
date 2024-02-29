@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { AxiosError } from 'axios';
+
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { StoriesRepository } from '@/services/repositories/stories/stories';
@@ -8,6 +10,8 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
   const [isLoading, setIsLoading] = useState(false);
 
   const updateAudioRecordings = useCallback(async () => {
+    let error: AxiosError | null = null;
+
     try {
       setIsLoading(true);
       const audioRecordings = await StoriesRepository.getAudioRecordings(storyId);
@@ -63,13 +67,20 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
       }
     } catch (err) {
       console.error(err);
+      error = err as AxiosError;
     } finally {
       setIsLoading(false);
     }
+
+    return error;
   }, [storyId]);
 
   useEffect(() => {
-    updateAudioRecordings();
+    updateAudioRecordings().then((error) => {
+      if (error) {
+        updateAudioRecordings();
+      }
+    });
   }, []);
 
   return [isLoading, updateAudioRecordings];
