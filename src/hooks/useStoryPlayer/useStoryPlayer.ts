@@ -60,7 +60,7 @@ export function useStoryPlayer({
   }, [isStoryPlaying, selectedAudioRecording?.story_id, selectedAudioRecordingId]);
 
   const audioRecordingIdRef = useMutableValue(audioRecordingId);
-  const isCurrentStoryPlayingMutableValue = useMutableValue(isStoryPlaying);
+  const isCurrentStoryPlayingMutableValue = useMutableValue(isCurrentStoryPlaying);
   const selectedAudioRecordingIdMutableValue = useMutableValue(selectedAudioRecordingId);
   const selectedAudioRecordingCachedNameMutableValue = useMutableValue(
     selectedAudioRecording?.cached_name,
@@ -323,17 +323,24 @@ export function useStoryPlayer({
 
         const { filePath, isPlaying, playingTime } = audioPlayer.getCurrentState();
 
-        setPlayedTime(playingTime);
-
-        if (filePath !== `${selectedAudioRecordingCachedNameMutableValue.current}`) {
+        if (
+          filePath !==
+          `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedNameMutableValue.current}`
+        ) {
           return;
         }
+
+        setPlayedTime(playingTime);
 
         if (isPlaying && !isCurrentStoryPlayingMutableValue.current) {
           if (selectedAudioRecordingIdMutableValue.current) {
             reduxDispatch(startPlaying(selectedAudioRecordingIdMutableValue.current));
           }
-        } else if (isCurrentStoryPlayingMutableValue.current && !currentPlayCallPromise.current) {
+        } else if (
+          !isPlaying &&
+          isCurrentStoryPlayingMutableValue.current &&
+          !currentPlayCallPromise.current
+        ) {
           reduxDispatch(stopPlaying());
         }
 
@@ -354,7 +361,11 @@ export function useStoryPlayer({
             if (selectedAudioRecordingIdMutableValue.current) {
               reduxDispatch(startPlaying(selectedAudioRecordingIdMutableValue.current));
             }
-          } else if (isCurrentStoryPlayingMutableValue.current && !currentPlayCallPromise.current) {
+          } else if (
+            !isPlaying &&
+            isCurrentStoryPlayingMutableValue.current &&
+            !currentPlayCallPromise.current
+          ) {
             reduxDispatch(stopPlaying());
           }
 
@@ -379,11 +390,14 @@ export function useStoryPlayer({
         if (state === 'active' && audioPlayer) {
           const { filePath, isPlaying, playingTime } = audioPlayer.getCurrentState();
 
-          setPlayedTime(playingTime);
-
-          if (filePath !== `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecording?.cached_name}`) {
+          if (
+            filePath !==
+            `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedNameMutableValue.current}`
+          ) {
             return;
           }
+
+          setPlayedTime(playingTime);
 
           if (isPlaying) {
             if (selectedAudioRecording?.id) {

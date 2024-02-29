@@ -53,7 +53,7 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
 
       if (audioRecordings.length) {
         const audioRecordingIdsToRemove: Array<number> = [];
-        const allAudioRecordings = AudioRecordingsDB.objects();
+        const allAudioRecordings = AudioRecordingsDB.objects().filtered(`story_id = '${storyId}'`);
 
         for (let i = 0; i < allAudioRecordings.length; i++) {
           const audioRecording = allAudioRecordings[i];
