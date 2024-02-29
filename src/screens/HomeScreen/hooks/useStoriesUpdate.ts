@@ -11,6 +11,8 @@ export function useStoriesUpdate(): [boolean, () => void] {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const updateStories = useCallback(async () => {
+    let error: AxiosError | null = null;
+
     try {
       setIsRefreshing(true);
       const stories = await StoriesRepository.getStories();
@@ -81,13 +83,20 @@ export function useStoriesUpdate(): [boolean, () => void] {
     } catch (err) {
       console.log((err as AxiosError).request);
       console.error(err);
+      error = err as AxiosError;
     } finally {
       setIsRefreshing(false);
     }
+
+    return error;
   }, []);
 
   useEffect(() => {
-    updateStories();
+    updateStories().then((error) => {
+      if (error) {
+        updateStories();
+      }
+    });
   }, []);
 
   return [isRefreshing, updateStories];
