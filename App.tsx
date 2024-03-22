@@ -43,7 +43,7 @@ function App(): JSX.Element {
           <SharedKeyboardHeightProvider>
             <SafeAreaProvider initialMetrics={initialWindowMetrics}>
               <GestureHandlerRootView style={{ flex: 1 }}>
-                <StatusBar backgroundColor={theme.colors.white} barStyle='light-content' />
+                <StatusBar backgroundColor={theme.colors.purple} barStyle='light-content' />
                 <NavigationContainer
                   ref={navigationService.setRef}
                   theme={darkNavTheme}
