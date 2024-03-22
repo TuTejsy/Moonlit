@@ -26,6 +26,8 @@
 		8828EF5A2B65D569006D4AED /* MNTAudioPlayerSpec-generated.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8828EF582B65D568006D4AED /* MNTAudioPlayerSpec-generated.mm */; };
 		883424AA2A93C26700AED6E9 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883424A92A93C26700AED6E9 /* GradientView.swift */; };
 		883424AC2A93C37B00AED6E9 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 883424AB2A93C37B00AED6E9 /* Colors.xcassets */; };
+		8874C4A42BAD6DF5002449F1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8874C4A32BAD6DF5002449F1 /* PrivacyInfo.xcprivacy */; };
+		8874C4A52BAD6DF5002449F1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8874C4A32BAD6DF5002449F1 /* PrivacyInfo.xcprivacy */; };
 		88AC29952B5F97E90092EFF3 /* Terms_and_Conditions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AC29932B5F97E80092EFF3 /* Terms_and_Conditions.pdf */; };
 		88AC29962B5F97E90092EFF3 /* Privacy_policy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AC29942B5F97E80092EFF3 /* Privacy_policy.pdf */; };
 		88E122BA29E1BC8A00C30444 /* ZRKAudioRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */; };
@@ -85,6 +87,7 @@
 		8828EF592B65D569006D4AED /* MNTAudioPlayerSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNTAudioPlayerSpec.h; sourceTree = "<group>"; };
 		883424A92A93C26700AED6E9 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		883424AB2A93C37B00AED6E9 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		8874C4A32BAD6DF5002449F1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		88AC29932B5F97E80092EFF3 /* Terms_and_Conditions.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Terms_and_Conditions.pdf; sourceTree = "<group>"; };
 		88AC29942B5F97E80092EFF3 /* Privacy_policy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Privacy_policy.pdf; sourceTree = "<group>"; };
 		88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZRKAudioRecorderManager.m; sourceTree = "<group>"; };
@@ -149,6 +152,7 @@
 		13B07FAE1A68108700A75B9A /* AIVoice */ = {
 			isa = PBXGroup;
 			children = (
+				8874C4A32BAD6DF5002449F1 /* PrivacyInfo.xcprivacy */,
 				8805A8602B6A27A1009EDE6C /* MNTShareManager */,
 				8828EF3E2B65AA7E006D4AED /* MNTAudioPlayer */,
 				88AC298E2B5F953C0092EFF3 /* Files */,
@@ -441,6 +445,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8874C4A52BAD6DF5002449F1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +456,7 @@
 				88AC29952B5F97E90092EFF3 /* Terms_and_Conditions.pdf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				2B81BAADBBD04FFE8FCE5F04 /* Poppins-Regular.ttf in Resources */,
+				8874C4A42BAD6DF5002449F1 /* PrivacyInfo.xcprivacy in Resources */,
 				883424AC2A93C37B00AED6E9 /* Colors.xcassets in Resources */,
 				88286A4B2AF956E400D85031 /* LaunchScreen.storyboard in Resources */,
 				10305B375D664034A5405623 /* Poppins-SemiBold.ttf in Resources */,
