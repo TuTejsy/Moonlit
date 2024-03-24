@@ -43,7 +43,7 @@
     "react-native-screens": "^3.29.0",
     "react-native-svg": "^14.1.0",
     "react-redux": "^9.1.0",
-    "realm": "^12.3.1",
+    "realm": "^12.6.2",
     "redux-persist": "^6.0.0",
     "rn-dominant-color": "^1.7.2",
     "yarn": "^1.22.21"

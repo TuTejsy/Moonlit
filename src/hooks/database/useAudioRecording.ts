@@ -4,7 +4,6 @@ import { ObjectChangeCallback } from 'realm';
 
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
-import { mapById } from '@/utils/getMapById';
 import { cloneRealmObject } from '@/utils/realm/cloneRealmObject';
 
 import { useMutableValue } from '../useMutableValue';
@@ -30,21 +29,12 @@ export function useAudioRecording(
     if (audioRecording) {
       setAudioRecording(cloneRealmObject(audioRecording));
       setAudioRecordingVersion(audioRecordingVersionRef.current + 1);
-      let propsToWatchMap: { [props: string]: boolean } = {};
-
-      if (propsToWatch) {
-        propsToWatchMap = mapById.toExists(propsToWatch);
-      }
 
       const listener: ObjectChangeCallback<AudioRecordingSchema> = (
         nextaudioRecording,
         { changedProperties, deleted },
       ) => {
-        let isAnythingChanged = !!changedProperties.length;
-
-        if (propsToWatch) {
-          isAnythingChanged = changedProperties.some((changedProp) => propsToWatchMap[changedProp]);
-        }
+        const isAnythingChanged = !!changedProperties.length;
 
         if (isAnythingChanged) {
           setAudioRecordingVersion(audioRecordingVersionRef.current + 1);
@@ -57,7 +47,9 @@ export function useAudioRecording(
         }
       };
 
-      AudioRecordingsDB.performAfterTransactionComplete(() => audioRecording.addListener(listener));
+      AudioRecordingsDB.performAfterTransactionComplete(() =>
+        audioRecording.addListener(listener, propsToWatch),
+      );
 
       return () => {
         audioRecording.removeListener(listener);
