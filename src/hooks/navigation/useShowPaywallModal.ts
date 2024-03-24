@@ -19,7 +19,10 @@ export const useShowPaywallModal = () => {
 
   const showPaywallModal = useCallback(async () => {
     try {
-      const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en');
+      const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en', {
+        fetchPolicy: 'return_cache_data_if_not_expired_else_load',
+        maxAgeSeconds: 60 * 60 * 24, // 24 hours
+      });
       const products = await adapty.getPaywallProducts(paywall);
 
       if (!isFullVerion && products) {
