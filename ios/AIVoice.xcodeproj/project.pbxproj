@@ -758,6 +758,7 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-DFB_SONARKIT_ENABLED=1",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.moonlit;
 				PRODUCT_NAME = AIVoice;

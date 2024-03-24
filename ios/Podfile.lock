@@ -5,7 +5,7 @@ PODS:
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.73.6)
-  - Flipper (0.201.0):
+  - Flipper (0.212.0):
     - Flipper-Folly (~> 2.6)
   - Flipper-Boost-iOSX (1.76.0.1.11)
   - Flipper-DoubleConversion (3.2.0.1)
@@ -19,46 +19,46 @@ PODS:
     - OpenSSL-Universal (= 1.1.1100)
   - Flipper-Glog (0.5.0.5)
   - Flipper-PeerTalk (0.0.4)
-  - FlipperKit (0.201.0):
-    - FlipperKit/Core (= 0.201.0)
-  - FlipperKit/Core (0.201.0):
-    - Flipper (~> 0.201.0)
+  - FlipperKit (0.212.0):
+    - FlipperKit/Core (= 0.212.0)
+  - FlipperKit/Core (0.212.0):
+    - Flipper (~> 0.212.0)
     - FlipperKit/CppBridge
     - FlipperKit/FBCxxFollyDynamicConvert
     - FlipperKit/FBDefines
     - FlipperKit/FKPortForwarding
-    - SocketRocket (~> 0.6.0)
-  - FlipperKit/CppBridge (0.201.0):
-    - Flipper (~> 0.201.0)
-  - FlipperKit/FBCxxFollyDynamicConvert (0.201.0):
+    - SocketRocket (~> 0.7.0)
+  - FlipperKit/CppBridge (0.212.0):
+    - Flipper (~> 0.212.0)
+  - FlipperKit/FBCxxFollyDynamicConvert (0.212.0):
     - Flipper-Folly (~> 2.6)
-  - FlipperKit/FBDefines (0.201.0)
-  - FlipperKit/FKPortForwarding (0.201.0):
+  - FlipperKit/FBDefines (0.212.0)
+  - FlipperKit/FKPortForwarding (0.212.0):
     - CocoaAsyncSocket (~> 7.6)
     - Flipper-PeerTalk (~> 0.0.4)
-  - FlipperKit/FlipperKitHighlightOverlay (0.201.0)
-  - FlipperKit/FlipperKitLayoutHelpers (0.201.0):
+  - FlipperKit/FlipperKitHighlightOverlay (0.212.0)
+  - FlipperKit/FlipperKitLayoutHelpers (0.212.0):
     - FlipperKit/Core
     - FlipperKit/FlipperKitHighlightOverlay
     - FlipperKit/FlipperKitLayoutTextSearchable
-  - FlipperKit/FlipperKitLayoutIOSDescriptors (0.201.0):
+  - FlipperKit/FlipperKitLayoutIOSDescriptors (0.212.0):
     - FlipperKit/Core
     - FlipperKit/FlipperKitHighlightOverlay
     - FlipperKit/FlipperKitLayoutHelpers
-  - FlipperKit/FlipperKitLayoutPlugin (0.201.0):
+  - FlipperKit/FlipperKitLayoutPlugin (0.212.0):
     - FlipperKit/Core
     - FlipperKit/FlipperKitHighlightOverlay
     - FlipperKit/FlipperKitLayoutHelpers
     - FlipperKit/FlipperKitLayoutIOSDescriptors
     - FlipperKit/FlipperKitLayoutTextSearchable
-  - FlipperKit/FlipperKitLayoutTextSearchable (0.201.0)
-  - FlipperKit/FlipperKitNetworkPlugin (0.201.0):
+  - FlipperKit/FlipperKitLayoutTextSearchable (0.212.0)
+  - FlipperKit/FlipperKitNetworkPlugin (0.212.0):
     - FlipperKit/Core
-  - FlipperKit/FlipperKitReactPlugin (0.201.0):
+  - FlipperKit/FlipperKitReactPlugin (0.212.0):
     - FlipperKit/Core
-  - FlipperKit/FlipperKitUserDefaultsPlugin (0.201.0):
+  - FlipperKit/FlipperKitUserDefaultsPlugin (0.212.0):
     - FlipperKit/Core
-  - FlipperKit/SKIOSNetworkPlugin (0.201.0):
+  - FlipperKit/SKIOSNetworkPlugin (0.212.0):
     - FlipperKit/Core
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
@@ -145,7 +145,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/CoreModulesHeaders (0.73.6):
     - glog
@@ -159,7 +159,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/Default (0.73.6):
     - glog
@@ -172,7 +172,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/DevSupport (0.73.6):
     - glog
@@ -188,7 +188,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTActionSheetHeaders (0.73.6):
     - glog
@@ -202,7 +202,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTAnimationHeaders (0.73.6):
     - glog
@@ -216,7 +216,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTBlobHeaders (0.73.6):
     - glog
@@ -230,7 +230,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTImageHeaders (0.73.6):
     - glog
@@ -244,7 +244,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTLinkingHeaders (0.73.6):
     - glog
@@ -258,7 +258,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTNetworkHeaders (0.73.6):
     - glog
@@ -272,7 +272,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTSettingsHeaders (0.73.6):
     - glog
@@ -286,7 +286,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTTextHeaders (0.73.6):
     - glog
@@ -300,7 +300,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTVibrationHeaders (0.73.6):
     - glog
@@ -314,7 +314,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-Core/RCTWebSocket (0.73.6):
     - glog
@@ -328,7 +328,7 @@ PODS:
     - React-perflogger
     - React-runtimescheduler
     - React-utils
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
     - Yoga
   - React-CoreModules (0.73.6):
     - RCT-Folly (= 2022.05.16.00)
@@ -340,7 +340,7 @@ PODS:
     - React-RCTBlob
     - React-RCTImage (= 0.73.6)
     - ReactCommon
-    - SocketRocket (= 0.6.1)
+    - SocketRocket (= 0.7.0)
   - React-cxxreact (0.73.6):
     - boost (= 1.83.0)
     - DoubleConversion
@@ -1255,7 +1255,7 @@ PODS:
     - React-jsi (= 0.73.6)
     - React-logger (= 0.73.6)
     - React-perflogger (= 0.73.6)
-  - RealmJS (12.5.1):
+  - RealmJS (12.6.2):
     - React
   - RNDominantColor (1.7.2):
     - React
@@ -1398,33 +1398,33 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - SocketRocket (0.6.1)
+  - SocketRocket (0.7.0)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
-  - Flipper (= 0.201.0)
+  - Flipper (= 0.212.0)
   - Flipper-Boost-iOSX (= 1.76.0.1.11)
   - Flipper-DoubleConversion (= 3.2.0.1)
   - Flipper-Fmt (= 7.1.7)
   - Flipper-Folly (= 2.6.10)
   - Flipper-Glog (= 0.5.0.5)
   - Flipper-PeerTalk (= 0.0.4)
-  - FlipperKit (= 0.201.0)
-  - FlipperKit/Core (= 0.201.0)
-  - FlipperKit/CppBridge (= 0.201.0)
-  - FlipperKit/FBCxxFollyDynamicConvert (= 0.201.0)
-  - FlipperKit/FBDefines (= 0.201.0)
-  - FlipperKit/FKPortForwarding (= 0.201.0)
-  - FlipperKit/FlipperKitHighlightOverlay (= 0.201.0)
-  - FlipperKit/FlipperKitLayoutPlugin (= 0.201.0)
-  - FlipperKit/FlipperKitLayoutTextSearchable (= 0.201.0)
-  - FlipperKit/FlipperKitNetworkPlugin (= 0.201.0)
-  - FlipperKit/FlipperKitReactPlugin (= 0.201.0)
-  - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.201.0)
-  - FlipperKit/SKIOSNetworkPlugin (= 0.201.0)
+  - FlipperKit (= 0.212.0)
+  - FlipperKit/Core (= 0.212.0)
+  - FlipperKit/CppBridge (= 0.212.0)
+  - FlipperKit/FBCxxFollyDynamicConvert (= 0.212.0)
+  - FlipperKit/FBDefines (= 0.212.0)
+  - FlipperKit/FKPortForwarding (= 0.212.0)
+  - FlipperKit/FlipperKitHighlightOverlay (= 0.212.0)
+  - FlipperKit/FlipperKitLayoutPlugin (= 0.212.0)
+  - FlipperKit/FlipperKitLayoutTextSearchable (= 0.212.0)
+  - FlipperKit/FlipperKitNetworkPlugin (= 0.212.0)
+  - FlipperKit/FlipperKitReactPlugin (= 0.212.0)
+  - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.212.0)
+  - FlipperKit/SKIOSNetworkPlugin (= 0.212.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
@@ -1663,14 +1663,14 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   FBLazyVector: f64d1e2ea739b4d8f7e4740cde18089cd97fe864
-  Flipper: c7a0093234c4bdd456e363f2f19b2e4b27652d44
+  Flipper: b7a3d90634c855fece9d491ca69f682f1244984f
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
   Flipper-DoubleConversion: 2dc99b02f658daf147069aad9dbd29d8feb06d30
   Flipper-Fmt: 60cbdd92fc254826e61d669a5d87ef7015396a9b
   Flipper-Folly: 584845625005ff068a6ebf41f857f468decd26b3
   Flipper-Glog: 70c50ce58ddaf67dc35180db05f191692570f446
   Flipper-PeerTalk: 116d8f857dc6ef55c7a5a75ea3ceaafe878aadc9
-  FlipperKit: 37525a5d056ef9b93d1578e04bc3ea1de940094f
+  FlipperKit: 73b2e0c1ed75801151dab992313b6b1951b67446
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   hermes-engine: 9cecf9953a681df7556b8cc9c74905de8f3293c0
@@ -1685,8 +1685,8 @@ SPEC CHECKSUMS:
   React: e296bcebb489deaad87326067204eb74145934ab
   React-callinvoker: d0b7015973fa6ccb592bb0363f6bc2164238ab8c
   React-Codegen: df86ee5fa0498fb4d1c7e6ac324a58b7fdffbbaa
-  React-Core: 44c936d0ab879e9c32e5381bd7596a677c59c974
-  React-CoreModules: 558228e12cddb9ca00ff7937894cc5104a21be6b
+  React-Core: 356c86d6495453aa803d126f8f6b5370a02c2e3e
+  React-CoreModules: 78a21784b5b4d238fc6e8821e50a55de5e314f03
   React-cxxreact: 1fcf565012c203655b3638f35aa03c13c2ed7e9e
   React-debug: d444db402065cca460d9c5b072caab802a04f729
   React-Fabric: 7d11905695e42f8bdaedddcf294959b43b290ab8
@@ -1732,7 +1732,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: 9636eee762c699ca7c85751a359101797e4c8b3b
   React-utils: d16c1d2251c088ad817996621947d0ac8167b46c
   ReactCommon: 2aa35648354bd4c4665b9a5084a7d37097b89c10
-  RealmJS: 5af7e3b3c1b6de6a1f9bd62bfbf4caca749fa708
+  RealmJS: 385df5ee940d96f1de26b1dab153e325633d3052
   RNDominantColor: 7c17c31201566a592ba4b2fbe2bb7e00df468753
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
@@ -1741,9 +1741,9 @@ SPEC CHECKSUMS:
   RNReanimated: 4f5e988a22b46a3de1b6b1d29a410e1f15db210a
   RNScreens: 9cd50a78d3723dfa55252a2220a94a7188deb180
   RNSVG: 18f1381e046be2f1c30b4724db8d0c966238089f
-  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: d17d2cc8105eed528474683b42e2ea310e1daf61
 
-PODFILE CHECKSUM: 03cdb530409979ed0487aec2fa6b5a1012279578
+PODFILE CHECKSUM: 27fbcac72451e1b38ce61f9af33534970fc187f5
 
 COCOAPODS: 1.14.3
