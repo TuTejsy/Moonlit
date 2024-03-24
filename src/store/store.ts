@@ -8,9 +8,8 @@ const middlewares: any[] = [];
 
 if (__DEV__) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
-  const createDebugger = require('redux-flipper').default;
-
-  middlewares.push(createDebugger());
+  // const createDebugger = require('redux-flipper').default;
+  // middlewares.push(createDebugger());
 }
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
