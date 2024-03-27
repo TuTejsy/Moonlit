@@ -9,8 +9,12 @@ import { processStoriesWithoutPreviews } from './utils/processStoriesWithoutPrev
 
 const DOWNLOADING_TIMEOUT = 5000;
 
-export function useDownloadStoriesPreviews() {
+export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
   useEffect(() => {
+    if (!areFoldersCreated) {
+      return;
+    }
+
     const storiesWithoutSmallPreview = StoriesDB.objects().filtered(
       'small_cover_cached_name == nil',
     );
@@ -62,5 +66,5 @@ export function useDownloadStoriesPreviews() {
       storiesWithoutFulCover.removeListener(fullCoversListener);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [areFoldersCreated]);
 }
