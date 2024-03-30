@@ -10,9 +10,10 @@
     "test": "jest",
     "reverse-port": "adb reverse tcp:8081 tcp:8081",
     "restart": "yarn cache clean && yarn reinstall && yarn start --reset-cache",
+    "codegen-android": "cd ./android && ./gradlew generateCodegenArtifactsFromSchema",
     "pod-reinstall": "cd ./ios && rm -rf ~/Library/Caches/CocoaPods && rm -rf Pods && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install --repo-update && cd ..",
     "postinstall": "patch-package",
-    "reinstall": "rm -rf node_modules && watchman watch-del-all && yarn && yarn postinstall && yarn pod-reinstall"
+    "reinstall": "rm -rf node_modules && watchman watch-del-all && yarn && yarn postinstall && yarn pod-reinstall && yarn codegen-android"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.4.5",
@@ -56,6 +57,7 @@
     "@babel/runtime": "^7.20.0",
     "@react-native-community/eslint-config": "^3.2.0",
     "@react-native/babel-preset": "0.73.19",
+    "@react-native/codegen": "^0.75.0-main",
     "@react-native/metro-config": "0.73.3",
     "@tsconfig/react-native": "^2.0.2",
     "@types/jest": "^29.2.1",
