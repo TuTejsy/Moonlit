@@ -9,7 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
-import { MOONLIT_APP_LINK, SANDBOX } from '@/constants/common';
+import { IS_IOS, MOONLIT_APP_LINK, SANDBOX } from '@/constants/common';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { CATEGORY_IDS, CATEGORY_NAMES } from '@/constants/stories';
@@ -18,7 +18,7 @@ import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
-import { Share } from '@/native_modules/MNTShare/ts/NativeShareManager';
+import { ShareIOS } from '@/native_modules/MNTShare/NativeShareManager';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
@@ -116,12 +116,14 @@ export const StoryPlayerScreen = () => {
   }, [navigation]);
 
   const handleSharePress = useCallback(() => {
-    Share?.share({
-      message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_APP_LINK}`,
-      subtitle: 'and more amazing stories in the Moonlit app.',
-      title: `Explore ${story?.name}`,
-      url: smallCoverURL,
-    });
+    if (IS_IOS) {
+      ShareIOS?.share({
+        message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_APP_LINK}`,
+        subtitle: 'and more amazing stories in the Moonlit app.',
+        title: `Explore ${story?.name}`,
+        url: smallCoverURL,
+      });
+    }
   }, [smallCoverURL, story?.name]);
 
   const handleVoiceSettingsPress = useCallback(() => {

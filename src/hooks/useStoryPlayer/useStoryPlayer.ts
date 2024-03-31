@@ -10,7 +10,7 @@ import { AudioRecordingsDB } from '@/database';
 import {
   AUDIO_PLAYER_EMITTER_EVENT,
   audioPlayer,
-} from '@/native_modules/MNTAudioPlayer/ts/NativeAudioPlayer';
+} from '@/native_modules/MNTAudioPlayer/NativeAudioPlayer';
 import { selectIsPlaying, selectSelectedAudioRecoringId } from '@/store/player/player.selector';
 import { startPlaying, stopPlaying } from '@/store/player/player.slice';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';

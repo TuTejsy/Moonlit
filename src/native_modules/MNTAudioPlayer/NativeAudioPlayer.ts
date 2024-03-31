@@ -17,3 +17,5 @@ export enum AUDIO_PLAYER_EMITTER_EVENT {
   PLAYING_DID_PAUSE = 'PLAYING_DID_PAUSE',
   PLAYING_DID_START = 'PLAYING_DID_START',
 }
+
+export default audioPlayer;

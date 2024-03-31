@@ -97,5 +97,13 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "codegenConfig": {
+    "name": "MNTAudioPlayerManagerSpec",
+    "type": "modules",
+    "jsSrcsDir": "./src/native_modules/MNTAudioPlayer",
+    "android": {
+      "javaPackageName": "com.moonlit.audioplayermanager"
+    }
   }
 }
