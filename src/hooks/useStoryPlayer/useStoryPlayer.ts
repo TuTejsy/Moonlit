@@ -5,12 +5,12 @@ import { useFocusEffect } from '@react-navigation/native';
 import RNFS from 'react-native-fs';
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
-import { SANDBOX } from '@/constants/common';
+import { IS_IOS, SANDBOX } from '@/constants/common';
 import { AudioRecordingsDB } from '@/database';
 import {
   AUDIO_PLAYER_EMITTER_EVENT,
   audioPlayer,
-} from '@/native_modules/MNTAudioPlayer/NativeAudioPlayer';
+} from '@/native_modules/MNTAudioPlayer/ts/NativeMNTAudioPlayerManager';
 import { selectIsPlaying, selectSelectedAudioRecoringId } from '@/store/player/player.selector';
 import { startPlaying, stopPlaying } from '@/store/player/player.slice';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
@@ -30,7 +30,7 @@ export function useStoryPlayer({
   storyId,
   title,
 }: useStoryPlayerProps) {
-  const eventEmmiterRef = useRef(new NativeEventEmitter(audioPlayer));
+  const eventEmmiterRef = useRef(IS_IOS ? new NativeEventEmitter(audioPlayer) : audioPlayer);
   const isStoryPlayNotifiedRef = useRef(false);
   const currentPlayCallPromise = useRef<Promise<void> | null>(null);
 
