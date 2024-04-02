@@ -1,8 +1,10 @@
-import { NativeModule, TurboModule, TurboModuleRegistry } from 'react-native';
+import { TurboModule, TurboModuleRegistry } from 'react-native';
 
-export interface Spec extends TurboModule, NativeModule {
+export interface Spec extends TurboModule {
+  addListener: (eventType: string) => void;
   getCurrentState: () => { filePath: string; isPlaying: boolean; playingTime: number };
   pausePlaying: () => { playingTime?: number };
+  removeListeners: (count: number) => void;
   rewindPlayingToTime: (time: number) => boolean;
   setToPlayFile: (fileInfo: { coverPath: string; filePath: string; fileTitle: string }) => boolean;
   startPlayingFromTime: (time: number) => boolean;

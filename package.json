@@ -27,6 +27,7 @@
     "add": "^2.0.6",
     "axios": "^1.3.5",
     "lodash": "^4.17.21",
+    "mnt-audioplayer": "./src/native_modules/MNTAudioPlayer",
     "qs": "^6.11.1",
     "react": "18.2.0",
     "react-native": "0.73.6",
@@ -97,13 +98,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "codegenConfig": {
-    "name": "MNTAudioPlayerManagerSpec",
-    "type": "modules",
-    "jsSrcsDir": "./src/native_modules/MNTAudioPlayer",
-    "android": {
-      "javaPackageName": "com.moonlit.audioplayermanager"
-    }
   }
 }

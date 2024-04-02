@@ -1,4 +1,4 @@
-package com.aivoice
+package com.moonlit
 
 import android.app.Application
 import com.facebook.react.PackageList

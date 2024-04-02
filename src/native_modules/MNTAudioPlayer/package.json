@@ -1,0 +1,32 @@
+{
+    "name": "mnt-audioplayer",
+    "version": "0.0.1",
+    "description": "Add numbers with Turbo Native Modules",
+    "react-native": "js/index",
+    "source": "js/index",
+    "files": [
+      "js",
+      "android",
+      "!android/build",
+      "!**/__tests__",
+      "!**/__fixtures__",
+      "!**/__mocks__"
+    ],
+    "keywords": ["react-native", "ios", "android"],
+    "repository": "https://github.com/<your_github_handle>/rtn-calculator",
+    "author": "TuTejsy <tutejsy@protonmail.com>",
+    "license": "MIT",
+    "devDependencies": {},
+    "peerDependencies": {
+      "react": "*",
+      "react-native": "*"
+    },
+    "codegenConfig": {
+        "name": "MNTAudioPlayerManagerSpec",
+        "type": "modules",
+        "jsSrcsDir": "./ts",
+        "android": {
+          "javaPackageName": "com.mntaudioplayer"
+        }
+      }
+  }
