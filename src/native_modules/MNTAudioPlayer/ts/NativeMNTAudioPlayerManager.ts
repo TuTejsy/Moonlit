@@ -1,17 +1,16 @@
-import { TurboModule, TurboModuleRegistry } from 'react-native';
+import { TurboModule, TurboModuleRegistry, NativeModule } from 'react-native';
 
 export interface Spec extends TurboModule {
-  addListener: (eventType: string) => void;
   getCurrentState: () => { filePath: string; isPlaying: boolean; playingTime: number };
   pausePlaying: () => { playingTime?: number };
-  removeListeners: (count: number) => void;
   rewindPlayingToTime: (time: number) => boolean;
   setToPlayFile: (fileInfo: { coverPath: string; filePath: string; fileTitle: string }) => boolean;
   startPlayingFromTime: (time: number) => boolean;
   stopPlaying: () => boolean;
 }
 
-export const audioPlayer = TurboModuleRegistry.get<Spec>('MNTAudioPlayerManager') || undefined;
+export const audioPlayer =
+  (TurboModuleRegistry.get<Spec>('MNTAudioPlayerManager') as Spec & NativeModule) || undefined;
 
 export enum AUDIO_PLAYER_EMITTER_EVENT {
   PLAYING_DID_FINISH = 'PLAYING_DID_FINISH',
