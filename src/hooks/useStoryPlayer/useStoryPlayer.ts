@@ -30,7 +30,7 @@ export function useStoryPlayer({
   storyId,
   title,
 }: useStoryPlayerProps) {
-  const eventEmmiterRef = useRef(IS_IOS ? new NativeEventEmitter(audioPlayer) : audioPlayer);
+  const eventEmmiterRef = useRef(IS_IOS ? new NativeEventEmitter(audioPlayer) : undefined);
   const isStoryPlayNotifiedRef = useRef(false);
   const currentPlayCallPromise = useRef<Promise<void> | null>(null);
 
@@ -298,10 +298,10 @@ export function useStoryPlayer({
     );
 
     return () => {
-      audioPlayerDidFinishPlayingSubscriptionRef.remove();
-      audioPlayerDidInterruptPlayingSubscriptionRef.remove();
-      audioPlayerDidStartPlayingSubscriptionRef.remove();
-      audioPlayerDidPausePlayingSubscriptionRef.remove();
+      audioPlayerDidFinishPlayingSubscriptionRef?.remove();
+      audioPlayerDidInterruptPlayingSubscriptionRef?.remove();
+      audioPlayerDidStartPlayingSubscriptionRef?.remove();
+      audioPlayerDidPausePlayingSubscriptionRef?.remove();
     };
   }, [reduxDispatch, selectedAudioRecordingIdMutableValue]);
 

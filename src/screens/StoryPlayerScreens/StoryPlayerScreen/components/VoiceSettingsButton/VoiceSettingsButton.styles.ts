@@ -18,9 +18,13 @@ export const makeStyles = (
   StyleSheet.create({
     blurView: {
       backgroundColor: convertHEXtoRGBA(storyColor, 0.3),
+      flex: 1,
+    },
+    blurViewContainer: {
       borderRadius: 16,
       height: BUTTON_HEIGHT,
       left: 0,
+      overflow: 'hidden',
       position: 'absolute',
       top: 0,
       width: '100%',

@@ -2,7 +2,7 @@ import { DefaultTheme as defaultNavigationTheme, Theme } from '@react-navigation
 
 import { commonColors } from './common';
 
-const darkColors = {
+export const darkColors = {
   dark: '#2D2D2D',
   darkBlack: '#141C1A',
   darkGradientPurple: '#0A0315',

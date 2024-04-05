@@ -19,6 +19,11 @@ apply plugin: 'org.jetbrains.kotlin.android'
 android {
   compileSdkVersion safeExtGet('compileSdkVersion', 33)
   namespace "com.mntaudioplayer"
+
+   defaultConfig {
+        minSdkVersion rootProject.hasProperty('minSdkVersion') ? rootProject.minSdkVersion : 21
+        targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : 34
+    }
 }
 
 repositories {

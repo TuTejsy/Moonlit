@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-import Animated from 'react-native-reanimated';
+import Animated, { useAnimatedReaction } from 'react-native-reanimated';
 
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
