@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { View } from 'react-native';
+import { View, Share, StatusBar } from 'react-native';
 
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { GestureDetector } from 'react-native-gesture-handler';
@@ -9,7 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
-import { IS_IOS, MOONLIT_APP_LINK, SANDBOX } from '@/constants/common';
+import { IS_IOS, MOONLIT_IOS_APP_LINK, SANDBOX } from '@/constants/common';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { CATEGORY_IDS, CATEGORY_NAMES } from '@/constants/stories';
@@ -25,11 +25,16 @@ import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { getHitSlop } from '@/utils/getHitSlop';
+import { dh } from '@/utils/sizes';
 
 import { StoryActions } from './components/StoryActions/StoryActions';
 import { StoryMeta } from './components/StoryMeta/StoryMeta';
 import { StoryPlayer } from './components/StoryPlayer/StoryPlayer';
 import { VoiceSettingsButton } from './components/VoiceSettingsButton/VoiceSettingsButton';
+import {
+  BUTTON_BOTTOM_PADDING,
+  BUTTON_HEIGHT,
+} from './components/VoiceSettingsButton/VoiceSettingsButton.constants';
 import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUpdate';
 import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
 import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
@@ -38,7 +43,14 @@ import { makeStyles } from './StoryPlayerScreen.styles';
 export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
   const storyContainerMinHeight =
-    WINDOW_HEIGHT - DEFAULT_HEADER_HEIGHT - insets.top - insets.bottom - 102;
+    WINDOW_HEIGHT -
+    DEFAULT_HEADER_HEIGHT -
+    insets.top -
+    insets.bottom -
+    BUTTON_HEIGHT -
+    BUTTON_BOTTOM_PADDING -
+    dh(24) -
+    (StatusBar.currentHeight || 0);
 
   const { colors } = useTheme();
 
@@ -118,11 +130,20 @@ export const StoryPlayerScreen = () => {
   const handleSharePress = useCallback(() => {
     if (IS_IOS) {
       ShareIOS?.share({
-        message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_APP_LINK}`,
+        message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
         subtitle: 'and more amazing stories in the Moonlit app.',
         title: `Explore ${story?.name}`,
         url: smallCoverURL,
       });
+    } else {
+      Share.share(
+        {
+          message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
+        },
+        {
+          dialogTitle: `Explore ${story?.name}`,
+        },
+      );
     }
   }, [smallCoverURL, story?.name]);
 
@@ -187,46 +208,46 @@ export const StoryPlayerScreen = () => {
         onGoBack={handleGoBack}
       />
 
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={[styles.storyContainer, storyContainerAnimatedStyles]}>
-          <View style={styles.imageContainer}>
-            <Animated.Image
-              resizeMode='cover'
-              source={{ uri: coverURL }}
-              style={[styles.cover, coverAnimatedStyles]}
-            />
-
-            <LinearGradient
-              angle={180}
-              colors={[colors.opacityBlack(0), gradientColor]}
-              locations={[0.5, 1]}
-              pointerEvents='none'
-              style={styles.bottomGradient}
-            />
-
-            <LinearGradient
-              angle={180}
-              colors={[colors.opacityBlack(0), colors.opacityBlack(0.4)]}
-              locations={[0.5, 1]}
-              pointerEvents='none'
-              style={styles.bottomGradient}
-            />
-
-            <StoryActions
-              startStoryPlaying={startStoryPlaying}
-              storyId={storyId}
-              storyPlayingSharedValue={storyPlayingSharedValue}
-              storyTitle={story?.name ?? ''}
-            />
-          </View>
-          <StoryMeta
-            description={story?.description_large ?? ''}
-            duration={selectedAudioRecording?.duration ?? 0}
-            storyPlayingSharedValue={storyPlayingSharedValue}
-            style={styles.storyMeta}
+      {/* <GestureDetector gesture={gesture}> */}
+      <Animated.View style={[styles.storyContainer, storyContainerAnimatedStyles]}>
+        <View style={styles.imageContainer}>
+          <Animated.Image
+            resizeMode='cover'
+            source={{ uri: coverURL }}
+            style={[styles.cover, coverAnimatedStyles]}
           />
-        </Animated.View>
-      </GestureDetector>
+
+          <LinearGradient
+            angle={180}
+            colors={[colors.opacityBlack(0), gradientColor]}
+            locations={[0.5, 1]}
+            pointerEvents='none'
+            style={styles.bottomGradient}
+          />
+
+          <LinearGradient
+            angle={180}
+            colors={[colors.opacityBlack(0), colors.opacityBlack(0.4)]}
+            locations={[0.5, 1]}
+            pointerEvents='none'
+            style={styles.bottomGradient}
+          />
+
+          <StoryActions
+            startStoryPlaying={startStoryPlaying}
+            storyId={storyId}
+            storyPlayingSharedValue={storyPlayingSharedValue}
+            storyTitle={story?.name ?? ''}
+          />
+        </View>
+        <StoryMeta
+          description={story?.description_large ?? ''}
+          duration={selectedAudioRecording?.duration ?? 0}
+          storyPlayingSharedValue={storyPlayingSharedValue}
+          style={styles.storyMeta}
+        />
+      </Animated.View>
+      {/* </GestureDetector> */}
 
       <StoryPlayer
         audioRecordingDuration={selectedAudioRecording?.duration || 0}
