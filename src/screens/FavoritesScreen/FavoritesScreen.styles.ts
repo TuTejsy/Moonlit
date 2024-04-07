@@ -56,6 +56,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       backgroundColor: colors.orange,
       borderRadius: 12,
       height: 40,
+      left: 0,
       position: 'absolute',
       width: TAB_WIDTH,
     },

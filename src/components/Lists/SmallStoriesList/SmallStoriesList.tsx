@@ -10,6 +10,7 @@ import {
 
 import Animated from 'react-native-reanimated';
 
+import { IS_IOS } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';

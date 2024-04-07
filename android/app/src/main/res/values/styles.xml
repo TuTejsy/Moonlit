@@ -5,6 +5,8 @@
         <!-- Customize your theme here. -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
         <item name="android:windowBackground">@color/darkPurple</item>
+        <item name="android:navigationBarColor">@color/dark</item>
+
     </style>
 
 </resources>

@@ -14,6 +14,7 @@ import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { IS_IOS } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
@@ -95,14 +96,16 @@ export const SearchBar = React.memo(
 
           <Animated.View style={[styles.inputContainer, inputContainerAnimatedStyle]}>
             <Animated.View style={[styles.blurContainer, opacityAnimStyle]}>
-              <BlurView
-                blurAmount={5}
-                blurRadius={5}
-                blurType='dark'
-                overlayColor={colors.black}
-                reducedTransparencyFallbackColor={colors.opacityBlack(0.2)}
-                style={styles.inputBlur}
-              />
+              {IS_IOS && (
+                <BlurView
+                  blurAmount={5}
+                  blurRadius={5}
+                  blurType='dark'
+                  overlayColor={colors.black}
+                  reducedTransparencyFallbackColor={colors.opacityBlack(0.2)}
+                  style={styles.inputBlur}
+                />
+              )}
             </Animated.View>
 
             <Icons.Search style={styles.searchIcon} />

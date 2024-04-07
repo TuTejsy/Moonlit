@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { View, Share, StatusBar } from 'react-native';
+import { View, Share } from 'react-native';
 
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { GestureDetector } from 'react-native-gesture-handler';
@@ -49,8 +49,7 @@ export const StoryPlayerScreen = () => {
     insets.bottom -
     BUTTON_HEIGHT -
     BUTTON_BOTTOM_PADDING -
-    dh(24) -
-    (StatusBar.currentHeight || 0);
+    dh(24);
 
   const { colors } = useTheme();
 

@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import Svg, { SvgProps, G, Rect, Path } from 'react-native-svg';
 
+import { IS_ANDROID, IS_IOS } from '@/constants/common';
 import { MakeStylesProps, useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
@@ -18,15 +19,20 @@ const makeStyles = ({ colors }: MakeStylesProps) =>
       top: 0,
       width: 24,
     },
-    container: {
-      alignItems: 'center',
-      borderRadius: 12,
-      height: 24,
-      justifyContent: 'center',
-      overflow: 'hidden',
-      position: 'relative',
-      width: 24,
-    },
+    container: StyleSheet.flatten([
+      {
+        alignItems: 'center',
+        borderRadius: 12,
+        height: 24,
+        justifyContent: 'center',
+        overflow: 'hidden',
+        position: 'relative',
+        width: 24,
+      },
+      IS_ANDROID && {
+        backgroundColor: colors.opacityWhite(0.3),
+      },
+    ]),
   });
 
 export const Lock = ({ style, ...props }: SvgProps) => {
@@ -36,12 +42,14 @@ export const Lock = ({ style, ...props }: SvgProps) => {
 
   return (
     <View style={[styles.container, style]}>
-      <BlurView
-        blurAmount={2}
-        blurType='light'
-        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-        style={styles.blurView}
-      />
+      {IS_IOS && (
+        <BlurView
+          blurAmount={2}
+          blurType='light'
+          reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+          style={styles.blurView}
+        />
+      )}
       <Svg height={24} viewBox='0 0 24 24' width={24} {...props}>
         <G filter='url(#filter0_b_186_1263)'>
           <Rect fill={colors.white} fillOpacity={0.2} height={24} rx={12} width={24} />
