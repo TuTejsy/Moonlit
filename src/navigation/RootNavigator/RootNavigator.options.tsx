@@ -1,6 +1,6 @@
 import { StackNavigationOptions, TransitionPresets } from '@react-navigation/stack';
 
-import { IS_ANDROID } from '@/constants/common';
+import { IS_ANDROID, IS_IOS } from '@/constants/common';
 import { ITheme } from '@/hooks/theme/useTheme';
 
 // import { ModalHeader } from '@/components/Headers/ModalHeader/ModalHeader';
@@ -17,12 +17,12 @@ export const rootOptions = ({ colors }: ITheme): StackNavigationOptions => ({
 
 export const rootModalOptions = ({ colors }: ITheme): StackNavigationOptions => ({
   cardStyle: {
-    backgroundColor: colors.transparent,
+    backgroundColor: IS_IOS ? colors.transparent : colors.darkPurple,
   },
   headerShadowVisible: false,
   headerShown: false,
-  presentation: 'transparentModal',
-  ...TransitionPresets.ModalSlideFromBottomIOS,
+  presentation: IS_IOS ? 'transparentModal' : 'modal',
+  ...(IS_IOS ? TransitionPresets.ModalSlideFromBottomIOS : undefined),
 });
 
 export const paywallOptions: StackNavigationOptions = {

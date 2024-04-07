@@ -12,6 +12,7 @@ import Animated, {
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { IS_IOS } from '@/constants/common';
 import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -57,12 +58,14 @@ export const StoryActions = ({
         </PressableView>
 
         <PressableView style={styles.button} onPress={handleStoryFavoritePress}>
-          <BlurView
-            blurAmount={5}
-            blurType='light'
-            reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-            style={styles.buttonBlurView}
-          />
+          {IS_IOS && (
+            <BlurView
+              blurAmount={5}
+              blurType='light'
+              reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+              style={styles.buttonBlurView}
+            />
+          )}
           <Icons.Favorite isFavorite={isFavorite} />
         </PressableView>
       </View>

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { IS_ANDROID } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
@@ -18,14 +19,19 @@ export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
       width: WINDOW_WIDTH - 32,
       zIndex: 10,
     },
-    button: {
-      alignItems: 'center',
-      borderRadius: 24,
-      height: 48,
-      justifyContent: 'center',
-      overflow: 'hidden',
-      width: 48,
-    },
+    button: StyleSheet.flatten([
+      {
+        alignItems: 'center',
+        borderRadius: 24,
+        height: 48,
+        justifyContent: 'center',
+        overflow: 'hidden',
+        width: 48,
+      },
+      IS_ANDROID && {
+        backgroundColor: colors.opacityWhite(0.3),
+      },
+    ]),
     buttonBlurView: {
       height: 48,
       left: 0,

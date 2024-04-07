@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { IS_ANDROID } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
@@ -19,19 +20,24 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
       top: 0,
       width: WINDOW_WIDTH - 14,
     },
-    container: {
-      alignItems: 'center',
-      borderRadius: 16,
-      bottom: insets.bottom + TAB_BAR_STORY_PLAYER_HEIGHT + 3,
-      flex: 1,
-      flexDirection: 'row',
-      height: TAB_BAR_STORY_PLAYER_HEIGHT,
-      left: 7,
-      overflow: 'hidden',
-      paddingHorizontal: 12,
-      position: 'absolute',
-      width: WINDOW_WIDTH - 14,
-    },
+    container: StyleSheet.flatten([
+      {
+        alignItems: 'center',
+        borderRadius: 16,
+        bottom: insets.bottom + TAB_BAR_STORY_PLAYER_HEIGHT + 3,
+        flex: 1,
+        flexDirection: 'row',
+        height: TAB_BAR_STORY_PLAYER_HEIGHT,
+        left: 7,
+        overflow: 'hidden',
+        paddingHorizontal: 12,
+        position: 'absolute',
+        width: WINDOW_WIDTH - 14,
+      },
+      IS_ANDROID && {
+        backgroundColor: convertHEXtoRGBA(storyColor || colors.imagePurple, 0.9),
+      },
+    ]),
     image: {
       borderRadius: 16,
       height: 32,

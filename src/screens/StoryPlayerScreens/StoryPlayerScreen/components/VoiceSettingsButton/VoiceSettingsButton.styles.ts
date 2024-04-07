@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { IS_ANDROID, IS_IOS } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
@@ -11,16 +12,13 @@ interface Context {
   storyColor: string;
 }
 
-export const makeStyles = (
-  { colors, fonts, insets, zIndex }: MakeStylesProps,
-  { storyColor }: Context,
-) =>
+export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyColor }: Context) =>
   StyleSheet.create({
     blurView: {
-      backgroundColor: convertHEXtoRGBA(storyColor, 0.3),
       flex: 1,
     },
     blurViewContainer: {
+      backgroundColor: convertHEXtoRGBA(storyColor, IS_IOS ? 0.3 : 0.7),
       borderRadius: 16,
       height: BUTTON_HEIGHT,
       left: 0,

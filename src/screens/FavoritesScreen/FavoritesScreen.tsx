@@ -50,12 +50,16 @@ export const FavoritesScreen = () => {
   );
 
   const animatedTabIndicatorStyle = useAnimatedStyle(() => ({
-    left: interpolate(
-      scrollOffsetSharedValue.value,
-      [0, SCREEN_WIDTH],
-      [4, TAB_WIDTH - 4],
-      Extrapolation.CLAMP,
-    ),
+    transform: [
+      {
+        translateX: interpolate(
+          scrollOffsetSharedValue.value,
+          [0, SCREEN_WIDTH],
+          [4, TAB_WIDTH - 4],
+          Extrapolation.CLAMP,
+        ),
+      },
+    ],
   }));
 
   const animatedSavedTabStyle = useAnimatedStyle(() => ({

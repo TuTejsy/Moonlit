@@ -6,6 +6,7 @@ import { BlurView } from '@react-native-community/blur';
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { IS_IOS } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
@@ -37,12 +38,14 @@ export function VoiceSettingsButton({
   return (
     <View style={styles.voiceSettingsButtonContainer}>
       <View style={styles.blurViewContainer}>
-        <BlurView
-          blurAmount={5}
-          blurType='light'
-          reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-          style={styles.blurView}
-        />
+        {IS_IOS && (
+          <BlurView
+            blurAmount={5}
+            blurType='light'
+            reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+            style={styles.blurView}
+          />
+        )}
       </View>
 
       <PressableView style={styles.voiceSettingsButton} onPress={onPress}>

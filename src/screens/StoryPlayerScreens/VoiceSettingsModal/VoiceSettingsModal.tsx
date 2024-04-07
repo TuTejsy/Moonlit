@@ -5,6 +5,7 @@ import { BlurView } from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
+import { IS_IOS } from '@/constants/common';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -85,12 +86,14 @@ export function VoiceSettingsModal() {
 
   return (
     <View style={styles.modalContainer}>
-      <BlurView
-        blurAmount={15}
-        blurType='dark'
-        reducedTransparencyFallbackColor={colors.opacityBlack(0.6)}
-        style={styles.blurView}
-      />
+      {IS_IOS && (
+        <BlurView
+          blurAmount={15}
+          blurType='dark'
+          reducedTransparencyFallbackColor={colors.opacityBlack(0.6)}
+          style={styles.blurView}
+        />
+      )}
 
       <LinearGradient
         angle={180}
