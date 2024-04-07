@@ -4,7 +4,7 @@ import { WINDOW_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     actions: {
       alignItems: 'center',
@@ -58,6 +58,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     title: {
       ...fonts.size_32,
       color: colors.white,
-      marginBottom: 32,
+      marginBottom: dh(32),
     },
   });

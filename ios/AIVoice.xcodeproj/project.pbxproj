@@ -226,7 +226,8 @@
 				8805A86A2B6A30DA009EDE6C /* MNTShareManager.h */,
 				8805A86B2B6A30F6009EDE6C /* MNTShareManager.mm */,
 			);
-			path = MNTShareManager;
+			name = MNTShareManager;
+			path = AIVoice/MNTShareManager;
 			sourceTree = "<group>";
 		};
 		8805A8692B6A309D009EDE6C /* MNTShareManagerSpec */ = {
