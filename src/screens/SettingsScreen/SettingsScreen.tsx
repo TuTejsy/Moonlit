@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { MOONLIT_APP_LINK, SUPPORT_EMAIL } from '@/constants/common';
+import { MOONLIT_IOS_APP_LINK, SUPPORT_EMAIL } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -40,11 +40,11 @@ export const SettingsScreen = () => {
     InAppReview.RequestInAppReview()
       .then((reviewShown) => {
         if (!reviewShown) {
-          Linking.openURL(MOONLIT_APP_LINK);
+          Linking.openURL(MOONLIT_IOS_APP_LINK);
         }
       })
       .catch((err) => {
-        Linking.openURL(MOONLIT_APP_LINK);
+        Linking.openURL(MOONLIT_IOS_APP_LINK);
       });
   }, []);
 

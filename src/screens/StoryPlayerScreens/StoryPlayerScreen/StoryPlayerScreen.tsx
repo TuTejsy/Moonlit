@@ -207,46 +207,46 @@ export const StoryPlayerScreen = () => {
         onGoBack={handleGoBack}
       />
 
-      {/* <GestureDetector gesture={gesture}> */}
-      <Animated.View style={[styles.storyContainer, storyContainerAnimatedStyles]}>
-        <View style={styles.imageContainer}>
-          <Animated.Image
-            resizeMode='cover'
-            source={{ uri: coverURL }}
-            style={[styles.cover, coverAnimatedStyles]}
-          />
+      <GestureDetector gesture={gesture}>
+        <Animated.View style={[styles.storyContainer, storyContainerAnimatedStyles]}>
+          <View style={styles.imageContainer}>
+            <Animated.Image
+              resizeMode='cover'
+              source={{ uri: coverURL }}
+              style={[styles.cover, coverAnimatedStyles]}
+            />
 
-          <LinearGradient
-            angle={180}
-            colors={[colors.opacityBlack(0), gradientColor]}
-            locations={[0.5, 1]}
-            pointerEvents='none'
-            style={styles.bottomGradient}
-          />
+            <LinearGradient
+              angle={180}
+              colors={[colors.opacityBlack(0), gradientColor]}
+              locations={[0.5, 1]}
+              pointerEvents='none'
+              style={styles.bottomGradient}
+            />
 
-          <LinearGradient
-            angle={180}
-            colors={[colors.opacityBlack(0), colors.opacityBlack(0.4)]}
-            locations={[0.5, 1]}
-            pointerEvents='none'
-            style={styles.bottomGradient}
-          />
+            <LinearGradient
+              angle={180}
+              colors={[colors.opacityBlack(0), colors.opacityBlack(0.4)]}
+              locations={[0.5, 1]}
+              pointerEvents='none'
+              style={styles.bottomGradient}
+            />
 
-          <StoryActions
-            startStoryPlaying={startStoryPlaying}
-            storyId={storyId}
+            <StoryActions
+              startStoryPlaying={startStoryPlaying}
+              storyId={storyId}
+              storyPlayingSharedValue={storyPlayingSharedValue}
+              storyTitle={story?.name ?? ''}
+            />
+          </View>
+          <StoryMeta
+            description={story?.description_large ?? ''}
+            duration={selectedAudioRecording?.duration ?? 0}
             storyPlayingSharedValue={storyPlayingSharedValue}
-            storyTitle={story?.name ?? ''}
+            style={styles.storyMeta}
           />
-        </View>
-        <StoryMeta
-          description={story?.description_large ?? ''}
-          duration={selectedAudioRecording?.duration ?? 0}
-          storyPlayingSharedValue={storyPlayingSharedValue}
-          style={styles.storyMeta}
-        />
-      </Animated.View>
-      {/* </GestureDetector> */}
+        </Animated.View>
+      </GestureDetector>
 
       <StoryPlayer
         audioRecordingDuration={selectedAudioRecording?.duration || 0}
