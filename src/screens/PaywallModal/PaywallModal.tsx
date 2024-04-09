@@ -195,7 +195,7 @@ export const PaywallModal = () => {
             ]}
           >
             <TextView style={styles.unlockButtonText} type='bold'>
-              Go to lisen stories
+              Go to listen stories
             </TextView>
           </LinearGradient>
         </PressableView>

@@ -5,6 +5,8 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { selectFreeOfferDays } from '@/store/user/user.selector';
 
 import bannerBackgroundImage from './images/bannerBackground/bannerBackground.png';
 import { makeStyles } from './PromotionBanner.styles';
@@ -13,6 +15,7 @@ export const PromotionBanner = memo(() => {
   const styles = useMakeStyles(makeStyles);
 
   const { showPaywallModal } = useShowPaywallModal();
+  const freeOfferDays = useAppSelector(selectFreeOfferDays);
 
   return (
     <PressableView onPress={showPaywallModal}>
@@ -21,7 +24,7 @@ export const PromotionBanner = memo(() => {
           <TextView style={styles.title} type='bold'>
             Subscription
           </TextView>
-          <TextView style={styles.subtitle}>Free</TextView>
+          <TextView style={styles.subtitle}>{freeOfferDays} days for free</TextView>
         </View>
 
         <View style={styles.button}>

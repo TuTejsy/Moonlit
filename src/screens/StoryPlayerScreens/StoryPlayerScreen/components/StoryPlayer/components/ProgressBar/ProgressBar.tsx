@@ -134,19 +134,19 @@ export function ProgressBar({
   }, [playedTime, isStoryPlaying]);
 
   return (
-    // <GestureDetector gesture={gestureHandler}>
-    <View style={styles.progressBarContainer}>
-      <View style={styles.progressBar}>
-        <Animated.View style={[styles.progressBarValue, animatedProgressStyle]}>
-          <Animated.View style={styles.cirlce} />
-        </Animated.View>
-      </View>
+    <GestureDetector gesture={gestureHandler}>
+      <View style={styles.progressBarContainer}>
+        <View style={styles.progressBar}>
+          <Animated.View style={[styles.progressBarValue, animatedProgressStyle]}>
+            <Animated.View style={styles.cirlce} />
+          </Animated.View>
+        </View>
 
-      <View style={styles.timeContainer}>
-        <TextView style={styles.time}>{playedText}</TextView>
-        <TextView style={styles.time}>{remainedTimeText}</TextView>
+        <View style={styles.timeContainer}>
+          <TextView style={styles.time}>{playedText}</TextView>
+          <TextView style={styles.time}>{remainedTimeText}</TextView>
+        </View>
       </View>
-    </View>
-    // </GestureDetector>
+    </GestureDetector>
   );
 }
