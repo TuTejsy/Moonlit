@@ -42,6 +42,7 @@
 		88E122D529E1C49200C30444 /* FileTypeChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122D429E1C49200C30444 /* FileTypeChecker.swift */; };
 		88E122D829E1C59000C30444 /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122D729E1C59000C30444 /* NSString+Helper.m */; };
 		88E122DA29E1C61500C30444 /* Extensions+optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122D929E1C61500C30444 /* Extensions+optional.swift */; };
+		88E1A31A2BC71432008376E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88E1A3192BC71432008376E1 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		88E122D629E1C59000C30444 /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
 		88E122D729E1C59000C30444 /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
 		88E122D929E1C61500C30444 /* Extensions+optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+optional.swift"; sourceTree = "<group>"; };
+		88E1A3192BC71432008376E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-AIVoice-AIVoiceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIVoice-AIVoiceTests.release.xcconfig"; path = "Target Support Files/Pods-AIVoice-AIVoiceTests/Pods-AIVoice-AIVoiceTests.release.xcconfig"; sourceTree = "<group>"; };
 		AEFBC557120B4C09B8374F2A /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../src/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		E63E863DC9C74A1ABB097632 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../src/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				88E1A3192BC71432008376E1 /* GoogleService-Info.plist */,
 				88286A4A2AF956E400D85031 /* LaunchScreen.storyboard */,
 				13B07FAE1A68108700A75B9A /* AIVoice */,
 				88E122CB29E1C1CB00C30444 /* ZRKNative.h */,
@@ -462,6 +465,7 @@
 				883424AC2A93C37B00AED6E9 /* Colors.xcassets in Resources */,
 				88286A4B2AF956E400D85031 /* LaunchScreen.storyboard in Resources */,
 				10305B375D664034A5405623 /* Poppins-SemiBold.ttf in Resources */,
+				88E1A31A2BC71432008376E1 /* GoogleService-Info.plist in Resources */,
 				3DA6C76D80A248CA81D4C170 /* Poppins-Medium.ttf in Resources */,
 				88AC29962B5F97E90092EFF3 /* Privacy_policy.pdf in Resources */,
 			);

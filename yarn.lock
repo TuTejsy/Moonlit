@@ -1774,6 +1774,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.3.0.tgz#9e558170c106bbafaa1ef502bd8e6d4651012bf9"
   integrity sha512-+zDZ20NUnSWghj7Ku5aFphMzuM9JulqCW+aPXT6IfIXFbb8tzYTTOSeRFOtuekJ99ibW2fUCSsjuKNlwDIbHFg==
 
+"@react-native-firebase/analytics@^19.1.2":
+  version "19.1.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-19.1.2.tgz#5f161f33d340804c3c8a6cf7710dd0908266285e"
+  integrity sha512-hIQl/7Rvfp11HMTJcqCGRf9HeYiVypoeP9zmDjN7CQwq54/eIw59FM+0I0WpT29NsMQv+nUkK9YTF18wSmVYOg==
+
 "@react-native-firebase/app@^19.1.2":
   version "19.1.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-19.1.2.tgz#a4b0b70b698e98ebdbebf76d12b6c8c54821094e"
