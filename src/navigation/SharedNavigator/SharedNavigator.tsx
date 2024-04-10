@@ -20,9 +20,10 @@ const Stack = createStackNavigator<SharedStackParams>();
 
 interface Props {
   parentRoute: TabRoutes;
+  isInitialRoute?: boolean;
 }
 
-export const SharedNavigator = memo(({ parentRoute }: Props) => {
+export const SharedNavigator = memo(({ isInitialRoute = false, parentRoute }: Props) => {
   const theme = useTheme();
 
   const initialRouteName = useMemo(() => INITIAL_ROUTE_MAP[parentRoute], [parentRoute]);
@@ -31,7 +32,11 @@ export const SharedNavigator = memo(({ parentRoute }: Props) => {
     <Stack.Navigator initialRouteName={initialRouteName} screenOptions={commonOptions(theme)}>
       {parentRoute === TabRoutes.HOME && (
         <>
-          <Stack.Screen component={HomeScreen} name={SharedRoutes.HOME} />
+          <Stack.Screen
+            component={HomeScreen}
+            initialParams={{ initalRoute: isInitialRoute }}
+            name={SharedRoutes.HOME}
+          />
           <Stack.Screen
             component={StoriesListScreen}
             name={getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME)}

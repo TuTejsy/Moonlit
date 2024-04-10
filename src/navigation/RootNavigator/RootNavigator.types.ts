@@ -14,6 +14,7 @@ export interface RootStackParams extends Record<string, object | undefined> {
 
   [RootRoutes.PAYWALL_MODAL]: {
     products: AdaptyPaywallProduct[];
+    onClose?: () => void;
   };
 
   [RootRoutes.VOICE_SETTINGS_MODAL]: {

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { View, Image } from 'react-native';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
@@ -13,6 +13,7 @@ import Animated, {
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { WINDOW_WIDTH } from '@/constants/layout';
+import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
@@ -37,16 +38,25 @@ export const GetStartedScreen = () => {
     () => -currentStepSharedValue.value * WINDOW_WIDTH,
   );
 
+  const handleClosePaywallModal = useCallback(() => {
+    navigation.replace(RootRoutes.TAB, {
+      screen: SharedRoutes.HOME,
+    });
+  }, [navigation]);
+
+  const { loadProducts, showPaywallModal } = useShowPaywallModal(handleClosePaywallModal, true);
+
   const handleContinuePress = useCallback(() => {
     if (currentStepRef.current === STEPS.length - 1) {
       storage.set(StorageKeys.isOnboarded, true);
-      navigation.replace(RootRoutes.TAB, { screen: SharedRoutes.HOME });
+
+      showPaywallModal();
     } else {
       currentStepRef.current += 1;
     }
 
     currentStepSharedValue.value = withTiming(currentStepRef.current);
-  }, [currentStepSharedValue, navigation]);
+  }, [currentStepSharedValue, showPaywallModal]);
 
   const stepImagesAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
@@ -94,6 +104,11 @@ export const GetStartedScreen = () => {
       },
     ],
   }));
+
+  useEffect(() => {
+    loadProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <LinearGradient

@@ -28,7 +28,6 @@ end
 target 'AIVoice' do
   config = use_native_modules!
   
-
   use_react_native!(
     :path => config[:reactNativePath],
     # Enables Flipper.
@@ -39,6 +38,11 @@ target 'AIVoice' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
 
   target 'AIVoiceTests' do
     inherit! :complete
