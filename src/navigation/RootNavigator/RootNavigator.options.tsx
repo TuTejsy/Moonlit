@@ -1,7 +1,15 @@
-import { StackNavigationOptions, TransitionPresets } from '@react-navigation/stack';
+import {
+  StackNavigationOptions,
+  TransitionPresets,
+  TransitionSpecs,
+} from '@react-navigation/stack';
 
 import { IS_ANDROID, IS_IOS } from '@/constants/common';
 import { ITheme } from '@/hooks/theme/useTheme';
+import {
+  ANIMATION_DAMPING,
+  ANIMATION_STIFFNESS,
+} from '@/screens/GetStartedScreen/GetStartedScreen.constants';
 
 // import { ModalHeader } from '@/components/Headers/ModalHeader/ModalHeader';
 // import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
@@ -49,4 +57,16 @@ export const getStartedScreenOptions: StackNavigationOptions = {
 
 export const paywallScreenOptions: StackNavigationOptions = {
   headerShown: false,
+  transitionSpec: {
+    close: TransitionSpecs.TransitionIOSSpec,
+    open: {
+      animation: 'spring',
+      config: {
+        ...TransitionSpecs.TransitionIOSSpec.config,
+        damping: ANIMATION_DAMPING,
+        mass: 1.2,
+        stiffness: ANIMATION_STIFFNESS,
+      },
+    },
+  },
 };

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { View, Image } from 'react-native';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
@@ -104,11 +104,6 @@ export const GetStartedScreen = () => {
       },
     ],
   }));
-
-  useEffect(() => {
-    loadProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <LinearGradient

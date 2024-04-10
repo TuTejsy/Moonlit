@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { adapty, AdaptyPaywallProduct } from 'react-native-adapty';
 
@@ -32,20 +32,18 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
     return products;
   }, []);
 
-  const showPaywallModal = useCallback(async () => {
+  const showPaywallModal = useCallback(() => {
     try {
-      const paywallProducts = products || (await loadProducts());
-
-      if (!isFullVerion && paywallProducts) {
+      if (!isFullVerion && products) {
         (shouldReplace ? navigation.replace : navigation.navigate)(
           shouldReplace ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
           {
             onClose,
-            products: paywallProducts,
+            products,
           },
         );
 
-        const offerDays = paywallProducts.find(
+        const offerDays = products.find(
           (product) => !!product.subscriptionDetails?.introductoryOffers?.[0],
         )?.subscriptionDetails?.introductoryOffers?.[0]?.subscriptionPeriod.numberOfUnits;
 
@@ -61,7 +59,6 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
   }, [
     dispatch,
     isFullVerion,
-    loadProducts,
     navigation.navigate,
     navigation.replace,
     onClose,
@@ -69,5 +66,10 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
     shouldReplace,
   ]);
 
-  return { isSubscriptionAvailable: !isFullVerion, loadProducts, showPaywallModal };
+  useEffect(() => {
+    loadProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return { isSubscriptionAvailable: !isFullVerion, showPaywallModal };
 };
