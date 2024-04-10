@@ -5,6 +5,7 @@ import { adapty } from 'react-native-adapty';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useMutableValue } from '@/hooks/useMutableValue';
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { lockFullVersion, unlockFullVersion } from '@/store/user/user.slice';
 
 export const useCheckSubscription = (skipCheck = false) => {
@@ -19,6 +20,8 @@ export const useCheckSubscription = (skipCheck = false) => {
 
     adapty.getProfile().then((profile) => {
       const isActive = profile?.accessLevels?.premium?.isActive;
+
+      AnalyticsService.setIsUserPaid(isActive ?? false);
 
       if (isActive) {
         dispatch(unlockFullVersion());

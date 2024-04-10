@@ -17,6 +17,7 @@ import { useImageSlideAnimation } from '@/hooks/useImageSlideAnimation';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { unlockFullVersion } from '@/store/user/user.slice';
 import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
 import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
@@ -84,6 +85,8 @@ export const PaywallModal = () => {
 
       if (isSubscribed) {
         dispatch(unlockFullVersion());
+        AnalyticsService.setIsUserPaid(true);
+
         if (onClose) {
           onClose();
         } else {
