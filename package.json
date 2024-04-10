@@ -18,6 +18,7 @@
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.4.5",
     "@react-native-community/blur": "^4.4.0",
+    "@react-native-firebase/analytics": "^19.1.2",
     "@react-native-firebase/app": "^19.1.2",
     "@react-native/gradle-plugin": "^0.75.0-main",
     "@react-navigation/bottom-tabs": "^6.5.11",

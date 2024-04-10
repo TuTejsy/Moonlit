@@ -6,6 +6,8 @@ PODS:
   - FBLazyVector (0.73.6)
   - Firebase (10.23.1):
     - Firebase/Core (= 10.23.1)
+  - Firebase/Analytics (10.23.1):
+    - Firebase/Core
   - Firebase/Core (10.23.1):
     - Firebase/CoreOnly
     - FirebaseAnalytics (~> 10.23.1)
@@ -1322,6 +1324,10 @@ PODS:
     - React
   - RNDominantColor (1.7.2):
     - React
+  - RNFBAnalytics (19.1.2):
+    - Firebase/Analytics (= 10.23.1)
+    - React-Core
+    - RNFBApp
   - RNFBApp (19.1.2):
     - Firebase/CoreOnly (= 10.23.1)
     - React-Core
@@ -1534,6 +1540,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RealmJS (from `../node_modules/realm`)
   - RNDominantColor (from `../node_modules/rn-dominant-color`)
+  - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - RNFileViewer (from `../node_modules/react-native-file-viewer`)
   - RNFS (from `../node_modules/react-native-fs`)
@@ -1684,6 +1691,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/realm"
   RNDominantColor:
     :path: "../node_modules/rn-dominant-color"
+  RNFBAnalytics:
+    :path: "../node_modules/@react-native-firebase/analytics"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFileViewer:
@@ -1779,6 +1788,7 @@ SPEC CHECKSUMS:
   ReactCommon: 2aa35648354bd4c4665b9a5084a7d37097b89c10
   RealmJS: 385df5ee940d96f1de26b1dab153e325633d3052
   RNDominantColor: 7c17c31201566a592ba4b2fbe2bb7e00df468753
+  RNFBAnalytics: f25630b8988f79da8dfb32faa9009c9dc9eff64c
   RNFBApp: 5cbbb49393dc840f46b227ae483d11d502ed36a8
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
