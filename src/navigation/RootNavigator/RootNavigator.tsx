@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { SplashView } from '@/components/SplashView/SplashView';
@@ -12,6 +14,7 @@ import { VoiceSettingsModal } from '@/screens/StoryPlayerScreens/VoiceSettingsMo
 import {
   getStartedScreenOptions,
   paywallOptions,
+  paywallScreenOptions,
   rootModalOptions,
   rootOptions,
   storyPlayerOptions,
@@ -27,13 +30,18 @@ export const RootNavigator = () => {
   const theme = useTheme();
   const { initialRouteName, isAppReady, onSplashAnimationEnd } = useInitApp();
 
+  const Tab = useCallback(
+    () => <TabNavigator isInitialRoute={initialRouteName === RootRoutes.TAB} />,
+    [initialRouteName],
+  );
+
   if (!isAppReady) {
     return <SplashView onAppReady={onSplashAnimationEnd} />;
   }
 
   return (
     <RootStack.Navigator initialRouteName={initialRouteName} screenOptions={rootOptions(theme)}>
-      <RootStack.Screen component={TabNavigator} name={RootRoutes.TAB} options={tabOptions} />
+      <RootStack.Screen component={Tab} name={RootRoutes.TAB} options={tabOptions} />
       <RootStack.Screen
         component={StoryPlayerScreen}
         name={RootRoutes.STORY_PLAYER}
@@ -44,6 +52,12 @@ export const RootNavigator = () => {
         component={GetStartedScreen}
         name={RootRoutes.GET_STARTED_SCREEN}
         options={getStartedScreenOptions}
+      />
+
+      <RootStack.Screen
+        component={PaywallModal}
+        name={RootRoutes.PAYWALL_SCREEN}
+        options={paywallScreenOptions}
       />
 
       <RootStack.Group screenOptions={rootModalOptions(theme)}>

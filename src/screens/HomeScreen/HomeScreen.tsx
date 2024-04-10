@@ -9,6 +9,8 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useCheckSubscription } from '@/hooks/useCheckSubscription';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
+import { useAppRoute } from '@/navigation/hooks/useAppRoute';
+import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 
 import { DefaultList } from './components/DefaultList/DefaultList';
 import { EmptySearch } from './components/EmptySearch/EmptySearch';
@@ -19,6 +21,9 @@ import { makeStyles } from './HomeScreen.styles';
 export const HomeScreen = () => {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
+
+  const { params } = useAppRoute<SharedRoutes.HOME>();
+  const { initalRoute = false } = params || {};
 
   const [searchText, setSearchText] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -61,7 +66,7 @@ export const HomeScreen = () => {
     setSearchText(item);
   }, []);
 
-  useCheckSubscription();
+  useCheckSubscription(!initalRoute);
 
   return (
     <LinearGradient

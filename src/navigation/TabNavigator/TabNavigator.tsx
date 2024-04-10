@@ -11,8 +11,15 @@ import { TabStackParams } from './TabNavigator.types';
 
 const Tab = createBottomTabNavigator<TabStackParams>();
 
-export const TabNavigator = () => {
-  const Home = useCallback(() => <SharedNavigator parentRoute={TabRoutes.HOME} />, []);
+interface TabNavigator {
+  isInitialRoute?: boolean;
+}
+
+export const TabNavigator = ({ isInitialRoute = false }: TabNavigator) => {
+  const Home = useCallback(
+    () => <SharedNavigator isInitialRoute={isInitialRoute} parentRoute={TabRoutes.HOME} />,
+    [isInitialRoute],
+  );
   const Favorites = useCallback(() => <SharedNavigator parentRoute={TabRoutes.FAVORITES} />, []);
   const Settings = useCallback(() => <SharedNavigator parentRoute={TabRoutes.SETTINGS} />, []);
 

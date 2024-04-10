@@ -1,47 +1,73 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
-import { adapty } from 'react-native-adapty';
+import { adapty, AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { PLACEMENT_ID } from '@/constants/common';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { setFreeOfferDays } from '@/store/user/user.slice';
 
 import { useAppDispatch } from '../useAppDispatch';
 import { useAppSelector } from '../useAppSelector';
 
-export const useShowPaywallModal = () => {
-  const navigation = useAppNavigation();
+export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false) => {
+  const navigation = useAppNavigation<RootRoutes.GET_STARTED_SCREEN | SharedRoutes.HOME>();
   const isFullVerion = useAppSelector(selectIsFullVersion);
 
   const dispatch = useAppDispatch();
 
+  const [products, setProducts] = useState<AdaptyPaywallProduct[] | null>(null);
+
+  const loadProducts = useCallback(async () => {
+    const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en', {
+      fetchPolicy: 'return_cache_data_if_not_expired_else_load',
+      maxAgeSeconds: 60 * 60 * 24, // 24 hours
+    });
+    const products = await adapty.getPaywallProducts(paywall);
+
+    setProducts(products);
+
+    return products;
+  }, []);
+
   const showPaywallModal = useCallback(async () => {
     try {
-      const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en', {
-        fetchPolicy: 'return_cache_data_if_not_expired_else_load',
-        maxAgeSeconds: 60 * 60 * 24, // 24 hours
-      });
-      const products = await adapty.getPaywallProducts(paywall);
+      const paywallProducts = products || (await loadProducts());
 
-      if (!isFullVerion && products) {
-        navigation.navigate(RootRoutes.PAYWALL_MODAL, {
-          products,
-        });
+      if (!isFullVerion && paywallProducts) {
+        (shouldReplace ? navigation.replace : navigation.navigate)(
+          shouldReplace ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
+          {
+            onClose,
+            products: paywallProducts,
+          },
+        );
 
-        const offerDays = products.find(
+        const offerDays = paywallProducts.find(
           (product) => !!product.subscriptionDetails?.introductoryOffers?.[0],
         )?.subscriptionDetails?.introductoryOffers?.[0]?.subscriptionPeriod.numberOfUnits;
 
         if (offerDays) {
           dispatch(setFreeOfferDays(offerDays));
         }
+      } else if (onClose) {
+        onClose();
       }
     } catch (err) {
       console.error(err);
     }
-  }, [dispatch, isFullVerion, navigation]);
+  }, [
+    dispatch,
+    isFullVerion,
+    loadProducts,
+    navigation.navigate,
+    navigation.replace,
+    onClose,
+    products,
+    shouldReplace,
+  ]);
 
-  return { isSubscriptionAvailable: !isFullVerion, showPaywallModal };
+  return { isSubscriptionAvailable: !isFullVerion, loadProducts, showPaywallModal };
 };

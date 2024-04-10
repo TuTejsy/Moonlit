@@ -22,6 +22,7 @@ import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
 import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
 
 import backgroundImage from './images/background/background.png';
+// eslint-disable-next-line import/no-unresolved
 import voicesImage from './images/voices/voices.png';
 import { makeStyles } from './PaywallModal.styles';
 
@@ -32,7 +33,7 @@ export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
 
-  const { products } = params;
+  const { onClose, products } = params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFreeTrialEnabled, setIsFreeTrialEnabled] = useState(false);
@@ -83,15 +84,23 @@ export const PaywallModal = () => {
 
       if (isSubscribed) {
         dispatch(unlockFullVersion());
-        navigation.goBack();
+        if (onClose) {
+          onClose();
+        } else {
+          navigation.goBack();
+        }
       }
     },
-    [dispatch, navigation],
+    [dispatch, navigation, onClose],
   );
 
   const handleSkipPress = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
+    if (onClose) {
+      onClose();
+    } else {
+      navigation.goBack();
+    }
+  }, [navigation, onClose]);
 
   const handleUnlockPress = useCallback(() => {
     const product = isFreeTrialEnabled ? trialProduct : fullProduct;
