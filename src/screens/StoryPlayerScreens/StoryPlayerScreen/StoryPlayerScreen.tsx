@@ -12,7 +12,7 @@ import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import { IS_IOS, MOONLIT_IOS_APP_LINK, SANDBOX } from '@/constants/common';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
-import { CATEGORY_IDS, CATEGORY_NAMES } from '@/constants/stories';
+import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_NAMES } from '@/constants/stories';
 import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
 import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -81,7 +81,8 @@ export const StoryPlayerScreen = () => {
   );
 
   const storyCategories = useMemo(
-    () => story?.category_ids.map((categoryId: CATEGORY_IDS) => CATEGORY_NAMES[categoryId]),
+    () =>
+      story?.category_ids.map((categoryId: CATEGORY_IDS) => MAP_CATEGORY_ID_TO_NAMES[categoryId]),
     [story?.category_ids],
   );
 

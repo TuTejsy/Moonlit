@@ -20,6 +20,7 @@
     "@react-native-community/blur": "^4.4.0",
     "@react-native-firebase/analytics": "^19.1.2",
     "@react-native-firebase/app": "^19.1.2",
+    "@react-native-firebase/remote-config": "^19.1.2",
     "@react-native/gradle-plugin": "^0.75.0-main",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
