@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
 
+import { useScrollToTop } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Realm from 'realm';
 
@@ -25,7 +26,6 @@ import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.route
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { CategoriesList } from '@/screens/HomeScreen/components/CategoriesList/CategoriesList';
 import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
-import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
@@ -51,6 +51,8 @@ export const DefaultList = React.memo(
     popularStories,
     popularStoriesVersion,
   }: DefaultListPropTypes) => {
+    const scrollRef = useRef<ScrollView>(null);
+
     const isFullVersion = useAppSelector(selectIsFullVersion);
 
     const styles = useMakeStyles(makeStyles);
@@ -119,8 +121,11 @@ export const DefaultList = React.memo(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isListVisible]);
 
+    useScrollToTop(scrollRef);
+
     return (
       <ScrollView
+        ref={scrollRef}
         showsVerticalScrollIndicator
         contentContainerStyle={styles.content}
         indicatorStyle='white'

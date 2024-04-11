@@ -207,7 +207,7 @@ export const PaywallModal = () => {
         <View style={styles.freeTrialContainer}>
           <View style={styles.freeTrialTextContainer}>
             <TextView style={styles.freeTrialTitle} type='bold'>
-              Not shure yet
+              Not sure yet
             </TextView>
             <TextView style={styles.freeTrialSubtitle}>Enable free trial</TextView>
           </View>
@@ -236,7 +236,7 @@ export const PaywallModal = () => {
             ]}
           >
             <TextView style={styles.unlockButtonText} type='bold'>
-              Go to listen stories
+              Begin your adventure
             </TextView>
           </LinearGradient>
         </PressableView>
