@@ -14,6 +14,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { navigationService } from '@/services/navigation/navigationService';
 import { getHitSlop } from '@/utils/getHitSlop';
 
@@ -29,6 +30,8 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   const [story] = useStory(storyId, ['name', 'small_cover_cached_name']);
 
   const { selectedAudioRecording } = useSelectedAudioRecording(storyId);
+
+  const storyName = story?.name;
 
   const storyColor = useMemo(() => {
     return story?.colors?.primary ?? colors.imagePurple;
@@ -53,8 +56,24 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
     audioRecordingId: selectedAudioRecording?.id,
     coverPath: smallCoverURL,
     storyId,
-    title: story?.name ?? '',
+    title: storyName ?? '',
   });
+
+  const handlePlayStory = useCallback(() => {
+    startStoryPlaying();
+
+    if (storyName) {
+      AnalyticsService.logTalePlayEvent({ name: storyName, tab: 'Tab player' });
+    }
+  }, [startStoryPlaying, storyName]);
+
+  const handlePauseStory = useCallback(() => {
+    pauseStoryPlaying();
+
+    if (storyName) {
+      AnalyticsService.logTalePauseEvent({ name: storyName, tab: 'Tab player' });
+    }
+  }, [pauseStoryPlaying, storyName]);
 
   const progressSharedValue = useSharedValue(0);
 
@@ -65,6 +84,7 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   const handlePreviewPress = useCallback(() => {
     navigationService.navigate(RootRoutes.STORY_PLAYER, {
       storyId,
+      tab: 'Tab player',
     });
   }, [storyId]);
 
@@ -109,11 +129,11 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
       </TextView>
 
       {isStoryPlaying ? (
-        <PressableView hitSlop={getHitSlop(10)} onPress={pauseStoryPlaying}>
+        <PressableView hitSlop={getHitSlop(10)} onPress={handlePauseStory}>
           <Icons.PauseSmall fillCirlce={colors.opacityWhite(0.1)} />
         </PressableView>
       ) : (
-        <PressableView hitSlop={getHitSlop(10)} onPress={startStoryPlaying}>
+        <PressableView hitSlop={getHitSlop(10)} onPress={handlePlayStory}>
           <Icons.PlaySmall fillCirlce={colors.opacityWhite(0.1)} hitSlop={getHitSlop(10)} />
         </PressableView>
       )}

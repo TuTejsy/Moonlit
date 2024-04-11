@@ -62,24 +62,27 @@ export class AnalyticsService {
   static logSettingsViewEvent() {
     AnalyticsService.settingsViewLogCount += 1;
 
-    firebaseAnalytics().logEvent('settings_view', {
+    firebaseAnalytics().logEvent('page_view', {
       count: AnalyticsService.settingsViewLogCount,
+      screen: 'settings',
     });
   }
 
   static logSavedViewEvent() {
     AnalyticsService.savedViewLogCount += 1;
 
-    firebaseAnalytics().logEvent('saved_view', {
+    firebaseAnalytics().logEvent('page_view', {
       count: AnalyticsService.savedViewLogCount,
+      screen: 'saved',
     });
   }
 
   static logHomeViewEvent() {
     AnalyticsService.homeViewLogCount += 1;
 
-    firebaseAnalytics().logEvent('home_view', {
+    firebaseAnalytics().logEvent('page_view', {
       count: AnalyticsService.homeViewLogCount,
+      screen: 'home',
     });
   }
 

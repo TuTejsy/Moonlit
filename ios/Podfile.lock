@@ -1354,7 +1354,7 @@ PODS:
     - React-Core
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.16.0):
+  - RNGestureHandler (2.14.1):
     - glog
     - hermes-engine
     - RCT-Folly (= 2022.05.16.00)
@@ -1826,7 +1826,7 @@ SPEC CHECKSUMS:
   RNFBRemoteConfig: 974626016982218a53d0860202751093332d53be
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: e28d9f46471638eaee98e38ad728d2f09ca8668e
+  RNGestureHandler: 74b7b3d06d667ba0bbf41da7718f2607ae0dfe8f
   RNLinearGradient: 0f0edb4523bc7ba5c609b956d3fcf11283336a46
   RNReanimated: 323436b1a5364dca3b5f8b1a13458455e0de9efe
   RNScreens: 9ec969a95987a6caae170ef09313138abf3331e1
