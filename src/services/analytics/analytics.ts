@@ -104,7 +104,7 @@ export class AnalyticsService {
 
     const eventName = 'page_view';
     const eventParams = {
-      count: AnalyticsService.savedViewLogCount,
+      count: AnalyticsService.homeViewLogCount,
       screen: 'home',
     };
 

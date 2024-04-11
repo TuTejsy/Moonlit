@@ -8,7 +8,9 @@ export type TabEventType =
   | 'Free tales'
   | 'All tales'
   | 'Popular tales'
-  | 'Tab player';
+  | 'Tab player'
+  | 'Saved'
+  | 'Recent played';
 
 export interface LaunchAppEventParams {
   source: SOURCE.HOT_START | SOURCE.COLD_START;

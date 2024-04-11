@@ -191,6 +191,7 @@ export const FavoritesScreen = () => {
             showsVerticalScrollIndicator={false}
             stories={savedStories}
             storiesVersion={savedStoriesVersion}
+            tab='Saved'
             ListHeaderComponent={
               savedStories.length ? (
                 <TextView style={styles.listTitleText} type='bold'>
@@ -210,6 +211,7 @@ export const FavoritesScreen = () => {
             showsVerticalScrollIndicator={false}
             stories={recentlyPlayedStories}
             storiesVersion={recentlyPlayedStoriesVersion}
+            tab='Recent played'
             ListHeaderComponent={
               recentlyPlayedStories.length ? (
                 <TextView style={styles.listTitleText} type='bold'>
