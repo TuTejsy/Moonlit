@@ -22,6 +22,7 @@ import { ShareIOS } from '@/native_modules/MNTShare/NativeShareManager';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { getHitSlop } from '@/utils/getHitSlop';
@@ -55,7 +56,7 @@ export const StoryPlayerScreen = () => {
 
   const navigation = useAppNavigation<RootRoutes.STORY_PLAYER>();
   const route = useAppRoute<RootRoutes.STORY_PLAYER>();
-  const { storyId } = route.params;
+  const { storyId, tab } = route.params;
 
   const [story] = useStory(storyId, [
     'full_cover_url',
@@ -67,6 +68,8 @@ export const StoryPlayerScreen = () => {
   const { selectedAudioRecording, setSelectedAudioRecording } = useSelectedAudioRecording(storyId);
 
   useStoryAudioRecordingsUpdate(storyId);
+
+  const storyName = story?.name;
 
   const coverURL = useMemo(
     () => (story ? `file://${SANDBOX.DOCUMENTS.FULL_COVER}/${story.full_cover_cached_name}` : ''),
@@ -112,15 +115,31 @@ export const StoryPlayerScreen = () => {
     audioRecordingId: selectedAudioRecording?.id,
     coverPath: smallCoverURL,
     storyId,
-    title: story?.name ?? '',
+    title: storyName ?? '',
   });
+
+  const handlePlayStory = useCallback(() => {
+    startStoryPlaying();
+
+    if (storyName && tab) {
+      AnalyticsService.logTalePlayEvent({ name: storyName, tab });
+    }
+  }, [startStoryPlaying, storyName, tab]);
+
+  const handlePauseStory = useCallback(() => {
+    pauseStoryPlaying();
+
+    if (storyName && tab) {
+      AnalyticsService.logTalePauseEvent({ name: storyName, tab });
+    }
+  }, [pauseStoryPlaying, storyName, tab]);
 
   const { coverAnimatedStyles, storyContainerAnimatedStyles } = useStoryCoverAnimation(
     storyPlayingSharedValue,
     storyContainerMinHeight,
   );
 
-  const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue, pauseStoryPlaying);
+  const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue, handlePauseStory);
 
   const handleGoBack = useCallback(() => {
     navigation.goBack();
@@ -129,29 +148,29 @@ export const StoryPlayerScreen = () => {
   const handleSharePress = useCallback(() => {
     if (IS_IOS) {
       ShareIOS?.share({
-        message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
+        message: `Explore ${storyName} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
         subtitle: 'and more amazing stories in the Moonlit app.',
-        title: `Explore ${story?.name}`,
+        title: `Explore ${storyName}`,
         url: smallCoverURL,
       });
     } else {
       Share.share(
         {
-          message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
+          message: `Explore ${storyName} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
         },
         {
-          dialogTitle: `Explore ${story?.name}`,
+          dialogTitle: `Explore ${storyName}`,
         },
       );
     }
-  }, [smallCoverURL, story?.name]);
+  }, [smallCoverURL, storyName]);
 
   const handleVoiceSettingsPress = useCallback(() => {
     if (selectedAudioRecording) {
       navigation.navigate(RootRoutes.VOICE_SETTINGS_MODAL, {
         onSelectAudioRecording: (audioRecordingId: number) => {
           setSelectedAudioRecording(audioRecordingId);
-          pauseStoryPlaying();
+          handlePauseStory();
         },
         selectedAudioRecordingId: selectedAudioRecording.id,
         storyColor: gradientColor,
@@ -161,7 +180,7 @@ export const StoryPlayerScreen = () => {
   }, [
     gradientColor,
     navigation,
-    pauseStoryPlaying,
+    handlePauseStory,
     selectedAudioRecording,
     setSelectedAudioRecording,
     storyId,
@@ -174,7 +193,7 @@ export const StoryPlayerScreen = () => {
     (isStoryPlayingSharedValue, previousIsStoryPlayingSharedValue) => {
       if (isStoryPlayingSharedValue !== previousIsStoryPlayingSharedValue) {
         if (!isStoryPlayingSharedValue) {
-          runOnJS(pauseStoryPlaying);
+          runOnJS(handlePauseStory);
         }
       }
     },
@@ -188,6 +207,13 @@ export const StoryPlayerScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCurrentStoryPlaying]);
 
+  useEffect(() => {
+    if (storyName && tab) {
+      AnalyticsService.logTaleOpenEvent({ name: storyName, tab });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storyName]);
+
   return (
     <LinearGradient
       angle={180}
@@ -198,7 +224,7 @@ export const StoryPlayerScreen = () => {
       <ScreenHeader
         style={styles.header}
         subtitle={storyCategories?.[0]}
-        title={story?.name}
+        title={storyName}
         renderRight={
           <TouchableOpacity hitSlop={getHitSlop(10)} onPress={handleSharePress}>
             <Icons.Share />
@@ -233,10 +259,10 @@ export const StoryPlayerScreen = () => {
             />
 
             <StoryActions
-              startStoryPlaying={startStoryPlaying}
+              startStoryPlaying={handlePlayStory}
               storyId={storyId}
               storyPlayingSharedValue={storyPlayingSharedValue}
-              storyTitle={story?.name ?? ''}
+              storyTitle={storyName ?? ''}
             />
           </View>
           <StoryMeta
@@ -253,11 +279,11 @@ export const StoryPlayerScreen = () => {
         isStoryLoading={isStoryLoading}
         isStoryPlaying={isCurrentStoryPlaying}
         moveStoryPlayingToTime={moveStoryPlayingToTime}
-        pauseStoryPlaying={pauseStoryPlaying}
+        pauseStoryPlaying={handlePauseStory}
         playedTime={playedTime}
-        startStoryPlaying={startStoryPlaying}
+        startStoryPlaying={handlePlayStory}
         storyId={storyId}
-        storyName={story?.name}
+        storyName={storyName}
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
 
