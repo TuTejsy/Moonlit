@@ -40,11 +40,16 @@ export const SettingsScreen = () => {
 
   const handleRateAppPress = useCallback(() => {
     InAppReview.RequestInAppReview()
-      .then((reviewShown) => {
-        if (!reviewShown) {
+      .then(
+        (reviewShown) => {
+          if (!reviewShown) {
+            Linking.openURL(MOONLIT_IOS_APP_LINK);
+          }
+        },
+        () => {
           Linking.openURL(MOONLIT_IOS_APP_LINK);
-        }
-      })
+        },
+      )
       .catch((err) => {
         Linking.openURL(MOONLIT_IOS_APP_LINK);
       });
