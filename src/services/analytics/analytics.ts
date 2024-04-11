@@ -18,6 +18,8 @@ import {
 export class AnalyticsService {
   private static settingsViewLogCount = 0;
 
+  private static savedViewLogCount = 0;
+
   private static homeViewLogCount = 0;
 
   private static taleLikedLogCount = 0;
@@ -62,6 +64,14 @@ export class AnalyticsService {
 
     firebaseAnalytics().logEvent('settings_view', {
       count: AnalyticsService.settingsViewLogCount,
+    });
+  }
+
+  static logSavedViewEvent() {
+    AnalyticsService.savedViewLogCount += 1;
+
+    firebaseAnalytics().logEvent('saved_view', {
+      count: AnalyticsService.savedViewLogCount,
     });
   }
 

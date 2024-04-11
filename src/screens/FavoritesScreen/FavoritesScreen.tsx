@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   Extrapolation,
@@ -19,6 +20,8 @@ import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
+import { AnalyticsService } from '@/services/analytics/analytics';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 
 import { TAB_WIDTH } from './FavoritesScreen.constants';
 import { makeStyles } from './FavoritesScreen.styles';
@@ -161,6 +164,12 @@ export const FavoritesScreen = () => {
     [changeBarColor],
   );
 
+  useFocusEffect(
+    useCallback(() => {
+      AnalyticsService.logSavedViewEvent();
+    }, []),
+  );
+
   return (
     <LinearGradient
       angle={180}
@@ -181,6 +190,7 @@ export const FavoritesScreen = () => {
             ListEmptyComponent={<Empty text={`You don't have any\nsaved stories`} />}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
+            source={SOURCE.SAVED_TAB}
             stories={savedStories}
             storiesVersion={savedStoriesVersion}
             ListHeaderComponent={
@@ -200,6 +210,7 @@ export const FavoritesScreen = () => {
             ListEmptyComponent={<Empty text={`You don't have any\nrecent played stories`} />}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
+            source={SOURCE.RECENT_PLAYED_TAB}
             stories={recentlyPlayedStories}
             storiesVersion={recentlyPlayedStoriesVersion}
             ListHeaderComponent={

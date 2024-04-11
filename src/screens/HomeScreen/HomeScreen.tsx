@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 
+import { useFocusEffect } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
@@ -11,6 +12,7 @@ import { useCheckSubscription } from '@/hooks/useCheckSubscription';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 
 import { DefaultList } from './components/DefaultList/DefaultList';
@@ -68,6 +70,12 @@ export const HomeScreen = () => {
   }, []);
 
   useCheckSubscription(!initalRoute);
+
+  useFocusEffect(
+    useCallback(() => {
+      AnalyticsService.logHomeViewEvent();
+    }, []),
+  );
 
   return (
     <LinearGradient

@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { Linking, View } from 'react-native';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { openComposer } from 'react-native-email-link';
 import InAppReview from 'react-native-in-app-review';
 import LinearGradient from 'react-native-linear-gradient';
@@ -11,6 +12,7 @@ import { MOONLIT_IOS_APP_LINK, SUPPORT_EMAIL } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
 import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
@@ -47,6 +49,12 @@ export const SettingsScreen = () => {
         Linking.openURL(MOONLIT_IOS_APP_LINK);
       });
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      AnalyticsService.logSettingsViewEvent();
+    }, []),
+  );
 
   return (
     <LinearGradient
