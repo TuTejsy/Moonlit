@@ -18,6 +18,7 @@ import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
+import { MOVE_TO_PROPS } from '@/hooks/useStoryPlayer/useStoryPlayers.types';
 import { ShareIOS } from '@/native_modules/MNTShare/NativeShareManager';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
@@ -69,8 +70,6 @@ export const StoryPlayerScreen = () => {
 
   useStoryAudioRecordingsUpdate(storyId);
 
-  const storyName = story?.name;
-
   const coverURL = useMemo(
     () => (story ? `file://${SANDBOX.DOCUMENTS.FULL_COVER}/${story.full_cover_cached_name}` : ''),
     [story],
@@ -115,24 +114,43 @@ export const StoryPlayerScreen = () => {
     audioRecordingId: selectedAudioRecording?.id,
     coverPath: smallCoverURL,
     storyId,
-    title: storyName ?? '',
+    title: story?.name ?? '',
   });
 
   const handlePlayStory = useCallback(() => {
     startStoryPlaying();
 
-    if (storyName && tab) {
-      AnalyticsService.logTalePlayEvent({ name: storyName, tab });
+    if (story?.name && tab) {
+      AnalyticsService.logTalePlayEvent({ name: story?.name, tab });
     }
-  }, [startStoryPlaying, storyName, tab]);
+  }, [startStoryPlaying, story?.name, tab]);
 
   const handlePauseStory = useCallback(() => {
     pauseStoryPlaying();
 
-    if (storyName && tab) {
-      AnalyticsService.logTalePauseEvent({ name: storyName, tab });
+    if (story?.name && tab) {
+      AnalyticsService.logTalePauseEvent({ name: story?.name, tab });
     }
-  }, [pauseStoryPlaying, storyName, tab]);
+  }, [pauseStoryPlaying, story?.name, tab]);
+
+  const handleMoveStoryToTime = useCallback(
+    ({ exactTime, moveGap }: MOVE_TO_PROPS) => {
+      moveStoryPlayingToTime({ exactTime, moveGap });
+
+      if (story?.name && tab) {
+        let value = '';
+
+        if (exactTime) {
+          value = exactTime.toFixed(2);
+        } else if (moveGap) {
+          value = `${moveGap > 0 ? '+' : '-'}${moveGap}`;
+        }
+
+        AnalyticsService.logTaleRewindEvent({ name: story?.name, tab, value });
+      }
+    },
+    [moveStoryPlayingToTime, story?.name, tab],
+  );
 
   const { coverAnimatedStyles, storyContainerAnimatedStyles } = useStoryCoverAnimation(
     storyPlayingSharedValue,
@@ -148,22 +166,22 @@ export const StoryPlayerScreen = () => {
   const handleSharePress = useCallback(() => {
     if (IS_IOS) {
       ShareIOS?.share({
-        message: `Explore ${storyName} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
+        message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
         subtitle: 'and more amazing stories in the Moonlit app.',
-        title: `Explore ${storyName}`,
+        title: `Explore ${story?.name}`,
         url: smallCoverURL,
       });
     } else {
       Share.share(
         {
-          message: `Explore ${storyName} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
+          message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
         },
         {
-          dialogTitle: `Explore ${storyName}`,
+          dialogTitle: `Explore ${story?.name}`,
         },
       );
     }
-  }, [smallCoverURL, storyName]);
+  }, [smallCoverURL, story?.name]);
 
   const handleVoiceSettingsPress = useCallback(() => {
     if (selectedAudioRecording) {
@@ -208,11 +226,11 @@ export const StoryPlayerScreen = () => {
   }, [isCurrentStoryPlaying]);
 
   useEffect(() => {
-    if (storyName && tab) {
-      AnalyticsService.logTaleOpenEvent({ name: storyName, tab });
+    if (story?.name && tab) {
+      AnalyticsService.logTaleOpenEvent({ name: story.name, tab });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storyName]);
+  }, []);
 
   return (
     <LinearGradient
@@ -224,7 +242,7 @@ export const StoryPlayerScreen = () => {
       <ScreenHeader
         style={styles.header}
         subtitle={storyCategories?.[0]}
-        title={storyName}
+        title={story?.name}
         renderRight={
           <TouchableOpacity hitSlop={getHitSlop(10)} onPress={handleSharePress}>
             <Icons.Share />
@@ -262,7 +280,7 @@ export const StoryPlayerScreen = () => {
               startStoryPlaying={handlePlayStory}
               storyId={storyId}
               storyPlayingSharedValue={storyPlayingSharedValue}
-              storyTitle={storyName ?? ''}
+              storyTitle={story?.name ?? ''}
             />
           </View>
           <StoryMeta
@@ -278,12 +296,12 @@ export const StoryPlayerScreen = () => {
         audioRecordingDuration={selectedAudioRecording?.duration || 0}
         isStoryLoading={isStoryLoading}
         isStoryPlaying={isCurrentStoryPlaying}
-        moveStoryPlayingToTime={moveStoryPlayingToTime}
+        moveStoryPlayingToTime={handleMoveStoryToTime}
         pauseStoryPlaying={handlePauseStory}
         playedTime={playedTime}
         startStoryPlaying={handlePlayStory}
         storyId={storyId}
-        storyName={storyName}
+        story?.name={story?.name}
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
 
