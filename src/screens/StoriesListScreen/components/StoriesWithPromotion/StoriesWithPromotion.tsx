@@ -43,6 +43,7 @@ export const StoriesWithPromotion = memo(
               previewURL={getImageFilePathForStory(story, 'small')}
               source={source}
               storyId={story.id}
+              tab={tab}
               title={story.name}
             />
           ))}

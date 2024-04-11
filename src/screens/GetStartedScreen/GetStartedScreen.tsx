@@ -109,6 +109,7 @@ export const GetStartedScreen = () => {
   }));
 
   useEffect(() => {
+    AnalyticsService.setIsUserPaid(false);
     AnalyticsService.logOnboardingEvent({ screen: 1 });
   }, []);
 

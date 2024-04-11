@@ -16,6 +16,7 @@ export const useCheckSubscription = (skipCheck = false) => {
 
   useEffect(() => {
     if (skipCheck) {
+      AnalyticsService.setIsUserPaid(false);
       return;
     }
 
