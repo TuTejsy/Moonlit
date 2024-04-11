@@ -16,7 +16,9 @@
     "reinstall": "rm -rf node_modules && watchman watch-del-all && yarn && yarn postinstall && yarn pod-reinstall && yarn codegen-android"
   },
   "dependencies": {
+    "@amplitude/analytics-react-native": "^1.4.7",
     "@gorhom/bottom-sheet": "^4.4.5",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/blur": "^4.4.0",
     "@react-native-firebase/analytics": "^19.1.2",
     "@react-native-firebase/app": "^19.1.2",

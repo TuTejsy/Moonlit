@@ -2,6 +2,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 
+import * as amplitude from '@amplitude/analytics-react-native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { adapty } from 'react-native-adapty';
@@ -11,6 +12,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { AppLogicProvider } from '@/components/Providers/AppLogicProvider/AppLogicProvider';
+import { ADAPTY_API_KEY, AMPLITUDE_API_KEY } from '@/constants/auth';
 import { AudioRecordingsDB, StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
@@ -31,7 +33,10 @@ AudioRecordingsDB.open();
 // StoriesDB.open().then(() => StoriesDB.dropDatabase());
 // AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
 
-adapty.activate('public_live_f9QzhFlB.vAmyFLiD39fXZJjW6UXh');
+adapty.activate(ADAPTY_API_KEY);
+amplitude.init(AMPLITUDE_API_KEY, undefined, {
+  logLevel: __DEV__ ? amplitude.Types.LogLevel.Debug : amplitude.Types.LogLevel.None,
+});
 
 function App(): JSX.Element {
   const theme = useInitTheme();

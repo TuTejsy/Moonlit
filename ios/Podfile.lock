@@ -1,5 +1,7 @@
 PODS:
   - Adapty (2.10.1)
+  - amplitude-react-native (1.4.7):
+    - React-Core
   - Base64 (1.1.2)
   - boost (1.83.0)
   - DoubleConversion (1.1.6)
@@ -1337,6 +1339,25 @@ PODS:
     - React-perflogger (= 0.73.6)
   - RealmJS (12.6.2):
     - React
+  - RNCAsyncStorage (1.23.1):
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2022.05.16.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNDominantColor (1.7.2):
     - React
   - RNFBAnalytics (19.1.2):
@@ -1493,6 +1514,7 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - "amplitude-react-native (from `../node_modules/@amplitude/analytics-react-native`)"
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -1561,6 +1583,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RealmJS (from `../node_modules/realm`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNDominantColor (from `../node_modules/rn-dominant-color`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
@@ -1599,6 +1622,8 @@ SPEC REPOS:
     - SocketRocket
 
 EXTERNAL SOURCES:
+  amplitude-react-native:
+    :path: "../node_modules/@amplitude/analytics-react-native"
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   DoubleConversion:
@@ -1716,6 +1741,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RealmJS:
     :path: "../node_modules/realm"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNDominantColor:
     :path: "../node_modules/rn-dominant-color"
   RNFBAnalytics:
@@ -1743,6 +1770,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Adapty: 8458d44e75607e38da8845ba40893d53b51ae409
+  amplitude-react-native: 43098dfcfe1dcd6f0e9426017258ba79289d7a21
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
@@ -1820,6 +1848,7 @@ SPEC CHECKSUMS:
   React-utils: d16c1d2251c088ad817996621947d0ac8167b46c
   ReactCommon: 2aa35648354bd4c4665b9a5084a7d37097b89c10
   RealmJS: 385df5ee940d96f1de26b1dab153e325633d3052
+  RNCAsyncStorage: 0ae9ad1fef1cdf2633a2d41574076ddeeaa1df48
   RNDominantColor: 7c17c31201566a592ba4b2fbe2bb7e00df468753
   RNFBAnalytics: f25630b8988f79da8dfb32faa9009c9dc9eff64c
   RNFBApp: 5cbbb49393dc840f46b227ae483d11d502ed36a8
