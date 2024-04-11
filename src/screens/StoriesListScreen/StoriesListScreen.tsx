@@ -60,6 +60,7 @@ export const StoriesListScreen = () => {
         source={SOURCE.STORIES_LIST}
         stories={listStories}
         storiesVersion={storiesVersion}
+        tab={(title ?? 'All tales') as TabEventType}
         ListHeaderComponent={
           <StoriesWithPromotion
             source={SOURCE.STORIES_LIST}
