@@ -73,3 +73,17 @@ export interface TaleLikedEventParams {
   source: SOURCE.TALE_PLAYER | SOURCE.TALE_PREVIEW;
   tab: TabEventType;
 }
+
+export interface VoiceViewEventParams {
+  name: string;
+  source: SOURCE.TALE_PLAYER | SOURCE.TALE_PREVIEW;
+  tab: TabEventType;
+}
+
+export interface VoiceChangeEventParams {
+  from: string;
+  name: string;
+  source: SOURCE.TALE_PLAYER | SOURCE.TALE_PREVIEW;
+  tab: TabEventType;
+  to: string;
+}

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { FlatList, ListRenderItemInfo, View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
 import { IS_IOS } from '@/constants/common';
+import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -14,6 +15,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
@@ -26,7 +28,15 @@ import { makeStyles } from './VoiceSettingsModal.styles';
 
 export function VoiceSettingsModal() {
   const {
-    params: { onSelectAudioRecording, selectedAudioRecordingId, storyColor, storyId },
+    params: {
+      onSelectAudioRecording,
+      selectedAudioRecordingId,
+      source,
+      storyColor,
+      storyId,
+      storyName,
+      tab,
+    },
   } = useAppRoute<RootRoutes.VOICE_SETTINGS_MODAL>();
 
   const navigation = useAppNavigation<RootRoutes.VOICE_SETTINGS_MODAL>();
@@ -51,11 +61,23 @@ export function VoiceSettingsModal() {
   }, [navigation]);
 
   const handleSelectAudioRecording = useCallback(
-    (audioRecordingnId: number) => {
+    (audioRecordingnId: number, newRecordingName: string) => {
+      const currentRecording = AudioRecordingsDB.object(selectedAudioRecordingId);
+
+      if (currentRecording) {
+        AnalyticsService.logVoiceChangeEvent({
+          from: currentRecording.voice_name,
+          name: storyName,
+          source,
+          tab,
+          to: newRecordingName,
+        });
+      }
+
       onSelectAudioRecording(audioRecordingnId);
       handleClosePress();
     },
-    [handleClosePress, onSelectAudioRecording],
+    [handleClosePress, onSelectAudioRecording, selectedAudioRecordingId, source, storyName, tab],
   );
 
   const renderItem = useCallback(
@@ -84,6 +106,11 @@ export function VoiceSettingsModal() {
     (item: AudioRecordingSchema | typeof MORE_VOICES_PLACEHOLDER) => `${item.id}`,
     [],
   );
+
+  useEffect(() => {
+    AnalyticsService.logVoiceViewEvent({ name: storyName, source, tab });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={styles.modalContainer}>
