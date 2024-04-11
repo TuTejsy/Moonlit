@@ -301,7 +301,7 @@ export const StoryPlayerScreen = () => {
         playedTime={playedTime}
         startStoryPlaying={handlePlayStory}
         storyId={storyId}
-        story?.name={story?.name}
+        storyName={story?.name}
         storyPlayingSharedValue={storyPlayingSharedValue}
       />
 
