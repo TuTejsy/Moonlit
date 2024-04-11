@@ -57,13 +57,12 @@ export const StoriesListScreen = () => {
       <SmallStoriesList
         contentContainerStyle={styles.smallListContainerStyle}
         isScrollable={!!listStories.length}
-        source={SOURCE.STORIES_LIST}
         stories={listStories}
         storiesVersion={storiesVersion}
         tab={(title ?? 'All tales') as TabEventType}
         ListHeaderComponent={
           <StoriesWithPromotion
-            source={SOURCE.STORIES_LIST}
+            source={SOURCE.CONTENT}
             stories={headerStories}
             storiesVersion={storiesVersion}
             tab={(title ?? 'All tales') as TabEventType}

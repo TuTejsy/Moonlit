@@ -142,7 +142,6 @@ export const DefaultList = React.memo(
         <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
 
         <LargeStoriesList
-          source={SOURCE.HOME_VIEW}
           stories={featuringStories}
           storiesVersion={featuringStoriesVersion}
           tab='Featuring tales'
@@ -154,7 +153,6 @@ export const DefaultList = React.memo(
           <>
             <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
             <MediumStoriesList
-              source={SOURCE.HOME_VIEW}
               stories={freeStories}
               storiesVersion={freeStoriesVersion}
               style={styles.freeList}
@@ -167,7 +165,6 @@ export const DefaultList = React.memo(
 
         <SectionHeader title='Popular tales' onSeeAllPress={handleSeePopularTales} />
         <MediumStoriesList
-          source={SOURCE.HOME_VIEW}
           stories={popularStories}
           storiesVersion={popularStoriesVersion}
           style={styles.popularList}
@@ -178,7 +175,6 @@ export const DefaultList = React.memo(
         <SmallStoriesList
           displayCount={6}
           isScrollable={false}
-          source={SOURCE.HOME_VIEW}
           stories={allStories as unknown as StorySchema[]}
           storiesVersion={allStoriesVersion}
           style={styles.smallList}

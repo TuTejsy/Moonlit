@@ -21,7 +21,6 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 import { AnalyticsService } from '@/services/analytics/analytics';
-import { SOURCE } from '@/services/analytics/analytics.constants';
 
 import { TAB_WIDTH } from './FavoritesScreen.constants';
 import { makeStyles } from './FavoritesScreen.styles';
@@ -190,7 +189,6 @@ export const FavoritesScreen = () => {
             ListEmptyComponent={<Empty text={`You don't have any\nsaved stories`} />}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
-            source={SOURCE.SAVED_TAB}
             stories={savedStories}
             storiesVersion={savedStoriesVersion}
             ListHeaderComponent={
@@ -210,7 +208,6 @@ export const FavoritesScreen = () => {
             ListEmptyComponent={<Empty text={`You don't have any\nrecent played stories`} />}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
-            source={SOURCE.RECENT_PLAYED_TAB}
             stories={recentlyPlayedStories}
             storiesVersion={recentlyPlayedStoriesVersion}
             ListHeaderComponent={

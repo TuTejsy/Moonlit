@@ -68,6 +68,6 @@ export interface TaleRewindEventParams {
 
 export interface TaleLikedEventParams {
   name: string;
-  source: SOURCE.TALE_PLAYING | SOURCE.TALE_PREVIEW;
+  source: SOURCE.TALE_PLAYER | SOURCE.TALE_PREVIEW;
   tab: TabEventType;
 }

@@ -18,6 +18,8 @@ import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite'
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { MOVE_TO_PROPS } from '@/hooks/useStoryPlayer/useStoryPlayers.types';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 import { getHitSlop } from '@/utils/getHitSlop';
 
 import { Loader } from './components/Loader/Loader';
@@ -34,6 +36,7 @@ interface StoryPlayerPropTypes {
   startStoryPlaying: () => void;
   storyId: number;
   storyPlayingSharedValue: SharedValue<number>;
+  tab: TabEventType;
   storyName?: string;
 }
 
@@ -48,13 +51,19 @@ export function StoryPlayer({
   storyId,
   storyName,
   storyPlayingSharedValue,
+  tab,
 }: StoryPlayerPropTypes) {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
   const insets = useSafeAreaInsets();
 
-  const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite(storyId);
+  const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite({
+    source: SOURCE.TALE_PLAYER,
+    storyId,
+    storyName: storyName ?? '',
+    tab,
+  });
 
   const animatedBlurViewContainerStyle = useAnimatedStyle(() => {
     return {

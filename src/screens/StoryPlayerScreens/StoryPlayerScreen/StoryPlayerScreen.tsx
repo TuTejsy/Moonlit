@@ -120,7 +120,7 @@ export const StoryPlayerScreen = () => {
   const handlePlayStory = useCallback(() => {
     startStoryPlaying();
 
-    if (story?.name && tab) {
+    if (story?.name) {
       AnalyticsService.logTalePlayEvent({ name: story?.name, tab });
     }
   }, [startStoryPlaying, story?.name, tab]);
@@ -128,7 +128,7 @@ export const StoryPlayerScreen = () => {
   const handlePauseStory = useCallback(() => {
     pauseStoryPlaying();
 
-    if (story?.name && tab) {
+    if (story?.name) {
       AnalyticsService.logTalePauseEvent({ name: story?.name, tab });
     }
   }, [pauseStoryPlaying, story?.name, tab]);
@@ -137,7 +137,7 @@ export const StoryPlayerScreen = () => {
     ({ exactTime, moveGap }: MOVE_TO_PROPS) => {
       moveStoryPlayingToTime({ exactTime, moveGap });
 
-      if (story?.name && tab) {
+      if (story?.name) {
         let value = '';
 
         if (exactTime) {
@@ -226,7 +226,7 @@ export const StoryPlayerScreen = () => {
   }, [isCurrentStoryPlaying]);
 
   useEffect(() => {
-    if (story?.name && tab) {
+    if (story?.name) {
       AnalyticsService.logTaleOpenEvent({ name: story.name, tab });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -281,6 +281,7 @@ export const StoryPlayerScreen = () => {
               storyId={storyId}
               storyPlayingSharedValue={storyPlayingSharedValue}
               storyTitle={story?.name ?? ''}
+              tab={tab}
             />
           </View>
           <StoryMeta
@@ -303,6 +304,7 @@ export const StoryPlayerScreen = () => {
         storyId={storyId}
         storyName={story?.name}
         storyPlayingSharedValue={storyPlayingSharedValue}
+        tab={tab}
       />
 
       <VoiceSettingsButton

@@ -37,7 +37,7 @@ export const useHandleStoryPlayerNavigate = ({
     } else {
       navigation.navigate(RootRoutes.STORY_PLAYER, {
         storyId,
-        tab,
+        tab: tab ?? 'All tales',
       });
     }
   }, [contentName, isFree, isFullVersion, navigation, showPaywallModal, source, storyId, tab]);

@@ -16,6 +16,8 @@ import { IS_IOS } from '@/constants/common';
 import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 
 import { makeStyles } from './StoryActions.styles';
 
@@ -24,6 +26,7 @@ interface StoryActionsPropTyps {
   storyId: number;
   storyPlayingSharedValue: SharedValue<number>;
   storyTitle: string;
+  tab: TabEventType;
 }
 
 export const StoryActions = ({
@@ -31,11 +34,17 @@ export const StoryActions = ({
   storyId,
   storyPlayingSharedValue,
   storyTitle,
+  tab,
 }: StoryActionsPropTyps) => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
-  const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite(storyId);
+  const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite({
+    source: SOURCE.TALE_PREVIEW,
+    storyId,
+    storyName: storyTitle,
+    tab,
+  });
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     return {
