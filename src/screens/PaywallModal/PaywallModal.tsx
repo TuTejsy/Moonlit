@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Image, Switch } from 'react-native';
 
-import { adapty, AdaptyProfile } from 'react-native-adapty';
+import { adapty, AdaptyPaywallProduct, AdaptyProfile } from 'react-native-adapty';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
@@ -80,13 +80,24 @@ export const PaywallModal = () => {
 
   const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(WINDOW_WIDTH);
 
-  const unlockFullAccess = useCallback(
-    (profile: AdaptyProfile) => {
+  const makeUnlockFullAccess = useCallback(
+    (product: AdaptyPaywallProduct | null) => (profile: AdaptyProfile) => {
       const isSubscribed = profile.accessLevels?.premium?.isActive;
 
       if (isSubscribed) {
         dispatch(unlockFullVersion());
         AnalyticsService.setIsUserPaid(true);
+
+        if (product) {
+          AnalyticsService.logStartSubscriptionEvent({
+            contentName,
+            hasTrial: isFreeTrialEnabled,
+            productId: product.vendorProductId,
+            source,
+            tab,
+            type: PAYWALL_TYPE.WITH_SWITCHER,
+          });
+        }
 
         if (onClose) {
           onClose();
@@ -95,7 +106,7 @@ export const PaywallModal = () => {
         }
       }
     },
-    [dispatch, navigation, onClose],
+    [contentName, dispatch, isFreeTrialEnabled, navigation, onClose, source, tab],
   );
 
   const handleSkipPress = useCallback(() => {
@@ -104,7 +115,14 @@ export const PaywallModal = () => {
     } else {
       navigation.goBack();
     }
-  }, [navigation, onClose]);
+
+    AnalyticsService.logPaywallClosedEvent({
+      contentName,
+      source,
+      tab,
+      type: PAYWALL_TYPE.WITH_SWITCHER,
+    });
+  }, [contentName, navigation, onClose, source, tab]);
 
   const handleUnlockPress = useCallback(() => {
     const product = isFreeTrialEnabled ? trialProduct : fullProduct;
@@ -114,25 +132,25 @@ export const PaywallModal = () => {
 
       adapty
         .makePurchase(product)
-        .then(unlockFullAccess)
+        .then(makeUnlockFullAccess(product))
         .catch(console.error)
         .finally(() => {
           setIsLoading(false);
         });
     }
-  }, [fullProduct, isFreeTrialEnabled, trialProduct, unlockFullAccess]);
+  }, [fullProduct, isFreeTrialEnabled, makeUnlockFullAccess, trialProduct]);
 
   const handleRestorePress = useCallback(() => {
     setIsLoading(true);
 
     adapty
       .restorePurchases()
-      .then(unlockFullAccess)
+      .then(makeUnlockFullAccess(null))
       .catch(console.error)
       .finally(() => {
         setIsLoading(false);
       });
-  }, [unlockFullAccess]);
+  }, [makeUnlockFullAccess]);
 
   useEffect(() => {
     AnalyticsService.logPaywallViewedEvent({

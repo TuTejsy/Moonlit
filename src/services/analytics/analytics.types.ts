@@ -28,14 +28,16 @@ export interface PaywallClosedEventParams {
   source: SOURCE;
   type: PAYWALL_TYPE;
   contentName?: string;
+  tab?: TabEventType;
 }
 
 export interface StartSubscriptionEventParams {
   hasTrial: boolean;
-  productId: number;
+  productId: string;
   source: SOURCE;
   type: PAYWALL_TYPE;
   contentName?: string;
+  tab?: TabEventType;
 }
 
 export interface SettingsViewEventParams {}
