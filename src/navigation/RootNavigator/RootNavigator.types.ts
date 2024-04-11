@@ -13,7 +13,7 @@ export interface RootStackParams extends Record<string, object | undefined> {
 
   [RootRoutes.STORY_PLAYER]: {
     storyId: number;
-    tab?: TabEventType;
+    tab: TabEventType;
   };
 
   [RootRoutes.PAYWALL_MODAL]: {

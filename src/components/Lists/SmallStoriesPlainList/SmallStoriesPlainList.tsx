@@ -26,7 +26,6 @@ import { makeStyles } from './SmallStoriesPlainList.styles';
 
 interface SmallStoriesPlainListPropTypes
   extends Omit<FlatListProps<StorySchema>, 'data' | 'renderItem'> {
-  source: SOURCE;
   stories: Realm.Results<StorySchema>;
   storiesVersion: number;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -38,7 +37,6 @@ export const SmallStoriesPlainList = React.memo(
   ({
     onScroll,
     showSaveButton = false,
-    source,
     stories,
     storiesVersion,
     tab,
@@ -74,7 +72,7 @@ export const SmallStoriesPlainList = React.memo(
             isSaved={mapStoriesToSaved.get(item.id)}
             previewURL={getImageFilePathForStory(item, 'small')}
             showSaveButton={showSaveButton}
-            source={source}
+            source={SOURCE.CONTENT}
             storyId={item.id}
             tab={tab}
             title={item.name}
@@ -82,7 +80,7 @@ export const SmallStoriesPlainList = React.memo(
           />
         );
       },
-      [handleSaveStoryPress, mapStoriesToSaved, showSaveButton, source, tab],
+      [handleSaveStoryPress, mapStoriesToSaved, showSaveButton, tab],
     );
 
     const handleScrollToTop = useCallback(() => {

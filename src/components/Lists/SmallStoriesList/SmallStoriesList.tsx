@@ -20,7 +20,6 @@ import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
-  source: SOURCE;
   stories: Array<StorySchema>;
   storiesVersion: number;
   ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
@@ -44,7 +43,6 @@ export function SmallStoriesList({
   onScroll,
   showsHorizontalScrollIndicator = false,
   showsVerticalScrollIndicator = true,
-  source,
   stories,
   storiesVersion,
   style,
@@ -68,14 +66,14 @@ export function SmallStoriesList({
           isFree={item.is_free}
           isImageLoaded={!!item.small_cover_cached_name}
           previewURL={getImageFilePathForStory(item, 'small')}
-          source={source}
+          source={SOURCE.CONTENT}
           storyId={item.id}
           tab={tab}
           title={item.name}
         />
       );
     },
-    [source, tab],
+    [tab],
   );
 
   const keyExtractor = useCallback((item: StorySchema) => `${item.id}`, []);

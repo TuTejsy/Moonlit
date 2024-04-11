@@ -11,18 +11,12 @@ import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './LargeStoriesList.styles';
 
 interface LargeStoriesListPropTypes {
-  source: SOURCE;
   stories: ArrayLike<StorySchema>;
   storiesVersion: number;
   tab?: TabEventType;
 }
 
-export function LargeStoriesList({
-  source,
-  stories,
-  storiesVersion,
-  tab,
-}: LargeStoriesListPropTypes) {
+export function LargeStoriesList({ stories, storiesVersion, tab }: LargeStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
   const renderItem = useCallback(
@@ -33,14 +27,14 @@ export function LargeStoriesList({
           isFree={item.is_free}
           isImageLoaded={!!item.full_cover_cached_name}
           previewURL={getImageFilePathForStory(item, 'full')}
-          source={source}
+          source={SOURCE.CONTENT}
           storyId={item.id}
           tab={tab}
           title={item.name}
         />
       );
     },
-    [source, tab],
+    [tab],
   );
 
   const keyExtractor = useCallback((item: StorySchema) => `${item.id}`, []);

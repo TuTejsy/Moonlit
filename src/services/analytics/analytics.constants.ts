@@ -10,7 +10,7 @@ export enum SOURCE {
   SEARCH = 'search',
   SETTINGS = 'settings',
   STORIES_LIST = 'stories_list',
-  TALE_PLAYING = 'tale_playing',
+  TALE_PLAYER = 'tale_player',
   TALE_PREVIEW = 'tale_preview',
   VOICE = 'voice',
 }

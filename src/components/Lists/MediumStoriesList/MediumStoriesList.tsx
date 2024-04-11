@@ -13,7 +13,6 @@ import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './MediumStoriesList.styles';
 
 interface MediumStoriesListPropTypes {
-  source: SOURCE;
   stories: Realm.Results<StorySchema>;
   storiesVersion: number;
   style?: ViewStyle;
@@ -21,7 +20,6 @@ interface MediumStoriesListPropTypes {
 }
 
 export function MediumStoriesList({
-  source,
   stories,
   storiesVersion,
   style,
@@ -37,14 +35,14 @@ export function MediumStoriesList({
           isFree={item.is_free}
           isImageLoaded={!!item.medium_cover_cached_name}
           previewURL={getImageFilePathForStory(item, 'medium')}
-          source={source}
+          source={SOURCE.CONTENT}
           storyId={item.id}
           tab={tab}
           title={item.name}
         />
       );
     },
-    [source, tab],
+    [tab],
   );
 
   const keyExtractor = useCallback((item: StorySchema, index: number) => `${item.id}`, []);
