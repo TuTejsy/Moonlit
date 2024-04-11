@@ -24,6 +24,7 @@ import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { getHitSlop } from '@/utils/getHitSlop';
@@ -191,17 +192,23 @@ export const StoryPlayerScreen = () => {
           handlePauseStory();
         },
         selectedAudioRecordingId: selectedAudioRecording.id,
+        source: storyPlayingSharedValue.value === 1 ? SOURCE.TALE_PLAYER : SOURCE.TALE_PREVIEW,
         storyColor: gradientColor,
         storyId,
+        storyName: story?.name ?? '',
+        tab,
       });
     }
   }, [
-    gradientColor,
-    navigation,
-    handlePauseStory,
     selectedAudioRecording,
-    setSelectedAudioRecording,
+    navigation,
+    storyPlayingSharedValue.value,
+    gradientColor,
     storyId,
+    story?.name,
+    tab,
+    setSelectedAudioRecording,
+    handlePauseStory,
   ]);
 
   useAnimatedReaction(

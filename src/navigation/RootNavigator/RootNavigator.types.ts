@@ -35,7 +35,10 @@ export interface RootStackParams extends Record<string, object | undefined> {
   [RootRoutes.VOICE_SETTINGS_MODAL]: {
     onSelectAudioRecording: (selectedAudioRecordingId: number) => void;
     selectedAudioRecordingId: number;
+    source: SOURCE.TALE_PLAYER | SOURCE.TALE_PREVIEW;
     storyColor: string;
     storyId: number;
+    storyName: string;
+    tab: TabEventType;
   };
 }

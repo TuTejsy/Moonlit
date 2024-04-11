@@ -14,6 +14,8 @@ import {
   TalePauseEventParams,
   TalePlayEventParams,
   TaleRewindEventParams,
+  VoiceChangeEventParams,
+  VoiceViewEventParams,
 } from './analytics.types';
 
 export class AnalyticsService {
@@ -24,6 +26,8 @@ export class AnalyticsService {
   private static homeViewLogCount = 0;
 
   private static taleLikedLogCount = 0;
+
+  private static voiceViewLogCount = 0;
 
   static setIsUserPaid(paid: boolean) {
     firebaseAnalytics().setUserProperties({ paid: paid ? 'paid' : 'free' });
@@ -144,12 +148,32 @@ export class AnalyticsService {
     AnalyticsService.taleLikedLogCount += 1;
 
     const eventName = 'tale_liked';
-    const evnetParams = {
+    const eventParams = {
       ...params,
       count: AnalyticsService.taleLikedLogCount,
     };
 
-    firebaseAnalytics().logEvent(eventName, evnetParams);
-    amplitude.track(eventName, evnetParams);
+    firebaseAnalytics().logEvent(eventName, eventParams);
+    amplitude.track(eventName, eventParams);
+  }
+
+  static logVoiceViewEvent(params: VoiceViewEventParams) {
+    AnalyticsService.voiceViewLogCount += 1;
+
+    const eventName = 'voice_view';
+    const eventParams = {
+      ...params,
+      count: AnalyticsService.voiceViewLogCount,
+    };
+
+    firebaseAnalytics().logEvent(eventName, eventParams);
+    amplitude.track(eventName, eventParams);
+  }
+
+  static logVoiceChangeEvent(params: VoiceChangeEventParams) {
+    const eventName = 'voice_change';
+
+    firebaseAnalytics().logEvent(eventName, params);
+    amplitude.track(eventName, params);
   }
 }

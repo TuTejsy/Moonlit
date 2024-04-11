@@ -17,7 +17,7 @@ interface AudioRecordingProps {
   isFree: boolean;
   isSelected: boolean;
   name: string;
-  onSelect: (recordingId: number) => void;
+  onSelect: (recordingId: number, recordingName: string) => void;
   recordingId: number;
 }
 
@@ -40,7 +40,7 @@ export function AudioRecording({
     if (!isFullVersion && !isFree) {
       showPaywallModal({ contentName: name, source: SOURCE.VOICE });
     } else {
-      onSelect(recordingId);
+      onSelect(recordingId, name);
     }
   }, [isFree, isFullVersion, name, onSelect, recordingId, showPaywallModal]);
 
