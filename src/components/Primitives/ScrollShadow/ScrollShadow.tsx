@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
-import LinearGradient from 'react-native-linear-gradient';
-import Animated, { useAnimatedReaction } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import { TrippleGradient } from '@/components/TrippleGradient/TrippleGradient';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';

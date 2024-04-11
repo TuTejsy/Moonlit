@@ -26,10 +26,9 @@ interface TabBarStoryPlayerProps {
 export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
   const { colors } = useTheme();
 
-  const [story, _storyVersion] = useStory(storyId, ['name', 'small_cover_cached_name']);
+  const [story] = useStory(storyId, ['name', 'small_cover_cached_name']);
 
-  const { _selectedAudioRecordingVersion, selectedAudioRecording } =
-    useSelectedAudioRecording(storyId);
+  const { selectedAudioRecording } = useSelectedAudioRecording(storyId);
 
   const storyColor = useMemo(() => {
     return story?.colors?.primary ?? colors.imagePurple;

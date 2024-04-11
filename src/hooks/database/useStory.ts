@@ -23,10 +23,7 @@ export function useStory(
       setStory(story);
       setStoryVersion(storyVersionRef.current + 1);
 
-      const listener: ObjectChangeCallback<StorySchema> = (
-        nextStory,
-        { changedProperties, deleted },
-      ) => {
+      const listener: ObjectChangeCallback<StorySchema> = (nextStory, { changedProperties }) => {
         const isAnythingChanged = !!changedProperties.length;
 
         if (isAnythingChanged) {
@@ -41,6 +38,7 @@ export function useStory(
         story.removeListener(listener);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storyId]);
 
   return [story, storyVersion];

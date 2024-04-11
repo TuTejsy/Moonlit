@@ -23,7 +23,7 @@ export class AnalyticsService {
   private static taleLikedLogCount = 0;
 
   static setIsUserPaid(paid: boolean) {
-    firebaseAnalytics().setUserProperty('paid', paid ? 'paid' : 'free');
+    firebaseAnalytics().setUserProperties({ paid: paid ? 'paid' : 'free' });
   }
 
   static logLaunchAppEvent(params: LaunchAppEventParams) {

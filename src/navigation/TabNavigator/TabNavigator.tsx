@@ -11,11 +11,11 @@ import { TabStackParams } from './TabNavigator.types';
 
 const Tab = createBottomTabNavigator<TabStackParams>();
 
-interface TabNavigator {
+interface TabNavigatorProps {
   isInitialRoute?: boolean;
 }
 
-export const TabNavigator = ({ isInitialRoute = false }: TabNavigator) => {
+export const TabNavigator = ({ isInitialRoute = false }: TabNavigatorProps) => {
   const Home = useCallback(
     () => <SharedNavigator isInitialRoute={isInitialRoute} parentRoute={TabRoutes.HOME} />,
     [isInitialRoute],

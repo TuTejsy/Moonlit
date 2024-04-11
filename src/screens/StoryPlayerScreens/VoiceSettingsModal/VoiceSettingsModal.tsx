@@ -14,6 +14,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
@@ -115,7 +116,11 @@ export function VoiceSettingsModal() {
         showsVerticalScrollIndicator={false}
         style={styles.audioRecordingsList}
       />
-      {!isFullVersion && <UnlockButton style={styles.unlockButton}>Unlock all voices</UnlockButton>}
+      {!isFullVersion && (
+        <UnlockButton source={SOURCE.ALL_VOICES} style={styles.unlockButton}>
+          Unlock all voices
+        </UnlockButton>
+      )}
     </View>
   );
 }

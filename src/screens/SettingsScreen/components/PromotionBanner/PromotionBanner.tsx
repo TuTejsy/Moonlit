@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { ImageBackground, View } from 'react-native';
 
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
@@ -6,6 +6,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectFreeOfferDays } from '@/store/user/user.selector';
 
 import bannerBackgroundImage from './images/bannerBackground/bannerBackground.png';
@@ -17,8 +18,12 @@ export const PromotionBanner = memo(() => {
   const { showPaywallModal } = useShowPaywallModal();
   const freeOfferDays = useAppSelector(selectFreeOfferDays);
 
+  const handlePromotionBannerPress = useCallback(() => {
+    showPaywallModal({ contentName: 'Promotion banner', source: SOURCE.SETTINGS });
+  }, [showPaywallModal]);
+
   return (
-    <PressableView onPress={showPaywallModal}>
+    <PressableView onPress={handlePromotionBannerPress}>
       <ImageBackground source={bannerBackgroundImage} style={styles.container}>
         <View style={styles.textContainer}>
           <TextView style={styles.title} type='bold'>

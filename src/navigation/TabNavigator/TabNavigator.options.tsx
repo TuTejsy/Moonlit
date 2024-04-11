@@ -2,8 +2,6 @@ import React from 'react';
 
 import { BottomTabBarProps, BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 
-import { commonColors } from '@/styles/themes/common';
-
 import { TabBar } from './components/TabBar/TabBar';
 
 export const rootTabOptions: BottomTabNavigationOptions = {

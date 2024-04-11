@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { IS_ANDROID, IS_IOS } from '@/constants/common';
+import { IS_IOS } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';

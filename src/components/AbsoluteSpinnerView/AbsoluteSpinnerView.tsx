@@ -1,5 +1,5 @@
-import React, { memo, useMemo } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import React, { memo } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 import { VibrancyView } from '@react-native-community/blur';
 

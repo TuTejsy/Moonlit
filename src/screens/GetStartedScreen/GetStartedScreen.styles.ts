@@ -1,7 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import _ from 'lodash';
-
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 

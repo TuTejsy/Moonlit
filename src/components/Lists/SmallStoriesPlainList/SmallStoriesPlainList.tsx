@@ -16,6 +16,8 @@ import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useRenderVersion } from '@/hooks/useRenderVersion';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 import { generateMapStoriesToSaved } from '@/utils/generators/generateMapStoriesToSaved';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
@@ -24,19 +26,22 @@ import { makeStyles } from './SmallStoriesPlainList.styles';
 
 interface SmallStoriesPlainListPropTypes
   extends Omit<FlatListProps<StorySchema>, 'data' | 'renderItem'> {
+  source: SOURCE;
   stories: Realm.Results<StorySchema>;
   storiesVersion: number;
-
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   showSaveButton?: boolean;
+  tab?: TabEventType;
 }
 
 export const SmallStoriesPlainList = React.memo(
   ({
     onScroll,
     showSaveButton = false,
+    source,
     stories,
     storiesVersion,
+    tab,
     ...props
   }: SmallStoriesPlainListPropTypes) => {
     const styles = useMakeStyles(makeStyles);
@@ -69,13 +74,15 @@ export const SmallStoriesPlainList = React.memo(
             isSaved={mapStoriesToSaved.get(item.id)}
             previewURL={getImageFilePathForStory(item, 'small')}
             showSaveButton={showSaveButton}
+            source={source}
             storyId={item.id}
+            tab={tab}
             title={item.name}
             onSaveStoryPress={handleSaveStoryPress}
           />
         );
       },
-      [handleSaveStoryPress, mapStoriesToSaved, showSaveButton],
+      [handleSaveStoryPress, mapStoriesToSaved, showSaveButton, source, tab],
     );
 
     const handleScrollToTop = useCallback(() => {

@@ -6,6 +6,7 @@ import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useMutableValue } from '@/hooks/useMutableValue';
 import { AnalyticsService } from '@/services/analytics/analytics';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { lockFullVersion, unlockFullVersion } from '@/store/user/user.slice';
 
 export const useCheckSubscription = (skipCheck = false) => {
@@ -27,7 +28,7 @@ export const useCheckSubscription = (skipCheck = false) => {
         dispatch(unlockFullVersion());
       } else {
         dispatch(lockFullVersion());
-        showPaywallModalRef.current();
+        showPaywallModalRef.current({ source: SOURCE.COLD_START });
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

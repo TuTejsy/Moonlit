@@ -11,6 +11,7 @@ import { useCheckSubscription } from '@/hooks/useCheckSubscription';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 
 import { DefaultList } from './components/DefaultList/DefaultList';
 import { EmptySearch } from './components/EmptySearch/EmptySearch';
@@ -93,6 +94,7 @@ export const HomeScreen = () => {
         >
           <SmallStoriesPlainList
             ListEmptyComponent={<EmptySearch />}
+            source={SOURCE.SEARCH}
             stories={allStories}
             storiesVersion={allStoriesVersion}
             onScroll={handleOpacityScroll}

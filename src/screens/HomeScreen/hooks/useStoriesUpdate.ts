@@ -97,6 +97,7 @@ export function useStoriesUpdate(): [boolean, () => void] {
         updateStories();
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return [isRefreshing, updateStories];
