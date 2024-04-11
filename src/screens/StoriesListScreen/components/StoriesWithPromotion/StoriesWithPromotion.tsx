@@ -9,18 +9,22 @@ import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 import { selectFreeOfferDays, selectIsFullVersion } from '@/store/user/user.selector';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { makeStyles } from './StoriesWithPromotion.styles';
 
 interface StoriesWithPromotionProps {
+  source: SOURCE;
   stories: Array<StorySchema>;
   storiesVersion: number;
+  tab?: TabEventType;
 }
 
 export const StoriesWithPromotion = memo(
-  ({ stories, storiesVersion }: StoriesWithPromotionProps) => {
+  ({ source, stories, storiesVersion, tab }: StoriesWithPromotionProps) => {
     const styles = useMakeStyles(makeStyles);
     const { colors } = useTheme();
 
@@ -37,6 +41,7 @@ export const StoriesWithPromotion = memo(
               isFree={story.is_free}
               isImageLoaded={!!story.small_cover_cached_name}
               previewURL={getImageFilePathForStory(story, 'small')}
+              source={source}
               storyId={story.id}
               title={story.name}
             />
@@ -58,7 +63,12 @@ export const StoriesWithPromotion = memo(
           >
             <View style={styles.separator} />
 
-            <UnlockButton style={styles.unlockButton} theme='light'>
+            <UnlockButton
+              source={SOURCE.STORIES_LIST}
+              style={styles.unlockButton}
+              tab={tab}
+              theme='light'
+            >
               Try {freeOfferDays} days for free
             </UnlockButton>
 

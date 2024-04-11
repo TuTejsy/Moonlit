@@ -13,6 +13,8 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { useAnimatedScrollHandlerValue } from '@/hooks/useAnimatedScrollHandlerValue';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 
 import { StoriesWithPromotion } from './components/StoriesWithPromotion/StoriesWithPromotion';
 import { makeStyles } from './StoriesListScreen.styles';
@@ -55,10 +57,16 @@ export const StoriesListScreen = () => {
       <SmallStoriesList
         contentContainerStyle={styles.smallListContainerStyle}
         isScrollable={!!listStories.length}
+        source={SOURCE.STORIES_LIST}
         stories={listStories}
         storiesVersion={storiesVersion}
         ListHeaderComponent={
-          <StoriesWithPromotion stories={headerStories} storiesVersion={storiesVersion} />
+          <StoriesWithPromotion
+            source={SOURCE.STORIES_LIST}
+            stories={headerStories}
+            storiesVersion={storiesVersion}
+            tab={(title ?? 'All tales') as TabEventType}
+          />
         }
         onScroll={handleAnimatedScroll}
       />

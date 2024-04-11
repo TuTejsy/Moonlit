@@ -57,17 +57,16 @@ export const StoryPlayerScreen = () => {
   const route = useAppRoute<RootRoutes.STORY_PLAYER>();
   const { storyId } = route.params;
 
-  const [story, storyVersion] = useStory(storyId, [
+  const [story] = useStory(storyId, [
     'full_cover_url',
     'name',
     'description',
     'small_cover_cached_name',
   ]);
 
-  const { selectedAudioRecording, selectedAudioRecordingVersion, setSelectedAudioRecording } =
-    useSelectedAudioRecording(storyId);
+  const { selectedAudioRecording, setSelectedAudioRecording } = useSelectedAudioRecording(storyId);
 
-  const [areRecordingsLoading] = useStoryAudioRecordingsUpdate(storyId);
+  useStoryAudioRecordingsUpdate(storyId);
 
   const coverURL = useMemo(
     () => (story ? `file://${SANDBOX.DOCUMENTS.FULL_COVER}/${story.full_cover_cached_name}` : ''),

@@ -8,6 +8,8 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { getHitSlop } from '@/utils/getHitSlop';
 
@@ -17,11 +19,13 @@ interface StoryPreviewPropTypes {
   description: string;
   isFree: boolean;
   previewURL: string | undefined;
+  source: SOURCE;
   storyId: number;
   title: string;
   isSaved?: boolean;
   onSaveStoryPress?: (storyId: number) => void;
   showSaveButton?: boolean;
+  tab?: TabEventType;
 }
 
 export const StoryPreview = React.memo(
@@ -32,14 +36,22 @@ export const StoryPreview = React.memo(
     onSaveStoryPress,
     previewURL,
     showSaveButton,
+    source,
     storyId,
+    tab,
     title,
   }: StoryPreviewPropTypes) => {
     const styles = useMakeStyles(makeStyles);
 
     const isFullVersion = useAppSelector(selectIsFullVersion);
 
-    const handlePreviewPress = useHandleStoryPlayerNavigate({ isFree, storyId });
+    const handlePreviewPress = useHandleStoryPlayerNavigate({
+      contentName: title,
+      isFree,
+      source,
+      storyId,
+      tab,
+    });
 
     const handleStoryFavoritePress = useCallback(() => {
       onSaveStoryPress?.(storyId);

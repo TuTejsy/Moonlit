@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -25,6 +25,7 @@ import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.route
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { CategoriesList } from '@/screens/HomeScreen/components/CategoriesList/CategoriesList';
 import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
@@ -140,7 +141,12 @@ export const DefaultList = React.memo(
       >
         <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
 
-        <LargeStoriesList stories={featuringStories} storiesVersion={featuringStoriesVersion} />
+        <LargeStoriesList
+          source={SOURCE.HOME_VIEW}
+          stories={featuringStories}
+          storiesVersion={featuringStoriesVersion}
+          tab='Featuring tales'
+        />
 
         <CategoriesList />
 
@@ -148,9 +154,11 @@ export const DefaultList = React.memo(
           <>
             <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
             <MediumStoriesList
+              source={SOURCE.HOME_VIEW}
               stories={freeStories}
               storiesVersion={freeStoriesVersion}
               style={styles.freeList}
+              tab='Free tales'
             />
 
             <PromotionBanner style={styles.promotionBanner} />
@@ -159,18 +167,22 @@ export const DefaultList = React.memo(
 
         <SectionHeader title='Popular tales' onSeeAllPress={handleSeePopularTales} />
         <MediumStoriesList
+          source={SOURCE.HOME_VIEW}
           stories={popularStories}
           storiesVersion={popularStoriesVersion}
           style={styles.popularList}
+          tab='Popular tales'
         />
 
         <SectionHeader title='All tales' onSeeAllPress={handleSeeAllTales} />
         <SmallStoriesList
           displayCount={6}
           isScrollable={false}
-          stories={allStories}
+          source={SOURCE.HOME_VIEW}
+          stories={allStories as unknown as StorySchema[]}
           storiesVersion={allStoriesVersion}
           style={styles.smallList}
+          tab='All tales'
         />
       </ScrollView>
     );

@@ -5,7 +5,9 @@ export enum SOURCE {
   HOME_VIEW = 'home_view',
   HOT_START = 'hot_start',
   ONBOARDING = 'onboarding',
+  SEARCH = 'search',
   SETTINGS = 'settings',
+  STORIES_LIST = 'stories_list',
   VOICE = 'voice',
 }
 

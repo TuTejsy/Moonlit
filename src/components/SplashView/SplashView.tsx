@@ -50,6 +50,7 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
         runOnJS(onAppReady)();
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

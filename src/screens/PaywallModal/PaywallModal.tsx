@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, Image, Switch } from 'react-native';
 
 import { adapty, AdaptyProfile } from 'react-native-adapty';
@@ -18,6 +18,7 @@ import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
+import { PAYWALL_TYPE } from '@/services/analytics/analytics.constants';
 import { unlockFullVersion } from '@/store/user/user.slice';
 import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
 import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
@@ -34,7 +35,7 @@ export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
 
-  const { onClose, products } = params;
+  const { contentName, onClose, products, source, tab } = params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [isFreeTrialEnabled, setIsFreeTrialEnabled] = useState(false);
@@ -132,6 +133,16 @@ export const PaywallModal = () => {
         setIsLoading(false);
       });
   }, [unlockFullAccess]);
+
+  useEffect(() => {
+    AnalyticsService.logPaywallViewedEvent({
+      contentName,
+      source,
+      tab,
+      type: PAYWALL_TYPE.WITH_SWITCHER,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <View style={styles.screen}>

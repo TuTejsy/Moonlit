@@ -6,6 +6,8 @@ import { PLACEMENT_ID } from '@/constants/common';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { setFreeOfferDays } from '@/store/user/user.slice';
 
@@ -32,39 +34,53 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
     return products;
   }, []);
 
-  const showPaywallModal = useCallback(() => {
-    try {
-      if (!isFullVerion && products) {
-        (shouldReplace ? navigation.replace : navigation.navigate)(
-          shouldReplace ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
-          {
-            onClose,
-            products,
-          },
-        );
+  const showPaywallModal = useCallback(
+    ({
+      contentName,
+      source,
+      tab,
+    }: {
+      source: SOURCE;
+      contentName?: string;
+      tab?: TabEventType;
+    }) => {
+      try {
+        if (!isFullVerion && products) {
+          (shouldReplace ? navigation.replace : navigation.navigate)(
+            shouldReplace ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
+            {
+              contentName,
+              onClose,
+              products,
+              source,
+              tab,
+            },
+          );
 
-        const offerDays = products.find(
-          (product) => !!product.subscriptionDetails?.introductoryOffers?.[0],
-        )?.subscriptionDetails?.introductoryOffers?.[0]?.subscriptionPeriod.numberOfUnits;
+          const offerDays = products.find(
+            (product) => !!product.subscriptionDetails?.introductoryOffers?.[0],
+          )?.subscriptionDetails?.introductoryOffers?.[0]?.subscriptionPeriod.numberOfUnits;
 
-        if (offerDays) {
-          dispatch(setFreeOfferDays(offerDays));
+          if (offerDays) {
+            dispatch(setFreeOfferDays(offerDays));
+          }
+        } else if (onClose) {
+          onClose();
         }
-      } else if (onClose) {
-        onClose();
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [
-    dispatch,
-    isFullVerion,
-    navigation.navigate,
-    navigation.replace,
-    onClose,
-    products,
-    shouldReplace,
-  ]);
+    },
+    [
+      dispatch,
+      isFullVerion,
+      navigation.navigate,
+      navigation.replace,
+      onClose,
+      products,
+      shouldReplace,
+    ],
+  );
 
   useEffect(() => {
     loadProducts();

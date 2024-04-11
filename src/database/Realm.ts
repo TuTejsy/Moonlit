@@ -202,7 +202,7 @@ export class RealmDB<ObjectType> {
 
   update = (ids: Array<number>, updater: (object: ObjectType) => void) => {
     this.modify(() => {
-      const [foundObjects, notFoundObjects] = this.fetch(ids);
+      const [foundObjects] = this.fetch(ids);
       foundObjects.forEach((object) => updater(object));
     });
   };

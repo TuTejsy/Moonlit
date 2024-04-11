@@ -55,6 +55,7 @@ export function useAudioRecording(
         audioRecording.removeListener(listener);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioRecordingId]);
 
   return [audioRecording, audioRecordingVersion];

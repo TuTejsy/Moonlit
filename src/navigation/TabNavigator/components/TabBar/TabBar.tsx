@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
 
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';

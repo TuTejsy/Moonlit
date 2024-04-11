@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Image, ViewProps } from 'react-native';
 
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -10,6 +10,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useImageSlideAnimation } from '@/hooks/useImageSlideAnimation';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectFreeOfferDays } from '@/store/user/user.selector';
 
 import { UnlockButton } from '../Buttons/UnlockButton/UnlockButton';
@@ -32,8 +33,12 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
   const { showPaywallModal } = useShowPaywallModal();
 
+  const handleBannerPress = useCallback(() => {
+    showPaywallModal({ contentName: 'Promotion banner', source: SOURCE.HOME_VIEW });
+  }, [showPaywallModal]);
+
   return (
-    <TouchableWithoutFeedback style={[styles.container, style]} onPress={showPaywallModal}>
+    <TouchableWithoutFeedback style={[styles.container, style]} onPress={handleBannerPress}>
       <Animated.Image
         resizeMode='cover'
         source={bannerImage}
@@ -57,7 +62,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
         <Image source={voicesImage} style={styles.voicesImage} />
 
-        <UnlockButton>Get {freeOfferDays} days free</UnlockButton>
+        <UnlockButton source={SOURCE.HOME_VIEW}>Get {freeOfferDays} days free</UnlockButton>
       </View>
     </TouchableWithoutFeedback>
   );

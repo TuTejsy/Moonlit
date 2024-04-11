@@ -45,7 +45,7 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
         audioRecordingsIdsSet.add(id);
       }
 
-      const [_upserted, notUpserted] = await AudioRecordingsDB.upsert(formattedAudioRecordings);
+      const [, notUpserted] = await AudioRecordingsDB.upsert(formattedAudioRecordings);
 
       if (notUpserted.length) {
         notUpserted.forEach(({ err }) => console.error(err));
@@ -81,6 +81,7 @@ export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => 
         updateAudioRecordings();
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return [isLoading, updateAudioRecordings];

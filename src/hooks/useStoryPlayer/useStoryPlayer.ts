@@ -34,10 +34,11 @@ export function useStoryPlayer({
   const isStoryPlayNotifiedRef = useRef(false);
   const currentPlayCallPromise = useRef<Promise<void> | null>(null);
 
-  const [selectedAudioRecording, selectedAudioRecordingVersion] = useAudioRecording(
-    audioRecordingId,
-    ['audio_url', 'cached_name', 'duration'],
-  );
+  const [selectedAudioRecording] = useAudioRecording(audioRecordingId, [
+    'audio_url',
+    'cached_name',
+    'duration',
+  ]);
 
   const isStoryPlaying = useAppSelector(selectIsPlaying);
   const selectedAudioRecordingId = useAppSelector(selectSelectedAudioRecoringId);

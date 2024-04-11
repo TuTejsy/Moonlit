@@ -7,6 +7,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './AudioRecording.styles';
@@ -37,11 +38,11 @@ export function AudioRecording({
 
   const handleSelect = useCallback(() => {
     if (!isFullVersion && !isFree) {
-      showPaywallModal();
+      showPaywallModal({ contentName: name, source: SOURCE.VOICE });
     } else {
       onSelect(recordingId);
     }
-  }, [isFree, isFullVersion, onSelect, recordingId, showPaywallModal]);
+  }, [isFree, isFullVersion, name, onSelect, recordingId, showPaywallModal]);
 
   return (
     <PressableView style={styles.audioRecordingContainer} onPress={handleSelect}>

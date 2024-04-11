@@ -10,15 +10,17 @@ import {
 
 import Animated from 'react-native-reanimated';
 
-import { IS_IOS } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
+  source: SOURCE;
   stories: Array<StorySchema>;
   storiesVersion: number;
   ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
@@ -30,6 +32,7 @@ interface SmallStoriesListPropTypes {
   showsHorizontalScrollIndicator?: boolean;
   showsVerticalScrollIndicator?: boolean;
   style?: ViewStyle;
+  tab?: TabEventType;
 }
 
 export function SmallStoriesList({
@@ -41,9 +44,11 @@ export function SmallStoriesList({
   onScroll,
   showsHorizontalScrollIndicator = false,
   showsVerticalScrollIndicator = true,
+  source,
   stories,
   storiesVersion,
   style,
+  tab,
 }: SmallStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
@@ -55,18 +60,23 @@ export function SmallStoriesList({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayCount, stories, storiesVersion]);
 
-  const renderItem = useCallback(({ item }: ListRenderItemInfo<StorySchema>) => {
-    return (
-      <StoryPreview
-        description={item.description}
-        isFree={item.is_free}
-        isImageLoaded={!!item.small_cover_cached_name}
-        previewURL={getImageFilePathForStory(item, 'small')}
-        storyId={item.id}
-        title={item.name}
-      />
-    );
-  }, []);
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<StorySchema>) => {
+      return (
+        <StoryPreview
+          description={item.description}
+          isFree={item.is_free}
+          isImageLoaded={!!item.small_cover_cached_name}
+          previewURL={getImageFilePathForStory(item, 'small')}
+          source={source}
+          storyId={item.id}
+          tab={tab}
+          title={item.name}
+        />
+      );
+    },
+    [source, tab],
+  );
 
   const keyExtractor = useCallback((item: StorySchema) => `${item.id}`, []);
 

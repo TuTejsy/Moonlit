@@ -7,7 +7,7 @@ import { useStory } from './useStory';
 export function useHandleStoryFavorite(storyId: number) {
   const [story, storyVersion] = useStory(storyId, ['is_favorite']);
 
-  const isFavorite = useMemo(() => story?.is_favorite ?? false, [storyVersion]);
+  const isFavorite = useMemo(() => story?.is_favorite ?? false, [story?.is_favorite]);
 
   const handleStoryFavoritePress = useCallback(() => {
     if (!story) {

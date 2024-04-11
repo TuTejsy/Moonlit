@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { View, Image } from 'react-native';
 
 import { TouchableHighlight } from 'react-native-gesture-handler';
@@ -19,6 +19,8 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { AnalyticsService } from '@/services/analytics/analytics';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { storage } from '@/services/storage/storage';
 import { StorageKeys } from '@/services/storage/storage.constants';
 
@@ -44,15 +46,16 @@ export const GetStartedScreen = () => {
     });
   }, [navigation]);
 
-  const { loadProducts, showPaywallModal } = useShowPaywallModal(handleClosePaywallModal, true);
+  const { showPaywallModal } = useShowPaywallModal(handleClosePaywallModal, true);
 
   const handleContinuePress = useCallback(() => {
     if (currentStepRef.current === STEPS.length - 1) {
       storage.set(StorageKeys.isOnboarded, true);
 
-      showPaywallModal();
+      showPaywallModal({ source: SOURCE.ONBOARDING });
     } else {
       currentStepRef.current += 1;
+      AnalyticsService.logOnboardingEvent({ screen: currentStepRef.current + 1 });
     }
 
     currentStepSharedValue.value = withTiming(currentStepRef.current);
@@ -104,6 +107,10 @@ export const GetStartedScreen = () => {
       },
     ],
   }));
+
+  useEffect(() => {
+    AnalyticsService.logOnboardingEvent({ screen: 1 });
+  }, []);
 
   return (
     <LinearGradient

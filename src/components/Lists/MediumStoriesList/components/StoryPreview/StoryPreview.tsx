@@ -12,6 +12,8 @@ import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryP
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { TabEventType } from '@/services/analytics/analytics.types';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './StoryPreview.styles';
@@ -21,8 +23,10 @@ interface StoryPreviewPropTypes {
   isFree: boolean;
   isImageLoaded: boolean;
   previewURL: string | undefined;
+  source: SOURCE;
   storyId: number;
   title: string;
+  tab?: TabEventType;
 }
 
 export function StoryPreview({
@@ -30,7 +34,9 @@ export function StoryPreview({
   isFree,
   isImageLoaded,
   previewURL,
+  source,
   storyId,
+  tab,
   title,
 }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
@@ -38,7 +44,13 @@ export function StoryPreview({
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
-  const handlePreviewPress = useHandleStoryPlayerNavigate({ isFree, storyId });
+  const handlePreviewPress = useHandleStoryPlayerNavigate({
+    contentName: title,
+    isFree,
+    source,
+    storyId,
+    tab,
+  });
 
   return (
     <TouchableWithoutFeedback style={styles.previewContainer} onPress={handlePreviewPress}>
