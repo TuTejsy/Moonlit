@@ -7,7 +7,7 @@ import { StorySchema } from '@/database/schema/stories/types';
 import { StoriesRepository } from '@/services/repositories/stories/stories';
 import { removeStoryCache } from '@/utils/documents/removeStoryCache';
 
-export function useStoriesUpdate(): [boolean, () => void] {
+export function useStoriesUpdate(loadInitially = true): [boolean, () => void] {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const updateStories = useCallback(async () => {
@@ -92,11 +92,13 @@ export function useStoriesUpdate(): [boolean, () => void] {
   }, []);
 
   useEffect(() => {
-    updateStories().then((error) => {
-      if (error) {
-        updateStories();
-      }
-    });
+    if (loadInitially) {
+      updateStories().then((error) => {
+        if (error) {
+          updateStories();
+        }
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

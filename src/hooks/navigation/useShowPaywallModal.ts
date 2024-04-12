@@ -44,28 +44,36 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
       contentName?: string;
       tab?: TabEventType;
     }) => {
+      const openPaywall = (products: AdaptyPaywallProduct[]) => {
+        (shouldReplace ? navigation.replace : navigation.navigate)(
+          shouldReplace ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
+          {
+            contentName,
+            onClose,
+            products,
+            source,
+            tab,
+          },
+        );
+
+        const offerDays = products.find(
+          (product) => !!product.subscriptionDetails?.introductoryOffers?.[0],
+        )?.subscriptionDetails?.introductoryOffers?.[0]?.subscriptionPeriod.numberOfUnits;
+
+        if (offerDays) {
+          dispatch(setFreeOfferDays(offerDays));
+        }
+      };
+
       try {
-        if (!isFullVerion && products) {
-          (shouldReplace ? navigation.replace : navigation.navigate)(
-            shouldReplace ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
-            {
-              contentName,
-              onClose,
-              products,
-              source,
-              tab,
-            },
-          );
-
-          const offerDays = products.find(
-            (product) => !!product.subscriptionDetails?.introductoryOffers?.[0],
-          )?.subscriptionDetails?.introductoryOffers?.[0]?.subscriptionPeriod.numberOfUnits;
-
-          if (offerDays) {
-            dispatch(setFreeOfferDays(offerDays));
+        if (!isFullVerion) {
+          if (products) {
+            openPaywall(products);
+          } else {
+            loadProducts().then(openPaywall);
           }
-        } else if (onClose) {
-          onClose();
+        } else {
+          onClose?.();
         }
       } catch (err) {
         console.error(err);
@@ -73,6 +81,7 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
     },
     [
       dispatch,
+      loadProducts,
       isFullVerion,
       navigation.navigate,
       navigation.replace,

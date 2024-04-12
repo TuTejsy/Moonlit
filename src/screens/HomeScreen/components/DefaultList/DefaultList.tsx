@@ -17,6 +17,7 @@ import {
   POPULAR_STORIES_CONFIG,
 } from '@/constants/stories';
 import { StorySchema } from '@/database/schema/stories/types';
+import { useStoriesUpdate } from '@/hooks/content/useStoriesUpdate';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -28,8 +29,6 @@ import { CategoriesList } from '@/screens/HomeScreen/components/CategoriesList/C
 import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
-
-import { useStoriesUpdate } from '../../hooks/useStoriesUpdate';
 
 import { makeStyles } from './DefaultList.styles';
 
@@ -61,7 +60,7 @@ export const DefaultList = React.memo(
     const insets = useSafeAreaInsets();
     const navigation = useAppNavigation<SharedRoutes.HOME>();
 
-    const [isRefreshing, updateStories] = useStoriesUpdate();
+    const [isRefreshing, updateStories] = useStoriesUpdate(false);
     const currentScrollRef = useRef(0);
 
     const [featuringStories, featuringStoriesVersion] = useStories(

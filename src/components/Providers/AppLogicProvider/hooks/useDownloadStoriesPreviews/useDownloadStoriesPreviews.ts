@@ -15,15 +15,17 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
       return;
     }
 
-    const storiesWithoutSmallPreview = StoriesDB.objects().filtered(
-      'small_cover_cached_name == nil',
-    );
-    const storiesWithoutMediumPreview = StoriesDB.objects().filtered(
-      'small_cover_cached_name != nil && medium_cover_cached_name == nil',
-    );
-    const storiesWithoutFulCover = StoriesDB.objects().filtered(
-      'small_cover_cached_name != nil && medium_cover_cached_name != nil && full_cover_cached_name == nil',
-    );
+    const storiesWithoutSmallPreview = StoriesDB.objects()
+      .filtered('small_cover_cached_name == nil')
+      .sorted('is_featuring', true);
+    const storiesWithoutMediumPreview = StoriesDB.objects()
+      .filtered('small_cover_cached_name != nil && medium_cover_cached_name == nil')
+      .sorted('is_featuring', true);
+    const storiesWithoutFulCover = StoriesDB.objects()
+      .filtered(
+        'small_cover_cached_name != nil && medium_cover_cached_name != nil && full_cover_cached_name == nil',
+      )
+      .sorted('is_featuring', true);
 
     const smallPreviewsListener: CollectionChangeCallback<StorySchema> = (collection, changes) => {
       processStoriesWithoutPreviews([...collection], 'small');
