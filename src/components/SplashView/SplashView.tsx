@@ -6,6 +6,7 @@ import Animated, {
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
+  withRepeat,
   withTiming,
 } from 'react-native-reanimated';
 
@@ -30,10 +31,12 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
   const { areProductsLoaded } = useShowPaywallModal();
 
   const animationProgress = useSharedValue(0);
+  const pulseAnimationProgress = useSharedValue(0);
 
   const starsAnimatedStyle = useAnimatedStyle(() => ({
     marginTop: interpolate(animationProgress.value, [0, 1], [STARS_MARGIN_TOP, -WINDOW_HEIGHT]),
     opacity: interpolate(animationProgress.value, [0, 1], [1, 0]),
+    transform: [{ scale: interpolate(pulseAnimationProgress.value, [0, 1], [1, 1.2]) }],
   }));
 
   const launchLogoAnimatedStyle = useAnimatedStyle(() => ({
@@ -57,6 +60,17 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areProductsLoaded]);
+
+  useEffect(() => {
+    pulseAnimationProgress.value = withRepeat(
+      withTiming(1, {
+        duration: 3000,
+      }),
+      -1,
+      true,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <LinearGradient
