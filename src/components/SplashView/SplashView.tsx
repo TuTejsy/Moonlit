@@ -14,6 +14,9 @@ import { WINDOW_HEIGHT } from '@/constants/layout';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useDelayedValue } from '@/hooks/useDelayedValue';
+
+import { Spinner } from '../Spinner/Spinner';
 
 import launchLogoImage from './images/launchLogo/launchLogo.png';
 import starsImage from './images/stars/stars.png';
@@ -29,6 +32,8 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
   const { colors } = useTheme();
 
   const { areProductsLoaded } = useShowPaywallModal();
+
+  const showSpinner = useDelayedValue(!areProductsLoaded, 1000, false);
 
   const animationProgress = useSharedValue(0);
   const pulseAnimationProgress = useSharedValue(0);
@@ -79,11 +84,20 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
       locations={[0, 1]}
       style={styles.container}
     >
-      <Animated.Image source={starsImage} style={starsAnimatedStyle} />
+      <Animated.Image source={starsImage} style={[styles.stars, starsAnimatedStyle]} />
       <Animated.Image
         source={launchLogoImage}
         style={[styles.launchLogo, launchLogoAnimatedStyle]}
       />
+
+      {showSpinner && (
+        <Spinner
+          color={colors.opacityWhite(0.5)}
+          size={36}
+          strokeWidth={7}
+          style={styles.spinner}
+        />
+      )}
     </LinearGradient>
   );
 };
