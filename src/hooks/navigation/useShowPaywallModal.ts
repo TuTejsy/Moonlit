@@ -70,7 +70,7 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
           if (products) {
             openPaywall(products);
           } else {
-            loadProducts().then(openPaywall);
+            loadProducts();
           }
         } else {
           onClose?.();
@@ -96,5 +96,9 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { isSubscriptionAvailable: !isFullVerion, showPaywallModal };
+  return {
+    areProductsLoaded: !!products,
+    isSubscriptionAvailable: !isFullVerion,
+    showPaywallModal,
+  };
 };
