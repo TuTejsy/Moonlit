@@ -2,8 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { useTimeout } from '@/hooks/useTimeout';
 
-export const useDelayedValue = <T>(value: T, delay = 500) => {
-  const [delayedValue, setDelayedValue] = useState<T>(value);
+export const useDelayedValue = <T>(
+  value: T,
+  delay = 500,
+  defaultValue: T | undefined = undefined,
+) => {
+  const [delayedValue, setDelayedValue] = useState<T>(defaultValue ?? value);
   const [setTimeoutHandler, clearTimeoutHandler] = useTimeout();
 
   useEffect(() => {

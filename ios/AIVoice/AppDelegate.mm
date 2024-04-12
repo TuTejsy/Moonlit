@@ -29,10 +29,21 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LaunchScreen" bundle:nil];
     [rootView setLoadingView:[[storyboard instantiateInitialViewController] view]];
     
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = rootView.bounds;
-    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorNamed:@"Purple"] CGColor], (id)[[UIColor colorNamed:@"DarkPurple"] CGColor], nil];
-    [rootView.layer insertSublayer:gradient atIndex:0];
+//    CAGradientLayer *gradient = [CAGradientLayer layer];
+//    gradient.frame = rootView.bounds;
+//    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor colorNamed:@"Purple"] CGColor], (id)[[UIColor colorNamed:@"DarkPurple"] CGColor], nil];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LaunchScreen"]];
+  
+    if (imageView.bounds.size.height > rootView.bounds.size.height) {
+      double heightDiff = imageView.bounds.size.height - rootView.bounds.size.height;
+      
+      imageView.layer.frame = CGRectMake(rootView.bounds.origin.x, -heightDiff /2, rootView.bounds.size.width, imageView.bounds.size.height);
+    } else {
+      imageView.layer.frame = rootView.bounds;
+    }
+        
+    [rootView.layer insertSublayer:imageView.layer atIndex:0];
   }
     
   return result;
