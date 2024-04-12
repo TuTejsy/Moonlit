@@ -4,11 +4,13 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 import { reduxPersistStorage } from './persistStorage';
 import { playerSlice } from './player/player.slice';
+import { subscriptionSlice } from './subscription/subscription.slice';
 import { userSlice } from './user/user.slice';
 
 const reducers = combineReducers({
   [playerSlice.name]: playerSlice.reducer,
   [userSlice.name]: userSlice.reducer,
+  [subscriptionSlice.name]: subscriptionSlice.reducer,
 });
 
 const persistConfig: PersistConfig<any> = {
