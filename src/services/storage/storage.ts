@@ -21,11 +21,13 @@ export const getStorageData = (): StorageDataReturn => {
   const devMode = storage.getBoolean(StorageKeys.DevMode);
   const isOnboarded = storage.getBoolean(StorageKeys.isOnboarded);
   const isFirstLaunch = storage.getBoolean(StorageKeys.isFirstLaunch) ?? true;
+  const isReviewAsked = storage.getBoolean(StorageKeys.isReviewAsked) ?? false;
 
   return {
     [StorageKeys.DevMode]: devMode,
     [StorageKeys.isOnboarded]: isOnboarded,
     [StorageKeys.isFirstLaunch]: isFirstLaunch,
+    [StorageKeys.isReviewAsked]: isReviewAsked,
   };
 };
 

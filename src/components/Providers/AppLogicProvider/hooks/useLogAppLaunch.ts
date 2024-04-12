@@ -24,7 +24,6 @@ export const useLogAppLaunch = () => {
           }
           break;
         }
-
         default: {
           break;
         }

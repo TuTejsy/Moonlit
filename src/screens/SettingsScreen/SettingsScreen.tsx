@@ -13,6 +13,8 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { AnalyticsService } from '@/services/analytics/analytics';
+import { getStorageData, storage } from '@/services/storage/storage';
+import { StorageKeys } from '@/services/storage/storage.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
 import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
@@ -39,20 +41,27 @@ export const SettingsScreen = () => {
   }, []);
 
   const handleRateAppPress = useCallback(() => {
-    InAppReview.RequestInAppReview()
-      .then(
-        (reviewShown) => {
-          if (!reviewShown) {
+    if (getStorageData().isReviewAsked) {
+      Linking.openURL(MOONLIT_IOS_APP_LINK);
+    } else {
+      InAppReview.RequestInAppReview()
+        .then(
+          (reviewShown) => {
+            if (!reviewShown) {
+              Linking.openURL(MOONLIT_IOS_APP_LINK);
+            }
+          },
+          () => {
             Linking.openURL(MOONLIT_IOS_APP_LINK);
-          }
-        },
-        () => {
+          },
+        )
+        .catch((err) => {
           Linking.openURL(MOONLIT_IOS_APP_LINK);
-        },
-      )
-      .catch((err) => {
-        Linking.openURL(MOONLIT_IOS_APP_LINK);
-      });
+        })
+        .finally(() => {
+          storage.set(StorageKeys.isReviewAsked, true);
+        });
+    }
   }, []);
 
   useFocusEffect(
