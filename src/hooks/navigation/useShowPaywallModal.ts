@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { adapty, AdaptyPaywallProduct } from 'react-native-adapty';
 
@@ -8,6 +8,8 @@ import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
+import { selectProducts } from '@/store/subscription/subscription.selector';
+import { setProducts } from '@/store/subscription/subscription.slice';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { setFreeOfferDays } from '@/store/user/user.slice';
 
@@ -19,8 +21,7 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
   const isFullVerion = useAppSelector(selectIsFullVersion);
 
   const dispatch = useAppDispatch();
-
-  const [products, setProducts] = useState<AdaptyPaywallProduct[] | null>(null);
+  const products = useAppSelector(selectProducts);
 
   const loadProducts = useCallback(async () => {
     const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en', {
@@ -29,10 +30,10 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
     });
     const products = await adapty.getPaywallProducts(paywall);
 
-    setProducts(products);
+    dispatch(setProducts(products));
 
     return products;
-  }, []);
+  }, [dispatch]);
 
   const showPaywallModal = useCallback(
     ({
