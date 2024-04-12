@@ -10,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { WINDOW_HEIGHT } from '@/constants/layout';
+import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
@@ -25,6 +26,8 @@ interface SplashViewProps {
 export const SplashView = ({ onAppReady }: SplashViewProps) => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+
+  const { areProductsLoaded } = useShowPaywallModal();
 
   const animationProgress = useSharedValue(0);
 
@@ -43,15 +46,17 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
   }));
 
   useEffect(() => {
-    animationProgress.value = withTiming(1, { duration: 1000 }, (finished?: boolean) => {
-      'worklet';
+    if (areProductsLoaded) {
+      animationProgress.value = withTiming(1, { duration: 1000 }, (finished?: boolean) => {
+        'worklet';
 
-      if (finished) {
-        runOnJS(onAppReady)();
-      }
-    });
+        if (finished) {
+          runOnJS(onAppReady)();
+        }
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [areProductsLoaded]);
 
   return (
     <LinearGradient
