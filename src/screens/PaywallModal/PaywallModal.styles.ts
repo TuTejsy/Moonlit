@@ -12,9 +12,11 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       marginHorizontal: 19,
     },
     actions: {
+      alignItems: 'flex-end',
       flexDirection: 'row',
+      height: dh(49),
       justifyContent: 'center',
-      marginTop: dh(24),
+      paddingBottom: dh(8),
     },
     bottomOverlayGradient: {
       bottom: 0,
@@ -22,6 +24,9 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       left: 0,
       position: 'absolute',
       width: WINDOW_WIDTH,
+    },
+    button: {
+      marginTop: dh(16),
     },
     content: {
       alignItems: 'center',
@@ -31,7 +36,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       justifyContent: 'flex-end',
       marginTop: insets.top,
       overflow: 'hidden',
-      paddingBottom: insets.bottom + dh(8),
+      paddingBottom: insets.bottom,
       paddingHorizontal: 34,
       paddingTop: dh(24),
       position: 'relative',
@@ -103,20 +108,6 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       position: 'absolute',
       top: 0,
       width: WINDOW_WIDTH,
-    },
-    unlockButton: {
-      marginTop: dh(16),
-    },
-    unlockButtonGradient: {
-      alignItems: 'center',
-      borderRadius: 32,
-      height: dw(48),
-      justifyContent: 'center',
-      width: SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
-    },
-    unlockButtonText: {
-      ...fonts.size_16,
-      color: colors.white,
     },
     voicesImage: {
       height: dw(140),

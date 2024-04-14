@@ -5,21 +5,13 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
-    continueButton: {
-      borderColor: colors.opacityWhite(0.2),
-      borderRadius: 24,
-      borderWidth: 1,
-      paddingHorizontal: 57,
-      paddingVertical: 13,
-    },
     continueText: {
       ...fonts.size_16,
       color: colors.white,
     },
     controls: {
       alignItems: 'center',
-      marginBottom: dh(16),
-      marginTop: dh(40),
+      marginTop: dh(32),
       width: '100%',
     },
     description: {
@@ -43,11 +35,11 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       marginTop: 0,
     },
     indicatorsContainer: {
-      alignItems: 'center',
+      alignItems: 'flex-end',
       flexDirection: 'row',
+      height: dh(49),
       justifyContent: 'center',
-      marginBottom: dh(17),
-      marginTop: dh(19),
+      paddingBottom: dh(16),
     },
     screen: {
       alignItems: 'flex-start',

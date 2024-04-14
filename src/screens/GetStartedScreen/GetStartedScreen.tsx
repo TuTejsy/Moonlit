@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { View, Image } from 'react-native';
 
-import { TouchableHighlight } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   useAnimatedStyle,
@@ -11,6 +10,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
@@ -166,11 +166,7 @@ export const GetStartedScreen = () => {
       </View>
 
       <View style={styles.controls}>
-        <TouchableHighlight style={styles.continueButton} onPress={handleContinuePress}>
-          <TextView style={styles.continueText} type='bold'>
-            Continue
-          </TextView>
-        </TouchableHighlight>
+        <GradientButton onPress={handleContinuePress}>Continue</GradientButton>
 
         <View style={styles.indicatorsContainer}>
           {STEPS.map(({ title }, step) => (
