@@ -1,3 +1,4 @@
+import { Moon } from './brand/Moon';
 import { Check } from './common/Check';
 import { Clock } from './common/Clock';
 import { Doc } from './common/Doc';
@@ -44,6 +45,7 @@ export const Icons = {
   Info,
   Loader,
   Lock,
+  Moon,
   PauseBig,
   PauseSmall,
   PlayBig,
