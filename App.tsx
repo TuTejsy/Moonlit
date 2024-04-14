@@ -35,7 +35,7 @@ AudioRecordingsDB.open();
 
 adapty.activate(ADAPTY_API_KEY);
 amplitude.init(AMPLITUDE_API_KEY, undefined, {
-  logLevel: __DEV__ ? amplitude.Types.LogLevel.Debug : amplitude.Types.LogLevel.None,
+  logLevel: __DEV__ ? amplitude.Types.LogLevel.Error : amplitude.Types.LogLevel.None,
 });
 
 function App(): JSX.Element {

@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
 
 import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
+import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -193,7 +193,7 @@ export const PaywallModal = () => {
         </TextView>
 
         <TextView style={styles.subtitle} type='regular'>
-          Discover unique voices and{`\n`}listen classic fary tales
+          Discover unique voices and{`\n`}listen to classic fary tales
         </TextView>
 
         <Image source={voicesImage} style={styles.voicesImage} />
@@ -217,29 +217,15 @@ export const PaywallModal = () => {
             value={isFreeTrialEnabled}
             trackColor={{
               false: colors.opacityWhite(0.2),
-              true: colors.unlockButtonGradientStart,
+              true: colors.gradientButtonStart,
             }}
             onValueChange={setIsFreeTrialEnabled}
           />
         </View>
 
-        <PressableView style={styles.unlockButton} onPress={handleUnlockPress}>
-          <LinearGradient
-            useAngle
-            angle={45}
-            locations={[0, 0.5, 1]}
-            style={styles.unlockButtonGradient}
-            colors={[
-              colors.unlockButtonGradientStart,
-              colors.unlockButtonGradientMiddle,
-              colors.unlockButtonGradientEnd,
-            ]}
-          >
-            <TextView style={styles.unlockButtonText} type='bold'>
-              Begin your adventure
-            </TextView>
-          </LinearGradient>
-        </PressableView>
+        <GradientButton style={styles.button} onPress={handleUnlockPress}>
+          Begin your adventure
+        </GradientButton>
 
         <View style={styles.actions}>
           <TouchableOpacity onPress={openTermsAndConditions}>
