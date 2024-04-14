@@ -2,25 +2,24 @@ import { useEffect } from 'react';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
-  interpolate,
+  Easing,
   runOnJS,
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
 
+import { Icons } from '@/assets/icons/Icons';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useDelayedValue } from '@/hooks/useDelayedValue';
-
-import { Spinner } from '../Spinner/Spinner';
 
 import launchLogoImage from './images/launchLogo/launchLogo.png';
 import starsImage from './images/stars/stars.png';
-import { LAUNCH_LOGO_MARGIN_TOP, STARS_MARGIN_TOP } from './SplashView.constants';
+import { MOON_LOGO_SIZE } from './SplashView.constants';
 import { makeStyles } from './SplashView.styles';
 
 interface SplashViewProps {
@@ -33,24 +32,46 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
 
   const { areProductsLoaded } = useShowPaywallModal();
 
-  const showSpinner = useDelayedValue(!areProductsLoaded, 1000, false);
-
   const animationProgress = useSharedValue(0);
   const pulseAnimationProgress = useSharedValue(0);
 
   const starsAnimatedStyle = useAnimatedStyle(() => ({
-    marginTop: interpolate(animationProgress.value, [0, 1], [STARS_MARGIN_TOP, -WINDOW_HEIGHT]),
     opacity: interpolate(animationProgress.value, [0, 1], [1, 0]),
-    transform: [{ scale: interpolate(pulseAnimationProgress.value, [0, 1], [1, 1.2]) }],
+    transform: [
+      { scale: interpolate(pulseAnimationProgress.value, [0, 1], [1, 0.9]) },
+      {
+        translateY: interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT]),
+      },
+    ],
   }));
 
   const launchLogoAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(animationProgress.value, [0, 1], [1, 0]),
-    top: interpolate(
-      animationProgress.value,
-      [0, 1],
-      [LAUNCH_LOGO_MARGIN_TOP, LAUNCH_LOGO_MARGIN_TOP / 2],
-    ),
+    opacity: interpolate(pulseAnimationProgress.value, [0, 1], [1, 0.5]),
+    transform: [
+      { scale: interpolate(pulseAnimationProgress.value, [0, 1], [1, 0.8]) },
+      {
+        translateY: interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT * 1.5]),
+      },
+    ],
+  }));
+
+  const moonAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT * 1.5]),
+      },
+    ],
+  }));
+
+  const moonGradientAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY:
+          animationProgress.value === 0
+            ? interpolate(pulseAnimationProgress.value, [0, 1], [0, -MOON_LOGO_SIZE * 2])
+            : interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT * 1.5]),
+      },
+    ],
   }));
 
   useEffect(() => {
@@ -70,6 +91,7 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
     pulseAnimationProgress.value = withRepeat(
       withTiming(1, {
         duration: 3000,
+        easing: Easing.out(Easing.poly(3)),
       }),
       -1,
       true,
@@ -81,23 +103,28 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
     <LinearGradient
       angle={180}
       colors={[colors.purple, colors.darkPurple]}
-      locations={[0, 1]}
+      locations={[0.5, 1]}
       style={styles.container}
     >
+      <Animated.View style={[styles.moonContainer, moonAnimatedStyle]}>
+        <Icons.Moon height={MOON_LOGO_SIZE} style={styles.moonLogo} width={MOON_LOGO_SIZE} />
+      </Animated.View>
+
+      <Animated.View style={[styles.moonGradientContainer, moonGradientAnimatedStyle]}>
+        <LinearGradient
+          angle={180}
+          colors={[colors.opacityPurple(1), colors.opacityPurple(0)]}
+          locations={[0.5, 1]}
+          style={styles.moonGradient}
+        />
+      </Animated.View>
+
       <Animated.Image source={starsImage} style={[styles.stars, starsAnimatedStyle]} />
+
       <Animated.Image
         source={launchLogoImage}
         style={[styles.launchLogo, launchLogoAnimatedStyle]}
       />
-
-      {showSpinner && (
-        <Spinner
-          color={colors.opacityWhite(0.5)}
-          size={36}
-          strokeWidth={7}
-          style={styles.spinner}
-        />
-      )}
     </LinearGradient>
   );
 };
