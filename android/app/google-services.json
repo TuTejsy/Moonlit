@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "870926275829",
+    "project_id": "moonlit-stories-dev",
+    "storage_bucket": "moonlit-stories-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870926275829:android:693d1a0abebd52ffe421bc",
+        "android_client_info": {
+          "package_name": "com.moonlit.tales"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9xb2txpgWy4C7ObNcFy4v7FBP9L2IUMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
