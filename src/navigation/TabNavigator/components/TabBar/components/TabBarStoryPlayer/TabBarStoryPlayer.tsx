@@ -7,7 +7,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { IS_IOS, SANDBOX } from '@/constants/common';
+import { SANDBOX } from '@/constants/common';
 import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
 import { useStory } from '@/hooks/database/useStory';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -109,14 +109,12 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
 
   return (
     <PressableView style={styles.container} onPress={handlePreviewPress}>
-      {IS_IOS && (
-        <BlurView
-          blurAmount={5}
-          blurType='light'
-          reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-          style={styles.blurView}
-        />
-      )}
+      <BlurView
+        blurAmount={5}
+        blurType='light'
+        reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+        style={styles.blurView}
+      />
       <Image
         resizeMode='cover'
         style={styles.image}
