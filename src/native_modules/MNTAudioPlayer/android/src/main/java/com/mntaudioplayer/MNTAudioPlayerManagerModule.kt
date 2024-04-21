@@ -60,6 +60,7 @@ class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : Nativ
 
     var hasError = false
     try {
+      mediaPlayer.reset()
       mediaPlayer.setDataSource(filePath)
     } catch (error: Exception) {
       hasError = true
@@ -71,9 +72,13 @@ class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : Nativ
   override fun startPlayingFromTime(time: Double): Boolean {
     var hasError = false
     try {
-      mediaPlayer.prepare()
-      mediaPlayer.seekTo((time * 1000).toInt())
-      mediaPlayer.start()
+      if (mediaPlayer.isPlaying) {
+        mediaPlayer.seekTo((time * 1000).toInt())
+      } else {
+        mediaPlayer.prepare()
+        mediaPlayer.seekTo((time * 1000).toInt())
+        mediaPlayer.start()
+      }
     } catch (error: Exception) {
       hasError = true
     }
