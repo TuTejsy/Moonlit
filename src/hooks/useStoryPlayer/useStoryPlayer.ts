@@ -168,10 +168,18 @@ export function useStoryPlayer({
           setPlayedTime(0);
         }
 
-        audioPlayer.setToPlayFile({ coverPath, filePath, fileTitle: title });
-        audioPlayer.startPlayingFromTime(timeToStart);
+        const setToPlayResult = audioPlayer.setToPlayFile({
+          coverPath,
+          filePath,
+          fileTitle: title,
+        });
+        const startPlatinResult = audioPlayer.startPlayingFromTime(timeToStart);
 
-        if (!isStoryPlayNotifiedRef.current) {
+        if (
+          !isStoryPlayNotifiedRef.current &&
+          setToPlayResult !== false &&
+          startPlatinResult !== false
+        ) {
           isStoryPlayNotifiedRef.current = true;
           notifyStoryPlay(storyId);
         }
@@ -252,6 +260,8 @@ export function useStoryPlayer({
         if (isCurrentStoryPlayingMutableValue.current) {
           audioPlayer?.startPlayingFromTime(playedTimeToSet);
           reduxDispatch(startPlaying(selectedAudioRecording?.id));
+        } else {
+          audioPlayer?.rewindPlayingToTime(playedTimeToSet);
         }
 
         setPlayedTime(playedTimeToSet);
