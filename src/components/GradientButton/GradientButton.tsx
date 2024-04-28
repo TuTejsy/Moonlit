@@ -1,12 +1,12 @@
 import { memo, useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
 
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
-import { PressableView } from '../Primitives/PressableView/PressableView';
 import { TextView } from '../Primitives/TextView/TextView';
 
 import { makeStyles } from './GradientButton.styles';
@@ -29,7 +29,7 @@ export const GradientButton = memo(
     }, [colors.gradientButtonEnd, colors.gradientButtonMiddle, colors.gradientButtonStart]);
 
     return (
-      <PressableView style={[styles.button, style]} onPress={onPress}>
+      <TouchableWithoutFeedback style={[styles.button, style]} onPress={onPress}>
         <LinearGradient
           useAngle
           angle={45}
@@ -42,7 +42,7 @@ export const GradientButton = memo(
             {children}
           </TextView>
         </LinearGradient>
-      </PressableView>
+      </TouchableWithoutFeedback>
     );
   },
 );
