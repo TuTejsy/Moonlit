@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
+import { MoreTalesComingFooter } from '@/components/Lists/MoreTalesComingFooter/MoreTalesComingFooter';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
@@ -56,10 +57,16 @@ export const StoriesListScreen = () => {
 
       <SmallStoriesList
         contentContainerStyle={styles.smallListContainerStyle}
-        isScrollable={!!listStories.length}
         stories={listStories}
         storiesVersion={storiesVersion}
         tab={(title ?? 'All tales') as TabEventType}
+        ListFooterComponent={
+          <MoreTalesComingFooter
+            source={SOURCE.CONTENT}
+            style={styles.footer}
+            tab={(title ?? 'All tales') as TabEventType}
+          />
+        }
         ListHeaderComponent={
           <StoriesWithPromotion
             source={SOURCE.CONTENT}

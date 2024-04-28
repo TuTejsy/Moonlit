@@ -1,11 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 import { LARGE_TITLE_HEIGHT } from '@/components/Headers/ScreenHeader/ScreenHeader.constants';
-import { TAB_BAR_HEIGHT, TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
+import { HORIZONTAL_PADDING, TAB_BAR_HEIGHT, TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
+    footer: {
+      marginLeft: -HORIZONTAL_PADDING,
+    },
     screen: {
       flex: 1,
     },

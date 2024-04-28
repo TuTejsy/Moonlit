@@ -66,6 +66,7 @@ export const StoryPreview = React.memo(
             />
           ) : (
             <LinearGradient
+              useAngle
               angle={180}
               colors={[colors.opacityBlack(0), colors.opacityBlack(1)]}
               locations={[0, 1]}
