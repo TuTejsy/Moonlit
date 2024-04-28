@@ -54,22 +54,13 @@ export function StoryPreview({
 
   return (
     <TouchableWithoutFeedback style={styles.previewContainer} onPress={handlePreviewPress}>
-      {previewURL && !isImageLoaded ? (
+      {previewURL && !isImageLoaded && (
         <BlurView
           blurAmount={5}
           blurRadius={10}
           blurType='dark'
           reducedTransparencyFallbackColor={colors.opacityBlack(0.2)}
           style={styles.blurView}
-        />
-      ) : (
-        <LinearGradient
-          useAngle
-          angle={180}
-          colors={[colors.opacityBlack(0), colors.opacityBlack(0.7)]}
-          locations={[0, 1]}
-          pointerEvents='none'
-          style={styles.previewGradient}
         />
       )}
 

@@ -16,6 +16,7 @@ import {
   FEATURING_STORIES_FILTER,
   FREE_STORIES_FILTER,
   POPULAR_STORIES_CONFIG,
+  POPULAR_STORIES_FILTER,
 } from '@/constants/stories';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useStoriesUpdate } from '@/hooks/content/useStoriesUpdate';
@@ -84,7 +85,8 @@ export const DefaultList = React.memo(
 
     const handleSeePopularTales = useCallback(() => {
       navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
-        storiesSortConfig: POPULAR_STORIES_CONFIG,
+        storiesFilter: POPULAR_STORIES_FILTER,
+        storiesSortConfigs: POPULAR_STORIES_CONFIG,
         title: 'Popular tales',
       });
     }, [navigation]);

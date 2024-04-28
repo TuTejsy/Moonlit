@@ -2,17 +2,27 @@ import { SortConfig } from '@/hooks/database/useStories';
 
 export type StoryCoverType = 'small' | 'medium' | 'full';
 
-export const POPULAR_STORIES_CONFIG: SortConfig = {
-  reverse: true,
-  sortDescriptor: 'played_count',
-};
+export const POPULAR_STORIES_FILTER = 'is_coming_soon = false';
+
+export const POPULAR_STORIES_CONFIG: SortConfig[] = [
+  {
+    reverse: true,
+    sortDescriptor: 'played_count',
+  },
+];
 
 export const FEATURING_STORIES_FILTER = 'is_featuring = true';
 
-export const FEATURING_STORIES_CONFIG: SortConfig = {
-  reverse: false,
-  sortDescriptor: 'played_count',
-};
+export const FEATURING_STORIES_CONFIG: SortConfig[] = [
+  {
+    reverse: false,
+    sortDescriptor: 'is_coming_soon',
+  },
+  {
+    reverse: false,
+    sortDescriptor: 'played_count',
+  },
+];
 
 export const FREE_STORIES_FILTER = 'is_free = true';
 

@@ -13,6 +13,10 @@ export const StorySchema: ObjectSchema = {
     full_cover_cached_name: 'string?',
     full_cover_url: 'string',
     id: 'int',
+    is_coming_soon: {
+      default: false,
+      type: 'bool',
+    },
     is_favorite: {
       default: false,
       type: 'bool',

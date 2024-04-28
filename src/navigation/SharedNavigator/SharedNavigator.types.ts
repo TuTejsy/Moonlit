@@ -8,7 +8,7 @@ export interface SharedStackParams extends Record<string, object | undefined> {
   };
   [SharedRoutes.STORIES_LIST]?: {
     storiesFilter?: string;
-    storiesSortConfig?: SortConfig;
+    storiesSortConfigs?: SortConfig[];
     title?: string;
   };
 }

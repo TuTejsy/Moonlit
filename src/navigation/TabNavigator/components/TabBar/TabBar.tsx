@@ -28,10 +28,12 @@ export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) =>
 
   const [recentlyPlayedStories, recentlyPlayedStoriesVersion] = useStories(
     'played_at_timestamp != nil',
-    {
-      reverse: true,
-      sortDescriptor: 'played_at_timestamp',
-    },
+    [
+      {
+        reverse: true,
+        sortDescriptor: 'played_at_timestamp',
+      },
+    ],
   );
 
   const lastPlayedStory: StorySchema | undefined = useMemo(() => {

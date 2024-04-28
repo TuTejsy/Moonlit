@@ -5,8 +5,8 @@ import { ZRKRealmConfiguration } from '../types';
 export const storiesConfig: ZRKRealmConfiguration = {
   deleteCache: () => {},
 
-  deleteRealmIfMigrationNeeded: true,
+  deleteRealmIfMigrationNeeded: false,
 
   schema: [StorySchema, ColorSchema],
-  schemaVersion: 2,
+  schemaVersion: 3,
 };
