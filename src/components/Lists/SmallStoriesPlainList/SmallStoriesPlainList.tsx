@@ -30,6 +30,7 @@ interface SmallStoriesPlainListPropTypes
   storiesVersion: number;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   showSaveButton?: boolean;
+  source?: SOURCE;
   tab?: TabEventType;
 }
 
@@ -37,6 +38,7 @@ export const SmallStoriesPlainList = React.memo(
   ({
     onScroll,
     showSaveButton = false,
+    source,
     stories,
     storiesVersion,
     tab,
@@ -72,7 +74,7 @@ export const SmallStoriesPlainList = React.memo(
             isSaved={mapStoriesToSaved.get(item.id)}
             previewURL={getImageFilePathForStory(item, 'small')}
             showSaveButton={showSaveButton}
-            source={SOURCE.CONTENT}
+            source={source ?? SOURCE.CONTENT}
             storyId={item.id}
             tab={tab}
             title={item.name}
@@ -80,7 +82,7 @@ export const SmallStoriesPlainList = React.memo(
           />
         );
       },
-      [handleSaveStoryPress, mapStoriesToSaved, showSaveButton, tab],
+      [handleSaveStoryPress, source, mapStoriesToSaved, showSaveButton, tab],
     );
 
     const handleScrollToTop = useCallback(() => {

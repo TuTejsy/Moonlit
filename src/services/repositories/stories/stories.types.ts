@@ -25,6 +25,7 @@ export interface Story {
   description_large: string;
   full_cover_url: string;
   id: number;
+  is_coming_soon: boolean;
   is_featuring: boolean;
   is_free: boolean;
   medium_cover_url: string;

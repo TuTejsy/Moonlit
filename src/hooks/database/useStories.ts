@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 
-import Realm, { CollectionChangeCallback } from 'realm';
+import Realm, { CollectionChangeCallback, SortDescriptor } from 'realm';
 
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
@@ -12,7 +12,7 @@ export interface SortConfig {
 
 export function useStories(
   filter?: string,
-  sortConfig?: SortConfig,
+  sortConfigs?: SortConfig[],
   maxNum?: number,
 ): [Realm.Results<StorySchema>, number] {
   const stories = useMemo(() => {
@@ -22,12 +22,23 @@ export function useStories(
       result = result.filtered(filter);
     }
 
-    const config = sortConfig ?? {
-      reverse: true,
-      sortDescriptor: 'updated_at_timestamp',
-    };
+    const configs: SortConfig[] = sortConfigs || [
+      {
+        reverse: false,
+        sortDescriptor: 'is_coming_soon',
+      },
+      {
+        reverse: true,
+        sortDescriptor: 'updated_at_timestamp',
+      },
+    ];
 
-    result = result.sorted(config.sortDescriptor, config.reverse);
+    const mappedConfig: SortDescriptor[] = configs.map(({ reverse, sortDescriptor }) => [
+      sortDescriptor,
+      reverse,
+    ]);
+
+    result = result.sorted(mappedConfig);
 
     return result;
     // eslint-disable-next-line react-hooks/exhaustive-deps

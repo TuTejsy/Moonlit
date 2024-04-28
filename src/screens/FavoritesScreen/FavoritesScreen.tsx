@@ -39,16 +39,20 @@ export const FavoritesScreen = () => {
 
   const { handleOpacityScroll, opacityAnimStyle } = useScrollOpacity();
 
-  const [savedStories, savedStoriesVersion] = useStories('is_favorite = true', {
-    reverse: true,
-    sortDescriptor: 'saved_at_timestamp',
-  });
-  const [recentlyPlayedStories, recentlyPlayedStoriesVersion] = useStories(
-    'played_at_timestamp != nil',
+  const [savedStories, savedStoriesVersion] = useStories('is_favorite = true', [
     {
       reverse: true,
-      sortDescriptor: 'played_at_timestamp',
+      sortDescriptor: 'saved_at_timestamp',
     },
+  ]);
+  const [recentlyPlayedStories, recentlyPlayedStoriesVersion] = useStories(
+    'played_at_timestamp != nil',
+    [
+      {
+        reverse: true,
+        sortDescriptor: 'played_at_timestamp',
+      },
+    ],
   );
 
   const animatedTabIndicatorStyle = useAnimatedStyle(() => ({

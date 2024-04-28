@@ -25,11 +25,11 @@ export const StoriesListScreen = () => {
   const { colors } = useTheme();
 
   const { params } = useAppRoute<SharedRoutes.STORIES_LIST>();
-  const { storiesFilter, storiesSortConfig, title } = params || {};
+  const { storiesFilter, storiesSortConfigs, title } = params || {};
 
   const insets = useSafeAreaInsets();
 
-  const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfig);
+  const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfigs);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const headerStories = useMemo(() => stories.slice(0, 2), [stories, storiesVersion]);

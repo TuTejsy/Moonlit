@@ -6,6 +6,7 @@ export interface StorySchema {
   description_large: string;
   full_cover_url: string;
   id: number;
+  is_coming_soon: boolean;
   is_favorite: boolean;
   is_featuring: boolean;
   is_free: boolean;

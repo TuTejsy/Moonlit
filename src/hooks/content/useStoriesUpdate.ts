@@ -38,6 +38,8 @@ export function useStoriesUpdate(loadInitially = true): [boolean, () => void] {
           description_large: story.description_large,
           full_cover_url: story.full_cover_url,
           id: story.id,
+          is_coming_soon: story.is_coming_soon ?? false,
+          is_favorite: currentStory?.is_favorite,
           is_featuring: story.is_featuring,
           is_free: story.is_free,
           medium_cover_url: story.medium_cover_url,

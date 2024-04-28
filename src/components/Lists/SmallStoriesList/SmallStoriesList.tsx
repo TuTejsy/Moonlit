@@ -64,6 +64,7 @@ export function SmallStoriesList({
       return (
         <StoryPreview
           description={item.description}
+          isComingSoon={item.is_coming_soon}
           isFree={item.is_free}
           isImageLoaded={!!item.small_cover_cached_name}
           previewURL={getImageFilePathForStory(item, 'small')}

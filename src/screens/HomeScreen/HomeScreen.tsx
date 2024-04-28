@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
-import { POPULAR_STORIES_CONFIG } from '@/constants/stories';
+import { POPULAR_STORIES_CONFIG, POPULAR_STORIES_FILTER } from '@/constants/stories';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -37,13 +37,17 @@ export const HomeScreen = () => {
     const trimmedSeacrhText = searchText.trim();
 
     if (trimmedSeacrhText) {
-      return `name CONTAINS[c] "${trimmedSeacrhText}"`;
+      return `name CONTAINS[c] "${trimmedSeacrhText} && is_coming_soon = false"`;
     }
     return undefined;
   }, [searchText]);
 
   const [allStories, allStoriesVersion] = useStories(searchDecriptor);
-  const [popularStories, popularStoriesVersion] = useStories(undefined, POPULAR_STORIES_CONFIG, 5);
+  const [popularStories, popularStoriesVersion] = useStories(
+    POPULAR_STORIES_FILTER,
+    POPULAR_STORIES_CONFIG,
+    5,
+  );
 
   const popularSearchItems = useMemo(
     () => popularStories.map((story) => story.name),
