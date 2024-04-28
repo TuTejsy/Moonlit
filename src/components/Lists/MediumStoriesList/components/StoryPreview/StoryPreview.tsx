@@ -64,6 +64,7 @@ export function StoryPreview({
         />
       ) : (
         <LinearGradient
+          useAngle
           angle={180}
           colors={[colors.opacityBlack(0), colors.opacityBlack(0.7)]}
           locations={[0, 1]}

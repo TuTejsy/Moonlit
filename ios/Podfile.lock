@@ -1358,6 +1358,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNCMaskedView (0.3.1):
+    - React-Core
   - RNDominantColor (1.7.2):
     - React
   - RNFBAnalytics (19.1.2):
@@ -1584,6 +1586,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RealmJS (from `../node_modules/realm`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - RNDominantColor (from `../node_modules/rn-dominant-color`)
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
@@ -1743,6 +1746,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/realm"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCMaskedView:
+    :path: "../node_modules/@react-native-masked-view/masked-view"
   RNDominantColor:
     :path: "../node_modules/rn-dominant-color"
   RNFBAnalytics:
@@ -1849,6 +1854,7 @@ SPEC CHECKSUMS:
   ReactCommon: 2aa35648354bd4c4665b9a5084a7d37097b89c10
   RealmJS: 385df5ee940d96f1de26b1dab153e325633d3052
   RNCAsyncStorage: 0ae9ad1fef1cdf2633a2d41574076ddeeaa1df48
+  RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
   RNDominantColor: 7c17c31201566a592ba4b2fbe2bb7e00df468753
   RNFBAnalytics: f25630b8988f79da8dfb32faa9009c9dc9eff64c
   RNFBApp: 5cbbb49393dc840f46b227ae483d11d502ed36a8

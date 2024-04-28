@@ -29,7 +29,7 @@ export const GradientButton = memo(
     }, [colors.gradientButtonEnd, colors.gradientButtonMiddle, colors.gradientButtonStart]);
 
     return (
-      <PressableView style={style} onPress={onPress}>
+      <PressableView style={[styles.button, style]} onPress={onPress}>
         <LinearGradient
           useAngle
           angle={45}

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import {
+  FlatList,
   FlatListProps,
   ListRenderItemInfo,
   NativeScrollEvent,
@@ -7,8 +8,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-
-import Animated from 'react-native-reanimated';
 
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -22,6 +21,7 @@ import { makeStyles } from './SmallStoriesList.styles';
 interface SmallStoriesListPropTypes {
   stories: Array<StorySchema>;
   storiesVersion: number;
+  ListFooterComponent?: FlatListProps<StorySchema>['ListFooterComponent'];
   ListHeaderComponent?: FlatListProps<StorySchema>['ListHeaderComponent'];
   contentContainerStyle?: ViewStyle;
   displayCount?: number;
@@ -35,6 +35,7 @@ interface SmallStoriesListPropTypes {
 }
 
 export function SmallStoriesList({
+  ListFooterComponent,
   ListHeaderComponent,
   contentContainerStyle,
   displayCount,
@@ -94,8 +95,9 @@ export function SmallStoriesList({
   }, []);
 
   return (
-    <Animated.FlatList
+    <FlatList
       ItemSeparatorComponent={() => <View style={styles.separator} />}
+      ListFooterComponent={ListFooterComponent}
       ListHeaderComponent={ListHeaderComponent}
       contentContainerStyle={[styles.listContent, contentContainerStyle]}
       data={storiesToRender}
@@ -105,6 +107,7 @@ export function SmallStoriesList({
       numColumns={2}
       renderItem={renderItem}
       scrollEnabled={isScrollable}
+      scrollEventThrottle={16}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       style={style}

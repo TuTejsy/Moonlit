@@ -99,6 +99,7 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
 
   return {
     areProductsLoaded: !!products || IS_ANDROID,
+    isFullVerion,
     isSubscriptionAvailable: !isFullVerion,
     showPaywallModal,
   };

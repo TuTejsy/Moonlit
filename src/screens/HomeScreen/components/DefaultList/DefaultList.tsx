@@ -7,6 +7,7 @@ import Realm from 'realm';
 
 import { LargeStoriesList } from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumStoriesList';
+import { MoreTalesComingFooter } from '@/components/Lists/MoreTalesComingFooter/MoreTalesComingFooter';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { PromotionBanner } from '@/components/PromotionBanner/PromotionBanner';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
@@ -27,6 +28,7 @@ import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.route
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { CategoriesList } from '@/screens/HomeScreen/components/CategoriesList/CategoriesList';
 import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
+import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
@@ -184,6 +186,8 @@ export const DefaultList = React.memo(
           style={styles.smallList}
           tab='All tales'
         />
+
+        <MoreTalesComingFooter source={SOURCE.HOME_VIEW} />
       </ScrollView>
     );
   },
