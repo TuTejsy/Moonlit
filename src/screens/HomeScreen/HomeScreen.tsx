@@ -37,7 +37,7 @@ export const HomeScreen = () => {
     const trimmedSeacrhText = searchText.trim();
 
     if (trimmedSeacrhText) {
-      return `name CONTAINS[c] "${trimmedSeacrhText} && is_coming_soon = false"`;
+      return `name CONTAINS[c] "${trimmedSeacrhText}" && is_coming_soon = false`;
     }
     return undefined;
   }, [searchText]);
