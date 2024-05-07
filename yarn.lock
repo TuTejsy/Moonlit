@@ -6822,10 +6822,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-adapty@^2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/react-native-adapty/-/react-native-adapty-2.10.0.tgz#ff951c7cadd59c8b8155f050f0fb06614dc528d8"
-  integrity sha512-PRGNh+e63VsdXq98fBBdm1R8+xQ7cx6US4NaiQsbf8oKcHgP85mmP0cgPTSDjIPQL/AOVqCXxxdZB3mxOc2jlg==
+react-native-adapty@^2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/react-native-adapty/-/react-native-adapty-2.10.1.tgz#64ce06b80d19fb3fbb78e7a05690dc4c1e539a81"
+  integrity sha512-jcAc1BIpN5aQf61IHqXwxim1JhYBVafcVUU/hBxYmXp8H+GZMaBFuXifbo+lIQR8+YWWYLQsM9ICuiLJDEbuew==
 
 react-native-config@^1.5.1:
   version "1.5.1"
