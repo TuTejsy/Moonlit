@@ -1,13 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 import { WINDOW_WIDTH } from '@/constants/layout';
-import { TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     backgroundImage: {
-      height: dw(571),
+      height: dw(597),
       left: 0,
       position: 'absolute',
       top: 0,
