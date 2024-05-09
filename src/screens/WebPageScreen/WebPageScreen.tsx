@@ -29,8 +29,6 @@ export const WebPageScreen = () => {
     (event: WebViewNavigation) => {
       const { url } = event;
 
-      console.log('url: ', event);
-
       if (url === MOONLIT_SITE_URL) {
         navigation.goBack();
       }
