@@ -9,6 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { MOONLIT_IOS_APP_LINK, SUPPORT_EMAIL } from '@/constants/common';
+import { useWebPagesNavigation } from '@/hooks/navigation/useWebPagesNavigation';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -16,8 +17,6 @@ import { AnalyticsService } from '@/services/analytics/analytics';
 import { getStorageData, storage } from '@/services/storage/storage';
 import { StorageKeys } from '@/services/storage/storage.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
-import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
-import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
 
 import { MenuItem } from './components/MenuItem/MenuItem';
 import { PromotionBanner } from './components/PromotionBanner/PromotionBanner';
@@ -28,6 +27,8 @@ export const SettingsScreen = () => {
   const { colors } = useTheme();
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
+
+  const { openPrivacyPolicy, openTermsOfService } = useWebPagesNavigation();
 
   const handleHelpAndSupportPress = useCallback(() => {
     openComposer({
@@ -84,7 +85,7 @@ export const SettingsScreen = () => {
       {!isFullVersion && <PromotionBanner />}
 
       <MenuItem icon={<Icons.Info />} title='Contact us' onPress={handleHelpAndSupportPress} />
-      <MenuItem icon={<Icons.Doc />} title='Terms of service' onPress={openTermsAndConditions} />
+      <MenuItem icon={<Icons.Doc />} title='Terms of service' onPress={openTermsOfService} />
       <MenuItem icon={<Icons.Privacy />} title='Privacy policy' onPress={openPrivacyPolicy} />
 
       <View style={styles.separator} />

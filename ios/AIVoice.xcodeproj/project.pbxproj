@@ -28,8 +28,6 @@
 		883424AC2A93C37B00AED6E9 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 883424AB2A93C37B00AED6E9 /* Colors.xcassets */; };
 		8874C4A42BAD6DF5002449F1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8874C4A32BAD6DF5002449F1 /* PrivacyInfo.xcprivacy */; };
 		8874C4A52BAD6DF5002449F1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8874C4A32BAD6DF5002449F1 /* PrivacyInfo.xcprivacy */; };
-		88AC29952B5F97E90092EFF3 /* Terms_and_Conditions.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AC29932B5F97E80092EFF3 /* Terms_and_Conditions.pdf */; };
-		88AC29962B5F97E90092EFF3 /* Privacy_policy.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 88AC29942B5F97E80092EFF3 /* Privacy_policy.pdf */; };
 		88E122BA29E1BC8A00C30444 /* ZRKAudioRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */; };
 		88E122BB29E1BC8A00C30444 /* ZRKAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */; };
 		88E122BC29E1BC8A00C30444 /* ZRKAudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */; };
@@ -89,8 +87,6 @@
 		883424A92A93C26700AED6E9 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		883424AB2A93C37B00AED6E9 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8874C4A32BAD6DF5002449F1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		88AC29932B5F97E80092EFF3 /* Terms_and_Conditions.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Terms_and_Conditions.pdf; sourceTree = "<group>"; };
-		88AC29942B5F97E80092EFF3 /* Privacy_policy.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Privacy_policy.pdf; sourceTree = "<group>"; };
 		88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZRKAudioRecorderManager.m; sourceTree = "<group>"; };
 		88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioRecorder.swift; sourceTree = "<group>"; };
 		88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioRecorderManager.swift; sourceTree = "<group>"; };
@@ -157,7 +153,6 @@
 				8874C4A32BAD6DF5002449F1 /* PrivacyInfo.xcprivacy */,
 				8805A8602B6A27A1009EDE6C /* MNTShareManager */,
 				8828EF3E2B65AA7E006D4AED /* MNTAudioPlayer */,
-				88AC298E2B5F953C0092EFF3 /* Files */,
 				883424A72A93C23400AED6E9 /* Views */,
 				88E122D329E1C47D00C30444 /* Helpers */,
 				88E122CE29E1C3E300C30444 /* Extensions */,
@@ -281,15 +276,6 @@
 				883424A92A93C26700AED6E9 /* GradientView.swift */,
 			);
 			path = GradientView;
-			sourceTree = "<group>";
-		};
-		88AC298E2B5F953C0092EFF3 /* Files */ = {
-			isa = PBXGroup;
-			children = (
-				88AC29942B5F97E80092EFF3 /* Privacy_policy.pdf */,
-				88AC29932B5F97E80092EFF3 /* Terms_and_Conditions.pdf */,
-			);
-			path = Files;
 			sourceTree = "<group>";
 		};
 		88E122B229E1BC8A00C30444 /* ZRKAudioRecorder */ = {
@@ -458,7 +444,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88AC29952B5F97E90092EFF3 /* Terms_and_Conditions.pdf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				2B81BAADBBD04FFE8FCE5F04 /* Poppins-Regular.ttf in Resources */,
 				8874C4A42BAD6DF5002449F1 /* PrivacyInfo.xcprivacy in Resources */,
@@ -467,7 +452,6 @@
 				10305B375D664034A5405623 /* Poppins-SemiBold.ttf in Resources */,
 				88E1A31A2BC71432008376E1 /* GoogleService-Info.plist in Resources */,
 				3DA6C76D80A248CA81D4C170 /* Poppins-Medium.ttf in Resources */,
-				88AC29962B5F97E90092EFF3 /* Privacy_policy.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@ import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSp
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { WINDOW_WIDTH } from '@/constants/layout';
+import { useWebPagesNavigation } from '@/hooks/navigation/useWebPagesNavigation';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
@@ -20,8 +21,6 @@ import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { PAYWALL_TYPE } from '@/services/analytics/analytics.constants';
 import { unlockFullVersion } from '@/store/user/user.slice';
-import { openPrivacyPolicy } from '@/utils/documents/openPrivacyPolicy';
-import { openTermsAndConditions } from '@/utils/documents/openTermsAndConditions';
 
 import backgroundImage from './images/background/background.png';
 // eslint-disable-next-line import/no-unresolved
@@ -41,6 +40,8 @@ export const PaywallModal = () => {
   const [isFreeTrialEnabled, setIsFreeTrialEnabled] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  const { openPrivacyPolicy, openTermsOfService } = useWebPagesNavigation();
 
   const trialProduct = useMemo(
     () => products.find((product) => !!product.subscriptionDetails?.introductoryOffers?.length),
@@ -228,7 +229,7 @@ export const PaywallModal = () => {
         </GradientButton>
 
         <View style={styles.actions}>
-          <TouchableOpacity onPress={openTermsAndConditions}>
+          <TouchableOpacity onPress={openTermsOfService}>
             <TextView style={styles.action}>Terms</TextView>
           </TouchableOpacity>
 

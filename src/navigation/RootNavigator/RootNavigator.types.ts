@@ -32,6 +32,10 @@ export interface RootStackParams extends Record<string, object | undefined> {
     tab?: TabEventType;
   };
 
+  [RootRoutes.WEB_PAGE_SCREEN]: {
+    url: string;
+  };
+
   [RootRoutes.VOICE_SETTINGS_MODAL]: {
     onSelectAudioRecording: (selectedAudioRecordingId: number) => void;
     selectedAudioRecordingId: number;

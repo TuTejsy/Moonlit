@@ -10,6 +10,7 @@ import { GetStartedScreen } from '@/screens/GetStartedScreen/GetStartedScreen';
 import { PaywallModal } from '@/screens/PaywallModal/PaywallModal';
 import { StoryPlayerScreen } from '@/screens/StoryPlayerScreens/StoryPlayerScreen/StoryPlayerScreen';
 import { VoiceSettingsModal } from '@/screens/StoryPlayerScreens/VoiceSettingsModal/VoiceSettingsModal';
+import { WebPageScreen } from '@/screens/WebPageScreen/WebPageScreen';
 
 import {
   getStartedScreenOptions,
@@ -20,6 +21,7 @@ import {
   storyPlayerOptions,
   tabOptions,
   voiceSettingsModalOptions,
+  webPageScreenOptions,
 } from './RootNavigator.options';
 import { RootRoutes } from './RootNavigator.routes';
 import { RootStackParams } from './RootNavigator.types';
@@ -52,6 +54,12 @@ export const RootNavigator = () => {
         component={GetStartedScreen}
         name={RootRoutes.GET_STARTED_SCREEN}
         options={getStartedScreenOptions}
+      />
+
+      <RootStack.Screen
+        component={WebPageScreen}
+        name={RootRoutes.WEB_PAGE_SCREEN}
+        options={webPageScreenOptions}
       />
 
       <RootStack.Screen
