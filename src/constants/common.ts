@@ -29,6 +29,10 @@ export const BUNDLE_PATH = RNFS.MainBundlePath;
 export const SUPPORT_EMAIL = 'appmoonlit@gmail.com';
 export const MOONLIT_IOS_APP_LINK = 'https://apps.apple.com/app/moonlit-tales/id6471524142';
 
+export const MOONLIT_SITE_URL = 'https://moonlit.ltd/';
+export const PRIVACY_POLICY_URL = 'https://moonlit.ltd/docs/privacy_policy';
+export const TERMS_OF_SERVICE_URL = 'https://moonlit.ltd/docs/terms_of_service';
+
 export const SANDBOX = {
   DOCUMENTS: {
     get FULL_COVER() {

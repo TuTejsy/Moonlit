@@ -55,6 +55,10 @@ export const getStartedScreenOptions: StackNavigationOptions = {
   headerShown: false,
 };
 
+export const webPageScreenOptions: StackNavigationOptions = {
+  headerShown: false,
+};
+
 export const paywallScreenOptions: StackNavigationOptions = {
   headerShown: false,
   transitionSpec: {
