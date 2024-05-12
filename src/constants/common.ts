@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import Config from 'react-native-config';
 import RNFS from 'react-native-fs';
 
-import { getApplicationEnv } from '@/utils/getEnv';
+// import { getApplicationEnv } from '@/utils/getEnv';
 
 export const Fonts = Object.freeze({
   PoppinsMedium: 'Poppins-Medium',
@@ -18,7 +18,7 @@ export const IS_IOS = Platform.OS === 'ios';
 
 export const IS_ANDROID = Platform.OS === 'android';
 
-export const isSandbox = () => getApplicationEnv() === 'sandbox';
+// export const isSandbox = () => getApplicationEnv() === 'sandbox';
 
 export const IS_JEST_ENV = process.env.JEST_WORKER_ID;
 
