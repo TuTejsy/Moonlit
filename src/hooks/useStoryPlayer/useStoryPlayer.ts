@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import RNFS from 'react-native-fs';
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
-import { IS_IOS, SANDBOX } from '@/constants/common';
+import { IS_ANDROID, IS_IOS, SANDBOX } from '@/constants/common';
 import { AudioRecordingsDB } from '@/database';
 import {
   AUDIO_PLAYER_EMITTER_EVENT,
@@ -19,6 +19,7 @@ import { generateAudioRecordingCachedName } from '@/utils/generators/generateAud
 import { useAudioRecording } from '../database/useAudioRecording';
 import { useAppDispatch } from '../useAppDispatch';
 import { useAppSelector } from '../useAppSelector';
+import { useAppState } from '../useAppState';
 import { useMutableValue } from '../useMutableValue';
 
 import { MOVE_TO_PROPS, useStoryPlayerProps } from './useStoryPlayers.types';
@@ -276,7 +277,80 @@ export function useStoryPlayer({
     [selectedAudioRecording, playedTime, stopStoryPlaying],
   );
 
+  const focusHandler = useCallback(
+    () => {
+      if (!audioPlayer) {
+        return;
+      }
+
+      const { filePath, isPlaying, playingTime } = audioPlayer.getCurrentState();
+
+      if (
+        filePath !==
+        `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedNameMutableValue.current}`
+      ) {
+        return;
+      }
+
+      setPlayedTime(playingTime);
+
+      if (isPlaying && !isCurrentStoryPlayingMutableValue.current) {
+        if (selectedAudioRecordingIdMutableValue.current) {
+          reduxDispatch(startPlaying(selectedAudioRecordingIdMutableValue.current));
+        }
+      } else if (
+        !isPlaying &&
+        isCurrentStoryPlayingMutableValue.current &&
+        !currentPlayCallPromise.current
+      ) {
+        reduxDispatch(stopPlaying());
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const blurHandler = useCallback(
+    () => {
+      if (!audioPlayer) {
+        return;
+      }
+
+      const { filePath, isPlaying, playingTime } = audioPlayer.getCurrentState();
+      if (
+        filePath !==
+        `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedNameMutableValue.current}`
+      ) {
+        return;
+      }
+
+      if (isPlaying && !isCurrentStoryPlayingMutableValue.current) {
+        if (selectedAudioRecordingIdMutableValue.current) {
+          reduxDispatch(startPlaying(selectedAudioRecordingIdMutableValue.current));
+        }
+      } else if (
+        !isPlaying &&
+        isCurrentStoryPlayingMutableValue.current &&
+        !currentPlayCallPromise.current
+      ) {
+        reduxDispatch(stopPlaying());
+      }
+
+      if (selectedAudioRecordingIdMutableValue.current) {
+        AudioRecordingsDB.update([selectedAudioRecordingIdMutableValue.current], (recording) => {
+          recording.played_time = playingTime;
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
   useEffect(() => {
+    if (IS_ANDROID) {
+      return;
+    }
+
     const audioPlayerDidFinishPlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_FINISH,
       () => {
@@ -329,74 +403,14 @@ export function useStoryPlayer({
   }, [playedTime, audioRecordingId]);
 
   useFocusEffect(
-    useCallback(
-      () => {
-        if (!audioPlayer) {
-          return;
-        }
-
-        const { filePath, isPlaying, playingTime } = audioPlayer.getCurrentState();
-
-        if (
-          filePath !==
-          `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedNameMutableValue.current}`
-        ) {
-          return;
-        }
-
-        setPlayedTime(playingTime);
-
-        if (isPlaying && !isCurrentStoryPlayingMutableValue.current) {
-          if (selectedAudioRecordingIdMutableValue.current) {
-            reduxDispatch(startPlaying(selectedAudioRecordingIdMutableValue.current));
-          }
-        } else if (
-          !isPlaying &&
-          isCurrentStoryPlayingMutableValue.current &&
-          !currentPlayCallPromise.current
-        ) {
-          reduxDispatch(stopPlaying());
-        }
-
-        return () => {
-          if (!audioPlayer) {
-            return;
-          }
-
-          const { filePath, isPlaying, playingTime } = audioPlayer.getCurrentState();
-          if (
-            filePath !==
-            `${SANDBOX.DOCUMENTS.VOICE}/${selectedAudioRecordingCachedNameMutableValue.current}`
-          ) {
-            return;
-          }
-
-          if (isPlaying && !isCurrentStoryPlayingMutableValue.current) {
-            if (selectedAudioRecordingIdMutableValue.current) {
-              reduxDispatch(startPlaying(selectedAudioRecordingIdMutableValue.current));
-            }
-          } else if (
-            !isPlaying &&
-            isCurrentStoryPlayingMutableValue.current &&
-            !currentPlayCallPromise.current
-          ) {
-            reduxDispatch(stopPlaying());
-          }
-
-          if (selectedAudioRecordingIdMutableValue.current) {
-            AudioRecordingsDB.update(
-              [selectedAudioRecordingIdMutableValue.current],
-              (recording) => {
-                recording.played_time = playingTime;
-              },
-            );
-          }
-        };
-      },
+    useCallback(() => {
+      focusHandler();
+      return blurHandler;
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [],
-    ),
+    }, []),
   );
+
+  useAppState({ onBlur: blurHandler, onFocus: focusHandler });
 
   useEffect(
     () => {
