@@ -1,7 +1,6 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -55,42 +54,30 @@ export const StoryPreview = React.memo(
 
     return (
       <TouchableWithoutFeedback style={styles.previewContainer} onPress={handlePreviewPress}>
-        {!isImageLoaded &&
-          (previewURL ? (
-            <BlurView
-              blurAmount={5}
-              blurRadius={10}
-              blurType='dark'
-              reducedTransparencyFallbackColor={colors.opacityBlack(0.2)}
-              style={styles.blurView}
-            />
-          ) : (
-            <LinearGradient
-              useAngle
-              angle={180}
-              colors={[colors.opacityBlack(0), colors.opacityBlack(1)]}
-              locations={[0, 1]}
-              pointerEvents='none'
-              style={styles.imageGradient}
-            />
-          ))}
+        <LinearGradient
+          useAngle
+          angle={180}
+          colors={[colors.opacityBlack(0), colors.opacityBlack(1)]}
+          locations={[0, 1]}
+          pointerEvents='none'
+          style={styles.imageGradient}
+        />
 
         <ImageBackground
+          blurRadius={!isImageLoaded ? 10 : 0}
           defaultSource={loonImage}
           imageStyle={!isImageLoaded && !previewURL && styles.emptyImageStyle}
           resizeMode={previewURL ? 'cover' : 'center'}
           source={{ uri: previewURL }}
           style={styles.preview}
         >
-          {isImageLoaded && (
-            <LinearGradient
-              angle={180}
-              colors={[colors.opacityBlack(0), colors.opacityBlack(0.8)]}
-              locations={[0, 1]}
-              pointerEvents='none'
-              style={styles.previewGradient}
-            />
-          )}
+          <LinearGradient
+            angle={180}
+            colors={[colors.opacityBlack(0), colors.opacityBlack(0.8)]}
+            locations={[0, 1]}
+            pointerEvents='none'
+            style={styles.previewGradient}
+          />
 
           {!isFree && !isFullVersion && <Icons.Lock style={styles.lockIcon} />}
 

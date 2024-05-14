@@ -23,9 +23,9 @@ export function LargeStoriesList({ stories, storiesVersion, tab }: LargeStoriesL
     ({ item }: ListRenderItemInfo<StorySchema>) => {
       return (
         <StoryPreview
+          isImageLoaded
           description={item.description}
           isFree={item.is_free}
-          isImageLoaded={!!item.full_cover_cached_name}
           previewURL={getImageFilePathForStory(item, 'full')}
           source={SOURCE.CONTENT}
           storyId={item.id}

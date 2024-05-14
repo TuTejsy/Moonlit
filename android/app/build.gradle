@@ -167,7 +167,6 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
     implementation("androidx.core:core-splashscreen:1.0.0")
-    implementation("com.google.android.gms:play-services-ads-identifier:18.0.1")
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
@@ -177,9 +176,9 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:32.8.1')
     implementation 'com.google.firebase:firebase-analytics'
+    implementation("com.google.android.gms:play-services-ads-identifier:18.0.1")
+    implementation "com.android.installreferrer:installreferrer:2.2"
 }
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-
-compile 'com.android.installreferrer:installreferrer:2.2'

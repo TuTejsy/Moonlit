@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 import { WINDOW_WIDTH } from '@/constants/layout';
+import { TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     backgroundImage: {
       height: dw(597),
@@ -20,6 +21,7 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       alignItems: 'center',
       display: 'flex',
       marginTop: 40,
+      paddingBottom: insets.bottom + TAB_BAR_STORY_PLAYER_HEIGHT,
       position: 'relative',
     },
     logoImage: {

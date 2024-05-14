@@ -1,9 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import loonImage from '@/assets/images/moon/moon.png';
@@ -54,17 +52,8 @@ export function StoryPreview({
 
   return (
     <TouchableWithoutFeedback style={styles.previewContainer} onPress={handlePreviewPress}>
-      {previewURL && !isImageLoaded && (
-        <BlurView
-          blurAmount={5}
-          blurRadius={10}
-          blurType='dark'
-          reducedTransparencyFallbackColor={colors.opacityBlack(0.2)}
-          style={styles.blurView}
-        />
-      )}
-
       <Image
+        blurRadius={!isImageLoaded ? 10 : 0}
         defaultSource={loonImage}
         resizeMode={previewURL ? 'cover' : 'center'}
         source={{ uri: previewURL }}
