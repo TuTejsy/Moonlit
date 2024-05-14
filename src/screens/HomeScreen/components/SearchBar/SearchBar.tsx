@@ -15,6 +15,7 @@ import { PressableView } from '@/components/Primitives/PressableView/PressableVi
 import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { IS_IOS } from '@/constants/common';
+import { useBackHandler } from '@/hooks/navigation/useBackHandler';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
@@ -82,12 +83,25 @@ export const SearchBar = React.memo(
 
     const handleCloseButtonPress = useCallback(() => {
       inputRef.current?.blur();
-    }, []);
+      inputRef.current?.clear();
+      onChangeText('');
+    }, [onChangeText]);
 
     const handleRemovePress = useCallback(() => {
       inputRef.current?.clear();
       onChangeText('');
     }, [onChangeText]);
+
+    const backButtonHandler = useCallback(() => {
+      if (isInputFocused) {
+        handleCloseButtonPress();
+        return true;
+      }
+
+      return false;
+    }, [handleCloseButtonPress, isInputFocused]);
+
+    useBackHandler(backButtonHandler, [backButtonHandler]);
 
     return (
       <View style={styles.searchBar}>
