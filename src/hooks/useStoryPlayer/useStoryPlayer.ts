@@ -141,6 +141,7 @@ export function useStoryPlayer({
   const downloadAndPlayStory = useCallback(
     async (storySelectedAudioRecordingId: number) => {
       if (!audioPlayer) {
+        console.log('!audioPlayer');
         return;
       }
 
@@ -148,6 +149,8 @@ export function useStoryPlayer({
         audioRecordingIdRef.current &&
         audioRecordingIdRef.current !== storySelectedAudioRecordingId
       ) {
+        console.log('!audioRecordingIdRef');
+
         return;
       }
 
