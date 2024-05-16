@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AppState } from 'react-native';
 
+import { IS_ANDROID } from '@/constants/common';
+
 interface Props {
   onActive?: () => void;
   onBackground?: () => void;
@@ -29,12 +31,12 @@ export const useAppState = ({ onActive, onBackground, onBlur, onFocus, onInactiv
       return changeListener.remove;
     }
 
-    if (onFocus) {
+    if (IS_ANDROID && onFocus) {
       const focusListener = AppState.addEventListener('focus', onFocus);
       return focusListener.remove;
     }
 
-    if (onBlur) {
+    if (IS_ANDROID && onBlur) {
       const blurListener = AppState.addEventListener('blur', onBlur);
       return blurListener.remove;
     }
