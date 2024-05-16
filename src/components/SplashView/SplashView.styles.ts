@@ -20,7 +20,7 @@ export const makeStyles = ({ colors, dh, dw, insets }: MakeStylesProps) =>
       position: 'absolute',
       width: dw(121),
     },
-    moonContainer: {
+    logoContainer: {
       position: 'absolute',
       top: WINDOW_HEIGHT / 2 - MOON_LOGO_SIZE - dw(42),
     },
@@ -29,8 +29,7 @@ export const makeStyles = ({ colors, dh, dw, insets }: MakeStylesProps) =>
       width: MOON_LOGO_SIZE,
     },
     moonGradientContainer: {
-      position: 'absolute',
-      top: WINDOW_HEIGHT / 2 - MOON_LOGO_SIZE - dw(42),
+      marginTop: -MOON_LOGO_SIZE,
     },
     moonLogo: {
       height: MOON_LOGO_SIZE,
