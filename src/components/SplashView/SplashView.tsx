@@ -55,21 +55,18 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
     ],
   }));
 
-  const moonAnimatedStyle = useAnimatedStyle(() => ({
+  const moonGradientAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateY: interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT * 1.5]),
+        translateY: interpolate(pulseAnimationProgress.value, [0, 1], [0, -MOON_LOGO_SIZE * 2]),
       },
     ],
   }));
 
-  const moonGradientAnimatedStyle = useAnimatedStyle(() => ({
+  const logoContainerAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateY:
-          animationProgress.value === 0
-            ? interpolate(pulseAnimationProgress.value, [0, 1], [0, -MOON_LOGO_SIZE * 2])
-            : interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT * 1.5]),
+        translateY: interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT * 1.5]),
       },
     ],
   }));
@@ -106,17 +103,17 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
       locations={[0.5, 1]}
       style={styles.container}
     >
-      <Animated.View style={[styles.moonContainer, moonAnimatedStyle]}>
+      <Animated.View style={[styles.logoContainer, logoContainerAnimatedStyle]}>
         <Icons.Moon height={MOON_LOGO_SIZE} style={styles.moonLogo} width={MOON_LOGO_SIZE} />
-      </Animated.View>
 
-      <Animated.View style={[styles.moonGradientContainer, moonGradientAnimatedStyle]}>
-        <LinearGradient
-          angle={180}
-          colors={[colors.opacityPurple(1), colors.opacityPurple(0)]}
-          locations={[0.5, 1]}
-          style={styles.moonGradient}
-        />
+        <Animated.View style={[styles.moonGradientContainer, moonGradientAnimatedStyle]}>
+          <LinearGradient
+            angle={180}
+            colors={[colors.opacityPurple(1), colors.opacityPurple(0)]}
+            locations={[0.5, 1]}
+            style={styles.moonGradient}
+          />
+        </Animated.View>
       </Animated.View>
 
       <Animated.Image source={starsImage} style={[styles.stars, starsAnimatedStyle]} />
