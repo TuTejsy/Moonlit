@@ -37,13 +37,11 @@ class MNTPlaybackService : MediaSessionService() {
     // The user dismissed the app from the recent tasks
     override fun onTaskRemoved(rootIntent: Intent?) {
         val player = mediaSession?.player!!
-        if (!player.playWhenReady
-            || player.mediaItemCount == 0
-            || player.playbackState == Player.STATE_ENDED) {
-            // Stop the service if not playing, continue playing in the background
-            // otherwise.
-            stopSelf()
+        if (player.playWhenReady) {
+            // Make sure the service is not in foreground.
+            player.pause()
         }
+        stopSelf()
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = mediaSession
