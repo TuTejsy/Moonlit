@@ -7,16 +7,18 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.WritableMap
 import com.google.common.util.concurrent.MoreExecutors
 import java.lang.Exception
 
-class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : NativeMNTAudioPlayerManagerSpec(reactContext) {
+class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : NativeMNTAudioPlayerManagerSpec(reactContext),
+  LifecycleEventListener {
   private val mediaPlayerControllerFactory = MediaController.Builder(
-    reactContext,
-    SessionToken(reactContext, ComponentName(reactContext, MNTPlaybackService::class.java))
+    reactContext.applicationContext,
+    SessionToken(reactContext.applicationContext, ComponentName(reactContext.applicationContext, MNTPlaybackService::class.java))
   ).buildAsync()
 
   private var mediaPlayerController: MediaController? = null
@@ -25,6 +27,7 @@ class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : Nativ
 
   init {
     super.initialize()
+    reactContext.addLifecycleEventListener(this)
 
     mediaPlayerControllerFactory?.addListener(
       {
@@ -136,5 +139,20 @@ class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : Nativ
 
   companion object {
     const val NAME = "MNTAudioPlayerManager"
+  }
+
+  override fun onHostResume() {
+  }
+
+  override fun onHostPause() {
+  }
+
+  override fun onHostDestroy() {
+    mediaPlayerControllerFactory?.let {
+      MediaController.releaseFuture(it)
+
+    }
+    mediaPlayerController?.release()
+    mediaPlayerController = null
   }
 }
