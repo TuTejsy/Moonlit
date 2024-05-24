@@ -191,7 +191,7 @@ export const StoryPlayerScreen = () => {
           setSelectedAudioRecording(audioRecordingId);
           handlePauseStory();
         },
-        selectedAudioRecordingId: selectedAudioRecording.id,
+        selectedAudioRecordingId: selectedAudioRecording?.id,
         source: storyPlayingSharedValue.value === 1 ? SOURCE.TALE_PLAYER : SOURCE.TALE_PREVIEW,
         storyColor: gradientColor,
         storyId,
@@ -316,11 +316,8 @@ export const StoryPlayerScreen = () => {
 
       <VoiceSettingsButton
         storyColor={gradientColor}
+        voiceCoverUrl={selectedAudioRecording?.cover_url}
         voiceName={selectedAudioRecording?.voice_name}
-        voiceCoverUrl={
-          selectedAudioRecording &&
-          formatServerFileURLToAbsolutePath(selectedAudioRecording.cover_url)
-        }
         onPress={handleVoiceSettingsPress}
       />
     </LinearGradient>

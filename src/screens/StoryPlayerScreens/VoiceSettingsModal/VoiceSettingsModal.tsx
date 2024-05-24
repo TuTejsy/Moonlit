@@ -90,7 +90,7 @@ export function VoiceSettingsModal() {
 
       return (
         <AudioRecording
-          coverUrl={formatServerFileURLToAbsolutePath(audioRecording.cover_url)}
+          coverUrl={audioRecording.cover_url}
           isFree={audioRecording.is_free}
           isSelected={selectedAudioRecordingId === item.id}
           name={audioRecording.voice_name}

@@ -7,6 +7,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useVoicePreviewCachedPath } from '@/hooks/useVoicePreviewCachedPath';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
@@ -33,6 +34,7 @@ export function AudioRecording({
   const styles = useMakeStyles(makeStyles, stylesContext);
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
+  const voicePreviewCachedPath = useVoicePreviewCachedPath(coverUrl);
 
   const { showPaywallModal } = useShowPaywallModal();
 
@@ -60,7 +62,7 @@ export function AudioRecording({
           !isFree && !isFullVersion && <Icons.Lock style={styles.rightIcon} />
         )}
       </View>
-      <Image source={{ cache: 'force-cache', uri: coverUrl }} style={styles.voiceAvatar} />
+      <Image source={{ uri: voicePreviewCachedPath }} style={styles.voiceAvatar} />
       <TextView style={styles.text} type='bold'>
         {name}
       </TextView>

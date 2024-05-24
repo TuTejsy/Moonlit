@@ -29,16 +29,22 @@ export function MediumStoriesList({
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<StorySchema>) => {
+      const isImageLoaded = !!item.medium_cover_cached_name;
+
       return (
         <StoryPreview
           description={item.description}
           isFree={item.is_free}
-          isImageLoaded={!!item.medium_cover_cached_name}
-          previewURL={getImageFilePathForStory(item, 'medium')}
+          isImageLoaded={isImageLoaded}
           source={SOURCE.CONTENT}
           storyId={item.id}
           tab={tab}
           title={item.name}
+          previewURL={
+            isImageLoaded
+              ? getImageFilePathForStory(item, 'medium')
+              : getImageFilePathForStory(item, 'small')
+          }
         />
       );
     },

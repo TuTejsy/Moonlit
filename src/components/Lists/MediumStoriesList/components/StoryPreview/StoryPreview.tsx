@@ -8,7 +8,6 @@ import loonImage from '@/assets/images/moon/moon.png';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
@@ -38,7 +37,6 @@ export function StoryPreview({
   title,
 }: StoryPreviewPropTypes) {
   const styles = useMakeStyles(makeStyles);
-  const { colors } = useTheme();
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
