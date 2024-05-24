@@ -56,5 +56,8 @@ export const SANDBOX = {
     get VOICE() {
       return `${RNFS.DocumentDirectoryPath}/voice`;
     },
+    get VOICE_PREVIEW() {
+      return `${RNFS.DocumentDirectoryPath}/voice_preview`;
+    },
   },
 };

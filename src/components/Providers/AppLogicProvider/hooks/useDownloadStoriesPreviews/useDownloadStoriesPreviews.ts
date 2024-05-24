@@ -21,7 +21,7 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
     const storiesWithoutMediumPreview = StoriesDB.objects()
       .filtered('small_cover_cached_name != nil && medium_cover_cached_name == nil')
       .sorted('is_featuring', true);
-    const storiesWithoutFulCover = StoriesDB.objects()
+    const storiesWithoutFullCover = StoriesDB.objects()
       .filtered(
         'small_cover_cached_name != nil && medium_cover_cached_name != nil && full_cover_cached_name == nil',
       )
@@ -58,14 +58,14 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
 
     setTimeout(() => {
       StoriesDB.performAfterTransactionComplete(() => {
-        storiesWithoutFulCover.addListener(fullCoversListener);
+        storiesWithoutFullCover.addListener(fullCoversListener);
       });
     }, fullTimeout);
 
     return () => {
       storiesWithoutSmallPreview.removeListener(smallPreviewsListener);
       storiesWithoutMediumPreview.removeListener(mediumPreviewsListener);
-      storiesWithoutFulCover.removeListener(fullCoversListener);
+      storiesWithoutFullCover.removeListener(fullCoversListener);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areFoldersCreated]);

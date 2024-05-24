@@ -21,16 +21,22 @@ export function LargeStoriesList({ stories, storiesVersion, tab }: LargeStoriesL
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<StorySchema>) => {
+      const isImageLoaded = !!item.full_cover_cached_name;
+
       return (
         <StoryPreview
-          isImageLoaded
           description={item.description}
           isFree={item.is_free}
-          previewURL={getImageFilePathForStory(item, 'full')}
+          isImageLoaded={isImageLoaded}
           source={SOURCE.CONTENT}
           storyId={item.id}
           tab={tab}
           title={item.name}
+          previewURL={
+            isImageLoaded
+              ? getImageFilePathForStory(item, 'full')
+              : getImageFilePathForStory(item, 'small')
+          }
         />
       );
     },

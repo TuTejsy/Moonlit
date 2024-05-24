@@ -9,6 +9,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { IS_IOS } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useVoicePreviewCachedPath } from '@/hooks/useVoicePreviewCachedPath';
 
 import { makeStyles } from './VoiceSettingsButton.styles';
 
@@ -34,6 +35,8 @@ export function VoiceSettingsButton({
 
   const styles = useMakeStyles(makeStyles, stylesContext);
   const { colors } = useTheme();
+
+  const voicePreviewCachedPath = useVoicePreviewCachedPath(voiceCoverUrl);
 
   return (
     <View style={styles.voiceSettingsButtonContainer}>
@@ -61,7 +64,7 @@ export function VoiceSettingsButton({
           </TextView>
         </View>
 
-        <Image source={{ cache: 'force-cache', uri: voiceCoverUrl }} style={styles.voiceAvatar} />
+        <Image source={{ uri: voicePreviewCachedPath }} style={styles.voiceAvatar} />
       </PressableView>
     </View>
   );
