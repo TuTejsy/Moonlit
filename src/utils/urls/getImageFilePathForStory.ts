@@ -11,7 +11,7 @@ export const getImageFilePathForStory = (story: StorySchema, upToType: StoryCove
 
   const availableTypeRange: StoryCoverType[] = STORY_TYPES_RANGE.slice(0, upToTypeIndex + 1);
 
-  for (let i = availableTypeRange.length; i > 0; i--) {
+  for (let i = availableTypeRange.length - 1; i >= 0; i--) {
     const storyType = availableTypeRange[i];
 
     const cachedName = story[getStoryCachedNameFieldForCoverType(storyType)];

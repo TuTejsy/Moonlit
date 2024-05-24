@@ -36,15 +36,11 @@ export function MediumStoriesList({
           description={item.description}
           isFree={item.is_free}
           isImageLoaded={isImageLoaded}
+          previewURL={getImageFilePathForStory(item, 'medium')}
           source={SOURCE.CONTENT}
           storyId={item.id}
           tab={tab}
           title={item.name}
-          previewURL={
-            isImageLoaded
-              ? getImageFilePathForStory(item, 'medium')
-              : getImageFilePathForStory(item, 'small')
-          }
         />
       );
     },

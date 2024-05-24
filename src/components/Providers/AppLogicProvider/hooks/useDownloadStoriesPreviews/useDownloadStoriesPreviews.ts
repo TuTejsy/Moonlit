@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 
 import { CollectionChangeCallback } from 'realm';
+// eslint-disable-next-line import/no-unresolved
+import { RealmObject } from 'realm/dist/public-types/Object';
 
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
+import { getStoryCachedNameFieldForCoverType } from '@/utils/urls/getStoryCachedNameFieldForCoverType';
 
 import { processStoriesWithoutPreviews } from './utils/processStoriesWithoutPreviews';
-
-const DOWNLOADING_TIMEOUT = 5000;
 
 export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
   useEffect(() => {
@@ -15,57 +16,42 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
       return;
     }
 
-    const storiesWithoutSmallPreview = StoriesDB.objects()
-      .filtered('small_cover_cached_name == nil')
-      .sorted('is_featuring', true);
-    const storiesWithoutMediumPreview = StoriesDB.objects()
-      .filtered('small_cover_cached_name != nil && medium_cover_cached_name == nil')
-      .sorted('is_featuring', true);
-    const storiesWithoutFullCover = StoriesDB.objects()
-      .filtered(
-        'small_cover_cached_name != nil && medium_cover_cached_name != nil && full_cover_cached_name == nil',
-      )
-      .sorted('is_featuring', true);
+    const storiesWithoutPreview = StoriesDB.objects().filtered(
+      'small_cover_cached_name == nil || medium_cover_cached_name == nil || full_cover_cached_name == nil',
+    );
 
-    const smallPreviewsListener: CollectionChangeCallback<StorySchema> = (collection, changes) => {
-      processStoriesWithoutPreviews([...collection], 'small');
+    const previewsListener: CollectionChangeCallback<
+      RealmObject<StorySchema, never> & StorySchema,
+      [number, RealmObject<StorySchema, never> & StorySchema]
+    > = (collection, changes) => {
+      const stortedCollection = [...collection.sorted('is_featuring', true)];
+
+      processStoriesWithoutPreviews(
+        stortedCollection.filter((story) => !story[getStoryCachedNameFieldForCoverType('small')]),
+        'small',
+      ).then(() => {
+        processStoriesWithoutPreviews(
+          stortedCollection.filter(
+            (story) => !story[getStoryCachedNameFieldForCoverType('medium')],
+          ),
+          'medium',
+        ).then(() => {
+          processStoriesWithoutPreviews(
+            stortedCollection.filter(
+              (story) => !story[getStoryCachedNameFieldForCoverType('full')],
+            ),
+            'full',
+          );
+        });
+      });
     };
 
     StoriesDB.performAfterTransactionComplete(() => {
-      storiesWithoutSmallPreview.addListener(smallPreviewsListener);
+      StoriesDB.objects().addListener(previewsListener);
     });
 
-    const mediumPreviewsListener: CollectionChangeCallback<StorySchema> = (collection, changes) => {
-      processStoriesWithoutPreviews([...collection], 'medium');
-    };
-
-    setTimeout(
-      () => {
-        StoriesDB.performAfterTransactionComplete(() => {
-          storiesWithoutMediumPreview.addListener(mediumPreviewsListener);
-        });
-      },
-      storiesWithoutSmallPreview.length ? DOWNLOADING_TIMEOUT : 0,
-    );
-
-    const fullCoversListener: CollectionChangeCallback<StorySchema> = (collection, changes) => {
-      processStoriesWithoutPreviews([...collection], 'full');
-    };
-
-    const fullTimeout =
-      (storiesWithoutSmallPreview.length ? DOWNLOADING_TIMEOUT : 0) +
-      (storiesWithoutMediumPreview.length ? DOWNLOADING_TIMEOUT : 0);
-
-    setTimeout(() => {
-      StoriesDB.performAfterTransactionComplete(() => {
-        storiesWithoutFullCover.addListener(fullCoversListener);
-      });
-    }, fullTimeout);
-
     return () => {
-      storiesWithoutSmallPreview.removeListener(smallPreviewsListener);
-      storiesWithoutMediumPreview.removeListener(mediumPreviewsListener);
-      storiesWithoutFullCover.removeListener(fullCoversListener);
+      storiesWithoutPreview.removeListener(previewsListener);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areFoldersCreated]);

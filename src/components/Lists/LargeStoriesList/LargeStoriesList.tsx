@@ -28,15 +28,11 @@ export function LargeStoriesList({ stories, storiesVersion, tab }: LargeStoriesL
           description={item.description}
           isFree={item.is_free}
           isImageLoaded={isImageLoaded}
+          previewURL={getImageFilePathForStory(item, 'full')}
           source={SOURCE.CONTENT}
           storyId={item.id}
           tab={tab}
           title={item.name}
-          previewURL={
-            isImageLoaded
-              ? getImageFilePathForStory(item, 'full')
-              : getImageFilePathForStory(item, 'small')
-          }
         />
       );
     },

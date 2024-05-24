@@ -70,6 +70,8 @@ export async function downloadPreviews(
             story.small_cover_cached_name = cachedName;
             story.colors = colors[index];
           }
+        } else {
+          console.log('downloadPreview results[index].statusCode: ', results[index].statusCode);
         }
       });
     });
