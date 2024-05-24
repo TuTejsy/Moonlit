@@ -18,7 +18,6 @@ import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
-import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 
 import { AudioRecording } from './components/AudioRecording/AudioRecording';
 import { Header } from './components/Header/Header';
