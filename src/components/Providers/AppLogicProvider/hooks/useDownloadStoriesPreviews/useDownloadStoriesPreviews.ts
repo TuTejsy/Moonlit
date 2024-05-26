@@ -17,14 +17,25 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
     }
 
     const storiesWithoutPreview = StoriesDB.objects().filtered(
-      'small_cover_cached_name == nil || medium_cover_cached_name == nil || full_cover_cached_name == nil',
+      'small_cover_cached_name == nil && medium_cover_cached_name == nil && full_cover_cached_name == nil',
+    );
+
+    const storiesWithoutMediumPreview = StoriesDB.objects().filtered(
+      'small_cover_cached_name != nil && medium_cover_cached_name == nil && full_cover_cached_name == nil',
+    );
+
+    const storiesWithoutFullPreview = StoriesDB.objects().filtered(
+      'small_cover_cached_name != nil && medium_cover_cached_name != nil && full_cover_cached_name == nil',
     );
 
     const previewsListener: CollectionChangeCallback<
       RealmObject<StorySchema, never> & StorySchema,
       [number, RealmObject<StorySchema, never> & StorySchema]
     > = (collection, changes) => {
-      const stortedCollection = [...collection.sorted('is_featuring', true)];
+      const { insertions } = changes;
+      const stortedCollection = insertions
+        .map((index) => collection[index])
+        .sort(({ is_featuring }) => (is_featuring ? 1 : -1));
 
       processStoriesWithoutPreviews(
         stortedCollection.filter((story) => !story[getStoryCachedNameFieldForCoverType('small')]),
@@ -49,6 +60,30 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
     StoriesDB.performAfterTransactionComplete(() => {
       StoriesDB.objects().addListener(previewsListener);
     });
+
+    if (storiesWithoutPreview.length) {
+      const sortedCollection = [...storiesWithoutPreview.sorted('is_featuring', true)];
+      processStoriesWithoutPreviews(
+        sortedCollection.filter((story) => !story[getStoryCachedNameFieldForCoverType('small')]),
+        'small',
+      );
+    }
+
+    if (storiesWithoutMediumPreview.length) {
+      const sortedCollection = [...storiesWithoutMediumPreview.sorted('is_featuring', true)];
+      processStoriesWithoutPreviews(
+        sortedCollection.filter((story) => !story[getStoryCachedNameFieldForCoverType('medium')]),
+        'medium',
+      );
+    }
+
+    if (storiesWithoutFullPreview.length) {
+      const sortedCollection = [...storiesWithoutFullPreview.sorted('is_featuring', true)];
+      processStoriesWithoutPreviews(
+        sortedCollection.filter((story) => !story[getStoryCachedNameFieldForCoverType('full')]),
+        'full',
+      );
+    }
 
     return () => {
       storiesWithoutPreview.removeListener(previewsListener);
