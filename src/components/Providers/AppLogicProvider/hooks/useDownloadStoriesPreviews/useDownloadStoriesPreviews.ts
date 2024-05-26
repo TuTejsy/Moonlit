@@ -35,7 +35,7 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
       const { insertions } = changes;
       const stortedCollection = insertions
         .map((index) => collection[index])
-        .sort(({ is_featuring }) => (is_featuring ? 1 : -1));
+        .sort(({ is_featuring }) => (is_featuring ? -1 : 1));
 
       processStoriesWithoutPreviews(
         stortedCollection.filter((story) => !story[getStoryCachedNameFieldForCoverType('small')]),
