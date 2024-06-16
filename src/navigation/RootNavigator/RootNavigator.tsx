@@ -2,12 +2,11 @@ import { useCallback } from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { SplashView } from '@/components/SplashView/SplashView';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useInitApp } from '@/hooks/useInitApp';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
 import { GetStartedScreen } from '@/screens/GetStartedScreen/GetStartedScreen';
 import { PaywallModal } from '@/screens/PaywallModal/PaywallModal';
+import { SplashViewModal } from '@/screens/SplashViewModal/SplashViewModal';
 import { StoryPlayerScreen } from '@/screens/StoryPlayerScreens/StoryPlayerScreen/StoryPlayerScreen';
 import { VoiceSettingsModal } from '@/screens/StoryPlayerScreens/VoiceSettingsModal/VoiceSettingsModal';
 import { WebPageScreen } from '@/screens/WebPageScreen/WebPageScreen';
@@ -18,6 +17,7 @@ import {
   paywallScreenOptions,
   rootModalOptions,
   rootOptions,
+  splashViewModalOptions,
   storyPlayerOptions,
   tabOptions,
   voiceSettingsModalOptions,
@@ -28,18 +28,16 @@ import { RootStackParams } from './RootNavigator.types';
 
 const RootStack = createStackNavigator<RootStackParams>();
 
-export const RootNavigator = () => {
-  const theme = useTheme();
-  const { initialRouteName, isAppReady, onSplashAnimationEnd } = useInitApp();
+interface RootNavigatorParams {
+  initialRouteName: string;
+}
 
+export const RootNavigator = ({ initialRouteName }: RootNavigatorParams) => {
+  const theme = useTheme();
   const Tab = useCallback(
     () => <TabNavigator isInitialRoute={initialRouteName === RootRoutes.TAB} />,
     [initialRouteName],
   );
-
-  if (!isAppReady) {
-    return <SplashView onAppReady={onSplashAnimationEnd} />;
-  }
 
   return (
     <RootStack.Navigator initialRouteName={initialRouteName} screenOptions={rootOptions(theme)}>
@@ -78,6 +76,11 @@ export const RootNavigator = () => {
           component={VoiceSettingsModal}
           name={RootRoutes.VOICE_SETTINGS_MODAL}
           options={voiceSettingsModalOptions}
+        />
+        <RootStack.Screen
+          component={SplashViewModal}
+          name={RootRoutes.SPLASH_VIEW_MODAL}
+          options={splashViewModalOptions}
         />
       </RootStack.Group>
     </RootStack.Navigator>

@@ -7,6 +7,7 @@ export enum RootRoutes {
   PAYWALL_SCREEN = 'paywallScreen',
   WEB_PAGE_SCREEN = 'webPageScreen',
 
+  SPLASH_VIEW_MODAL = 'spalshViewModal',
   PAYWALL_MODAL = 'paywallModal',
   VOICE_SETTINGS_MODAL = 'voiceSettingsModal',
 }

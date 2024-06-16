@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
+import { View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   Easing,
-  runOnJS,
   interpolate,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -16,24 +17,49 @@ import { WINDOW_HEIGHT } from '@/constants/layout';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useHandleCheckSubscription } from '@/hooks/useHandleCheckSubscription';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
+import { SOURCE } from '@/services/analytics/analytics.constants';
+import { getStorageData } from '@/services/storage/storage';
 
 import launchLogoImage from './images/launchLogo/launchLogo.png';
 import starsImage from './images/stars/stars.png';
-import { MOON_LOGO_SIZE } from './SplashView.constants';
-import { makeStyles } from './SplashView.styles';
+import { MOON_LOGO_SIZE } from './SplashViewModal.constants';
+import { makeStyles } from './SplashViewModal.styles';
 
-interface SplashViewProps {
-  onAppReady: () => void;
-}
-
-export const SplashView = ({ onAppReady }: SplashViewProps) => {
+export const SplashViewModal = () => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
-  const { areProductsLoaded } = useShowPaywallModal();
+  const navigation = useAppNavigation<RootRoutes.SPLASH_VIEW_MODAL>();
+
+  const { areProductsLoaded, showPaywallModal } = useShowPaywallModal({
+    animationType: 'modal',
+    shouldReplace: true,
+  });
+
+  const { isOnboarded } = getStorageData();
+
+  const handleSubscriptionCheck = useCallback(
+    (isSubscriptionActive: boolean) => {
+      if (isSubscriptionActive) {
+        navigation.goBack();
+      } else {
+        showPaywallModal({ source: SOURCE.COLD_START });
+      }
+    },
+    [navigation, showPaywallModal],
+  );
+
+  const handleCheckSubscription = useHandleCheckSubscription(handleSubscriptionCheck);
 
   const animationProgress = useSharedValue(0);
   const pulseAnimationProgress = useSharedValue(0);
+
+  const gradientBackgroundAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(animationProgress.value, [0, 1], [1, 0]),
+  }));
 
   const starsAnimatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(animationProgress.value, [0, 1], [1, 0]),
@@ -77,7 +103,11 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
         'worklet';
 
         if (finished) {
-          runOnJS(onAppReady)();
+          if (isOnboarded) {
+            runOnJS(handleCheckSubscription)();
+          } else {
+            runOnJS(navigation.goBack)();
+          }
         }
       });
     }
@@ -97,12 +127,16 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
   }, []);
 
   return (
-    <LinearGradient
-      angle={180}
-      colors={[colors.purple, colors.darkPurple]}
-      locations={[0.5, 1]}
-      style={styles.container}
-    >
+    <View style={styles.container}>
+      <Animated.View style={[styles.gradientBackgroundContainer, gradientBackgroundAnimatedStyle]}>
+        <LinearGradient
+          angle={180}
+          colors={[colors.purple, colors.darkPurple]}
+          locations={[0.5, 1]}
+          style={styles.gradientBackground}
+        />
+      </Animated.View>
+
       <Animated.View style={[styles.logoContainer, logoContainerAnimatedStyle]}>
         <Icons.Moon height={MOON_LOGO_SIZE} style={styles.moonLogo} width={MOON_LOGO_SIZE} />
 
@@ -122,6 +156,6 @@ export const SplashView = ({ onAppReady }: SplashViewProps) => {
         source={launchLogoImage}
         style={[styles.launchLogo, launchLogoAnimatedStyle]}
       />
-    </LinearGradient>
+    </View>
   );
 };

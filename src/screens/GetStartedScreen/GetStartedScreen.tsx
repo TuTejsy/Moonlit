@@ -12,7 +12,6 @@ import Animated, {
 
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { IS_ANDROID } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -47,24 +46,24 @@ export const GetStartedScreen = () => {
     });
   }, [navigation]);
 
-  const { showPaywallModal } = useShowPaywallModal(handleClosePaywallModal, true);
+  const { showPaywallModal } = useShowPaywallModal({
+    animationType: 'push',
+    onClose: handleClosePaywallModal,
+    shouldReplace: true,
+  });
 
   const handleContinuePress = useCallback(() => {
     if (currentStepRef.current === STEPS.length - 1) {
       storage.set(StorageKeys.isOnboarded, true);
 
-      if (IS_ANDROID) {
-        handleClosePaywallModal();
-      } else {
-        showPaywallModal({ source: SOURCE.ONBOARDING });
-      }
+      showPaywallModal({ source: SOURCE.ONBOARDING });
     } else {
       currentStepRef.current += 1;
       AnalyticsService.logOnboardingEvent({ screen: currentStepRef.current + 1 });
     }
 
     currentStepSharedValue.value = withTiming(currentStepRef.current);
-  }, [currentStepSharedValue, handleClosePaywallModal, showPaywallModal]);
+  }, [currentStepSharedValue, showPaywallModal]);
 
   const stepImagesAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
