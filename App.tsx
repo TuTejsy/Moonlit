@@ -16,6 +16,7 @@ import { ADAPTY_API_KEY, AMPLITUDE_API_KEY } from '@/constants/auth';
 import { AudioRecordingsDB, StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
+import { useInitApp } from '@/hooks/useInitApp';
 import { SharedKeyboardHeightProvider } from '@/hooks/useSharedKeyboardHeight';
 import { RootNavigator } from '@/navigation/RootNavigator/RootNavigator';
 import { navigationService } from '@/services/navigation/navigationService';
@@ -41,6 +42,8 @@ amplitude.init(AMPLITUDE_API_KEY, undefined, {
 function App(): JSX.Element {
   const theme = useInitTheme();
 
+  const { initialNavigationState, initialRouteName } = useInitApp();
+
   return (
     <Provider store={store}>
       <PersistGate persistor={storePersistor}>
@@ -54,6 +57,7 @@ function App(): JSX.Element {
                 />
                 <NavigationContainer
                   ref={navigationService.setRef}
+                  initialState={initialNavigationState}
                   theme={darkNavTheme}
                   onStateChange={navigationService.onStateChange}
                 >
@@ -62,7 +66,7 @@ function App(): JSX.Element {
                       {/* {__DEV__ && (
                         <RealmPlugin realms={[StoriesDB.realm, AudioRecordingsDB.realm]} />
                       )} */}
-                      <RootNavigator />
+                      <RootNavigator initialRouteName={initialRouteName} />
                     </AppLogicProvider>
                   </BottomSheetModalProvider>
                 </NavigationContainer>

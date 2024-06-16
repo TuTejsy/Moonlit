@@ -11,6 +11,8 @@ import {
   ANIMATION_STIFFNESS,
 } from '@/screens/GetStartedScreen/GetStartedScreen.constants';
 
+import { splashViewModalInterpolator } from './utils/splashViewModalInterpolator';
+
 // import { ModalHeader } from '@/components/Headers/ModalHeader/ModalHeader';
 // import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 
@@ -41,6 +43,22 @@ export const voiceSettingsModalOptions: StackNavigationOptions = {
   cardOverlay: () => null,
   cardOverlayEnabled: false,
   presentation: 'transparentModal',
+};
+
+export const splashViewModalOptions: StackNavigationOptions = {
+  cardOverlay: () => null,
+  cardOverlayEnabled: false,
+  presentation: 'transparentModal',
+  ...TransitionPresets.ModalSlideFromBottomIOS,
+  transitionSpec: {
+    close: {
+      animation: 'timing',
+      config: {
+        duration: 0,
+      },
+    },
+    open: TransitionSpecs.TransitionIOSSpec,
+  },
 };
 
 export const tabOptions: StackNavigationOptions = {

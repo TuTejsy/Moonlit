@@ -8,10 +8,7 @@ import { POPULAR_STORIES_CONFIG, POPULAR_STORIES_FILTER } from '@/constants/stor
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
-import { useCheckSubscription } from '@/hooks/useCheckSubscription';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
-import { useAppRoute } from '@/navigation/hooks/useAppRoute';
-import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 
@@ -24,9 +21,6 @@ import { makeStyles } from './HomeScreen.styles';
 export const HomeScreen = () => {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
-
-  const { params } = useAppRoute<SharedRoutes.HOME>();
-  const { initalRoute = false } = params || {};
 
   const [searchText, setSearchText] = useState('');
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -72,8 +66,6 @@ export const HomeScreen = () => {
   const handlePopularSearchItemSelected = useCallback((item: string) => {
     setSearchText(item);
   }, []);
-
-  useCheckSubscription(!initalRoute);
 
   useFocusEffect(
     useCallback(() => {

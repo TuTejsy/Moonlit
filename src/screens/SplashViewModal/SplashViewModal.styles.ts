@@ -3,16 +3,27 @@ import { StyleSheet } from 'react-native';
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { LAUNCH_LOGO_HEIGHT, MOON_LOGO_SIZE, STARS_MARGIN_TOP } from './SplashView.constants';
+import { LAUNCH_LOGO_HEIGHT, MOON_LOGO_SIZE, STARS_MARGIN_TOP } from './SplashViewModal.constants';
 
-export const makeStyles = ({ colors, dh, dw, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dw, insets }: MakeStylesProps) =>
   StyleSheet.create({
     container: {
       alignItems: 'center',
-      backgroundColor: colors.purple,
       flex: 1,
       justifyContent: 'center',
       position: 'relative',
+    },
+    gradientBackground: {
+      backgroundColor: colors.purple,
+      height: WINDOW_HEIGHT,
+      width: WINDOW_WIDTH,
+    },
+    gradientBackgroundContainer: {
+      height: WINDOW_HEIGHT,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: WINDOW_WIDTH,
     },
     launchLogo: {
       height: LAUNCH_LOGO_HEIGHT,

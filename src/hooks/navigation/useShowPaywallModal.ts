@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 
 import { adapty, AdaptyPaywallProduct } from 'react-native-adapty';
 
-import { IS_ANDROID, PLACEMENT_ID } from '@/constants/common';
+import { PLACEMENT_ID } from '@/constants/common';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
@@ -16,7 +16,18 @@ import { setFreeOfferDays } from '@/store/user/user.slice';
 import { useAppDispatch } from '../useAppDispatch';
 import { useAppSelector } from '../useAppSelector';
 
-export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false) => {
+interface ShowPaywallModalProps {
+  animationType: 'push' | 'modal';
+  shouldReplace: boolean;
+  onClose?: () => void;
+}
+
+export const useShowPaywallModal = (
+  { animationType, onClose, shouldReplace }: ShowPaywallModalProps = {
+    animationType: 'modal',
+    shouldReplace: false,
+  },
+) => {
   const navigation = useAppNavigation<RootRoutes.GET_STARTED_SCREEN | SharedRoutes.HOME>();
   const isFullVerion = useAppSelector(selectIsFullVersion);
 
@@ -24,15 +35,22 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
   const products = useAppSelector(selectProducts);
 
   const loadProducts = useCallback(async () => {
-    const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en', {
-      fetchPolicy: 'return_cache_data_if_not_expired_else_load',
-      maxAgeSeconds: 60 * 60 * 24, // 24 hours
-    });
-    const products = await adapty.getPaywallProducts(paywall);
+    try {
+      const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en', {
+        fetchPolicy: 'return_cache_data_if_not_expired_else_load',
+        maxAgeSeconds: 60 * 60 * 24, // 24 hours
+      });
 
-    dispatch(setProducts(products));
+      const products = await adapty.getPaywallProducts(paywall);
 
-    return products;
+      dispatch(setProducts(products));
+
+      return products;
+    } catch (err) {
+      console.log(err);
+    }
+
+    return null;
   }, [dispatch]);
 
   const showPaywallModal = useCallback(
@@ -47,7 +65,7 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
     }) => {
       const openPaywall = (products: AdaptyPaywallProduct[]) => {
         (shouldReplace ? navigation.replace : navigation.navigate)(
-          shouldReplace ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
+          animationType === 'push' ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
           {
             contentName,
             onClose,
@@ -81,14 +99,15 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
       }
     },
     [
-      dispatch,
-      loadProducts,
-      isFullVerion,
-      navigation.navigate,
-      navigation.replace,
-      onClose,
-      products,
       shouldReplace,
+      navigation.replace,
+      navigation.navigate,
+      animationType,
+      onClose,
+      dispatch,
+      isFullVerion,
+      products,
+      loadProducts,
     ],
   );
 
@@ -98,7 +117,7 @@ export const useShowPaywallModal = (onClose?: () => void, shouldReplace = false)
   }, []);
 
   return {
-    areProductsLoaded: !!products || IS_ANDROID,
+    areProductsLoaded: !!products,
     isFullVerion,
     isSubscriptionAvailable: !isFullVerion,
     showPaywallModal,
