@@ -7,8 +7,8 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 // eslint-disable-next-line import/no-unresolved
+import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
 import voicesImage from '../../images/voices/voices.png';
-import { TrialSwitch } from '../TrialSwitch/TrialSwitch';
 
 import { makeStyles } from './SwitcherPaywallContent.styles';
 

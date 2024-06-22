@@ -17,7 +17,7 @@ import { unlockFullVersion } from '@/store/user/user.slice';
 
 import { FooterActions } from './components/FooterActions/FooterActions';
 import { PaywallBackground } from './components/PaywallBackground/PaywallBackground';
-import { SwitcherPaywallContent } from './components/SwitcherPaywallContent/SwitcherPaywallContent';
+import { SwitcherPaywallContent } from './contentVariants/SwitcherPaywallContent/SwitcherPaywallContent';
 import { makeStyles } from './PaywallModal.styles';
 
 export const PaywallModal = () => {
