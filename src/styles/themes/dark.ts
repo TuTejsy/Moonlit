@@ -10,6 +10,7 @@ export const darkColors = {
   darkPurple: '#080211',
   green: '#247F8A',
   imagePurple: '#4C3F55',
+  borderPurple: '#D44BED',
   lightGradientPurple: '#1E004E',
   lightPurple: '#1F0647',
   opacityDarkPurple: (float: number) => `rgba(8, 12, 17, ${float})`,

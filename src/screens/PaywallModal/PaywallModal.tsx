@@ -17,6 +17,7 @@ import { unlockFullVersion } from '@/store/user/user.slice';
 
 import { FooterActions } from './components/FooterActions/FooterActions';
 import { PaywallBackground } from './components/PaywallBackground/PaywallBackground';
+import { SelectionPaywallContent } from './contentVariants/SelectionPaywallContent/SelectionPaywallContent';
 import { SwitcherPaywallContent } from './contentVariants/SwitcherPaywallContent/SwitcherPaywallContent';
 import { makeStyles } from './PaywallModal.styles';
 
@@ -139,8 +140,15 @@ export const PaywallModal = () => {
         <TextView style={styles.skipText} type='regular' onPress={handleSkipPress}>
           Skip
         </TextView>
-
+        {/* 
         <SwitcherPaywallContent
+          fullProduct={fullProduct}
+          isFreeTrialEnabled={isFreeTrialEnabled}
+          trialProduct={trialProduct}
+          onTrialEnabledChanged={setIsFreeTrialEnabled}
+        /> */}
+
+        <SelectionPaywallContent
           fullProduct={fullProduct}
           isFreeTrialEnabled={isFreeTrialEnabled}
           trialProduct={trialProduct}
