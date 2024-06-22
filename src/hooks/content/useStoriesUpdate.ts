@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { AxiosError } from 'axios';
 
+import { StoriesRepository } from '@/api/stories/stories';
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
-import { StoriesRepository } from '@/services/repositories/stories/stories';
 import { removeStoryCache } from '@/utils/documents/removeStoryCache';
 
 export function useStoriesUpdate(loadInitially = true): [boolean, () => void] {
