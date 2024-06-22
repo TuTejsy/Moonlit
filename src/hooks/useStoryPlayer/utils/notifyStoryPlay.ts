@@ -1,5 +1,5 @@
+import { StoriesRepository } from '@/api/stories/stories';
 import { StoriesDB } from '@/database';
-import { StoriesRepository } from '@/services/repositories/stories/stories';
 
 export function notifyStoryPlay(storyId: number) {
   StoriesRepository.playNotify(storyId).catch((err) => {

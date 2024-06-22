@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { AxiosError } from 'axios';
 
+import { StoriesRepository } from '@/api/stories/stories';
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
-import { StoriesRepository } from '@/services/repositories/stories/stories';
 
 export function useStoryAudioRecordingsUpdate(storyId: number): [boolean, () => void] {
   const [isLoading, setIsLoading] = useState(false);
