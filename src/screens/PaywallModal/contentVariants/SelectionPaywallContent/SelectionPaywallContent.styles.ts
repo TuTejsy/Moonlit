@@ -68,6 +68,7 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.1),
       borderRadius: 16,
+      borderWidth: 1,
       flexDirection: 'row',
       height: dw(56),
       justifyContent: 'space-between',
@@ -104,7 +105,6 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
     },
     selectedProductContainer: {
       borderColor: colors.pink,
-      borderWidth: 1,
     },
     subtitle: {
       ...fonts.size_14,

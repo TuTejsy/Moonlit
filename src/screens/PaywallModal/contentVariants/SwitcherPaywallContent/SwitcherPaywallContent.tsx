@@ -6,24 +6,24 @@ import { AdaptyPaywallProduct } from 'react-native-adapty';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
-// eslint-disable-next-line import/no-unresolved
 import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
+// eslint-disable-next-line import/no-unresolved
 import voicesImage from '../../images/voices/voices.png';
 
 import { makeStyles } from './SwitcherPaywallContent.styles';
 
 interface SwitcherPaywallContentProps {
-  fullProduct: AdaptyPaywallProduct | undefined;
   isFreeTrialEnabled: boolean;
   onSelectProduct: (product: AdaptyPaywallProduct | undefined) => void;
   trialProduct: AdaptyPaywallProduct | undefined;
+  yearlyProduct: AdaptyPaywallProduct | undefined;
 }
 
 export const SwitcherPaywallContent = ({
-  fullProduct,
   isFreeTrialEnabled,
   onSelectProduct,
   trialProduct,
+  yearlyProduct,
 }: SwitcherPaywallContentProps) => {
   const styles = useMakeStyles(makeStyles);
 
@@ -37,16 +37,16 @@ export const SwitcherPaywallContent = ({
 
       return `${offerDays} days free, then ${price} ${currencyCode}/week`;
     }
-    const price = fullProduct?.price?.amount;
-    const currencyCode = fullProduct?.price?.currencyCode;
+    const price = yearlyProduct?.price?.amount;
+    const currencyCode = yearlyProduct?.price?.currencyCode;
 
-    const subscriptionPeriod = fullProduct?.subscriptionDetails?.subscriptionPeriod.unit;
+    const subscriptionPeriod = yearlyProduct?.subscriptionDetails?.subscriptionPeriod.unit;
 
     return `Try it now, just ${price} ${currencyCode}/${subscriptionPeriod}`;
   }, [
-    fullProduct?.price?.amount,
-    fullProduct?.price?.currencyCode,
-    fullProduct?.subscriptionDetails?.subscriptionPeriod.unit,
+    yearlyProduct?.price?.amount,
+    yearlyProduct?.price?.currencyCode,
+    yearlyProduct?.subscriptionDetails?.subscriptionPeriod.unit,
     isFreeTrialEnabled,
     trialProduct?.price?.amount,
     trialProduct?.price?.currencyCode,
@@ -55,9 +55,9 @@ export const SwitcherPaywallContent = ({
 
   const handleTrialEnabledChanged = useCallback(
     (isEnabled: boolean) => {
-      onSelectProduct(isEnabled ? trialProduct : fullProduct);
+      onSelectProduct(isEnabled ? trialProduct : yearlyProduct);
     },
-    [fullProduct, onSelectProduct, trialProduct],
+    [yearlyProduct, onSelectProduct, trialProduct],
   );
 
   return (
