@@ -29,9 +29,6 @@ export const PaywallModal = () => {
 
   const { contentName, onClose, products, source, tab } = params;
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFreeTrialEnabled, setIsFreeTrialEnabled] = useState(false);
-
   const dispatch = useAppDispatch();
 
   const trialProduct = useMemo(
@@ -39,10 +36,34 @@ export const PaywallModal = () => {
     [products],
   );
 
-  const fullProduct = useMemo(
-    () => products.find((product) => !product.subscriptionDetails?.introductoryOffers?.length),
-    [products],
+  const lightProduct = useMemo(
+    () =>
+      products.find(
+        (product) =>
+          !product.subscriptionDetails?.introductoryOffers?.length &&
+          product.price?.amount === trialProduct?.price?.amount,
+      ),
+    [products, trialProduct?.price?.amount],
   );
+
+  const fullProduct = useMemo(
+    () =>
+      products.find(
+        (product) =>
+          !product.subscriptionDetails?.introductoryOffers?.length &&
+          product.price?.amount &&
+          trialProduct?.price?.amount &&
+          product.price.amount > trialProduct.price.amount,
+      ),
+    [products, trialProduct?.price?.amount],
+  );
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<AdaptyPaywallProduct | undefined>(
+    fullProduct,
+  );
+
+  const isFreeTrialEnabled = selectedProduct === trialProduct;
 
   const topGradientLocations = useMemo(() => [0, 0.8], []);
   const bottomGradientLocations = useMemo(() => [0, 0.5], []);
@@ -92,20 +113,18 @@ export const PaywallModal = () => {
   }, [contentName, navigation, onClose, source, tab]);
 
   const handleUnlockPress = useCallback(() => {
-    const product = isFreeTrialEnabled ? trialProduct : fullProduct;
-
-    if (product) {
+    if (selectedProduct) {
       setIsLoading(true);
 
       adapty
-        .makePurchase(product)
-        .then(makeUnlockFullAccess(product))
+        .makePurchase(selectedProduct)
+        .then(makeUnlockFullAccess(selectedProduct))
         .catch(console.error)
         .finally(() => {
           setIsLoading(false);
         });
     }
-  }, [fullProduct, isFreeTrialEnabled, makeUnlockFullAccess, trialProduct]);
+  }, [makeUnlockFullAccess, selectedProduct]);
 
   const handleRestorePress = useCallback(() => {
     setIsLoading(true);
@@ -140,19 +159,21 @@ export const PaywallModal = () => {
         <TextView style={styles.skipText} type='regular' onPress={handleSkipPress}>
           Skip
         </TextView>
-        {/* 
-        <SwitcherPaywallContent
+
+        {/* <SwitcherPaywallContent
           fullProduct={fullProduct}
           isFreeTrialEnabled={isFreeTrialEnabled}
           trialProduct={trialProduct}
-          onTrialEnabledChanged={setIsFreeTrialEnabled}
+          onSelectProduct={setSelectedProduct}
         /> */}
 
         <SelectionPaywallContent
           fullProduct={fullProduct}
           isFreeTrialEnabled={isFreeTrialEnabled}
+          lightProduct={lightProduct}
+          selectedProduct={selectedProduct}
           trialProduct={trialProduct}
-          onTrialEnabledChanged={setIsFreeTrialEnabled}
+          onSelectProduct={setSelectedProduct}
         />
 
         <GradientButton style={styles.button} onPress={handleUnlockPress}>
