@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 
 import { adapty, AdaptyPaywallProduct } from 'react-native-adapty';
 
-import { PLACEMENT_ID } from '@/constants/common';
+import { SELECTION_PLACEMENT_ID } from '@/constants/common';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
@@ -36,7 +36,7 @@ export const useShowPaywallModal = (
 
   const loadProducts = useCallback(async () => {
     try {
-      const paywall = await adapty.getPaywall(PLACEMENT_ID, 'en', {
+      const paywall = await adapty.getPaywall(SELECTION_PLACEMENT_ID, 'en', {
         fetchPolicy: 'return_cache_data_if_not_expired_else_load',
         maxAgeSeconds: 60 * 60 * 24, // 24 hours
       });

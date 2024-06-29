@@ -11,7 +11,7 @@ import { makeStyles } from './TextView.styles';
 export interface TextViewProps extends TextProps {
   animated?: boolean;
   style?: StyleProp<TextStyle> | StyleProp<TextStyle>[];
-  type?: 'bold' | 'regular' | 'medium';
+  type?: 'bold' | 'regular' | 'medium' | 'light';
 }
 
 export const TextView = ({
@@ -33,11 +33,15 @@ export const TextView = ({
         return styles.medium;
       }
 
+      case 'light': {
+        return styles.light;
+      }
+
       default: {
         return styles.regular;
       }
     }
-  }, [styles.bold, styles.medium, styles.regular, type]);
+  }, [styles.bold, styles.light, styles.medium, styles.regular, type]);
 
   const TextComponent = animated ? Animated.Text : Text;
 

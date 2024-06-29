@@ -36,7 +36,7 @@ export const PaywallModal = () => {
     [products],
   );
 
-  const lightProduct = useMemo(
+  const weeklyProduct = useMemo(
     () =>
       products.find(
         (product) =>
@@ -46,7 +46,7 @@ export const PaywallModal = () => {
     [products, trialProduct?.price?.amount],
   );
 
-  const fullProduct = useMemo(
+  const yearlyProduct = useMemo(
     () =>
       products.find(
         (product) =>
@@ -60,7 +60,7 @@ export const PaywallModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<AdaptyPaywallProduct | undefined>(
-    fullProduct,
+    yearlyProduct,
   );
 
   const isFreeTrialEnabled = selectedProduct === trialProduct;
@@ -161,18 +161,18 @@ export const PaywallModal = () => {
         </TextView>
 
         {/* <SwitcherPaywallContent
-          fullProduct={fullProduct}
+          yearlyProduct={yearlyProduct}
           isFreeTrialEnabled={isFreeTrialEnabled}
           trialProduct={trialProduct}
           onSelectProduct={setSelectedProduct}
         /> */}
 
         <SelectionPaywallContent
-          fullProduct={fullProduct}
           isFreeTrialEnabled={isFreeTrialEnabled}
-          lightProduct={lightProduct}
           selectedProduct={selectedProduct}
           trialProduct={trialProduct}
+          weeklyProduct={weeklyProduct}
+          yearlyProduct={yearlyProduct}
           onSelectProduct={setSelectedProduct}
         />
 

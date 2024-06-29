@@ -6,6 +6,7 @@ import RNFS from 'react-native-fs';
 // import { getApplicationEnv } from '@/utils/getEnv';
 
 export const Fonts = Object.freeze({
+  PoppinsLight: 'Poppins-Light',
   PoppinsMedium: 'Poppins-Medium',
   PoppinsRegular: 'Poppins-Regular',
   PoppinsSemiBold: 'Poppins-SemiBold',
@@ -22,7 +23,8 @@ export const IS_ANDROID = Platform.OS === 'android';
 
 export const IS_JEST_ENV = process.env.JEST_WORKER_ID;
 
-export const PLACEMENT_ID = 'FULL_ACCESS';
+export const SWITCH_PLACEMENT_ID = 'FULL_ACCESS';
+export const SELECTION_PLACEMENT_ID = 'FULL_ACCESS_SELECTION';
 
 export const BUNDLE_PATH = RNFS.MainBundlePath;
 
