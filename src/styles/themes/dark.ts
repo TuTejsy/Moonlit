@@ -8,9 +8,10 @@ export const darkColors = {
   darkGradientPurple: '#0A0315',
   darkGrey: '#1A1A1A',
   darkPurple: '#080211',
+  gradientPinkEnd: '#D44BED',
+  gradientPinkStart: '#CC9DF3',
   green: '#247F8A',
   imagePurple: '#4C3F55',
-  borderPurple: '#D44BED',
   lightGradientPurple: '#1E004E',
   lightPurple: '#1F0647',
   opacityDarkPurple: (float: number) => `rgba(8, 12, 17, ${float})`,
@@ -21,6 +22,7 @@ export const darkColors = {
   opacityPurple: (float: number) => `rgba(23, 6, 52, ${float})`,
   opacitySkin: (float: number) => `rgba(202, 166, 144, ${float})`,
   orange: '#EC7748',
+  pink: '#D44BED',
   purple: '#170634',
 };
 

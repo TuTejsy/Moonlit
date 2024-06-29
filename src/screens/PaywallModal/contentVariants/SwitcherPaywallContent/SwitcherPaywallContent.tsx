@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { View, Image } from 'react-native';
 
 import { AdaptyPaywallProduct } from 'react-native-adapty';
@@ -15,14 +15,14 @@ import { makeStyles } from './SwitcherPaywallContent.styles';
 interface SwitcherPaywallContentProps {
   fullProduct: AdaptyPaywallProduct | undefined;
   isFreeTrialEnabled: boolean;
-  onTrialEnabledChanged: (isEnabled: boolean) => void;
+  onSelectProduct: (product: AdaptyPaywallProduct | undefined) => void;
   trialProduct: AdaptyPaywallProduct | undefined;
 }
 
 export const SwitcherPaywallContent = ({
   fullProduct,
   isFreeTrialEnabled,
-  onTrialEnabledChanged,
+  onSelectProduct,
   trialProduct,
 }: SwitcherPaywallContentProps) => {
   const styles = useMakeStyles(makeStyles);
@@ -53,6 +53,13 @@ export const SwitcherPaywallContent = ({
     trialProduct?.subscriptionDetails?.introductoryOffers,
   ]);
 
+  const handleTrialEnabledChanged = useCallback(
+    (isEnabled: boolean) => {
+      onSelectProduct(isEnabled ? trialProduct : fullProduct);
+    },
+    [fullProduct, onSelectProduct, trialProduct],
+  );
+
   return (
     <>
       <TextView style={styles.title} type='bold'>
@@ -79,7 +86,7 @@ export const SwitcherPaywallContent = ({
           <TextView style={styles.freeTrialSubtitle}>Enable free trial</TextView>
         </View>
 
-        <TrialSwitch value={isFreeTrialEnabled} onValueChange={onTrialEnabledChanged} />
+        <TrialSwitch value={isFreeTrialEnabled} onValueChange={handleTrialEnabledChanged} />
       </View>
     </>
   );
