@@ -69,4 +69,4 @@ yarn-error.log
 /ios/AIVoice.xcodeproj
 
 .env
-/src/constants/auth.ts
+src/constants/auth.ts
