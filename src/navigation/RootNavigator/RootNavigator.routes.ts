@@ -10,4 +10,6 @@ export enum RootRoutes {
   SPLASH_VIEW_MODAL = 'spalshViewModal',
   PAYWALL_MODAL = 'paywallModal',
   VOICE_SETTINGS_MODAL = 'voiceSettingsModal',
+
+  DEV_MENU_MODAL = 'devMenuModal',
 }

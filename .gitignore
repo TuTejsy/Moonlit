@@ -67,3 +67,6 @@ yarn-error.log
 /ios/archives/
 /ios/AIVoice.xcworkspace/xcuserdata/
 /ios/AIVoice.xcodeproj
+
+.env
+/src/constants/auth.ts
