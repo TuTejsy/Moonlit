@@ -40,6 +40,7 @@
     "react-native-adapty": "^2.10.1",
     "react-native-adjust": "^4.38.1",
     "react-native-config": "^1.5.1",
+    "react-native-dialog": "^9.3.0",
     "react-native-email-link": "^1.14.8",
     "react-native-file-viewer": "^2.1.5",
     "react-native-fs": "^2.20.0",
