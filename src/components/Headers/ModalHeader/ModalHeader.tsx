@@ -1,3 +1,4 @@
+import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 
@@ -32,7 +33,7 @@ export const ModalHeader = ({
       testID='closeBtn'
       onPress={handleClosePress}
     >
-      {/* <Icons.Close /> */}
+      <Icons.Close />
     </PressableView>
   );
 

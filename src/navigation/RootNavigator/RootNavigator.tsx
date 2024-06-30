@@ -2,8 +2,10 @@ import { useCallback } from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { isDevMode } from '@/constants/common';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
+import { DevMenuModal } from '@/screens/DevMenuScreens/DevMenuModal/DevMenuModal';
 import { GetStartedScreen } from '@/screens/GetStartedScreen/GetStartedScreen';
 import { PaywallModal } from '@/screens/PaywallModal/PaywallModal';
 import { SplashViewModal } from '@/screens/SplashViewModal/SplashViewModal';
@@ -82,6 +84,14 @@ export const RootNavigator = ({ initialRouteName }: RootNavigatorParams) => {
           name={RootRoutes.SPLASH_VIEW_MODAL}
           options={splashViewModalOptions}
         />
+
+        {/**
+         * Debug
+         */}
+
+        {isDevMode() && (
+          <RootStack.Screen component={DevMenuModal} name={RootRoutes.DEV_MENU_MODAL} />
+        )}
       </RootStack.Group>
     </RootStack.Navigator>
   );

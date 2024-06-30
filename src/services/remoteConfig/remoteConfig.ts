@@ -3,25 +3,31 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import { remoteConfigDefaultValues, REMOTE_CONFIG_FIELDS } from './remoteConfig.constants';
 
 class RemoteConfigService {
+  private config = remoteConfig();
+
   constructor() {
-    remoteConfig().setDefaults(remoteConfigDefaultValues);
-    remoteConfig().fetchAndActivate();
+    this.config.setDefaults(remoteConfigDefaultValues);
+    this.config.fetchAndActivate();
   }
 
-  static get toggleState() {
-    return remoteConfig().getValue(REMOTE_CONFIG_FIELDS.TOGGLE_STATE).asBoolean();
+  get toggleState() {
+    return this.config.getValue(REMOTE_CONFIG_FIELDS.TOGGLE_STATE).asBoolean();
   }
 
-  static get placementId() {
-    return remoteConfig().getValue(REMOTE_CONFIG_FIELDS.PLACEMENT_ID).asString();
+  get placementId() {
+    return this.config.getValue(REMOTE_CONFIG_FIELDS.PLACEMENT_ID).asString();
   }
 
-  static get buyButtonTextTrial() {
-    return remoteConfig().getValue(REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_TRIAL).asString();
+  get buyButtonTextTrial() {
+    return this.config.getValue(REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_TRIAL).asString();
   }
 
-  static get buyButtonTextNoTrial() {
-    return remoteConfig().getValue(REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_NO_TRIAL).asString();
+  get buyButtonTextNoTrial() {
+    return this.config.getValue(REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_NO_TRIAL).asString();
+  }
+
+  get segment() {
+    return this.config.getValue(REMOTE_CONFIG_FIELDS.SEGMENT).asString();
   }
 }
 

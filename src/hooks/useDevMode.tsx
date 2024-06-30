@@ -1,11 +1,12 @@
 import { useCallback, useState } from 'react';
-import { View, DevSettings } from 'react-native';
+import { View } from 'react-native';
 
 import Dialog from 'react-native-dialog';
 
-import { DEV_MODE_PASSWORD, DEV_MODE_PRESS_COUNT } from '@/constants/common';
-import { appStorage } from '@/services/storage/storage';
-import { isDevEnv } from '@/utils/getEnv';
+import { DEV_MODE_PASSWORD, DEV_MODE_PRESS_COUNT } from '@/constants/auth';
+import { isDevMode } from '@/constants/common';
+import { storage } from '@/services/storage/storage';
+import { StorageKeys } from '@/services/storage/storage.constants';
 
 export const useDevMode = () => {
   const [password, setPassword] = useState('');
@@ -13,9 +14,7 @@ export const useDevMode = () => {
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
 
   const enableDevMode = useCallback(() => {
-    appStorage.devMode = true;
-
-    DevSettings.reload();
+    storage.set(StorageKeys.DevMode, true);
   }, []);
 
   const hidePasswordDialog = useCallback(() => setShowPasswordDialog(false), []);
@@ -29,25 +28,25 @@ export const useDevMode = () => {
 
   const renderDevModeDialog = useCallback(() => {
     return (
-      !isDevEnv() && (
-        <View>
-          <Dialog.Container visible={showPasswordDialog}>
-            <Dialog.Title>Enter Password</Dialog.Title>
-            <Dialog.Input value={password} onChangeText={setPassword} />
-            <Dialog.Button label='Cancel' onPress={hidePasswordDialog} />
-            <Dialog.Button label='Ok' onPress={handleOkPress} />
-          </Dialog.Container>
-        </View>
-      )
+      <View>
+        <Dialog.Container visible={showPasswordDialog}>
+          <Dialog.Title>Enter Password</Dialog.Title>
+          <Dialog.Input value={password} onChangeText={setPassword} />
+          <Dialog.Button label='Cancel' onPress={hidePasswordDialog} />
+          <Dialog.Button label='Ok' onPress={handleOkPress} />
+        </Dialog.Container>
+      </View>
     );
   }, [showPasswordDialog, password, hidePasswordDialog, handleOkPress]);
 
   const handleDevModePress = useCallback(() => {
-    if (devModeCount >= DEV_MODE_PRESS_COUNT) {
-      setShowPasswordDialog(true);
-      setDevModeCount(0);
+    if (!isDevMode()) {
+      if (devModeCount >= DEV_MODE_PRESS_COUNT) {
+        setShowPasswordDialog(true);
+        setDevModeCount(0);
+      }
+      setDevModeCount((prev) => prev + 1);
     }
-    setDevModeCount((prev) => prev + 1);
   }, [devModeCount]);
 
   return {
