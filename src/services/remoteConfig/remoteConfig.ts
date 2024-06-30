@@ -9,11 +9,10 @@ class RemoteConfigService {
 
   constructor() {
     this.config.setDefaults(remoteConfigDefaultValues);
-    this.config.fetchAndActivate();
   }
 
-  async fetchAndActivate() {
-    await this.config.fetchAndActivate();
+  fetchAndActivate() {
+    return this.config.fetchAndActivate();
   }
 
   enableLiveUpdate = () => {
