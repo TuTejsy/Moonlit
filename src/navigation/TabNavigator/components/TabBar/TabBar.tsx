@@ -6,10 +6,12 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { TrippleGradient } from '@/components/TrippleGradient/TrippleGradient';
+import { isDevMode } from '@/constants/common';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { navigationService } from '@/services/navigation/navigationService';
 import { getHitSlop } from '@/utils/getHitSlop';
@@ -84,6 +86,17 @@ export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) =>
                 }
               };
 
+              const onLongPress = () => {
+                navigation.emit({
+                  target: route.key,
+                  type: 'tabLongPress',
+                });
+
+                if (route.name === TabRoutes.SETTINGS && isDevMode()) {
+                  navigation.navigate(RootRoutes.DEV_MENU_MODAL);
+                }
+              };
+
               const [Icon, title] = MAP_ICON_AND_TITLE_BY_ROUTE[route.name as TabRoutes];
 
               return (
@@ -94,6 +107,7 @@ export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) =>
                   accessibilityRole='button'
                   accessibilityState={isFocused ? { selected: true } : {}}
                   hitSlop={getHitSlop(20)}
+                  onLongPress={onLongPress}
                   onPress={onPress}
                 >
                   <View style={styles.tabContainer}>

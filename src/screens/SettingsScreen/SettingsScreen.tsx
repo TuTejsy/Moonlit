@@ -13,6 +13,7 @@ import { useWebPagesNavigation } from '@/hooks/navigation/useWebPagesNavigation'
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useDevMode } from '@/hooks/useDevMode';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { getStorageData, storage } from '@/services/storage/storage';
 import { StorageKeys } from '@/services/storage/storage.constants';
@@ -29,6 +30,7 @@ export const SettingsScreen = () => {
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
   const { openPrivacyPolicy, openTermsOfService } = useWebPagesNavigation();
+  const { onDevModePress, renderDevModeDialog } = useDevMode();
 
   const handleHelpAndSupportPress = useCallback(() => {
     openComposer({
@@ -78,7 +80,7 @@ export const SettingsScreen = () => {
       locations={[0, 1]}
       style={styles.screen}
     >
-      <TextView style={styles.title} type='bold'>
+      <TextView style={styles.title} type='bold' onPress={onDevModePress}>
         Settings
       </TextView>
 
@@ -91,6 +93,8 @@ export const SettingsScreen = () => {
       <View style={styles.separator} />
 
       <MenuItem icon={<Icons.Star />} title='Rate App' onPress={handleRateAppPress} />
+
+      {renderDevModeDialog()}
     </LinearGradient>
   );
 };

@@ -1,6 +1,7 @@
 import * as amplitude from '@amplitude/analytics-react-native';
 import firebaseAnalytics from '@react-native-firebase/analytics';
 
+import { remoteConfigService } from '../remoteConfig/remoteConfig';
 import { getStorageData } from '../storage/storage';
 
 import {
@@ -29,6 +30,13 @@ export class AnalyticsService {
 
   private static voiceViewLogCount = 0;
 
+  private static logCommongEvent(eventName: string, params: object) {
+    const injectedParams = { ...params, segment: remoteConfigService.segment };
+
+    firebaseAnalytics().logEvent(eventName, injectedParams);
+    amplitude.track(eventName, injectedParams);
+  }
+
   static setIsUserPaid(paid: boolean) {
     firebaseAnalytics().setUserProperties({ paid: paid ? 'paid' : 'free' });
 
@@ -45,36 +53,31 @@ export class AnalyticsService {
       first_launch: getStorageData().isFirstLaunch,
     };
 
-    firebaseAnalytics().logEvent(eventName, eventParams);
-    amplitude.track(eventName, eventParams);
+    AnalyticsService.logCommongEvent(eventName, eventParams);
   }
 
   static logOnboardingEvent(params: OnboardingEventParams) {
     const eventName = 'onboarding';
 
-    firebaseAnalytics().logEvent(eventName, params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 
   static logPaywallViewedEvent(params: PaywallViewedEventParams) {
     const eventName = 'ss_view';
 
-    firebaseAnalytics().logEvent('ss_view', params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 
   static logPaywallClosedEvent(params: PaywallClosedEventParams) {
     const eventName = 'ss_close';
 
-    firebaseAnalytics().logEvent('ss_close', params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 
   static logStartSubscriptionEvent(params: StartSubscriptionEventParams) {
     const eventName = 'start_subscription';
 
-    firebaseAnalytics().logEvent(eventName, params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 
   static logSettingsViewEvent() {
@@ -86,8 +89,7 @@ export class AnalyticsService {
       screen: 'settings',
     };
 
-    firebaseAnalytics().logEvent(eventName, eventParams);
-    amplitude.track(eventName, eventParams);
+    AnalyticsService.logCommongEvent(eventName, eventParams);
   }
 
   static logSavedViewEvent() {
@@ -99,8 +101,7 @@ export class AnalyticsService {
       screen: 'saved',
     };
 
-    firebaseAnalytics().logEvent(eventName, eventParams);
-    amplitude.track(eventName, eventParams);
+    AnalyticsService.logCommongEvent(eventName, eventParams);
   }
 
   static logHomeViewEvent() {
@@ -112,36 +113,31 @@ export class AnalyticsService {
       screen: 'home',
     };
 
-    firebaseAnalytics().logEvent(eventName, eventParams);
-    amplitude.track(eventName, eventParams);
+    AnalyticsService.logCommongEvent(eventName, eventParams);
   }
 
   static logTaleOpenEvent(params: TaleOpenEventParams) {
     const eventName = 'tale_open';
 
-    firebaseAnalytics().logEvent(eventName, params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 
   static logTalePlayEvent(params: TalePlayEventParams) {
     const eventName = 'tale_play';
 
-    firebaseAnalytics().logEvent(eventName, params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 
   static logTalePauseEvent(params: TalePauseEventParams) {
     const eventName = 'tale_pause';
 
-    firebaseAnalytics().logEvent(eventName, params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 
   static logTaleRewindEvent(params: TaleRewindEventParams) {
     const eventName = 'tale_rewind';
 
-    firebaseAnalytics().logEvent(eventName, params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 
   static logTaleLikedEvent(params: TaleLikedEventParams) {
@@ -153,8 +149,7 @@ export class AnalyticsService {
       count: AnalyticsService.taleLikedLogCount,
     };
 
-    firebaseAnalytics().logEvent(eventName, eventParams);
-    amplitude.track(eventName, eventParams);
+    AnalyticsService.logCommongEvent(eventName, eventParams);
   }
 
   static logVoiceViewEvent(params: VoiceViewEventParams) {
@@ -166,14 +161,12 @@ export class AnalyticsService {
       count: AnalyticsService.voiceViewLogCount,
     };
 
-    firebaseAnalytics().logEvent(eventName, eventParams);
-    amplitude.track(eventName, eventParams);
+    AnalyticsService.logCommongEvent(eventName, eventParams);
   }
 
   static logVoiceChangeEvent(params: VoiceChangeEventParams) {
     const eventName = 'voice_change';
 
-    firebaseAnalytics().logEvent(eventName, params);
-    amplitude.track(eventName, params);
+    AnalyticsService.logCommongEvent(eventName, params);
   }
 }
