@@ -1,13 +1,13 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { adapty, AdaptyPaywallProduct } from 'react-native-adapty';
 
-import { SELECTION_PLACEMENT_ID } from '@/constants/common';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
+import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
 import { selectProducts } from '@/store/subscription/subscription.selector';
 import { setProducts } from '@/store/subscription/subscription.slice';
 import { selectIsFullVersion } from '@/store/user/user.selector';
@@ -34,9 +34,13 @@ export const useShowPaywallModal = (
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectProducts);
 
+  const palcementIdRef = useRef(remoteConfigService.placementId);
+
   const loadProducts = useCallback(async () => {
     try {
-      const paywall = await adapty.getPaywall(SELECTION_PLACEMENT_ID, 'en', {
+      palcementIdRef.current = remoteConfigService.placementId;
+
+      const paywall = await adapty.getPaywall(palcementIdRef.current, 'en', {
         fetchPolicy: 'return_cache_data_if_not_expired_else_load',
         maxAgeSeconds: 60 * 60 * 24, // 24 hours
       });
@@ -69,6 +73,7 @@ export const useShowPaywallModal = (
           {
             contentName,
             onClose,
+            placementId: palcementIdRef.current,
             products,
             source,
             tab,
@@ -112,7 +117,7 @@ export const useShowPaywallModal = (
   );
 
   useEffect(() => {
-    loadProducts();
+    remoteConfigService.fetchAndActivate().then(loadProducts);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

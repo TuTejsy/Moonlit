@@ -6,6 +6,7 @@ import { adapty, AdaptyPaywallProduct, AdaptyProfile } from 'react-native-adapty
 import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { SELECTION_PLACEMENT_ID, SWITCH_PLACEMENT_ID } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
@@ -13,6 +14,7 @@ import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { PAYWALL_TYPE } from '@/services/analytics/analytics.constants';
+import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
 import { unlockFullVersion } from '@/store/user/user.slice';
 
 import { FooterActions } from './components/FooterActions/FooterActions';
@@ -27,7 +29,7 @@ export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
 
-  const { contentName, onClose, products, source, tab } = params;
+  const { contentName, onClose, placementId, products, source, tab } = params;
 
   const dispatch = useAppDispatch();
 
@@ -60,10 +62,13 @@ export const PaywallModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<AdaptyPaywallProduct | undefined>(
-    yearlyProduct,
+    remoteConfigService.toggleState ? trialProduct : yearlyProduct,
   );
 
   const isFreeTrialEnabled = selectedProduct === trialProduct;
+  const unlockButtonText = isFreeTrialEnabled
+    ? remoteConfigService.buyButtonTextTrial
+    : remoteConfigService.buyButtonTextNoTrial;
 
   const topGradientLocations = useMemo(() => [0, 0.8], []);
   const bottomGradientLocations = useMemo(() => [0, 0.5], []);
@@ -138,6 +143,45 @@ export const PaywallModal = () => {
       });
   }, [makeUnlockFullAccess]);
 
+  const renderPaywallContent = useCallback(() => {
+    switch (placementId) {
+      case SWITCH_PLACEMENT_ID: {
+        return (
+          <SwitcherPaywallContent
+            isFreeTrialEnabled={isFreeTrialEnabled}
+            trialProduct={trialProduct}
+            yearlyProduct={yearlyProduct}
+            onSelectProduct={setSelectedProduct}
+          />
+        );
+      }
+
+      case SELECTION_PLACEMENT_ID: {
+        return (
+          <SelectionPaywallContent
+            isFreeTrialEnabled={isFreeTrialEnabled}
+            selectedProduct={selectedProduct}
+            trialProduct={trialProduct}
+            weeklyProduct={weeklyProduct}
+            yearlyProduct={yearlyProduct}
+            onSelectProduct={setSelectedProduct}
+          />
+        );
+      }
+
+      default: {
+        return null;
+      }
+    }
+  }, [
+    isFreeTrialEnabled,
+    placementId,
+    selectedProduct,
+    trialProduct,
+    weeklyProduct,
+    yearlyProduct,
+  ]);
+
   useEffect(() => {
     AnalyticsService.logPaywallViewedEvent({
       contentName,
@@ -160,24 +204,10 @@ export const PaywallModal = () => {
           Skip
         </TextView>
 
-        {/* <SwitcherPaywallContent
-          yearlyProduct={yearlyProduct}
-          isFreeTrialEnabled={isFreeTrialEnabled}
-          trialProduct={trialProduct}
-          onSelectProduct={setSelectedProduct}
-        /> */}
-
-        <SelectionPaywallContent
-          isFreeTrialEnabled={isFreeTrialEnabled}
-          selectedProduct={selectedProduct}
-          trialProduct={trialProduct}
-          weeklyProduct={weeklyProduct}
-          yearlyProduct={yearlyProduct}
-          onSelectProduct={setSelectedProduct}
-        />
+        {renderPaywallContent()}
 
         <GradientButton style={styles.button} onPress={handleUnlockPress}>
-          Begin your adventure
+          {unlockButtonText}
         </GradientButton>
 
         <FooterActions onRestorePress={handleRestorePress} />

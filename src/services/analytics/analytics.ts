@@ -31,10 +31,12 @@ export class AnalyticsService {
   private static voiceViewLogCount = 0;
 
   private static logCommongEvent(eventName: string, params: object) {
-    const injectedParams = { ...params, segment: remoteConfigService.segment };
+    if (getStorageData().isAnaltyicsEnabled) {
+      const injectedParams = { ...params, segment: remoteConfigService.segment };
 
-    firebaseAnalytics().logEvent(eventName, injectedParams);
-    amplitude.track(eventName, injectedParams);
+      firebaseAnalytics().logEvent(eventName, injectedParams);
+      amplitude.track(eventName, injectedParams);
+    }
   }
 
   static setIsUserPaid(paid: boolean) {
