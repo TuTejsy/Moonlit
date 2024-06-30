@@ -94,7 +94,7 @@ export const useShowPaywallModal = (
           if (products) {
             openPaywall(products);
           } else {
-            loadProducts();
+            remoteConfigService.fetchAndActivate().then(loadProducts);
           }
         } else {
           onClose?.();
