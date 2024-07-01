@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { AdaptyPaywallProduct } from 'react-native-adapty';
+import { AdaptyPaywallProduct, OfferEligibility } from 'react-native-adapty';
 
 import { SubscriptionState } from './subscription.types';
 
 export const initialState: SubscriptionState = {
   products: null,
+  productsOffersEligibility: null,
 };
 
 export const subscriptionSlice = createSlice({
@@ -14,7 +15,14 @@ export const subscriptionSlice = createSlice({
     setProducts: (state, { payload }: PayloadAction<AdaptyPaywallProduct[]>) => {
       state.products = payload;
     },
+
+    setProductsOffersEligibility: (
+      state,
+      { payload }: PayloadAction<Record<string, OfferEligibility>>,
+    ) => {
+      state.productsOffersEligibility = payload;
+    },
   },
 });
 
-export const { setProducts } = subscriptionSlice.actions;
+export const { setProducts, setProductsOffersEligibility } = subscriptionSlice.actions;

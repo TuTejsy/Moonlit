@@ -5,3 +5,8 @@ import { RootState } from '../store';
 const subscriptionSelector = (state: RootState) => state.subscription;
 
 export const selectProducts = pipe(subscriptionSelector, (state) => state.products);
+
+export const selectProductsOffersEligibility = pipe(
+  subscriptionSelector,
+  (state) => state.productsOffersEligibility,
+);
