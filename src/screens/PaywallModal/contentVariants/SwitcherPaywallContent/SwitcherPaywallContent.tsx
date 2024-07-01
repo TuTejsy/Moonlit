@@ -14,6 +14,7 @@ import { makeStyles } from './SwitcherPaywallContent.styles';
 
 interface SwitcherPaywallContentProps {
   isFreeTrialEnabled: boolean;
+  isTrialEligible: boolean;
   onSelectProduct: (product: AdaptyPaywallProduct | undefined) => void;
   trialProduct: AdaptyPaywallProduct | undefined;
   yearlyProduct: AdaptyPaywallProduct | undefined;
@@ -21,6 +22,7 @@ interface SwitcherPaywallContentProps {
 
 export const SwitcherPaywallContent = ({
   isFreeTrialEnabled,
+  isTrialEligible,
   onSelectProduct,
   trialProduct,
   yearlyProduct,
@@ -55,9 +57,9 @@ export const SwitcherPaywallContent = ({
 
   const handleTrialEnabledChanged = useCallback(
     (isEnabled: boolean) => {
-      onSelectProduct(isEnabled ? trialProduct : yearlyProduct);
+      onSelectProduct(isEnabled && isTrialEligible ? trialProduct : yearlyProduct);
     },
-    [yearlyProduct, onSelectProduct, trialProduct],
+    [onSelectProduct, isTrialEligible, trialProduct, yearlyProduct],
   );
 
   return (

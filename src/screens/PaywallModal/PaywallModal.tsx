@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 
-import { adapty, AdaptyPaywallProduct, AdaptyProfile } from 'react-native-adapty';
+import { adapty, AdaptyPaywallProduct, AdaptyProfile, OfferEligibility } from 'react-native-adapty';
 
 import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
 import { GradientButton } from '@/components/GradientButton/GradientButton';
@@ -29,7 +29,8 @@ export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
 
-  const { contentName, onClose, placementId, products, source, tab } = params;
+  const { contentName, onClose, placementId, products, productsOffersEligibility, source, tab } =
+    params;
 
   const dispatch = useAppDispatch();
 
@@ -60,9 +61,13 @@ export const PaywallModal = () => {
     [products, trialProduct?.price?.amount],
   );
 
+  const isTrialEligible =
+    !!trialProduct &&
+    productsOffersEligibility[trialProduct.vendorProductId] === OfferEligibility.Eligible;
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<AdaptyPaywallProduct | undefined>(
-    remoteConfigService.toggleState ? trialProduct : yearlyProduct,
+    remoteConfigService.toggleState && isTrialEligible ? trialProduct : yearlyProduct,
   );
 
   const isFreeTrialEnabled = selectedProduct === trialProduct;
@@ -149,6 +154,7 @@ export const PaywallModal = () => {
         return (
           <SwitcherPaywallContent
             isFreeTrialEnabled={isFreeTrialEnabled}
+            isTrialEligible={isTrialEligible}
             trialProduct={trialProduct}
             yearlyProduct={yearlyProduct}
             onSelectProduct={setSelectedProduct}
@@ -160,6 +166,7 @@ export const PaywallModal = () => {
         return (
           <SelectionPaywallContent
             isFreeTrialEnabled={isFreeTrialEnabled}
+            isTrialEligible={isTrialEligible}
             selectedProduct={selectedProduct}
             trialProduct={trialProduct}
             weeklyProduct={weeklyProduct}
@@ -175,6 +182,7 @@ export const PaywallModal = () => {
     }
   }, [
     isFreeTrialEnabled,
+    isTrialEligible,
     placementId,
     selectedProduct,
     trialProduct,

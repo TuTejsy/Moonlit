@@ -1,5 +1,5 @@
 PODS:
-  - Adapty (2.10.3)
+  - Adapty (2.11.0)
   - Adjust (4.38.2):
     - Adjust/Core (= 4.38.2)
   - Adjust/Core (4.38.2)
@@ -1020,8 +1020,8 @@ PODS:
   - React-Mapbuffer (0.73.6):
     - glog
     - React-debug
-  - react-native-adapty-sdk (2.10.1):
-    - Adapty (= 2.10.3)
+  - react-native-adapty-sdk (2.11.0):
+    - Adapty (= 2.11.0)
     - React
   - react-native-adjust (4.38.1):
     - Adjust (= 4.38.2)
@@ -1806,7 +1806,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Adapty: adb16d30139d66297c70190f22b3e9a169e5130f
+  Adapty: 15fe29cec23af3967efaa843941afb61ca592d2a
   Adjust: 5a0f813fe079212bed61404d1f635cc330068b4a
   amplitude-react-native: 43098dfcfe1dcd6f0e9426017258ba79289d7a21
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
@@ -1855,7 +1855,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 4fed160d939e93a39049481f47744af246a7ac2c
   React-logger: 3eb80a977f0d9669468ef641a5e1fabbc50a09ec
   React-Mapbuffer: 84ea43c6c6232049135b1550b8c60b2faac19fab
-  react-native-adapty-sdk: 4bb30d713d5651e09295c2012098cf7a907df092
+  react-native-adapty-sdk: b8d132bf9a23126fc0ee6df1d90fb4cf5abbeac7
   react-native-adjust: 83114d391a4a7a438e2c4d8e8137bc7810e7076f
   react-native-blur: 4313c8f85ce921bbcc2e85e8ab3edae0673a41bf
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8

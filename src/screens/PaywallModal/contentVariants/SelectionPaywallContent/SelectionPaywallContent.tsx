@@ -18,6 +18,7 @@ import { makeStyles } from './SelectionPaywallContent.styles';
 
 interface SelectionPaywallContentProps {
   isFreeTrialEnabled: boolean;
+  isTrialEligible: boolean;
   onSelectProduct: (product: AdaptyPaywallProduct | undefined) => void;
   selectedProduct: AdaptyPaywallProduct | undefined;
   trialProduct: AdaptyPaywallProduct | undefined;
@@ -27,6 +28,7 @@ interface SelectionPaywallContentProps {
 
 export const SelectionPaywallContent = ({
   isFreeTrialEnabled,
+  isTrialEligible,
   onSelectProduct,
   selectedProduct,
   trialProduct,
@@ -167,13 +169,15 @@ export const SelectionPaywallContent = ({
         </View>
       </PressableView>
 
-      <View style={styles.freeTrialContainer}>
-        <TextView style={styles.freeTrialText} type='light'>
-          Enable free trial
-        </TextView>
+      {isTrialEligible && (
+        <View style={styles.freeTrialContainer}>
+          <TextView style={styles.freeTrialText} type='light'>
+            Enable free trial
+          </TextView>
 
-        <TrialSwitch value={isFreeTrialToggle} onValueChange={handleTrialEnabledChanged} />
-      </View>
+          <TrialSwitch value={isFreeTrialToggle} onValueChange={handleTrialEnabledChanged} />
+        </View>
+      )}
 
       <TextView style={styles.promotionText} type='regular'>
         Auto-renewable. Cancel anytime
