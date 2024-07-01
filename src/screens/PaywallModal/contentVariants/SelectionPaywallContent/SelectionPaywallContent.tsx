@@ -63,7 +63,7 @@ export const SelectionPaywallContent = ({
     [yearlyPricePerWeek, yearlyProduct?.price?.currencySymbol],
   );
 
-  const secondProduct = isFreeTrialToggle ? trialProduct : weeklyProduct;
+  const secondProduct = isFreeTrialToggle ? trialProduct : weeklyProduct || trialProduct;
 
   const weeklyPricePerWeekText = useMemo(
     () => `${secondProduct?.price?.currencySymbol}${secondProduct?.price?.amount || 0}`,

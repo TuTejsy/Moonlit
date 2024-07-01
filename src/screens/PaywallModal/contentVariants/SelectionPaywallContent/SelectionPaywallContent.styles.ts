@@ -67,6 +67,7 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
     productContainer: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.1),
+      borderColor: colors.transparent,
       borderRadius: 16,
       borderWidth: 1,
       flexDirection: 'row',
