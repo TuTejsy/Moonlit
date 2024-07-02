@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_WIDTH, WINDOW_WIDTH } from '@/constants/layout';
+import { SCREEN_WIDTH, WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
@@ -110,6 +110,7 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
     subtitle: {
       ...fonts.size_14,
       color: colors.opacityWhite(0.7),
+      display: WINDOW_HEIGHT < 680 ? 'none' : 'flex',
       marginTop: dh(8),
       textAlign: 'center',
     },

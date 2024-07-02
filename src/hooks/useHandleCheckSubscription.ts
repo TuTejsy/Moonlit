@@ -10,7 +10,6 @@ export const useHandleCheckSubscription = (onSuccess: (isSubscriptionActive: boo
   const dispatch = useAppDispatch();
 
   const handleCheckSubscription = useCallback(() => {
-    console.log('handleCheckSubscription');
     adapty.getProfile().then((profile) => {
       const isActive = profile?.accessLevels?.premium?.isActive;
 
@@ -21,8 +20,6 @@ export const useHandleCheckSubscription = (onSuccess: (isSubscriptionActive: boo
       } else {
         dispatch(lockFullVersion());
       }
-
-      console.log('onSuccess: ', onSuccess);
 
       onSuccess(isActive || false);
     });
