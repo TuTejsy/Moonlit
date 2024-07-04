@@ -46,7 +46,7 @@ export const SplashViewModal = () => {
       if (isSubscriptionActive) {
         navigation.goBack();
       } else {
-        showPaywallModal({ source: SOURCE.COLD_START });
+        showPaywallModal({ isSubscriptionExpired: true, source: SOURCE.COLD_START });
       }
     },
     [navigation, showPaywallModal],

@@ -66,11 +66,13 @@ export const useShowPaywallModal = (
   const showPaywallModal = useCallback(
     ({
       contentName,
+      isSubscriptionExpired = false,
       source,
       tab,
     }: {
       source: SOURCE;
       contentName?: string;
+      isSubscriptionExpired?: boolean;
       tab?: TabEventType;
     }) => {
       const openPaywall = (
@@ -100,7 +102,7 @@ export const useShowPaywallModal = (
       };
 
       try {
-        if (!isFullVerion) {
+        if (!isFullVerion || isSubscriptionExpired) {
           if (products && productsOffersEligibility) {
             openPaywall(products, productsOffersEligibility);
           } else {
