@@ -15,7 +15,6 @@ export const Fonts = Object.freeze({
 });
 
 export const { SERVER_URL } = Config;
-export const { SUPABASE_URL } = Config;
 
 export const IS_IOS = Platform.OS === 'ios';
 
