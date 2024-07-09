@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { MOONLIT_IOS_APP_LINK, SUPPORT_EMAIL } from '@/constants/common';
+import { STORE_LINK, SUPPORT_EMAIL } from '@/constants/common';
 import { useWebPagesNavigation } from '@/hooks/navigation/useWebPagesNavigation';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -45,21 +45,21 @@ export const SettingsScreen = () => {
 
   const handleRateAppPress = useCallback(() => {
     if (getStorageData().isReviewAsked) {
-      Linking.openURL(MOONLIT_IOS_APP_LINK);
+      Linking.openURL(STORE_LINK);
     } else {
       InAppReview.RequestInAppReview()
         .then(
           (reviewShown) => {
             if (!reviewShown) {
-              Linking.openURL(MOONLIT_IOS_APP_LINK);
+              Linking.openURL(STORE_LINK);
             }
           },
           () => {
-            Linking.openURL(MOONLIT_IOS_APP_LINK);
+            Linking.openURL(STORE_LINK);
           },
         )
         .catch((err) => {
-          Linking.openURL(MOONLIT_IOS_APP_LINK);
+          Linking.openURL(STORE_LINK);
         })
         .finally(() => {
           storage.set(StorageKeys.isReviewAsked, true);

@@ -16,6 +16,7 @@ export const TrialSwitch = React.memo(({ onValueChange, style, value }: TrialSwi
   return (
     <Switch
       style={[styles.switch, style]}
+      thumbColor={colors.white}
       value={value}
       trackColor={{
         false: colors.opacityWhite(0.2),
