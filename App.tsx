@@ -37,11 +37,9 @@ AudioRecordingsDB.open();
 
 adapty.activate(ADAPTY_API_KEY);
 
-if (IS_IOS) {
-  amplitude.init(AMPLITUDE_API_KEY, undefined, {
-    logLevel: __DEV__ ? amplitude.Types.LogLevel.Error : amplitude.Types.LogLevel.None,
-  });
-}
+amplitude.init(AMPLITUDE_API_KEY, undefined, {
+  logLevel: __DEV__ ? amplitude.Types.LogLevel.Error : amplitude.Types.LogLevel.None,
+});
 
 function App(): JSX.Element {
   const theme = useInitTheme();
