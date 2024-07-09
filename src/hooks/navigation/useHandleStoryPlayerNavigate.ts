@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 
-import { IS_IOS } from '@/constants/common';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SOURCE } from '@/services/analytics/analytics.constants';
@@ -32,7 +31,7 @@ export const useHandleStoryPlayerNavigate = ({
   const { showPaywallModal } = useShowPaywallModal();
 
   const handleStoryPlayerNavigate = useCallback(() => {
-    if (IS_IOS && !isFullVersion && !isFree) {
+    if (!isFullVersion && !isFree) {
       showPaywallModal({ contentName, source, tab });
     } else {
       navigation.navigate(RootRoutes.STORY_PLAYER, {
