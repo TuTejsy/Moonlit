@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { adapty, AdaptyPaywallProduct, OfferEligibility } from 'react-native-adapty';
 
-import { IS_ANDROID } from '@/constants/common';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
@@ -51,13 +50,10 @@ export const useShowPaywallModal = (
       });
 
       const products = await adapty.getPaywallProducts(paywall);
-
-      if (!(IS_ANDROID && __DEV__)) {
-        const offersEligibility = await adapty.getProductsIntroductoryOfferEligibility(products);
-        dispatch(setProductsOffersEligibility(offersEligibility));
-      }
+      const offersEligibility = await adapty.getProductsIntroductoryOfferEligibility(products);
 
       dispatch(setProducts(products));
+      dispatch(setProductsOffersEligibility(offersEligibility));
 
       return products;
     } catch (err) {
@@ -139,7 +135,7 @@ export const useShowPaywallModal = (
   }, []);
 
   return {
-    areProductsLoaded: !!products && !!(productsOffersEligibility || (IS_ANDROID && __DEV__)),
+    areProductsLoaded: !!products && !!productsOffersEligibility,
     isFullVerion,
     isSubscriptionAvailable: !isFullVerion,
     showPaywallModal,
