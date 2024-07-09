@@ -9,7 +9,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
-import { IS_IOS, MOONLIT_IOS_APP_LINK, SANDBOX } from '@/constants/common';
+import {
+  IS_IOS,
+  MOONLIT_IOS_APP_LINK,
+  MOONLIT_PLAY_STORE_APP_LINK,
+  SANDBOX,
+} from '@/constants/common';
 import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_NAMES } from '@/constants/stories';
@@ -26,7 +31,6 @@ import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
-import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { getHitSlop } from '@/utils/getHitSlop';
 import { dh } from '@/utils/sizes';
 
@@ -175,7 +179,7 @@ export const StoryPlayerScreen = () => {
     } else {
       Share.share(
         {
-          message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
+          message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_PLAY_STORE_APP_LINK}`,
         },
         {
           dialogTitle: `Explore ${story?.name}`,
