@@ -18,7 +18,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
       flex: 1,
     },
     blurViewContainer: {
-      backgroundColor: convertHEXtoRGBA(storyColor, IS_IOS ? 0.3 : 0.7),
+      backgroundColor: IS_IOS ? convertHEXtoRGBA(storyColor, 0.3) : storyColor,
       borderRadius: 16,
       height: BUTTON_HEIGHT,
       left: 0,

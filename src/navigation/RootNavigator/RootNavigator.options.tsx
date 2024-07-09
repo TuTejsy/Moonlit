@@ -11,8 +11,6 @@ import {
   ANIMATION_STIFFNESS,
 } from '@/screens/GetStartedScreen/GetStartedScreen.constants';
 
-import { splashViewModalInterpolator } from './utils/splashViewModalInterpolator';
-
 // import { ModalHeader } from '@/components/Headers/ModalHeader/ModalHeader';
 // import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 
@@ -32,7 +30,7 @@ export const rootModalOptions = ({ colors }: ITheme): StackNavigationOptions => 
   headerShadowVisible: false,
   headerShown: false,
   presentation: IS_IOS ? 'transparentModal' : 'modal',
-  ...(IS_IOS ? TransitionPresets.ModalSlideFromBottomIOS : undefined),
+  ...(IS_IOS ? TransitionPresets.ModalSlideFromBottomIOS : TransitionPresets.FadeFromBottomAndroid),
 });
 
 export const paywallOptions: StackNavigationOptions = {
@@ -40,9 +38,8 @@ export const paywallOptions: StackNavigationOptions = {
 };
 
 export const voiceSettingsModalOptions: StackNavigationOptions = {
-  cardOverlay: () => null,
-  cardOverlayEnabled: false,
-  presentation: 'transparentModal',
+  ...(IS_IOS && { cardOverlay: () => null, cardOverlayEnabled: false }),
+  presentation: IS_IOS ? 'transparentModal' : 'card',
 };
 
 export const splashViewModalOptions: StackNavigationOptions = {

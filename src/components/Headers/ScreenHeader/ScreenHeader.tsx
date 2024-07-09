@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo, useState } from 'react';
-import { LayoutChangeEvent, StyleProp, TextStyle, View, ViewStyle } from 'react-native';
+import { LayoutChangeEvent, StyleProp, TextStyle, View, ViewProps, ViewStyle } from 'react-native';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, {
@@ -22,6 +22,7 @@ import { makeStyles } from './ScreenHeader.styles';
 export interface ScreenHeaderProps {
   color?: string;
   onGoBack?: () => void;
+  pointerEvents?: ViewProps['pointerEvents'];
   renderLeft?: ReactNode;
   renderRight?: ReactNode;
   scrollPositionSharedValue?: SharedValue<number>;
@@ -37,6 +38,7 @@ export interface ScreenHeaderProps {
 export const ScreenHeader = ({
   color,
   onGoBack,
+  pointerEvents,
   renderLeft,
   renderRight = null,
   scrollPositionSharedValue,
@@ -103,7 +105,7 @@ export const ScreenHeader = ({
   };
 
   return (
-    <Animated.View style={[styles.container, style]}>
+    <Animated.View pointerEvents={pointerEvents} style={[styles.container, style]}>
       <View style={styles.headerContainer}>
         <View style={styles.controls} onLayout={onLayout}>
           {renderLeft === undefined ? (

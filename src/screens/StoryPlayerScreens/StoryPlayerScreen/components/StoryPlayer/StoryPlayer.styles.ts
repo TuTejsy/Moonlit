@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { IS_ANDROID } from '@/constants/common';
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
@@ -9,13 +10,18 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     blurView: {
       flex: 1,
     },
-    blurViewContainer: {
-      height: WINDOW_HEIGHT,
-      left: 0,
-      position: 'absolute',
-      top: 0,
-      width: WINDOW_WIDTH,
-    },
+    blurViewContainer: StyleSheet.flatten([
+      {
+        height: WINDOW_HEIGHT,
+        left: 0,
+        position: 'absolute',
+        top: 0,
+        width: WINDOW_WIDTH,
+      },
+      IS_ANDROID && {
+        backgroundColor: colors.opacityBlack(0.7),
+      },
+    ]),
     playerActionsContainer: {
       alignItems: 'center',
       flexDirection: 'row',

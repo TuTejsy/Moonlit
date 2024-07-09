@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { IS_IOS } from '@/constants/common';
 import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -113,13 +114,15 @@ export function StoryPlayer({
         pointerEvents='none'
         style={[styles.blurViewContainer, animatedBlurViewContainerStyle]}
       >
-        <BlurView
-          blurAmount={3}
-          blurType='dark'
-          pointerEvents='none'
-          reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
-          style={styles.blurView}
-        />
+        {IS_IOS && (
+          <BlurView
+            blurAmount={3}
+            blurType='dark'
+            pointerEvents='none'
+            reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
+            style={styles.blurView}
+          />
+        )}
       </Animated.View>
 
       {!isStoryLoading && (

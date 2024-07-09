@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 
+import { IS_ANDROID } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
@@ -32,6 +33,9 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
         paddingHorizontal: 12,
         position: 'absolute',
         width: WINDOW_WIDTH - 14,
+      },
+      IS_ANDROID && {
+        backgroundColor: storyColor || colors.imagePurple,
       },
     ]),
     image: {

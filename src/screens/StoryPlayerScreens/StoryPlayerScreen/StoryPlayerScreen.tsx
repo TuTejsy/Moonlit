@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { View, Share } from 'react-native';
 
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import { useIsFocused } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { runOnJS, useAnimatedReaction, withTiming } from 'react-native-reanimated';
@@ -10,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import {
+  IS_ANDROID,
   IS_IOS,
   MOONLIT_IOS_APP_LINK,
   MOONLIT_PLAY_STORE_APP_LINK,
@@ -63,6 +65,8 @@ export const StoryPlayerScreen = () => {
   const navigation = useAppNavigation<RootRoutes.STORY_PLAYER>();
   const route = useAppRoute<RootRoutes.STORY_PLAYER>();
   const { storyId, tab } = route.params;
+
+  const isFocused = useIsFocused();
 
   const [story] = useStory(storyId, [
     'full_cover_url',
@@ -164,10 +168,6 @@ export const StoryPlayerScreen = () => {
 
   const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue, handlePauseStory);
 
-  const handleGoBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
-
   const handleSharePress = useCallback(() => {
     if (IS_IOS) {
       ShareIOS?.share({
@@ -251,6 +251,7 @@ export const StoryPlayerScreen = () => {
       style={styles.screen}
     >
       <ScreenHeader
+        pointerEvents={IS_ANDROID && !isFocused ? 'none' : 'auto'}
         style={styles.header}
         subtitle={storyCategories?.[0]}
         title={story?.name}
@@ -259,7 +260,6 @@ export const StoryPlayerScreen = () => {
             <Icons.Share />
           </TouchableOpacity>
         }
-        onGoBack={handleGoBack}
       />
 
       <GestureDetector gesture={gesture}>

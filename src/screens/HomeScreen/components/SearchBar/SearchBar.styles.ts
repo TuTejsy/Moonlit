@@ -14,18 +14,13 @@ export const makeStyles = (
   { isInputFocused }: Context,
 ) =>
   StyleSheet.create({
-    blurContainer: StyleSheet.flatten([
-      {
-        height: 48,
-        left: 0,
-        position: 'absolute',
-        top: 0,
-        width: SCREEN_WIDTH,
-      },
-      IS_ANDROID && {
-        backgroundColor: colors.opacityBlack(0.7),
-      },
-    ]),
+    blurContainer: {
+      height: 48,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+      width: SCREEN_WIDTH,
+    },
     closeButton: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.2),
