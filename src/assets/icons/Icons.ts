@@ -6,6 +6,7 @@ import { Download } from './common/Download';
 import { DownloadRound } from './common/DownloadRound';
 import { Favorite } from './common/Favorite';
 import { FavoriteBig } from './common/FavoriteBig';
+import { FilledStar } from './common/FilledStar';
 import { Info } from './common/Info';
 import { Loader } from './common/Loader';
 import { Lock } from './common/Lock';
@@ -39,6 +40,7 @@ export const Icons = {
   Favorite,
   FavoriteBig,
   FavoritesTab,
+  FilledStar,
   GoBack,
   GoForward,
   HomeTab,

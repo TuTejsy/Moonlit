@@ -1,10 +1,24 @@
 import { StyleSheet } from 'react-native';
 
+import { IS_ANDROID } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
+    backButtonContainer: {
+      alignItems: 'center',
+      marginTop: dh(35),
+    },
+    backText: {
+      ...fonts.size_16,
+      color: colors.opacityWhite(0.5),
+    },
+    continueButton: StyleSheet.flatten([
+      IS_ANDROID && {
+        width: dw(205),
+      },
+    ]),
     continueText: {
       ...fonts.size_16,
       color: colors.white,

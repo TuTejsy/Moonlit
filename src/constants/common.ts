@@ -38,6 +38,7 @@ export const STORE_LINK = IS_ANDROID ? MOONLIT_PLAY_STORE_APP_LINK : MOONLIT_IOS
 export const MOONLIT_SITE_URL = 'https://moonlit.ltd/';
 export const PRIVACY_POLICY_URL = 'https://moonlit.ltd/docs/privacy_policy';
 export const TERMS_OF_SERVICE_URL = 'https://moonlit.ltd/docs/terms_of_service';
+export const GOOGLE_PLAY_SUBSCRIPTIONS_LINK = 'https://play.google.com/store/account/subscriptions';
 
 export const SANDBOX = {
   DOCUMENTS: {

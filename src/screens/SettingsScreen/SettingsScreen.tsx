@@ -8,7 +8,12 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { STORE_LINK, SUPPORT_EMAIL } from '@/constants/common';
+import {
+  GOOGLE_PLAY_SUBSCRIPTIONS_LINK,
+  IS_ANDROID,
+  STORE_LINK,
+  SUPPORT_EMAIL,
+} from '@/constants/common';
 import { useWebPagesNavigation } from '@/hooks/navigation/useWebPagesNavigation';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -67,6 +72,12 @@ export const SettingsScreen = () => {
     }
   }, []);
 
+  const handleManageSubscriptionPress = useCallback(() => {
+    if (IS_ANDROID) {
+      Linking.openURL(GOOGLE_PLAY_SUBSCRIPTIONS_LINK);
+    }
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
       AnalyticsService.logSettingsViewEvent();
@@ -85,6 +96,14 @@ export const SettingsScreen = () => {
       </TextView>
 
       {!isFullVersion && <PromotionBanner />}
+
+      {isFullVersion && IS_ANDROID && (
+        <MenuItem
+          icon={<Icons.FilledStar />}
+          title='Manage your supscription'
+          onPress={handleManageSubscriptionPress}
+        />
+      )}
 
       <MenuItem icon={<Icons.Info />} title='Contact us' onPress={handleHelpAndSupportPress} />
       <MenuItem icon={<Icons.Doc />} title='Terms of service' onPress={openTermsOfService} />

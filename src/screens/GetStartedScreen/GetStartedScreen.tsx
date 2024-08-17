@@ -3,6 +3,8 @@ import { View, Image } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
+  Extrapolation,
+  interpolate,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -12,6 +14,7 @@ import Animated, {
 
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { IS_ANDROID } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -65,6 +68,13 @@ export const GetStartedScreen = () => {
     currentStepSharedValue.value = withTiming(currentStepRef.current);
   }, [currentStepSharedValue, showPaywallModal]);
 
+  const handleBackPress = useCallback(() => {
+    if (currentStepRef.current !== 0) {
+      currentStepRef.current -= 1;
+      currentStepSharedValue.value = withTiming(currentStepRef.current);
+    }
+  }, [currentStepSharedValue]);
+
   const stepImagesAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
@@ -110,6 +120,10 @@ export const GetStartedScreen = () => {
         }),
       },
     ],
+  }));
+
+  const backButtonAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(currentStepSharedValue.value, [0, 1], [0, 1], Extrapolation.CLAMP),
   }));
 
   useEffect(() => {
@@ -170,7 +184,17 @@ export const GetStartedScreen = () => {
       </View>
 
       <View style={styles.controls}>
-        <GradientButton onPress={handleContinuePress}>Continue</GradientButton>
+        <GradientButton style={styles.continueButton} onPress={handleContinuePress}>
+          Continue
+        </GradientButton>
+
+        {IS_ANDROID && (
+          <Animated.View style={[styles.backButtonContainer, backButtonAnimatedStyle]}>
+            <TextView style={styles.backText} type='bold' onPress={handleBackPress}>
+              Back
+            </TextView>
+          </Animated.View>
+        )}
 
         <View style={styles.indicatorsContainer}>
           {STEPS.map(({ title }, step) => (
