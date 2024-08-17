@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_WIDTH } from '@/constants/layout';
+import { SCREEN_WIDTH, SUFFICIENT_SCREEN_WIDTH } from '@/constants/layout';
 import { TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
@@ -24,7 +24,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { hasPlay
       justifyContent: 'space-between',
       paddingBottom: insets.bottom,
       paddingHorizontal: 57,
-      width: '100%',
+      width: SUFFICIENT_SCREEN_WIDTH,
     },
     tabBarShadow: {
       bottom: 0,
@@ -38,6 +38,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { hasPlay
       shadowRadius: 100,
     },
     tabBarWrapper: {
+      alignItems: 'center',
       height: TAB_BAR_HEIGHT + insets.bottom,
       justifyContent: 'flex-end',
       width: SCREEN_WIDTH,

@@ -143,6 +143,7 @@ export const GetStartedScreen = () => {
           {STEPS.map(({ image, title }, step) => (
             <View key={title} style={styles.stepContainer}>
               <Image
+                resizeMode='contain'
                 source={image}
                 style={[styles.image, styles[`image${step + 1}` as 'image1' | 'image2' | 'image3']]}
               />

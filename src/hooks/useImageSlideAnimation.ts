@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent } from 'react-native';
 
@@ -5,11 +6,13 @@ import { useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-
 
 export const useImageSlideAnimation = (containerWidth: number) => {
   const imageTranslateXSharedValue = useSharedValue(0);
+  const imageWidthSharedValue = useSharedValue(1);
 
   const [imageWidth, setImageWidth] = useState(0);
 
   const imageAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: imageTranslateXSharedValue.value }],
+    ...(imageWidthSharedValue.value && { width: imageWidthSharedValue.value }),
   }));
 
   const handleImageLayout = useCallback((event: LayoutChangeEvent) => {
@@ -29,8 +32,10 @@ export const useImageSlideAnimation = (containerWidth: number) => {
         -1,
         true,
       );
+    } else if (imageWidth < containerWidth) {
+      imageWidthSharedValue.value = containerWidth;
     }
-  }, [containerWidth, imageTranslateXSharedValue, imageTranslateXSharedValue.value, imageWidth]);
+  }, [containerWidth, imageWidth]);
 
   return {
     handleImageLayout,

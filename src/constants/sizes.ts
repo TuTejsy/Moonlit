@@ -1,8 +1,6 @@
-import { dw } from '@/utils/sizes';
-
 import { WINDOW_HEIGHT } from './layout';
 
-export const HORIZONTAL_PADDING = dw(16);
+export const HORIZONTAL_PADDING = 16;
 
 export const PURE_TAB_HEIGHT = 52;
 

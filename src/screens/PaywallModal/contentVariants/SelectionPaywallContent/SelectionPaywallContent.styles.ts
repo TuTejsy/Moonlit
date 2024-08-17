@@ -1,6 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_WIDTH, WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
+import {
+  SCREEN_MAX_WIDTH,
+  SUFFICIENT_SCREEN_WIDTH,
+  WINDOW_HEIGHT,
+  WINDOW_WIDTH,
+} from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
@@ -9,17 +14,17 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
     checkbox: {
       alignItems: 'center',
       borderColor: colors.opacityWhite(0.2),
-      borderRadius: dw(12),
+      borderRadius: dw(12, SCREEN_MAX_WIDTH),
       borderWidth: 1,
-      height: dw(24),
+      height: dw(24, SCREEN_MAX_WIDTH),
       justifyContent: 'center',
-      width: dw(24),
+      width: dw(24, SCREEN_MAX_WIDTH),
     },
     checkboxMark: {
       backgroundColor: colors.white,
-      borderRadius: dw(6),
-      height: dw(12),
-      width: dw(12),
+      borderRadius: dw(6, SCREEN_MAX_WIDTH),
+      height: dw(12, SCREEN_MAX_WIDTH),
+      width: dw(12, SCREEN_MAX_WIDTH),
     },
     freeTrialContainer: {
       alignItems: 'center',
@@ -27,12 +32,12 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       borderRadius: 16,
       borderWidth: 1,
       flexDirection: 'row',
-      height: dw(56),
+      height: dw(56, SCREEN_MAX_WIDTH),
       justifyContent: 'space-between',
       marginTop: dh(12),
       paddingLeft: HORIZONTAL_PADDING,
       paddingRight: 24,
-      width: SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
+      width: SUFFICIENT_SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
     },
     freeTrialSwitch: {
       height: 28,
@@ -47,7 +52,7 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       borderRadius: 16,
       height: 16,
       justifyContent: 'center',
-      left: SCREEN_WIDTH / 2 - HORIZONTAL_PADDING * 2 - 34,
+      left: SUFFICIENT_SCREEN_WIDTH / 2 - HORIZONTAL_PADDING * 2 - 34,
       position: 'absolute',
       top: -8,
       width: 68,
@@ -71,13 +76,13 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       borderRadius: 16,
       borderWidth: 1,
       flexDirection: 'row',
-      height: dw(56),
+      height: dw(56, SCREEN_MAX_WIDTH),
       justifyContent: 'space-between',
       marginTop: dh(12),
       paddingLeft: HORIZONTAL_PADDING,
       paddingRight: 26,
       position: 'relative',
-      width: SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
+      width: SUFFICIENT_SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
     },
     productDescription: {
       ...fonts.size_14,
