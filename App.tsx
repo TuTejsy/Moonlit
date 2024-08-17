@@ -13,7 +13,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { AppLogicProvider } from '@/components/Providers/AppLogicProvider/AppLogicProvider';
 import { ADAPTY_API_KEY, AMPLITUDE_API_KEY } from '@/constants/auth';
-import { IS_IOS } from '@/constants/common';
 import { AudioRecordingsDB, StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
