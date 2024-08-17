@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
+import { IS_SQUARE_SCREEN } from '@/constants/layout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
@@ -107,11 +108,11 @@ export const SelectionPaywallContent = ({
   return (
     <>
       <TextView style={styles.title} type='bold'>
-        Get access{`\n`}to all tales
+        Get access{IS_SQUARE_SCREEN ? ' ' : `\n`}to all tales
       </TextView>
 
       <TextView style={styles.subtitle} type='regular'>
-        Discover unique voices and{`\n`}listen to classic fary tales
+        Discover unique voices and{IS_SQUARE_SCREEN ? ' ' : `\n`}listen to classic fary tales
       </TextView>
 
       <Image source={voicesImage} style={styles.voicesImage} />
