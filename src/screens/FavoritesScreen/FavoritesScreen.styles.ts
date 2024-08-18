@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_WIDTH } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT, TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
@@ -9,7 +8,7 @@ interface Context {
 }
 
 export const makeStyles = (
-  { colors, fonts, horizontalPadding, insets }: MakeStylesProps,
+  { colors, fonts, horizontalPadding, insets, windowWidth }: MakeStylesProps,
   { tabWidth }: Context,
 ) =>
   StyleSheet.create({
@@ -27,7 +26,7 @@ export const makeStyles = (
       position: 'relative',
     },
     listContainer: {
-      width: SCREEN_WIDTH,
+      width: windowWidth,
     },
     listContent: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,

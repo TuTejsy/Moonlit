@@ -6,7 +6,6 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
 import { IS_IOS } from '@/constants/common';
-import { WINDOW_WIDTH } from '@/constants/layout';
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
@@ -44,6 +43,7 @@ export function VoiceSettingsModal() {
   const navigation = useAppNavigation<RootRoutes.VOICE_SETTINGS_MODAL>();
 
   const { colors } = useTheme();
+  const { windowWidth } = useLayout();
   const audioRecordingLayout = useAudioRecordingLayout();
   const { audioRecordingWidth } = audioRecordingLayout;
 
@@ -90,8 +90,8 @@ export function VoiceSettingsModal() {
   );
 
   const numColumns = useMemo(() => {
-    return Math.floor(WINDOW_WIDTH - (horizontalPadding * 2) / audioRecordingWidth);
-  }, [audioRecordingWidth, horizontalPadding]);
+    return Math.floor(windowWidth - (horizontalPadding * 2) / audioRecordingWidth);
+  }, [audioRecordingWidth, horizontalPadding, windowWidth]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<AudioRecordingSchema | typeof MORE_VOICES_PLACEHOLDER>) => {

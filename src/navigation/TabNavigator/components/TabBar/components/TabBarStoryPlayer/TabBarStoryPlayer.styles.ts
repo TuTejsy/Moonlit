@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
-import { WINDOW_WIDTH } from '@/constants/layout';
 import { TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
@@ -10,7 +9,10 @@ interface Context {
   storyColor: string;
 }
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyColor }: Context) =>
+export const makeStyles = (
+  { colors, fonts, insets, windowWidth }: MakeStylesProps,
+  { storyColor }: Context,
+) =>
   StyleSheet.create({
     blurView: {
       backgroundColor: storyColor ? convertHEXtoRGBA(storyColor, 0.3) : colors.imagePurple,
@@ -18,7 +20,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
       left: 0,
       position: 'absolute',
       top: 0,
-      width: WINDOW_WIDTH - 14,
+      width: windowWidth - 14,
     },
     container: StyleSheet.flatten([
       {
@@ -32,7 +34,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
         overflow: 'hidden',
         paddingHorizontal: 12,
         position: 'absolute',
-        width: WINDOW_WIDTH - 14,
+        width: windowWidth - 14,
       },
       IS_ANDROID && {
         backgroundColor: storyColor || colors.imagePurple,

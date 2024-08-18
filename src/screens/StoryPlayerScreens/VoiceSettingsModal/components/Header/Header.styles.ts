@@ -1,10 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import { WINDOW_WIDTH } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts, insets, windowWidth }: MakeStylesProps) =>
   StyleSheet.create({
     closeIcon: {
       left: 16,
@@ -28,6 +27,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       justifyContent: 'center',
       marginTop: insets.top,
       position: 'relative',
-      width: WINDOW_WIDTH,
+      width: windowWidth,
     },
   });

@@ -1,14 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
-
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, insets, windowWidth }: MakeStylesProps) =>
   StyleSheet.create({
     gradient: {
       height: insets.top + 68,
-      width: SCREEN_WIDTH,
+      width: windowWidth,
     },
     gradientContainer: {
       left: 0,
