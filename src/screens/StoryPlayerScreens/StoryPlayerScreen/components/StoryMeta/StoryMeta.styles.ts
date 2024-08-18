@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+
+import { STORY_CONTAINER_MIN_WIDTH } from '../../StoryPlayerScreen.constants';
 
 export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
   StyleSheet.create({
@@ -19,7 +20,7 @@ export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
       flex: 1,
       paddingHorizontal: HORIZONTAL_PADDING,
       paddingTop: dh(32),
-      width: SCREEN_WIDTH - 32,
+      width: STORY_CONTAINER_MIN_WIDTH,
     },
     storyText: {
       ...fonts.size_14,
