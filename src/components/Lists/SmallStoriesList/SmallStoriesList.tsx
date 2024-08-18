@@ -9,6 +9,8 @@ import {
   ViewStyle,
 } from 'react-native';
 
+import { WINDOW_WIDTH } from '@/constants/layout';
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { SOURCE } from '@/services/analytics/analytics.constants';
@@ -16,6 +18,7 @@ import { TabEventType } from '@/services/analytics/analytics.types';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
+import { PREVIEW_SIZE } from './components/StoryPreview/StoryPreview.constants';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
@@ -58,6 +61,10 @@ export function SmallStoriesList({
     return stories;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayCount, stories, storiesVersion]);
+
+  const numColumns = useMemo(() => {
+    return Math.floor(WINDOW_WIDTH / (PREVIEW_SIZE + HORIZONTAL_PADDING));
+  }, []);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<StorySchema>) => {
@@ -105,7 +112,7 @@ export function SmallStoriesList({
       extraData={storiesVersion}
       indicatorStyle={indicatorStyle}
       keyExtractor={keyExtractor}
-      numColumns={2}
+      numColumns={numColumns}
       renderItem={renderItem}
       scrollEnabled={isScrollable}
       scrollEventThrottle={16}

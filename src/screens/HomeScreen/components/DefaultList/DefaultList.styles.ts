@@ -25,6 +25,7 @@ export const makeStyles = ({ insets }: MakeStylesProps) =>
       marginTop: 16,
     },
     promotionBanner: {
+      alignSelf: 'center',
       marginHorizontal: HORIZONTAL_PADDING,
       marginVertical: 40,
     },

@@ -15,7 +15,7 @@ import { Empty } from '@/components/Empty/Empty';
 import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
 import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { SCREEN_WIDTH } from '@/constants/layout';
+import { WINDOW_WIDTH } from '@/constants/layout';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -60,7 +60,7 @@ export const FavoritesScreen = () => {
       {
         translateX: interpolate(
           scrollOffsetSharedValue.value,
-          [0, SCREEN_WIDTH],
+          [0, WINDOW_WIDTH],
           [4, TAB_WIDTH - 4],
           Extrapolation.CLAMP,
         ),
@@ -71,7 +71,7 @@ export const FavoritesScreen = () => {
   const animatedSavedTabStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       scrollOffsetSharedValue.value,
-      [0, SCREEN_WIDTH],
+      [0, WINDOW_WIDTH],
       [1, 0.5],
       Extrapolation.CLAMP,
     ),
@@ -80,7 +80,7 @@ export const FavoritesScreen = () => {
   const animatedRecentlyPlayedTabStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       scrollOffsetSharedValue.value,
-      [0, SCREEN_WIDTH],
+      [0, WINDOW_WIDTH],
       [0.5, 1],
       Extrapolation.CLAMP,
     ),
@@ -105,7 +105,7 @@ export const FavoritesScreen = () => {
   }, [changeBarColor, isFirstTabScrolled, scrollViewRef]);
 
   const handleRecentlyPlayedTabPress = useCallback(() => {
-    scrollViewRef.current?.scrollTo({ x: SCREEN_WIDTH });
+    scrollViewRef.current?.scrollTo({ x: WINDOW_WIDTH });
     changeBarColor(isSecondTabScrolled);
   }, [changeBarColor, isSecondTabScrolled, scrollViewRef]);
 
@@ -117,18 +117,18 @@ export const FavoritesScreen = () => {
   const handleScrollEndDrag = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const { contentOffset } = event.nativeEvent;
-      const scrollPosition = Math.round(contentOffset.x / SCREEN_WIDTH);
+      const scrollPosition = Math.round(contentOffset.x / WINDOW_WIDTH);
 
       const scrollDiff = contentOffset.x - startScrollPositionRef.current;
 
       if (Math.abs(scrollDiff) > 70) {
         if (scrollDiff > 0) {
-          scrollViewRef.current?.scrollTo({ x: SCREEN_WIDTH });
+          scrollViewRef.current?.scrollTo({ x: WINDOW_WIDTH });
         } else {
           scrollViewRef.current?.scrollTo({ x: 0 });
         }
       } else {
-        scrollViewRef.current?.scrollTo({ x: scrollPosition * SCREEN_WIDTH });
+        scrollViewRef.current?.scrollTo({ x: scrollPosition * WINDOW_WIDTH });
       }
 
       const isScrolled = scrollPosition === 1 ? isSecondTabScrolled : isFirstTabScrolled;

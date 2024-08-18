@@ -9,7 +9,6 @@ import { TAB_WIDTH } from './FavoritesScreen.constants';
 export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     blurViewContainer: {
-      left: 0,
       position: 'absolute',
       top: 0,
     },
@@ -36,6 +35,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       marginBottom: 16,
     },
     screen: {
+      alignItems: 'center',
       backgroundColor: colors.black,
       flex: 1,
       position: 'relative',
