@@ -38,9 +38,17 @@
     if (imageView.bounds.size.height > rootView.bounds.size.height) {
       double heightDiff = imageView.bounds.size.height - rootView.bounds.size.height;
       
-      imageView.layer.frame = CGRectMake(rootView.bounds.origin.x, -heightDiff /2, rootView.bounds.size.width, imageView.bounds.size.height);
+      imageView.layer.frame = CGRectMake(rootView.bounds.origin.x, -heightDiff / 2, rootView.bounds.size.width, imageView.bounds.size.height);
     } else {
-      imageView.layer.frame = rootView.bounds;
+      double widthRatio = rootView.bounds.size.width / imageView.bounds.size.width;
+      double newImageHeight = imageView.bounds.size.height * widthRatio;
+      double heightDiff = newImageHeight - rootView.bounds.size.height;
+      
+      if (heightDiff > 0) {
+        imageView.layer.frame = CGRectMake(rootView.bounds.origin.x, -heightDiff / 2, imageView.bounds.size.width * widthRatio, newImageHeight);
+      } else {
+        imageView.layer.frame = rootView.bounds;
+      }
     }
         
     [rootView.layer insertSublayer:imageView.layer atIndex:0];
