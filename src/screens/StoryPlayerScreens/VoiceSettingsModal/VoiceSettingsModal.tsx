@@ -6,6 +6,8 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
 import { IS_IOS } from '@/constants/common';
+import { WINDOW_WIDTH } from '@/constants/layout';
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
@@ -20,6 +22,7 @@ import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { AudioRecording } from './components/AudioRecording/AudioRecording';
+import { AUDIO_RECORDING_WIDTH } from './components/AudioRecording/AudioRecording.constants';
 import { Header } from './components/Header/Header';
 import { MoreVoicesPlaceholder } from './components/MoreVoicesPlaceholder/MoreVoicesPlaceholder';
 import { MORE_VOICES_PLACEHOLDER } from './VoiceSettingsModal.constants';
@@ -79,6 +82,10 @@ export function VoiceSettingsModal() {
     [handleClosePress, onSelectAudioRecording, selectedAudioRecordingId, source, storyName, tab],
   );
 
+  const numColumns = useMemo(() => {
+    return Math.floor(WINDOW_WIDTH / (AUDIO_RECORDING_WIDTH + HORIZONTAL_PADDING));
+  }, []);
+
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<AudioRecordingSchema | typeof MORE_VOICES_PLACEHOLDER>) => {
       if (item.id === MORE_VOICES_PLACEHOLDER.id) {
@@ -137,7 +144,7 @@ export function VoiceSettingsModal() {
         data={flatListData}
         extraData={auidioRecoridngsVersion}
         keyExtractor={keyExtractor}
-        numColumns={2}
+        numColumns={numColumns}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
         style={styles.audioRecordingsList}

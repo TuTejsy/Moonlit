@@ -1,10 +1,15 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
+import {
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  SUFFICIENT_WINDOW_WIDTH,
+  WINDOW_MAX_WIDTH,
+} from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
   StyleSheet.create({
     addVoiceText: {
       ...fonts.size_14,
@@ -14,6 +19,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStyles
       flex: 1,
     },
     audioRecordingsListContainer: {
+      alignItems: 'center',
       paddingHorizontal: HORIZONTAL_PADDING - dw(7.5),
       paddingTop: 10,
     },
@@ -46,7 +52,10 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets, zIndex }: MakeStyles
       flex: 1,
     },
     unlockButton: {
+      alignSelf: 'center',
       marginBottom: insets.bottom + 17,
       marginHorizontal: HORIZONTAL_PADDING,
+      maxWidth: WINDOW_MAX_WIDTH,
+      width: '100%',
     },
   });

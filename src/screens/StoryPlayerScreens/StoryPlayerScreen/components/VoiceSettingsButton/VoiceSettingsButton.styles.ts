@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { IS_IOS } from '@/constants/common';
-import { WINDOW_WIDTH } from '@/constants/layout';
+import { SUFFICIENT_WINDOW_WIDTH, WINDOW_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
@@ -57,6 +57,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
     voiceSettingsButtonContainer: {
       bottom: insets.bottom + BUTTON_BOTTOM_PADDING,
       position: 'absolute',
-      width: WINDOW_WIDTH - HORIZONTAL_PADDING * 2,
+      width: SUFFICIENT_WINDOW_WIDTH - HORIZONTAL_PADDING * 2,
     },
   });
