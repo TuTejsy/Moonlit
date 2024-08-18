@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
-import { WINDOW_WIDTH } from '@/constants/layout';
+import { SCREEN_MAX_WIDTH, WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
@@ -16,7 +16,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     },
     continueButton: StyleSheet.flatten([
       IS_ANDROID && {
-        width: dw(205),
+        width: dw(205, SCREEN_MAX_WIDTH),
       },
     ]),
     continueText: {
@@ -39,13 +39,13 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       width: '100%',
     },
     image1: {
-      height: dw(483),
+      height: dw(483, SCREEN_MAX_WIDTH),
     },
     image2: {
-      height: dw(540),
+      height: dw(540, SCREEN_MAX_WIDTH),
     },
     image3: {
-      height: dw(617),
+      height: dw(617, SCREEN_MAX_WIDTH),
       marginTop: 0,
     },
     indicatorsContainer: {
