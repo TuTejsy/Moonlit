@@ -1,6 +1,8 @@
-import { WINDOW_HEIGHT } from './layout';
+import { dw } from '@/utils/sizes';
 
-export const HORIZONTAL_PADDING = 16;
+import { SCREEN_MAX_WIDTH, WINDOW_HEIGHT } from './layout';
+
+export const HORIZONTAL_PADDING = dw(16, SCREEN_MAX_WIDTH);
 
 export const PURE_TAB_HEIGHT = 52;
 

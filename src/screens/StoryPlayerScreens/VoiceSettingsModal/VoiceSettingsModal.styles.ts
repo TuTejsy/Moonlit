@@ -55,7 +55,6 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       alignSelf: 'center',
       marginBottom: insets.bottom + 17,
       marginHorizontal: HORIZONTAL_PADDING,
-      maxWidth: WINDOW_MAX_WIDTH,
-      width: '100%',
+      width: SUFFICIENT_WINDOW_WIDTH - HORIZONTAL_PADDING * 2,
     },
   });
