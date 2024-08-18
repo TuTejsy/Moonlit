@@ -1,21 +1,28 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_MAX_WIDTH, SUFFICIENT_SCREEN_WIDTH, WINDOW_WIDTH } from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
+export const makeStyles = ({
+  colors,
+  dh,
+  dw,
+  fonts,
+  sufficientWindowWidth,
+  windowMaxWidth,
+  windowWidth,
+}: MakeStylesProps) =>
   StyleSheet.create({
     freeTrialContainer: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.1),
       borderRadius: 16,
       flexDirection: 'row',
-      height: dw(72, SCREEN_MAX_WIDTH),
+      height: dw(72, windowMaxWidth),
       marginTop: dh(24),
       paddingLeft: HORIZONTAL_PADDING,
       paddingRight: 24,
-      width: SUFFICIENT_SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
+      width: sufficientWindowWidth - HORIZONTAL_PADDING * 4,
     },
     freeTrialSubtitle: {
       ...fonts.size_12,
@@ -53,6 +60,6 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
     voicesImage: {
       height: dw(140),
       marginTop: dh(40),
-      width: WINDOW_WIDTH,
+      width: windowWidth,
     },
   });

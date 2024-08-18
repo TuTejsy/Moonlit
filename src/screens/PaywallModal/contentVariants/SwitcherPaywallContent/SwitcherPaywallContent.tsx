@@ -4,7 +4,7 @@ import { View, Image } from 'react-native';
 import { AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { IS_SQUARE_SCREEN } from '@/constants/layout';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
@@ -29,6 +29,7 @@ export const SwitcherPaywallContent = ({
   yearlyProduct,
 }: SwitcherPaywallContentProps) => {
   const styles = useMakeStyles(makeStyles);
+  const { isSquareScreen } = useLayout();
 
   const productText = useMemo(() => {
     if (isFreeTrialEnabled) {
@@ -66,11 +67,11 @@ export const SwitcherPaywallContent = ({
   return (
     <>
       <TextView style={styles.title} type='bold'>
-        Get access to{IS_SQUARE_SCREEN ? ' ' : `\n`}all tales
+        Get access to{isSquareScreen ? ' ' : `\n`}all tales
       </TextView>
 
       <TextView style={styles.subtitle} type='regular'>
-        Discover unique voices and{IS_SQUARE_SCREEN ? ' ' : `\n`}listen to classic fary tales
+        Discover unique voices and{isSquareScreen ? ' ' : `\n`}listen to classic fary tales
       </TextView>
 
       <Image source={voicesImage} style={styles.voicesImage} />

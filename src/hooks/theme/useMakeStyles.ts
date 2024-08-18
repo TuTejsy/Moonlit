@@ -2,9 +2,11 @@ import { useMemo } from 'react';
 
 import { useSafeAreaInsets, WithSafeAreaInsetsProps } from 'react-native-safe-area-context';
 
+import { Layout, useLayout } from './useLayout';
+import { useRelativeSize } from './useRelativeSize';
 import { ITheme, useTheme } from './useTheme';
 
-export type MakeStylesProps = ITheme & WithSafeAreaInsetsProps;
+export type MakeStylesProps = ITheme & Layout & WithSafeAreaInsetsProps;
 type MakeStylesGenerator<T, C> = (theme: MakeStylesProps, styleContext: C) => T;
 
 export const useMakeStyles = <T extends object, C extends object>(
@@ -13,9 +15,11 @@ export const useMakeStyles = <T extends object, C extends object>(
 ) => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+  const layout = useLayout();
+  const { dh, dw } = useRelativeSize();
 
   return useMemo(
-    () => makeStyles({ ...theme, insets }, styleContext ?? ({} as any)),
-    [makeStyles, theme, insets, styleContext],
+    () => makeStyles({ ...theme, ...layout, dh, dw, insets }, styleContext ?? ({} as any)),
+    [makeStyles, theme, dh, dw, insets, layout, styleContext],
   );
 };

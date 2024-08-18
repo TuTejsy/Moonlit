@@ -1,29 +1,27 @@
 import { StyleSheet } from 'react-native';
 
-import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@gorhom/bottom-sheet';
-
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ insets }: MakeStylesProps) =>
+export const makeStyles = ({ insets, windowHeight, windowWidth }: MakeStylesProps) =>
   StyleSheet.create({
     bottomOverlayGradient: {
       bottom: 0,
-      height: (WINDOW_HEIGHT * 2) / 3,
+      height: (windowHeight * 2) / 3,
       left: 0,
       position: 'absolute',
-      width: WINDOW_WIDTH,
+      width: windowWidth,
     },
     image: {
-      height: WINDOW_HEIGHT - insets.top - insets.bottom - 120,
+      height: windowHeight - insets.top - insets.bottom - 120,
       left: 0,
       position: 'absolute',
       top: 0,
     },
     topOverlayGradient: {
-      height: (WINDOW_HEIGHT * 2) / 3,
+      height: (windowHeight * 2) / 3,
       left: 0,
       position: 'absolute',
       top: 0,
-      width: WINDOW_WIDTH,
+      width: windowWidth,
     },
   });

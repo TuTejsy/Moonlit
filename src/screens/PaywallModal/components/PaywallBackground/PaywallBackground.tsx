@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { WINDOW_WIDTH } from '@gorhom/bottom-sheet';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
 
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useImageSlideAnimation } from '@/hooks/useImageSlideAnimation';
@@ -21,8 +21,9 @@ export const PaywallBackground = React.memo(
   ({ bottomGradientLocations, topGradientLocations }: PaywallBackgroundProps) => {
     const styles = useMakeStyles(makeStyles);
     const { colors } = useTheme();
+    const { windowWidth } = useLayout();
 
-    const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(WINDOW_WIDTH);
+    const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(windowWidth);
 
     return (
       <>
