@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 
+import { WINDOW_MAX_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+
+import { AUDIO_RECORDING_HEIGHT, AUDIO_RECORDING_WIDTH } from './AudioRecording.constants';
 
 interface Context {
   isSelected: boolean;
@@ -11,13 +14,13 @@ export const makeStyles = ({ colors, dw, fonts }: MakeStylesProps, { isSelected 
     audioRecordingContainer: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(isSelected ? 1 : 0.05),
-      borderRadius: dw(16),
-      height: dw(184),
+      borderRadius: dw(16, WINDOW_MAX_WIDTH),
+      height: AUDIO_RECORDING_HEIGHT,
       justifyContent: 'center',
       marginBottom: 16,
       marginHorizontal: dw(7.5),
       overflow: 'hidden',
-      width: dw(163),
+      width: AUDIO_RECORDING_WIDTH,
     },
     freeLabel: {
       ...fonts.size_14,
@@ -46,10 +49,10 @@ export const makeStyles = ({ colors, dw, fonts }: MakeStylesProps, { isSelected 
       color: isSelected ? colors.black : colors.opacityWhite(0.5),
     },
     voiceAvatar: {
-      height: dw(102),
+      height: dw(102, WINDOW_MAX_WIDTH),
       marginBottom: 16,
       paddingHorizontal: 8,
       paddingVertical: 8,
-      width: dw(88),
+      width: dw(88, WINDOW_MAX_WIDTH),
     },
   });
