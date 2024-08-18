@@ -34,7 +34,6 @@ import { AnalyticsService } from '@/services/analytics/analytics';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 import { getHitSlop } from '@/utils/getHitSlop';
-import { dh } from '@/utils/sizes';
 
 import { StoryActions } from './components/StoryActions/StoryActions';
 import { StoryMeta } from './components/StoryMeta/StoryMeta';
@@ -46,11 +45,16 @@ import {
 } from './components/VoiceSettingsButton/VoiceSettingsButton.constants';
 import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUpdate';
 import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
 import { makeStyles } from './StoryPlayerScreen.styles';
+import { useStoryPlayerScreenLayout } from './hooks/useStoryPlayerScreenLayout';
 
 export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
+  const { dh } = useLayout();
+  const storyPlayerScreenLayout = useStoryPlayerScreenLayout();
+
   const storyContainerMinHeight =
     WINDOW_HEIGHT -
     DEFAULT_HEADER_HEIGHT -
@@ -105,8 +109,8 @@ export const StoryPlayerScreen = () => {
   const backgroundColor = useMemo(() => convertHEXtoRGBA(gradientColor, 0.3), [gradientColor]);
 
   const stylesContext = useMemo(
-    () => ({ gradientColor, storyContainerMinHeight }),
-    [gradientColor, storyContainerMinHeight],
+    () => ({ gradientColor, storyContainerMinHeight, ...storyPlayerScreenLayout }),
+    [gradientColor, storyContainerMinHeight, storyPlayerScreenLayout],
   );
 
   const styles = useMakeStyles(makeStyles, stylesContext);

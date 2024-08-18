@@ -2,10 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+import { SpalshViewModalLayout } from './hooks/useSplashViewModalLayout';
 
-import { LAUNCH_LOGO_HEIGHT, MOON_LOGO_SIZE, STARS_MARGIN_TOP } from './SplashViewModal.constants';
-
-export const makeStyles = ({ colors, dw, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dw, insets }: MakeStylesProps, {launchLogoHeight, moonLogoSize, starsMarginTop}: SpalshViewModalLayout) =>
   StyleSheet.create({
     container: {
       alignItems: 'center',
@@ -26,25 +25,25 @@ export const makeStyles = ({ colors, dw, insets }: MakeStylesProps) =>
       width: WINDOW_WIDTH,
     },
     launchLogo: {
-      height: LAUNCH_LOGO_HEIGHT,
+      height: launchLogoHeight,
       paddingBottom: dw(13),
       position: 'absolute',
       width: dw(121),
     },
     logoContainer: {
       position: 'absolute',
-      top: WINDOW_HEIGHT / 2 - MOON_LOGO_SIZE - dw(42),
+      top: WINDOW_HEIGHT / 2 - moonLogoSize - dw(42),
     },
     moonGradient: {
-      height: MOON_LOGO_SIZE * 2,
-      width: MOON_LOGO_SIZE,
+      height: moonLogoSize * 2,
+      width: moonLogoSize,
     },
     moonGradientContainer: {
-      marginTop: -MOON_LOGO_SIZE,
+      marginTop: -moonLogoSize,
     },
     moonLogo: {
-      height: MOON_LOGO_SIZE,
-      width: MOON_LOGO_SIZE,
+      height: moonLogoSize,
+      width: moonLogoSize,
     },
     spinner: {
       bottom: insets.bottom + dw(27),
@@ -52,7 +51,7 @@ export const makeStyles = ({ colors, dw, insets }: MakeStylesProps) =>
     },
     stars: {
       height: dw(398),
-      marginTop: STARS_MARGIN_TOP,
+      marginTop: starsMarginTop,
       width: dw(347),
     },
   });

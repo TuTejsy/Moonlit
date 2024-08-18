@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 import { IS_ANDROID } from '@/constants/common';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { STORY_CONTAINER_MIN_WIDTH } from '../../StoryPlayerScreen.constants';
+import { StoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
-export const makeStyles = ({ colors, dh, fonts, horizontalPadding }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts, horizontalPadding }: MakeStylesProps, { storyContainerMinWidth }: StoryPlayerScreenLayout) =>
   StyleSheet.create({
     actions: {
       alignItems: 'center',
@@ -16,7 +16,7 @@ export const makeStyles = ({ colors, dh, fonts, horizontalPadding }: MakeStylesP
       bottom: 0,
       paddingHorizontal: horizontalPadding,
       position: 'absolute',
-      width: STORY_CONTAINER_MIN_WIDTH,
+      width: storyContainerMinWidth,
       zIndex: 10,
     },
     button: StyleSheet.flatten([

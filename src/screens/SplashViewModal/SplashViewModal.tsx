@@ -23,13 +23,16 @@ import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { getStorageData } from '@/services/storage/storage';
 
+import { useSplashViewModalLayout } from './hooks/useSplashViewModalLayout';
 import launchLogoImage from './images/launchLogo/launchLogo.png';
 import starsImage from './images/stars/stars.png';
-import { MOON_LOGO_SIZE } from './SplashViewModal.constants';
 import { makeStyles } from './SplashViewModal.styles';
 
 export const SplashViewModal = () => {
-  const styles = useMakeStyles(makeStyles);
+  const spalshViewModalLayout = useSplashViewModalLayout();
+  const { moonLogoSize } = spalshViewModalLayout;
+
+  const styles = useMakeStyles(makeStyles, spalshViewModalLayout);
   const { colors } = useTheme();
 
   const navigation = useAppNavigation<RootRoutes.SPLASH_VIEW_MODAL>();
@@ -84,7 +87,7 @@ export const SplashViewModal = () => {
   const moonGradientAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateY: interpolate(pulseAnimationProgress.value, [0, 1], [0, -MOON_LOGO_SIZE * 2]),
+        translateY: interpolate(pulseAnimationProgress.value, [0, 1], [0, -moonLogoSize * 2]),
       },
     ],
   }));
@@ -138,7 +141,7 @@ export const SplashViewModal = () => {
       </Animated.View>
 
       <Animated.View style={[styles.logoContainer, logoContainerAnimatedStyle]}>
-        <Icons.Moon height={MOON_LOGO_SIZE} style={styles.moonLogo} width={MOON_LOGO_SIZE} />
+        <Icons.Moon height={moonLogoSize} style={styles.moonLogo} width={moonLogoSize} />
 
         <Animated.View style={[styles.moonGradientContainer, moonGradientAnimatedStyle]}>
           <LinearGradient

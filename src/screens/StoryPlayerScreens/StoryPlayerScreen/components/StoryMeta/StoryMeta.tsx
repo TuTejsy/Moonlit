@@ -13,6 +13,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { formatSecondsToMins } from '@/utils/formatters/formatSecondsToMins';
 
 import { makeStyles } from './StoryMeta.styles';
+import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
 interface StoryMetaPropTypes {
   description: string;
@@ -27,7 +28,8 @@ export function StoryMeta({
   storyPlayingSharedValue,
   style,
 }: StoryMetaPropTypes) {
-  const styles = useMakeStyles(makeStyles);
+  const storyPlayerScreenLayout = useStoryPlayerScreenLayout()
+  const styles = useMakeStyles(makeStyles, storyPlayerScreenLayout);
 
   const formattedDuration = useMemo(() => formatSecondsToMins(duration), [duration]);
 
