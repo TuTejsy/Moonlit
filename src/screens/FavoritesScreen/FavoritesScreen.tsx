@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native';
 
 import { useFocusEffect } from '@react-navigation/native';
@@ -17,17 +17,24 @@ import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow'
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { WINDOW_WIDTH } from '@/constants/layout';
 import { useStories } from '@/hooks/database/useStories';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 import { AnalyticsService } from '@/services/analytics/analytics';
 
-import { TAB_WIDTH } from './FavoritesScreen.constants';
 import { makeStyles } from './FavoritesScreen.styles';
 
 export const FavoritesScreen = () => {
   const { colors } = useTheme();
-  const styles = useMakeStyles(makeStyles);
+  const { horizontalPadding, sufficientWindowWidth } = useLayout();
+
+  const tabWidth = useMemo(
+    () => (sufficientWindowWidth - horizontalPadding * 2 - 8) / 2,
+    [horizontalPadding, sufficientWindowWidth],
+  );
+
+  const styles = useMakeStyles(makeStyles, { tabWidth });
 
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffsetSharedValue = useScrollViewOffset(scrollViewRef);
@@ -61,7 +68,7 @@ export const FavoritesScreen = () => {
         translateX: interpolate(
           scrollOffsetSharedValue.value,
           [0, WINDOW_WIDTH],
-          [4, TAB_WIDTH - 4],
+          [4, tabWidth - 4],
           Extrapolation.CLAMP,
         ),
       },

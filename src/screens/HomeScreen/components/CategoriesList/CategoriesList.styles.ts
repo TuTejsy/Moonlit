@@ -1,15 +1,14 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts, horizontalPadding }: MakeStylesProps) =>
   StyleSheet.create({
     categoriesList: {
       marginVertical: 30,
     },
     categoriesListContent: {
-      paddingLeft: HORIZONTAL_PADDING,
+      paddingLeft: horizontalPadding,
     },
     categoryPreview: {
       alignItems: 'center',

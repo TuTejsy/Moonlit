@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts, horizontalPadding }: MakeStylesProps) =>
   StyleSheet.create({
     button: {
       backgroundColor: colors.orange,
@@ -26,7 +25,7 @@ export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
       justifyContent: 'space-between',
       marginBottom: dh(48),
       overflow: 'hidden',
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
     },
     subtitle: {
       ...fonts.size_16,

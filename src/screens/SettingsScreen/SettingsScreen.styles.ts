@@ -1,13 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts, horizontalPadding, insets }: MakeStylesProps) =>
   StyleSheet.create({
     screen: {
       flex: 1,
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
       paddingTop: insets.top,
     },
     separator: {

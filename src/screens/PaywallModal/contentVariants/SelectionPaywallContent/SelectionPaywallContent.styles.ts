@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({
@@ -8,6 +7,7 @@ export const makeStyles = ({
   dh,
   dw,
   fonts,
+  horizontalPadding,
   sufficientWindowWidth,
   windowHeight,
   windowMaxWidth,
@@ -38,9 +38,9 @@ export const makeStyles = ({
       height: dw(56, windowMaxWidth),
       justifyContent: 'space-between',
       marginTop: dh(12),
-      paddingLeft: HORIZONTAL_PADDING,
+      paddingLeft: horizontalPadding,
       paddingRight: 24,
-      width: sufficientWindowWidth - HORIZONTAL_PADDING * 4,
+      width: sufficientWindowWidth - horizontalPadding * 4,
     },
     freeTrialSwitch: {
       height: 28,
@@ -55,7 +55,7 @@ export const makeStyles = ({
       borderRadius: 16,
       height: 16,
       justifyContent: 'center',
-      left: sufficientWindowWidth / 2 - HORIZONTAL_PADDING * 2 - 34,
+      left: sufficientWindowWidth / 2 - horizontalPadding * 2 - 34,
       position: 'absolute',
       top: -8,
       width: 68,
@@ -82,10 +82,10 @@ export const makeStyles = ({
       height: dw(56, windowMaxWidth),
       justifyContent: 'space-between',
       marginTop: dh(12),
-      paddingLeft: HORIZONTAL_PADDING,
+      paddingLeft: horizontalPadding,
       paddingRight: 26,
       position: 'relative',
-      width: sufficientWindowWidth - HORIZONTAL_PADDING * 4,
+      width: sufficientWindowWidth - horizontalPadding * 4,
     },
     productDescription: {
       ...fonts.size_14,

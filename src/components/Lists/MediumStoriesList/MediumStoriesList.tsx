@@ -3,9 +3,8 @@ import { FlatList, ListRenderItemInfo, ViewStyle } from 'react-native';
 
 import Realm from 'realm';
 
-import { WINDOW_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { StorySchema } from '@/database/schema/stories/types';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
@@ -30,9 +29,11 @@ export function MediumStoriesList({
 }: MediumStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
 
+  const { horizontalPadding, windowWidth } = useLayout();
+
   const isScrollEnabled = useMemo(() => {
-    return PREVIEW_WIDTH * stories.length > WINDOW_WIDTH - HORIZONTAL_PADDING * 2;
-  }, [stories.length]);
+    return PREVIEW_WIDTH * stories.length > windowWidth - horizontalPadding * 2;
+  }, [horizontalPadding, stories.length, windowWidth]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<StorySchema>) => {

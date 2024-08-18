@@ -1,12 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 import { SCREEN_WIDTH } from '@/constants/layout';
-import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING, TAB_BAR_HEIGHT } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT, TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { TAB_WIDTH } from './FavoritesScreen.constants';
+interface Context {
+  tabWidth: number;
+}
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = (
+  { colors, fonts, horizontalPadding, insets }: MakeStylesProps,
+  { tabWidth }: Context,
+) =>
   StyleSheet.create({
     blurViewContainer: {
       position: 'absolute',
@@ -17,7 +22,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
     },
     contentContainer: {
-      paddingHorizontal: HORIZONTAL_PADDING + 4,
+      paddingHorizontal: horizontalPadding + 4,
       paddingTop: insets.top + 10,
       position: 'relative',
     },
@@ -26,7 +31,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     },
     listContent: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 30,
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
       paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 39,
     },
     listTitleText: {
@@ -50,7 +55,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       marginBottom: 10,
       marginLeft: 4,
       position: 'relative',
-      width: TAB_WIDTH * 2,
+      width: tabWidth * 2,
     },
     tabIndicator: {
       backgroundColor: colors.orange,
@@ -58,14 +63,14 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
       height: 40,
       left: 0,
       position: 'absolute',
-      width: TAB_WIDTH,
+      width: tabWidth,
     },
     tabText: {
       ...fonts.size_16,
       color: colors.white,
       paddingVertical: 10,
       textAlign: 'center',
-      width: TAB_WIDTH,
+      width: tabWidth,
     },
     tabsGradient: {
       height: insets.top + DEFAULT_HEADER_HEIGHT + 38,

@@ -15,8 +15,8 @@ import Animated, {
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { IS_ANDROID } from '@/constants/common';
-import { WINDOW_WIDTH } from '@/constants/layout';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
@@ -34,13 +34,14 @@ import { makeStyles } from './GetStartedScreen.styles';
 export const GetStartedScreen = () => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+  const { windowWidth } = useLayout();
 
   const navigation = useAppNavigation<RootRoutes.GET_STARTED_SCREEN>();
 
   const currentStepRef = useRef(0);
   const currentStepSharedValue = useSharedValue(currentStepRef.current);
   const currentTranslateXSharedValue = useDerivedValue(
-    () => -currentStepSharedValue.value * WINDOW_WIDTH,
+    () => -currentStepSharedValue.value * windowWidth,
   );
 
   const handleClosePaywallModal = useCallback(() => {

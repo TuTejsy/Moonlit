@@ -7,10 +7,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
 import { IS_IOS } from '@/constants/common';
 import { WINDOW_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -22,7 +22,7 @@ import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { AudioRecording } from './components/AudioRecording/AudioRecording';
-import { AUDIO_RECORDING_WIDTH } from './components/AudioRecording/AudioRecording.constants';
+import { useAudioRecordingLayout } from './components/AudioRecording/hooks/useAudioRecordingLayout';
 import { Header } from './components/Header/Header';
 import { MoreVoicesPlaceholder } from './components/MoreVoicesPlaceholder/MoreVoicesPlaceholder';
 import { MORE_VOICES_PLACEHOLDER } from './VoiceSettingsModal.constants';
@@ -44,8 +44,15 @@ export function VoiceSettingsModal() {
   const navigation = useAppNavigation<RootRoutes.VOICE_SETTINGS_MODAL>();
 
   const { colors } = useTheme();
-  const stylesContext = useMemo(() => ({ storyColor }), [storyColor]);
+  const audioRecordingLayout = useAudioRecordingLayout();
+  const { audioRecordingWidth } = audioRecordingLayout;
+
+  const stylesContext = useMemo(
+    () => ({ ...audioRecordingLayout, storyColor }),
+    [audioRecordingLayout, storyColor],
+  );
   const styles = useMakeStyles(makeStyles, stylesContext);
+  const { horizontalPadding } = useLayout();
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
@@ -83,8 +90,8 @@ export function VoiceSettingsModal() {
   );
 
   const numColumns = useMemo(() => {
-    return Math.floor(WINDOW_WIDTH / (AUDIO_RECORDING_WIDTH + HORIZONTAL_PADDING));
-  }, []);
+    return Math.floor(WINDOW_WIDTH - (horizontalPadding * 2) / audioRecordingWidth);
+  }, [audioRecordingWidth, horizontalPadding]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<AudioRecordingSchema | typeof MORE_VOICES_PLACEHOLDER>) => {
@@ -140,6 +147,7 @@ export function VoiceSettingsModal() {
       <Header onCloseIconPress={handleClosePress} />
 
       <FlatList
+        key={numColumns}
         contentContainerStyle={styles.audioRecordingsListContainer}
         data={flatListData}
         extraData={auidioRecoridngsVersion}

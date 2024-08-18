@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 
-import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts, horizontalPadding, insets }: MakeStylesProps) =>
   StyleSheet.create({
     itemText: {
       ...fonts.size_16,
@@ -11,7 +11,7 @@ export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
       marginTop: dh(32),
     },
     popularSearchContainer: {
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
       paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + dh(48),
     },
     separator: {
