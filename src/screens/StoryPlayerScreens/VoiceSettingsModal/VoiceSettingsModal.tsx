@@ -45,7 +45,7 @@ export function VoiceSettingsModal() {
   const { colors } = useTheme();
   const { windowWidth } = useLayout();
   const audioRecordingLayout = useAudioRecordingLayout();
-  const { audioRecordingWidth } = audioRecordingLayout;
+  const { audioRecordingMargin, audioRecordingWidth } = audioRecordingLayout;
 
   const stylesContext = useMemo(
     () => ({ ...audioRecordingLayout, storyColor }),
@@ -90,8 +90,10 @@ export function VoiceSettingsModal() {
   );
 
   const numColumns = useMemo(() => {
-    return Math.floor((windowWidth - horizontalPadding * 2) / audioRecordingWidth);
-  }, [audioRecordingWidth, horizontalPadding, windowWidth]);
+    return Math.floor(
+      (windowWidth - horizontalPadding * 2) / (audioRecordingWidth + audioRecordingMargin / 2),
+    );
+  }, [audioRecordingMargin, audioRecordingWidth, horizontalPadding, windowWidth]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<AudioRecordingSchema | typeof MORE_VOICES_PLACEHOLDER>) => {
