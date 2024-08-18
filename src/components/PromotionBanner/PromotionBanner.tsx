@@ -16,20 +16,24 @@ import { selectFreeOfferDays } from '@/store/user/user.selector';
 import { UnlockButton } from '../Buttons/UnlockButton/UnlockButton';
 import { TextView } from '../Primitives/TextView/TextView';
 
+import { usePromotionBannerLayout } from './hooks/usePromotionBannerLayout';
 import bannerImage from './images/banner/banner.png';
 import voicesImage from './images/voices/voices.png';
-import { PROMOTION_BANNER_WIDTH } from './PromotionBanner.constants';
 import { makeStyles } from './PromotionBanner.styles';
 
 interface PromotionBannerPropTypes extends ViewProps {}
 
 export function PromotionBanner({ style }: PromotionBannerPropTypes) {
-  const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+
+  const promotionBannerLayout = usePromotionBannerLayout();
+  const { promotionBannerWidth } = promotionBannerLayout;
+
+  const styles = useMakeStyles(makeStyles, promotionBannerLayout);
 
   const freeOfferDays = useAppSelector(selectFreeOfferDays);
 
-  const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(PROMOTION_BANNER_WIDTH);
+  const { handleImageLayout, imageAnimatedStyle } = useImageSlideAnimation(promotionBannerWidth);
 
   const { showPaywallModal } = useShowPaywallModal();
 
