@@ -6,6 +6,8 @@ import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 
+import { STORY_CONTAINER_MIN_WIDTH } from '../../StoryPlayerScreen.constants';
+
 import { BUTTON_BOTTOM_PADDING, BUTTON_HEIGHT } from './VoiceSettingsButton.constants';
 
 interface Context {
@@ -57,6 +59,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
     voiceSettingsButtonContainer: {
       bottom: insets.bottom + BUTTON_BOTTOM_PADDING,
       position: 'absolute',
-      width: SUFFICIENT_WINDOW_WIDTH - HORIZONTAL_PADDING * 2,
+      width: STORY_CONTAINER_MIN_WIDTH,
     },
   });

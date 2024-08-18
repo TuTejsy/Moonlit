@@ -52,7 +52,10 @@ export function SmallStoriesList({
   style,
   tab,
 }: SmallStoriesListPropTypes) {
-  const styles = useMakeStyles(makeStyles);
+  const numColumns = useMemo(() => {
+    return Math.floor(WINDOW_WIDTH / (PREVIEW_SIZE + HORIZONTAL_PADDING));
+  }, []);
+  const styles = useMakeStyles(makeStyles, { numColumns });
 
   const storiesToRender = useMemo(() => {
     if (displayCount) {
@@ -61,10 +64,6 @@ export function SmallStoriesList({
     return stories;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayCount, stories, storiesVersion]);
-
-  const numColumns = useMemo(() => {
-    return Math.floor(WINDOW_WIDTH / (PREVIEW_SIZE + HORIZONTAL_PADDING));
-  }, []);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<StorySchema>) => {

@@ -18,7 +18,7 @@ export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
       bottom: 0,
       paddingHorizontal: HORIZONTAL_PADDING,
       position: 'absolute',
-      width: STORY_CONTAINER_MIN_WIDTH - 32,
+      width: STORY_CONTAINER_MIN_WIDTH,
       zIndex: 10,
     },
     button: StyleSheet.flatten([
