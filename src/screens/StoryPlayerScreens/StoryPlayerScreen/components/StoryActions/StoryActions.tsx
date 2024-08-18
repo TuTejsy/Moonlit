@@ -20,6 +20,7 @@ import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 
 import { makeStyles } from './StoryActions.styles';
+import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
 interface StoryActionsPropTyps {
   startStoryPlaying: () => void;
@@ -36,7 +37,8 @@ export const StoryActions = ({
   storyTitle,
   tab,
 }: StoryActionsPropTyps) => {
-  const styles = useMakeStyles(makeStyles);
+  const storyPlayerScreenLayout = useStoryPlayerScreenLayout()
+  const styles = useMakeStyles(makeStyles, storyPlayerScreenLayout);
   const { colors } = useTheme();
 
   const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite({

@@ -10,16 +10,18 @@ import {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import { useLayout } from '@/hooks/theme/useLayout';
 
-import { STORY_CONTAINER_MIN_WIDTH, STORY_COVER_MIN_HEIGHT } from '../StoryPlayerScreen.constants';
+import { useStoryPlayerScreenLayout } from './useStoryPlayerScreenLayout';
 
 export function useStoryCoverAnimation(
   storyPlayingSharedValue: SharedValue<number>,
   storyContainerMinHeight: number,
 ) {
   const insets = useSafeAreaInsets();
+  const { windowHeight, windowWidth } = useLayout();
+  const { storyContainerMinWidth, storyCoverMinHeight } = useStoryPlayerScreenLayout();
   const imageScaleSharedValue = useSharedValue(1);
 
   const storyContainerAnimatedStyles = useAnimatedStyle(() => {
@@ -27,7 +29,7 @@ export function useStoryCoverAnimation(
       height: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
-        [storyContainerMinHeight, SCREEN_HEIGHT],
+        [storyContainerMinHeight, windowHeight],
         Extrapolation.CLAMP,
       ),
       marginTop: interpolate(
@@ -39,7 +41,7 @@ export function useStoryCoverAnimation(
       width: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
-        [STORY_CONTAINER_MIN_WIDTH, SCREEN_WIDTH],
+        [storyContainerMinWidth, windowWidth],
         Extrapolation.CLAMP,
       ),
     };
@@ -50,7 +52,7 @@ export function useStoryCoverAnimation(
       height: interpolate(
         storyPlayingSharedValue.value,
         [0, 1],
-        [STORY_COVER_MIN_HEIGHT, SCREEN_HEIGHT],
+        [storyCoverMinHeight, windowHeight],
         Extrapolation.CLAMP,
       ),
       transform: [{ scale: imageScaleSharedValue.value }],

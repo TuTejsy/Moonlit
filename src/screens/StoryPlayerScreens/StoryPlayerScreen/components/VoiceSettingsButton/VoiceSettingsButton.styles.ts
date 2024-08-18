@@ -4,15 +4,15 @@ import { IS_IOS } from '@/constants/common';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 
-import { STORY_CONTAINER_MIN_WIDTH } from '../../StoryPlayerScreen.constants';
+import { StoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
 import { BUTTON_BOTTOM_PADDING, BUTTON_HEIGHT } from './VoiceSettingsButton.constants';
 
-interface Context {
+interface Context extends StoryPlayerScreenLayout {
   storyColor: string;
 }
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyColor }: Context) =>
+export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyColor, storyContainerMinWidth}: Context) =>
   StyleSheet.create({
     blurView: {
       flex: 1,
@@ -57,6 +57,6 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyCo
     voiceSettingsButtonContainer: {
       bottom: insets.bottom + BUTTON_BOTTOM_PADDING,
       position: 'absolute',
-      width: STORY_CONTAINER_MIN_WIDTH,
+      width: storyContainerMinWidth,
     },
   });

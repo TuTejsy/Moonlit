@@ -1,28 +1,27 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_HEIGHT, SCREEN_WIDTH, WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { STORY_CONTAINER_MIN_WIDTH, STORY_COVER_MIN_HEIGHT } from './StoryPlayerScreen.constants';
+import { StoryPlayerScreenLayout } from './hooks/useStoryPlayerScreenLayout';
 
-interface Context {
+interface Context extends StoryPlayerScreenLayout {
   gradientColor: string;
   storyContainerMinHeight: number;
 }
 
 export const makeStyles = (
-  { colors, zIndex }: MakeStylesProps,
-  { gradientColor, storyContainerMinHeight }: Context,
+  { colors, windowHeight, windowWidth, zIndex }: MakeStylesProps,
+  { gradientColor, storyContainerMinHeight, storyContainerMinWidth, storyCoverMinHeight }: Context,
 ) =>
   StyleSheet.create({
     bottomGradient: {
-      height: WINDOW_HEIGHT,
+      height: windowHeight,
       position: 'absolute',
-      width: WINDOW_WIDTH,
+      width: windowWidth,
     },
     cover: {
-      minHeight: STORY_COVER_MIN_HEIGHT,
-      minWidth: STORY_CONTAINER_MIN_WIDTH,
+      minHeight: storyCoverMinHeight,
+      minWidth: storyContainerMinWidth,
       width: '100%',
     },
     header: {
@@ -35,8 +34,8 @@ export const makeStyles = (
     imageContainer: {
       alignItems: 'center',
       justifyContent: 'flex-end',
-      minHeight: STORY_COVER_MIN_HEIGHT,
-      minWidth: STORY_CONTAINER_MIN_WIDTH,
+      minHeight: storyCoverMinHeight,
+      minWidth: storyContainerMinWidth,
       overflow: 'hidden',
       position: 'relative',
       width: '100%',
@@ -45,8 +44,8 @@ export const makeStyles = (
       alignItems: 'center',
       backgroundColor: colors.black,
       flex: 1,
-      maxHeight: SCREEN_HEIGHT,
-      maxWidth: SCREEN_WIDTH,
+      maxHeight: windowHeight,
+      maxWidth: windowWidth,
       position: 'relative',
     },
     storyContainer: {
@@ -54,10 +53,10 @@ export const makeStyles = (
       backgroundColor: gradientColor,
       borderRadius: 16,
       minHeight: storyContainerMinHeight,
-      minWidth: STORY_CONTAINER_MIN_WIDTH,
+      minWidth: storyContainerMinWidth,
       overflow: 'hidden',
     },
     storyMeta: {
-      minHeight: storyContainerMinHeight - STORY_COVER_MIN_HEIGHT,
+      minHeight: storyContainerMinHeight - storyCoverMinHeight,
     },
   });
