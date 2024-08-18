@@ -1,14 +1,15 @@
 import { StyleSheet } from 'react-native';
 
-import { SCREEN_WIDTH, SUFFICIENT_SCREEN_WIDTH } from '@/constants/layout';
 import { TAB_BAR_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-interface Context {
-  hasPlayer: boolean;
-}
-
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { hasPlayer }: Context) =>
+export const makeStyles = ({
+  colors,
+  fonts,
+  insets,
+  sufficientWindowWidth,
+  windowWidth,
+}: MakeStylesProps) =>
   StyleSheet.create({
     activeTabTitle: {
       ...fonts.size_10,
@@ -24,7 +25,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { hasPlay
       justifyContent: 'space-between',
       paddingBottom: insets.bottom,
       paddingHorizontal: 57,
-      width: SUFFICIENT_SCREEN_WIDTH,
+      width: sufficientWindowWidth,
     },
     tabBarShadow: {
       bottom: 0,
@@ -41,7 +42,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { hasPlay
       alignItems: 'center',
       height: TAB_BAR_HEIGHT + insets.bottom,
       justifyContent: 'flex-end',
-      width: SCREEN_WIDTH,
+      width: windowWidth,
     },
     tabContainer: {
       alignItems: 'center',

@@ -26,6 +26,7 @@ const MAP_ICON_AND_TITLE_BY_ROUTE: { [key: string]: [typeof Icons.HomeTab, strin
 };
 
 export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
+  const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
 
   const [recentlyPlayedStories, recentlyPlayedStoriesVersion] = useStories(
@@ -44,15 +45,6 @@ export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) =>
   }, [recentlyPlayedStories, recentlyPlayedStoriesVersion]);
 
   const hasPlayer = !!lastPlayedStory;
-
-  const stylesContext = useMemo(
-    () => ({
-      hasPlayer,
-    }),
-    [hasPlayer],
-  );
-
-  const styles = useMakeStyles(makeStyles, stylesContext);
 
   return (
     <>

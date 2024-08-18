@@ -2,9 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { PREVIEW_SIZE } from './StoryPreview.constants';
+import { PreviewLayout } from './hooks/usePreviewLayout';
 
-export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts }: MakeStylesProps, { previewSize }: PreviewLayout) =>
   StyleSheet.create({
     comingSoonLabel: {
       backgroundColor: colors.opacityWhite(0.2),
@@ -36,25 +36,25 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
       alignItems: 'flex-start',
       backgroundColor: colors.transparent,
       flex: 1,
-      height: PREVIEW_SIZE,
+      height: previewSize,
       justifyContent: 'flex-end',
-      maxHeight: PREVIEW_SIZE,
-      maxWidth: PREVIEW_SIZE,
-      width: PREVIEW_SIZE,
+      maxHeight: previewSize,
+      maxWidth: previewSize,
+      width: previewSize,
     },
     previewContainer: {
       marginRight: 16,
-      maxWidth: PREVIEW_SIZE,
+      maxWidth: previewSize,
       position: 'relative',
     },
     previewGradient: {
       backgroundColor: colors.imagePurple,
       borderRadius: 16,
-      height: PREVIEW_SIZE,
+      height: previewSize,
       left: 0,
       position: 'absolute',
       top: 0,
-      width: PREVIEW_SIZE,
+      width: previewSize,
     },
     previewImageContainer: {
       alignItems: 'center',

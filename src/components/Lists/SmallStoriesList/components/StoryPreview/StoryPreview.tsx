@@ -14,6 +14,7 @@ import { TabEventType } from '@/services/analytics/analytics.types';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './StoryPreview.styles';
+import { usePreviewLayout } from './hooks/usePreviewLayout';
 
 interface StoryPreviewPropTypes {
   description: string;
@@ -39,7 +40,8 @@ export const StoryPreview = memo(
     tab,
     title,
   }: StoryPreviewPropTypes) => {
-    const styles = useMakeStyles(makeStyles);
+    const previewLayout = usePreviewLayout();
+    const styles = useMakeStyles(makeStyles, previewLayout);
 
     const isFullVersion = useAppSelector(selectIsFullVersion);
 
