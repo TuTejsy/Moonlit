@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
-import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts, horizontalPadding, insets }: MakeStylesProps) =>
   StyleSheet.create({
     blurView: {
       flex: 1,
@@ -32,7 +32,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     playerContainer: {
       alignItems: 'center',
       justifyContent: 'center',
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
       position: 'absolute',
       width: WINDOW_WIDTH,
     },

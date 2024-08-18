@@ -8,8 +8,9 @@ import { MoreTalesComingFooter } from '@/components/Lists/MoreTalesComingFooter/
 import { PREVIEW_SIZE } from '@/components/Lists/SmallStoriesList/components/StoryPreview/StoryPreview.constants';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
-import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { useStories } from '@/hooks/database/useStories';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAnimatedScrollHandlerValue } from '@/hooks/useAnimatedScrollHandlerValue';
@@ -24,6 +25,7 @@ import { makeStyles } from './StoriesListScreen.styles';
 export const StoriesListScreen = () => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+  const { horizontalPadding } = useLayout();
 
   const { params } = useAppRoute<SharedRoutes.STORIES_LIST>();
   const { storiesFilter, storiesSortConfigs, title } = params || {};
@@ -33,8 +35,8 @@ export const StoriesListScreen = () => {
   const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfigs);
 
   const numColumns = useMemo(() => {
-    return Math.floor(WINDOW_WIDTH / (PREVIEW_SIZE + HORIZONTAL_PADDING));
-  }, []);
+    return Math.floor((WINDOW_WIDTH - horizontalPadding * 2) / PREVIEW_SIZE);
+  }, [horizontalPadding]);
 
   const headerStories = useMemo(
     () => stories.slice(0, numColumns),

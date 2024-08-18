@@ -16,16 +16,12 @@ import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow'
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { IS_IOS } from '@/constants/common';
 import { useBackHandler } from '@/hooks/navigation/useBackHandler';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
-import {
-  CLOSE_BUTTON_MARGIN_LEFT,
-  CLOSE_BUTTON_WIDTH,
-  SEARCH_BAR_BLURED_WIDTH,
-  SEARCH_BAR_FOCUSED_WIDTH,
-} from './SearchBar.constants';
+import { CLOSE_BUTTON_MARGIN_LEFT, CLOSE_BUTTON_WIDTH } from './SearchBar.constants';
 import { makeStyles } from './SearchBar.styles';
 
 interface SearchBarPropTypes {
@@ -38,13 +34,10 @@ interface SearchBarPropTypes {
 
 export const SearchBar = React.memo(
   ({ onChangeText, onInputBlur, onInputFocus, opacityAnimStyle, value }: SearchBarPropTypes) => {
+    const { horizontalPadding, windowWidth } = useLayout();
     const [isInputFocused, setIsInputFocused] = useState(false);
-    const hasSearchText = !!value;
 
-    const stylesContext = useMemo(
-      () => ({ hasSearchText, isInputFocused }),
-      [isInputFocused, hasSearchText],
-    );
+    const stylesContext = useMemo(() => ({ isInputFocused }), [isInputFocused]);
 
     const styles = useMakeStyles(makeStyles, stylesContext);
     const { colors } = useTheme();
@@ -52,11 +45,20 @@ export const SearchBar = React.memo(
     const inputRef = useRef<TextInput | null>(null);
     const isInputFocusedSharedValue = useSharedValue(0);
 
+    const searchBarBluredWidth = useMemo(
+      () => windowWidth - horizontalPadding * 2,
+      [horizontalPadding, windowWidth],
+    );
+    const searchBarFocusedWidth = useMemo(
+      () => searchBarBluredWidth - CLOSE_BUTTON_WIDTH - CLOSE_BUTTON_MARGIN_LEFT,
+      [searchBarBluredWidth],
+    );
+
     const inputContainerAnimatedStyle = useAnimatedStyle(() => ({
       width: interpolate(
         isInputFocusedSharedValue.value,
         [0, 1],
-        [SEARCH_BAR_BLURED_WIDTH, SEARCH_BAR_FOCUSED_WIDTH],
+        [searchBarBluredWidth, searchBarFocusedWidth],
         Extrapolation.CLAMP,
       ),
     }));

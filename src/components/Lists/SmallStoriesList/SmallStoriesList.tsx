@@ -9,9 +9,8 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { WINDOW_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { StorySchema } from '@/database/schema/stories/types';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
@@ -52,9 +51,12 @@ export function SmallStoriesList({
   style,
   tab,
 }: SmallStoriesListPropTypes) {
+  const { horizontalPadding, windowWidth } = useLayout();
+
   const numColumns = useMemo(() => {
-    return Math.floor(WINDOW_WIDTH / (PREVIEW_SIZE + HORIZONTAL_PADDING));
-  }, []);
+    return Math.floor((windowWidth - horizontalPadding * 2) / PREVIEW_SIZE);
+  }, [horizontalPadding, windowWidth]);
+
   const styles = useMakeStyles(makeStyles, { numColumns });
 
   const storiesToRender = useMemo(() => {
@@ -103,6 +105,7 @@ export function SmallStoriesList({
 
   return (
     <FlatList
+      key={numColumns}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       ListFooterComponent={ListFooterComponent}
       ListHeaderComponent={ListHeaderComponent}

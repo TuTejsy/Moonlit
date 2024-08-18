@@ -2,13 +2,12 @@ import { StyleSheet } from 'react-native';
 
 import {
   DEFAULT_HEADER_HEIGHT,
-  HORIZONTAL_PADDING,
   TAB_BAR_HEIGHT,
   TAB_BAR_STORY_PLAYER_HEIGHT,
 } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ insets }: MakeStylesProps) =>
+export const makeStyles = ({ horizontalPadding, insets }: MakeStylesProps) =>
   StyleSheet.create({
     content: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + TAB_BAR_STORY_PLAYER_HEIGHT,
@@ -26,7 +25,7 @@ export const makeStyles = ({ insets }: MakeStylesProps) =>
     },
     promotionBanner: {
       alignSelf: 'center',
-      marginHorizontal: HORIZONTAL_PADDING,
+      marginHorizontal: horizontalPadding,
       marginVertical: 40,
     },
     smallList: {

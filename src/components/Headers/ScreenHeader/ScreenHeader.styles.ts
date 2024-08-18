@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING } from '@/constants/sizes';
+import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { LARGE_TITLE_HEIGHT } from './ScreenHeader.constants';
@@ -11,7 +11,7 @@ interface Context {
 }
 
 export const makeStyles = (
-  { colors, fonts, insets, zIndex }: MakeStylesProps,
+  { colors, fonts, horizontalPadding, insets, zIndex }: MakeStylesProps,
   { color, horizontalInset }: Context,
 ) => {
   const HEADER_HEIGHT = DEFAULT_HEADER_HEIGHT;
@@ -19,7 +19,7 @@ export const makeStyles = (
   return StyleSheet.create({
     container: {
       backgroundColor: color ?? colors.transparent,
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
       paddingTop: insets.top,
       position: 'relative',
     },
@@ -39,7 +39,7 @@ export const makeStyles = (
       ...fonts.size_24,
       bottom: -LARGE_TITLE_HEIGHT + 16,
       color: colors.white,
-      left: HORIZONTAL_PADDING,
+      left: horizontalPadding,
       position: 'absolute',
     },
     subtitleText: {

@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
-import { SCREEN_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 interface Context {
@@ -10,7 +8,7 @@ interface Context {
 }
 
 export const makeStyles = (
-  { colors, fonts, insets }: MakeStylesProps,
+  { colors, fonts, horizontalPadding, insets, windowWidth }: MakeStylesProps,
   { isInputFocused }: Context,
 ) =>
   StyleSheet.create({
@@ -19,7 +17,7 @@ export const makeStyles = (
       left: 0,
       position: 'absolute',
       top: 0,
-      width: SCREEN_WIDTH,
+      width: windowWidth,
     },
     closeButton: {
       alignItems: 'center',
@@ -41,10 +39,10 @@ export const makeStyles = (
       flexDirection: 'row',
       justifyContent: 'flex-start',
       paddingBottom: 10,
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
       paddingTop: insets.top + 10,
       position: 'relative',
-      width: SCREEN_WIDTH,
+      width: windowWidth,
     },
     inputBlur: {
       flex: 1,

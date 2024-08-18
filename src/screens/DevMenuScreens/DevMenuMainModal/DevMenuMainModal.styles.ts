@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts, horizontalPadding, insets }: MakeStylesProps) =>
   StyleSheet.create({
     button: {
       marginTop: 30,
@@ -17,7 +16,7 @@ export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps) =>
     scrollView: {},
     scrollViewContent: {
       paddingBottom: insets.bottom + 20,
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
     },
     title: {
       ...fonts.size_18,

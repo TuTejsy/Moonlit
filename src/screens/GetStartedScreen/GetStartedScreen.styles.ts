@@ -1,10 +1,17 @@
 import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
-import { SCREEN_MAX_WIDTH, WINDOW_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({
+  colors,
+  dh,
+  dw,
+  fonts,
+  insets,
+  windowMaxWidth,
+  windowWidth,
+}: MakeStylesProps) =>
   StyleSheet.create({
     backButtonContainer: {
       alignItems: 'center',
@@ -16,7 +23,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     },
     continueButton: StyleSheet.flatten([
       IS_ANDROID && {
-        width: dw(205, SCREEN_MAX_WIDTH),
+        width: dw(205, windowMaxWidth),
       },
     ]),
     continueText: {
@@ -39,13 +46,13 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       width: '100%',
     },
     image1: {
-      height: dw(483, SCREEN_MAX_WIDTH),
+      height: dw(483, windowMaxWidth),
     },
     image2: {
-      height: dw(540, SCREEN_MAX_WIDTH),
+      height: dw(540, windowMaxWidth),
     },
     image3: {
-      height: dw(617, SCREEN_MAX_WIDTH),
+      height: dw(617, windowMaxWidth),
       marginTop: 0,
     },
     indicatorsContainer: {
@@ -63,7 +70,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     },
     stepContainer: {
       alignItems: 'center',
-      width: WINDOW_WIDTH,
+      width: windowWidth,
     },
     stepDescriptionsContainer: {
       flexDirection: 'row',

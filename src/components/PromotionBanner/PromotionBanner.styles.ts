@@ -1,12 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import { WINDOW_MAX_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { PROMOTION_BANNER_HEIGHT, PROMOTION_BANNER_WIDTH } from './PromotionBanner.constants';
 
-export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts, horizontalPadding, windowMaxWidth }: MakeStylesProps) =>
   StyleSheet.create({
     container: {
       alignItems: 'center',
@@ -20,8 +18,8 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
     content: {
       flex: 1,
       justifyContent: 'flex-end',
-      maxWidth: WINDOW_MAX_WIDTH,
-      paddingHorizontal: HORIZONTAL_PADDING,
+      maxWidth: windowMaxWidth,
+      paddingHorizontal: horizontalPadding,
     },
     image: {
       height: 360,

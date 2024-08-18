@@ -3,8 +3,7 @@ import { useCallback, useRef } from 'react';
 import { ComposedGesture, Gesture } from 'react-native-gesture-handler';
 import { Extrapolation, SharedValue, interpolate, runOnJS } from 'react-native-reanimated';
 
-import { SCREEN_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
+import { useLayout } from '@/hooks/theme/useLayout';
 
 export function useProgressBarGestureHandler(
   progressSharedValue: SharedValue<number>,
@@ -14,6 +13,8 @@ export function useProgressBarGestureHandler(
   const isTapActiveRef = useRef(false);
   const isPanActiveRef = useRef(false);
   const isGestureActiveRef = useRef(false);
+
+  const { horizontalPadding, windowWidth } = useLayout();
 
   const setIsPanActiveRef = useCallback((value: boolean) => {
     isPanActiveRef.current = value;
@@ -42,7 +43,7 @@ export function useProgressBarGestureHandler(
 
       progressSharedValue.value = interpolate(
         e.allTouches[0].absoluteX,
-        [HORIZONTAL_PADDING, SCREEN_WIDTH - HORIZONTAL_PADDING],
+        [horizontalPadding, windowWidth - horizontalPadding],
         [0, 100],
         Extrapolation.CLAMP,
       );
@@ -62,7 +63,7 @@ export function useProgressBarGestureHandler(
     .onUpdate((e) => {
       progressSharedValue.value = interpolate(
         e.absoluteX,
-        [HORIZONTAL_PADDING, SCREEN_WIDTH - HORIZONTAL_PADDING],
+        [horizontalPadding, windowWidth - horizontalPadding],
         [0, 100],
         Extrapolation.CLAMP,
       );

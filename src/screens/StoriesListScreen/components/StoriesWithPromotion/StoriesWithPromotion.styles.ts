@@ -1,17 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-import { SUFFICIENT_WINDOW_WIDTH, WINDOW_MAX_WIDTH, WINDOW_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors }: MakeStylesProps) =>
+export const makeStyles = ({
+  colors,
+  horizontalPadding,
+  sufficientWindowWidth,
+  windowWidth,
+}: MakeStylesProps) =>
   StyleSheet.create({
     container: {
       alignItems: 'center',
-      width: WINDOW_WIDTH,
+      width: windowWidth,
     },
     promotionContainer: {
-      marginLeft: -HORIZONTAL_PADDING,
+      marginLeft: -horizontalPadding,
       paddingVertical: 21,
       width: '100%',
     },
@@ -23,7 +26,7 @@ export const makeStyles = ({ colors }: MakeStylesProps) =>
     stories: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginLeft: -HORIZONTAL_PADDING,
+      marginLeft: -horizontalPadding,
       width: '100%',
     },
     storiesSeparator: {
@@ -33,6 +36,6 @@ export const makeStyles = ({ colors }: MakeStylesProps) =>
       alignSelf: 'center',
       marginBottom: 24,
       marginTop: 24,
-      width: SUFFICIENT_WINDOW_WIDTH - HORIZONTAL_PADDING * 2,
+      width: sufficientWindowWidth - horizontalPadding * 2,
     },
   });

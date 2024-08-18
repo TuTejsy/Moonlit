@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 import { IS_IOS } from '@/constants/common';
-import { SUFFICIENT_WINDOW_WIDTH, WINDOW_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 

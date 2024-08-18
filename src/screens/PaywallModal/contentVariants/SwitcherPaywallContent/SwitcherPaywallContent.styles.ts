@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({
@@ -8,6 +7,7 @@ export const makeStyles = ({
   dh,
   dw,
   fonts,
+  horizontalPadding,
   sufficientWindowWidth,
   windowMaxWidth,
   windowWidth,
@@ -20,9 +20,9 @@ export const makeStyles = ({
       flexDirection: 'row',
       height: dw(72, windowMaxWidth),
       marginTop: dh(24),
-      paddingLeft: HORIZONTAL_PADDING,
+      paddingLeft: horizontalPadding,
       paddingRight: 24,
-      width: sufficientWindowWidth - HORIZONTAL_PADDING * 4,
+      width: sufficientWindowWidth - horizontalPadding * 4,
     },
     freeTrialSubtitle: {
       ...fonts.size_12,

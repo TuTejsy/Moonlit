@@ -1,11 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { PREVIEW_HEIGHT, PREVIEW_WIDTH } from './StoryPreview.constants';
 
-export const makeStyles = ({ colors, fonts, zIndex }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts, horizontalPadding }: MakeStylesProps) =>
   StyleSheet.create({
     descriptionText: {
       ...fonts.size_15,
@@ -33,8 +32,8 @@ export const makeStyles = ({ colors, fonts, zIndex }: MakeStylesProps) =>
       backgroundColor: colors.transparent,
       flex: 1,
       justifyContent: 'flex-end',
-      paddingHorizontal: HORIZONTAL_PADDING,
-      paddingVertical: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
+      paddingVertical: horizontalPadding,
       position: 'relative',
     },
     previewContainer: {

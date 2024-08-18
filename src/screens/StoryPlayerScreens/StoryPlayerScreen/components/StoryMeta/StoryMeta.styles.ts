@@ -1,11 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { STORY_CONTAINER_MIN_WIDTH } from '../../StoryPlayerScreen.constants';
 
-export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts, horizontalPadding }: MakeStylesProps) =>
   StyleSheet.create({
     durationText: {
       ...fonts.size_14,
@@ -18,7 +17,7 @@ export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
     storyMetaContainer: {
       backgroundColor: colors.opacityBlack(0.4),
       flex: 1,
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
       paddingTop: dh(32),
       width: STORY_CONTAINER_MIN_WIDTH,
     },

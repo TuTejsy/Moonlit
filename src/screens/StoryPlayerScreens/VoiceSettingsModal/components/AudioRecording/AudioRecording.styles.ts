@@ -1,26 +1,28 @@
 import { StyleSheet } from 'react-native';
 
-import { WINDOW_MAX_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { AUDIO_RECORDING_HEIGHT, AUDIO_RECORDING_WIDTH } from './AudioRecording.constants';
+import { AuidioRecordingLayout } from './hooks/useAudioRecordingLayout';
 
-interface Context {
+interface Context extends AuidioRecordingLayout {
   isSelected: boolean;
 }
 
-export const makeStyles = ({ colors, dw, fonts }: MakeStylesProps, { isSelected }: Context) =>
+export const makeStyles = (
+  { colors, dw, fonts, windowMaxWidth }: MakeStylesProps,
+  { audioRecordingHeight, audioRecordingMargin, audioRecordingWidth, isSelected }: Context,
+) =>
   StyleSheet.create({
     audioRecordingContainer: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(isSelected ? 1 : 0.05),
-      borderRadius: dw(16, WINDOW_MAX_WIDTH),
-      height: AUDIO_RECORDING_HEIGHT,
+      borderRadius: dw(16, windowMaxWidth),
+      height: audioRecordingHeight,
       justifyContent: 'center',
       marginBottom: 16,
-      marginHorizontal: dw(7.5),
+      marginHorizontal: audioRecordingMargin / 2,
       overflow: 'hidden',
-      width: AUDIO_RECORDING_WIDTH,
+      width: audioRecordingWidth,
     },
     freeLabel: {
       ...fonts.size_14,
@@ -49,10 +51,10 @@ export const makeStyles = ({ colors, dw, fonts }: MakeStylesProps, { isSelected 
       color: isSelected ? colors.black : colors.opacityWhite(0.5),
     },
     voiceAvatar: {
-      height: dw(102, WINDOW_MAX_WIDTH),
+      height: dw(102, windowMaxWidth),
       marginBottom: 16,
       paddingHorizontal: 8,
       paddingVertical: 8,
-      width: dw(88, WINDOW_MAX_WIDTH),
+      width: dw(88, windowMaxWidth),
     },
   });

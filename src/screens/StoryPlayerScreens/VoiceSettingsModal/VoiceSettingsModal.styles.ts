@@ -1,15 +1,18 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  SUFFICIENT_WINDOW_WIDTH,
-  WINDOW_MAX_WIDTH,
-} from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({
+  colors,
+  dh,
+  dw,
+  fonts,
+  horizontalPadding,
+  insets,
+  sufficientWindowWidth,
+  windowHeight,
+  windowWidth,
+}: MakeStylesProps) =>
   StyleSheet.create({
     addVoiceText: {
       ...fonts.size_14,
@@ -20,19 +23,19 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     },
     audioRecordingsListContainer: {
       alignItems: 'center',
-      paddingHorizontal: HORIZONTAL_PADDING - dw(7.5),
+      paddingHorizontal: horizontalPadding - dw(7.5),
       paddingTop: 10,
     },
     blurView: {
-      height: SCREEN_HEIGHT,
+      height: windowHeight,
       left: 0,
       position: 'absolute',
-      width: SCREEN_WIDTH,
+      width: windowWidth,
     },
     bottomBar: {
       height: 64,
       marginBottom: insets.bottom,
-      width: SCREEN_WIDTH,
+      width: windowWidth,
     },
     bottomBarContent: {
       alignItems: 'center',
@@ -54,7 +57,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     unlockButton: {
       alignSelf: 'center',
       marginBottom: insets.bottom + 17,
-      marginHorizontal: HORIZONTAL_PADDING,
-      width: SUFFICIENT_WINDOW_WIDTH - HORIZONTAL_PADDING * 2,
+      marginHorizontal: horizontalPadding,
+      width: sufficientWindowWidth - horizontalPadding * 2,
     },
   });

@@ -1,13 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
-import { WINDOW_WIDTH } from '@/constants/layout';
-import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { STORY_CONTAINER_MIN_WIDTH } from '../../StoryPlayerScreen.constants';
 
-export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
+export const makeStyles = ({ colors, dh, fonts, horizontalPadding }: MakeStylesProps) =>
   StyleSheet.create({
     actions: {
       alignItems: 'center',
@@ -16,7 +14,7 @@ export const makeStyles = ({ colors, dh, fonts }: MakeStylesProps) =>
     },
     actionsContainer: {
       bottom: 0,
-      paddingHorizontal: HORIZONTAL_PADDING,
+      paddingHorizontal: horizontalPadding,
       position: 'absolute',
       width: STORY_CONTAINER_MIN_WIDTH,
       zIndex: 10,

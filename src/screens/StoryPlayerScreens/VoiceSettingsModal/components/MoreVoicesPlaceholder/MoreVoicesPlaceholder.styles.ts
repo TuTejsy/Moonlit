@@ -1,26 +1,25 @@
 import { StyleSheet } from 'react-native';
 
-import { WINDOW_MAX_WIDTH } from '@/constants/layout';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import {
-  AUDIO_RECORDING_HEIGHT,
-  AUDIO_RECORDING_WIDTH,
-} from '../AudioRecording/AudioRecording.constants';
+import { AuidioRecordingLayout } from '../AudioRecording/hooks/useAudioRecordingLayout';
 
-export const makeStyles = ({ colors, dw }: MakeStylesProps) =>
+export const makeStyles = (
+  { colors, dw, windowMaxWidth }: MakeStylesProps,
+  { audioRecordingHeight, audioRecordingMargin, audioRecordingWidth }: AuidioRecordingLayout,
+) =>
   StyleSheet.create({
     audioRecordingContainer: {
       backgroundColor: colors.opacityWhite(0.05),
-      borderRadius: dw(16, WINDOW_MAX_WIDTH),
-      height: AUDIO_RECORDING_HEIGHT,
+      borderRadius: dw(16, windowMaxWidth),
+      height: audioRecordingHeight,
       marginBottom: 16,
-      marginHorizontal: dw(7.5),
+      marginHorizontal: audioRecordingMargin / 2,
       overflow: 'hidden',
-      width: AUDIO_RECORDING_WIDTH,
+      width: audioRecordingWidth,
     },
     image: {
-      height: AUDIO_RECORDING_HEIGHT,
-      width: AUDIO_RECORDING_WIDTH,
+      height: audioRecordingHeight,
+      width: audioRecordingWidth,
     },
   });
