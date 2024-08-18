@@ -15,7 +15,6 @@ import { Empty } from '@/components/Empty/Empty';
 import { SmallStoriesPlainList } from '@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList';
 import { ScrollShadow } from '@/components/Primitives/ScrollShadow/ScrollShadow';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { WINDOW_WIDTH } from '@/constants/layout';
 import { useStories } from '@/hooks/database/useStories';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -27,7 +26,7 @@ import { makeStyles } from './FavoritesScreen.styles';
 
 export const FavoritesScreen = () => {
   const { colors } = useTheme();
-  const { horizontalPadding, sufficientWindowWidth } = useLayout();
+  const { horizontalPadding, sufficientWindowWidth, windowWidth } = useLayout();
 
   const tabWidth = useMemo(
     () => (sufficientWindowWidth - horizontalPadding * 2 - 8) / 2,
@@ -67,7 +66,7 @@ export const FavoritesScreen = () => {
       {
         translateX: interpolate(
           scrollOffsetSharedValue.value,
-          [0, WINDOW_WIDTH],
+          [0, windowWidth],
           [4, tabWidth - 4],
           Extrapolation.CLAMP,
         ),
@@ -78,7 +77,7 @@ export const FavoritesScreen = () => {
   const animatedSavedTabStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       scrollOffsetSharedValue.value,
-      [0, WINDOW_WIDTH],
+      [0, windowWidth],
       [1, 0.5],
       Extrapolation.CLAMP,
     ),
@@ -87,7 +86,7 @@ export const FavoritesScreen = () => {
   const animatedRecentlyPlayedTabStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       scrollOffsetSharedValue.value,
-      [0, WINDOW_WIDTH],
+      [0, windowWidth],
       [0.5, 1],
       Extrapolation.CLAMP,
     ),
@@ -112,7 +111,7 @@ export const FavoritesScreen = () => {
   }, [changeBarColor, isFirstTabScrolled, scrollViewRef]);
 
   const handleRecentlyPlayedTabPress = useCallback(() => {
-    scrollViewRef.current?.scrollTo({ x: WINDOW_WIDTH });
+    scrollViewRef.current?.scrollTo({ x: windowWidth });
     changeBarColor(isSecondTabScrolled);
   }, [changeBarColor, isSecondTabScrolled, scrollViewRef]);
 
@@ -124,18 +123,18 @@ export const FavoritesScreen = () => {
   const handleScrollEndDrag = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       const { contentOffset } = event.nativeEvent;
-      const scrollPosition = Math.round(contentOffset.x / WINDOW_WIDTH);
+      const scrollPosition = Math.round(contentOffset.x / windowWidth);
 
       const scrollDiff = contentOffset.x - startScrollPositionRef.current;
 
       if (Math.abs(scrollDiff) > 70) {
         if (scrollDiff > 0) {
-          scrollViewRef.current?.scrollTo({ x: WINDOW_WIDTH });
+          scrollViewRef.current?.scrollTo({ x: windowWidth });
         } else {
           scrollViewRef.current?.scrollTo({ x: 0 });
         }
       } else {
-        scrollViewRef.current?.scrollTo({ x: scrollPosition * WINDOW_WIDTH });
+        scrollViewRef.current?.scrollTo({ x: scrollPosition * windowWidth });
       }
 
       const isScrolled = scrollPosition === 1 ? isSecondTabScrolled : isFirstTabScrolled;
