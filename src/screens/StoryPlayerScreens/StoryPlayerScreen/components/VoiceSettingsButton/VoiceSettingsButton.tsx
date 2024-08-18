@@ -11,6 +11,8 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useVoicePreviewCachedPath } from '@/hooks/useVoicePreviewCachedPath';
 
+import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
+
 import { makeStyles } from './VoiceSettingsButton.styles';
 
 interface VoiceSettingsButtonProps {
@@ -26,11 +28,14 @@ export function VoiceSettingsButton({
   voiceCoverUrl,
   voiceName,
 }: VoiceSettingsButtonProps) {
+  const storyPlayerScreenLayout = useStoryPlayerScreenLayout();
+
   const stylesContext = useMemo(
     () => ({
       storyColor,
+      ...storyPlayerScreenLayout,
     }),
-    [storyColor],
+    [storyColor, storyPlayerScreenLayout],
   );
 
   const styles = useMakeStyles(makeStyles, stylesContext);

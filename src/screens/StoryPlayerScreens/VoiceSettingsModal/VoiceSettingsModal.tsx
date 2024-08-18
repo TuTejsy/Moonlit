@@ -90,7 +90,7 @@ export function VoiceSettingsModal() {
   );
 
   const numColumns = useMemo(() => {
-    return Math.floor(windowWidth - (horizontalPadding * 2) / audioRecordingWidth);
+    return Math.floor((windowWidth - horizontalPadding * 2) / audioRecordingWidth);
   }, [audioRecordingWidth, horizontalPadding, windowWidth]);
 
   const renderItem = useCallback(
