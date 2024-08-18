@@ -13,8 +13,8 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Icons } from '@/assets/icons/Icons';
-import { WINDOW_HEIGHT } from '@/constants/layout';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useHandleCheckSubscription } from '@/hooks/useHandleCheckSubscription';
@@ -29,6 +29,7 @@ import starsImage from './images/stars/stars.png';
 import { makeStyles } from './SplashViewModal.styles';
 
 export const SplashViewModal = () => {
+  const { windowHeight } = useLayout();
   const spalshViewModalLayout = useSplashViewModalLayout();
   const { moonLogoSize } = spalshViewModalLayout;
 
@@ -69,7 +70,7 @@ export const SplashViewModal = () => {
     transform: [
       { scale: interpolate(pulseAnimationProgress.value, [0, 1], [1, 0.9]) },
       {
-        translateY: interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT]),
+        translateY: interpolate(animationProgress.value, [0, 1], [0, -windowHeight]),
       },
     ],
   }));
@@ -79,7 +80,7 @@ export const SplashViewModal = () => {
     transform: [
       { scale: interpolate(pulseAnimationProgress.value, [0, 1], [1, 0.8]) },
       {
-        translateY: interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT * 1.5]),
+        translateY: interpolate(animationProgress.value, [0, 1], [0, -windowHeight * 1.5]),
       },
     ],
   }));
@@ -95,7 +96,7 @@ export const SplashViewModal = () => {
   const logoContainerAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
       {
-        translateY: interpolate(animationProgress.value, [0, 1], [0, -WINDOW_HEIGHT * 1.5]),
+        translateY: interpolate(animationProgress.value, [0, 1], [0, -windowHeight * 1.5]),
       },
     ],
   }));

@@ -17,11 +17,11 @@ import {
   MOONLIT_PLAY_STORE_APP_LINK,
   SANDBOX,
 } from '@/constants/common';
-import { WINDOW_HEIGHT } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_NAMES } from '@/constants/stories';
 import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
 import { useStory } from '@/hooks/database/useStory';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
@@ -45,18 +45,17 @@ import {
 } from './components/VoiceSettingsButton/VoiceSettingsButton.constants';
 import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUpdate';
 import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
-import { useLayout } from '@/hooks/theme/useLayout';
 import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
-import { makeStyles } from './StoryPlayerScreen.styles';
 import { useStoryPlayerScreenLayout } from './hooks/useStoryPlayerScreenLayout';
+import { makeStyles } from './StoryPlayerScreen.styles';
 
 export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
-  const { dh } = useLayout();
+  const { dh, windowHeight } = useLayout();
   const storyPlayerScreenLayout = useStoryPlayerScreenLayout();
 
   const storyContainerMinHeight =
-    WINDOW_HEIGHT -
+    windowHeight -
     DEFAULT_HEADER_HEIGHT -
     insets.top -
     insets.bottom -
