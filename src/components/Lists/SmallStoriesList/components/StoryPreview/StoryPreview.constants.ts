@@ -1,3 +1,3 @@
-import { SCREEN_WIDTH } from '@/constants/layout';
+import { SUFFICIENT_WINDOW_WIDTH } from '@/constants/layout';
 
-export const PREVIEW_SIZE = (SCREEN_WIDTH - 16 * 3) / 2;
+export const PREVIEW_SIZE = (SUFFICIENT_WINDOW_WIDTH - 16 * 3) / 2;

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { WINDOW_WIDTH } from '@/constants/layout';
+import { SCREEN_MAX_WIDTH, WINDOW_WIDTH } from '@/constants/layout';
 import { TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
@@ -15,7 +15,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
     },
     button: {
       marginTop: dh(20),
-      width: dw(213),
+      width: dw(213, SCREEN_MAX_WIDTH),
     },
     container: {
       alignItems: 'center',
@@ -25,9 +25,9 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       position: 'relative',
     },
     logoImage: {
-      height: dw(78),
+      height: dw(78, SCREEN_MAX_WIDTH),
       marginTop: dw(64),
-      width: dw(88),
+      width: dw(88, SCREEN_MAX_WIDTH),
     },
     title: {
       ...fonts.size_24,

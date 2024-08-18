@@ -1,8 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { FlatList, ListRenderItemInfo, ViewStyle } from 'react-native';
 
 import Realm from 'realm';
 
+import { WINDOW_WIDTH } from '@/constants/layout';
+import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { SOURCE } from '@/services/analytics/analytics.constants';
@@ -10,6 +12,7 @@ import { TabEventType } from '@/services/analytics/analytics.types';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
+import { PREVIEW_WIDTH } from './components/StoryPreview/StoryPreview.constants';
 import { makeStyles } from './MediumStoriesList.styles';
 
 interface MediumStoriesListPropTypes {
@@ -26,6 +29,10 @@ export function MediumStoriesList({
   tab,
 }: MediumStoriesListPropTypes) {
   const styles = useMakeStyles(makeStyles);
+
+  const isScrollEnabled = useMemo(() => {
+    return PREVIEW_WIDTH * stories.length > WINDOW_WIDTH - HORIZONTAL_PADDING * 2;
+  }, [stories.length]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<StorySchema>) => {
@@ -57,6 +64,7 @@ export function MediumStoriesList({
       extraData={storiesVersion}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
+      scrollEnabled={isScrollEnabled}
       showsHorizontalScrollIndicator={false}
       style={[styles.list, style]}
     />
