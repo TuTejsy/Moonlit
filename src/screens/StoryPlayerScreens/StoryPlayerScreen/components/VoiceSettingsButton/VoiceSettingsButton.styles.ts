@@ -12,7 +12,10 @@ interface Context extends StoryPlayerScreenLayout {
   storyColor: string;
 }
 
-export const makeStyles = ({ colors, fonts, insets }: MakeStylesProps, { storyColor, storyContainerMinWidth}: Context) =>
+export const makeStyles = (
+  { colors, fonts, insets }: MakeStylesProps,
+  { storyColor, storyContainerMinWidth }: Context,
+) =>
   StyleSheet.create({
     blurView: {
       flex: 1,

@@ -12,6 +12,7 @@ import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './AudioRecording.styles';
+import { useAudioRecordingLayout } from './hooks/useAudioRecordingLayout';
 
 interface AudioRecordingProps {
   coverUrl: string;
@@ -30,7 +31,11 @@ export function AudioRecording({
   onSelect,
   recordingId,
 }: AudioRecordingProps) {
-  const stylesContext = useMemo(() => ({ isSelected }), [isSelected]);
+  const audioRecordingLayout = useAudioRecordingLayout();
+  const stylesContext = useMemo(
+    () => ({ isSelected, ...audioRecordingLayout }),
+    [audioRecordingLayout, isSelected],
+  );
   const styles = useMakeStyles(makeStyles, stylesContext);
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
