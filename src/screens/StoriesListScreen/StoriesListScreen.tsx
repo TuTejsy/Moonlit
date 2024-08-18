@@ -35,7 +35,9 @@ export const StoriesListScreen = () => {
   const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfigs);
 
   const numColumns = useMemo(() => {
-    return Math.floor((windowWidth - horizontalPadding * 2) / previewSize);
+    return Math.floor(
+      (windowWidth - horizontalPadding * 2) / (previewSize + horizontalPadding / 2),
+    );
   }, [horizontalPadding, previewSize, windowWidth]);
 
   const headerStories = useMemo(

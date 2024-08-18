@@ -55,7 +55,9 @@ export function SmallStoriesList({
   const { previewSize } = usePreviewLayout();
 
   const numColumns = useMemo(() => {
-    return Math.floor((windowWidth - horizontalPadding * 2) / previewSize);
+    return Math.floor(
+      (windowWidth - horizontalPadding * 2) / (previewSize + horizontalPadding / 2),
+    );
   }, [horizontalPadding, previewSize, windowWidth]);
 
   const styles = useMakeStyles(makeStyles, { numColumns });

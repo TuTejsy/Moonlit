@@ -4,7 +4,10 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { PreviewLayout } from './hooks/usePreviewLayout';
 
-export const makeStyles = ({ colors, fonts }: MakeStylesProps, { previewSize }: PreviewLayout) =>
+export const makeStyles = (
+  { colors, fonts, horizontalPadding }: MakeStylesProps,
+  { previewSize }: PreviewLayout,
+) =>
   StyleSheet.create({
     comingSoonLabel: {
       backgroundColor: colors.opacityWhite(0.2),
@@ -43,7 +46,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps, { previewSize }: 
       width: previewSize,
     },
     previewContainer: {
-      marginRight: 16,
+      marginRight: horizontalPadding,
       maxWidth: previewSize,
       position: 'relative',
     },
