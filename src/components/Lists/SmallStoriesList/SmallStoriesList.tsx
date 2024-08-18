@@ -16,8 +16,8 @@ import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
+import { usePreviewLayout } from './components/StoryPreview/hooks/usePreviewLayout';
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
-import { PREVIEW_SIZE } from './components/StoryPreview/StoryPreview.constants';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
@@ -52,10 +52,11 @@ export function SmallStoriesList({
   tab,
 }: SmallStoriesListPropTypes) {
   const { horizontalPadding, windowWidth } = useLayout();
+  const { previewSize } = usePreviewLayout();
 
   const numColumns = useMemo(() => {
-    return Math.floor((windowWidth - horizontalPadding * 2) / PREVIEW_SIZE);
-  }, [horizontalPadding, windowWidth]);
+    return Math.floor((windowWidth - horizontalPadding * 2) / previewSize);
+  }, [horizontalPadding, previewSize, windowWidth]);
 
   const styles = useMakeStyles(makeStyles, { numColumns });
 

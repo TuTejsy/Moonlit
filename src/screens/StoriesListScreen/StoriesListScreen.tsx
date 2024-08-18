@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import { MoreTalesComingFooter } from '@/components/Lists/MoreTalesComingFooter/MoreTalesComingFooter';
-import { PREVIEW_SIZE } from '@/components/Lists/SmallStoriesList/components/StoryPreview/StoryPreview.constants';
+import { usePreviewLayout } from '@/components/Lists/SmallStoriesList/components/StoryPreview/hooks/usePreviewLayout';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
@@ -26,6 +26,7 @@ export const StoriesListScreen = () => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
   const { horizontalPadding } = useLayout();
+  const { previewSize } = usePreviewLayout();
 
   const { params } = useAppRoute<SharedRoutes.STORIES_LIST>();
   const { storiesFilter, storiesSortConfigs, title } = params || {};
@@ -35,8 +36,8 @@ export const StoriesListScreen = () => {
   const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfigs);
 
   const numColumns = useMemo(() => {
-    return Math.floor((WINDOW_WIDTH - horizontalPadding * 2) / PREVIEW_SIZE);
-  }, [horizontalPadding]);
+    return Math.floor((WINDOW_WIDTH - horizontalPadding * 2) / previewSize);
+  }, [horizontalPadding, previewSize]);
 
   const headerStories = useMemo(
     () => stories.slice(0, numColumns),
