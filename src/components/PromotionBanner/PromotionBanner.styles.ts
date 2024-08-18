@@ -2,18 +2,21 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { PROMOTION_BANNER_HEIGHT, PROMOTION_BANNER_WIDTH } from './PromotionBanner.constants';
+import { PromotionBannerLayout } from './hooks/usePromotionBannerLayout';
 
-export const makeStyles = ({ colors, fonts, horizontalPadding, windowMaxWidth }: MakeStylesProps) =>
+export const makeStyles = (
+  { colors, fonts, horizontalPadding, windowMaxWidth }: MakeStylesProps,
+  { promotionBannerHeight, promotionBannerWidth }: PromotionBannerLayout,
+) =>
   StyleSheet.create({
     container: {
       alignItems: 'center',
       backgroundColor: colors.lightPurple,
       borderRadius: 16,
-      height: PROMOTION_BANNER_HEIGHT,
+      height: promotionBannerHeight,
       overflow: 'hidden',
       position: 'relative',
-      width: PROMOTION_BANNER_WIDTH,
+      width: promotionBannerWidth,
     },
     content: {
       flex: 1,
@@ -32,7 +35,7 @@ export const makeStyles = ({ colors, fonts, horizontalPadding, windowMaxWidth }:
       left: 0,
       position: 'absolute',
       top: 0,
-      width: PROMOTION_BANNER_WIDTH,
+      width: promotionBannerWidth,
     },
     subtitle: {
       ...fonts.size_16,
