@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { IS_SQUARE_SCREEN } from '@/constants/layout';
+import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 
@@ -38,6 +38,7 @@ export const SelectionPaywallContent = ({
 }: SelectionPaywallContentProps) => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+  const { isSquareScreen } = useLayout();
 
   const [isFreeTrialToggle, setIsFreeTrialToggle] = useState(isFreeTrialEnabled);
 
@@ -108,11 +109,11 @@ export const SelectionPaywallContent = ({
   return (
     <>
       <TextView style={styles.title} type='bold'>
-        Get access{IS_SQUARE_SCREEN ? ' ' : `\n`}to all tales
+        Get access{isSquareScreen ? ' ' : `\n`}to all tales
       </TextView>
 
       <TextView style={styles.subtitle} type='regular'>
-        Discover unique voices and{IS_SQUARE_SCREEN ? ' ' : `\n`}listen to classic fary tales
+        Discover unique voices and{isSquareScreen ? ' ' : `\n`}listen to classic fary tales
       </TextView>
 
       <Image source={voicesImage} style={styles.voicesImage} />

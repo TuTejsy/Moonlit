@@ -1,30 +1,33 @@
 import { StyleSheet } from 'react-native';
 
-import {
-  SCREEN_MAX_WIDTH,
-  SUFFICIENT_SCREEN_WIDTH,
-  WINDOW_HEIGHT,
-  WINDOW_WIDTH,
-} from '@/constants/layout';
 import { HORIZONTAL_PADDING } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
+export const makeStyles = ({
+  colors,
+  dh,
+  dw,
+  fonts,
+  sufficientWindowWidth,
+  windowHeight,
+  windowMaxWidth,
+  windowWidth,
+}: MakeStylesProps) =>
   StyleSheet.create({
     checkbox: {
       alignItems: 'center',
       borderColor: colors.opacityWhite(0.2),
-      borderRadius: dw(12, SCREEN_MAX_WIDTH),
+      borderRadius: dw(12, windowMaxWidth),
       borderWidth: 1,
-      height: dw(24, SCREEN_MAX_WIDTH),
+      height: dw(24, windowMaxWidth),
       justifyContent: 'center',
-      width: dw(24, SCREEN_MAX_WIDTH),
+      width: dw(24, windowMaxWidth),
     },
     checkboxMark: {
       backgroundColor: colors.white,
-      borderRadius: dw(6, SCREEN_MAX_WIDTH),
-      height: dw(12, SCREEN_MAX_WIDTH),
-      width: dw(12, SCREEN_MAX_WIDTH),
+      borderRadius: dw(6, windowMaxWidth),
+      height: dw(12, windowMaxWidth),
+      width: dw(12, windowMaxWidth),
     },
     freeTrialContainer: {
       alignItems: 'center',
@@ -32,12 +35,12 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       borderRadius: 16,
       borderWidth: 1,
       flexDirection: 'row',
-      height: dw(56, SCREEN_MAX_WIDTH),
+      height: dw(56, windowMaxWidth),
       justifyContent: 'space-between',
       marginTop: dh(12),
       paddingLeft: HORIZONTAL_PADDING,
       paddingRight: 24,
-      width: SUFFICIENT_SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
+      width: sufficientWindowWidth - HORIZONTAL_PADDING * 4,
     },
     freeTrialSwitch: {
       height: 28,
@@ -52,7 +55,7 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       borderRadius: 16,
       height: 16,
       justifyContent: 'center',
-      left: SUFFICIENT_SCREEN_WIDTH / 2 - HORIZONTAL_PADDING * 2 - 34,
+      left: sufficientWindowWidth / 2 - HORIZONTAL_PADDING * 2 - 34,
       position: 'absolute',
       top: -8,
       width: 68,
@@ -76,13 +79,13 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       borderRadius: 16,
       borderWidth: 1,
       flexDirection: 'row',
-      height: dw(56, SCREEN_MAX_WIDTH),
+      height: dw(56, windowMaxWidth),
       justifyContent: 'space-between',
       marginTop: dh(12),
       paddingLeft: HORIZONTAL_PADDING,
       paddingRight: 26,
       position: 'relative',
-      width: SUFFICIENT_SCREEN_WIDTH - HORIZONTAL_PADDING * 4,
+      width: sufficientWindowWidth - HORIZONTAL_PADDING * 4,
     },
     productDescription: {
       ...fonts.size_14,
@@ -115,7 +118,7 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
     subtitle: {
       ...fonts.size_14,
       color: colors.opacityWhite(0.7),
-      display: WINDOW_HEIGHT < 680 ? 'none' : 'flex',
+      display: windowHeight < 680 ? 'none' : 'flex',
       marginTop: dh(8),
       textAlign: 'center',
     },
@@ -128,6 +131,6 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       height: dw(140),
       marginBottom: dh(22),
       marginTop: dh(18),
-      width: WINDOW_WIDTH,
+      width: windowWidth,
     },
   });

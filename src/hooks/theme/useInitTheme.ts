@@ -2,7 +2,6 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { makeFonts } from '@/styles/fonts';
 import { darkTheme } from '@/styles/themes/dark';
-import { dh, dw } from '@/utils/sizes';
 
 import { ThemeValues } from './useTheme';
 
@@ -24,8 +23,6 @@ export const useInitTheme = () => {
   return useMemo(
     () => ({
       ...theme,
-      dh,
-      dw,
       fonts: makeFonts(),
       onChangeTheme,
       value: themeValue,
