@@ -5,9 +5,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import { MoreTalesComingFooter } from '@/components/Lists/MoreTalesComingFooter/MoreTalesComingFooter';
+import { PREVIEW_SIZE } from '@/components/Lists/SmallStoriesList/components/StoryPreview/StoryPreview.constants';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
-import { WINDOW_HEIGHT } from '@/constants/layout';
-import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from '@/constants/layout';
+import { DEFAULT_HEADER_HEIGHT, HORIZONTAL_PADDING } from '@/constants/sizes';
 import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
@@ -31,10 +32,20 @@ export const StoriesListScreen = () => {
 
   const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfigs);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const headerStories = useMemo(() => stories.slice(0, 2), [stories, storiesVersion]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const listStories = useMemo(() => stories.slice(2), [stories, storiesVersion]);
+  const numColumns = useMemo(() => {
+    return Math.floor(WINDOW_WIDTH / (PREVIEW_SIZE + HORIZONTAL_PADDING));
+  }, []);
+
+  const headerStories = useMemo(
+    () => stories.slice(0, numColumns),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stories, storiesVersion, numColumns],
+  );
+  const listStories = useMemo(
+    () => stories.slice(numColumns),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stories, storiesVersion, numColumns],
+  );
 
   const gradientStartLocation = useMemo(() => {
     return (DEFAULT_HEADER_HEIGHT + insets.top) / WINDOW_HEIGHT;

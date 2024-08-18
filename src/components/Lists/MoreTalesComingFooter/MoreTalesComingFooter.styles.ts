@@ -23,6 +23,7 @@ export const makeStyles = ({ colors, dh, dw, fonts, insets }: MakeStylesProps) =
       marginTop: 40,
       paddingBottom: insets.bottom + TAB_BAR_STORY_PLAYER_HEIGHT,
       position: 'relative',
+      width: WINDOW_WIDTH,
     },
     logoImage: {
       height: dw(78, SCREEN_MAX_WIDTH),

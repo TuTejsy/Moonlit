@@ -38,6 +38,7 @@ export const StoriesWithPromotion = memo(
             <StoryPreview
               key={story.id}
               description={story.description}
+              isComingSoon={story.is_coming_soon}
               isFree={story.is_free}
               isImageLoaded={!!story.small_cover_cached_name}
               previewURL={getImageFilePathForStory(story, 'small')}
