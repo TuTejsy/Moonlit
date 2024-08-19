@@ -8,7 +8,7 @@ import { ITheme } from '@/hooks/theme/useTheme';
 // import { SearchBar } from '@/components/SearchBar/SearchBar';
 
 export const commonOptions = ({ colors }: ITheme): StackNavigationOptions => ({
-  cardStyle: { backgroundColor: colors.white },
+  cardStyle: { backgroundColor: colors.darkPurple },
   headerShadowVisible: false,
   headerShown: false,
   presentation: IS_ANDROID ? 'transparentModal' : 'card',

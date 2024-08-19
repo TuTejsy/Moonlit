@@ -16,7 +16,7 @@ import {
 
 export const rootOptions = ({ colors }: ITheme): StackNavigationOptions => ({
   cardStyle: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.darkPurple,
   },
   headerShadowVisible: false,
   headerShown: true,
