@@ -10,10 +10,11 @@ export const makeStyles = ({
 }: MakeStylesProps) =>
   StyleSheet.create({
     container: {
-      alignItems: 'center',
+      alignItems: 'flex-start',
       width: '100%',
     },
     promotionContainer: {
+      marginLeft: -horizontalPadding / 2,
       paddingVertical: 21,
       width: windowWidth,
     },
@@ -24,7 +25,7 @@ export const makeStyles = ({
     },
     stories: {
       flexDirection: 'row',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       width: '100%',
     },
     storiesSeparator: {

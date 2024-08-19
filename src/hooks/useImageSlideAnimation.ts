@@ -33,6 +33,7 @@ export const useImageSlideAnimation = (containerWidth: number) => {
         true,
       );
     } else if (imageWidth < containerWidth) {
+      imageTranslateXSharedValue.value = 0;
       imageWidthSharedValue.value = containerWidth;
     }
   }, [containerWidth, imageWidth]);
