@@ -2,12 +2,11 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { PreviewLayout } from './hooks/usePreviewLayout';
+import { PreviewLayout } from '../../hooks/useSmallStoriesListLayout';
 
-export const makeStyles = (
-  { colors, fonts, horizontalPadding }: MakeStylesProps,
-  { previewSize }: PreviewLayout,
-) =>
+import { STORY_PREVIEW_SIZE } from './StoryPreview.constants';
+
+export const makeStyles = ({ colors, fonts }: MakeStylesProps, { cellSpace }: PreviewLayout) =>
   StyleSheet.create({
     comingSoonLabel: {
       backgroundColor: colors.opacityWhite(0.2),
@@ -39,25 +38,25 @@ export const makeStyles = (
       alignItems: 'flex-start',
       backgroundColor: colors.transparent,
       flex: 1,
-      height: previewSize,
+      height: STORY_PREVIEW_SIZE,
       justifyContent: 'flex-end',
-      maxHeight: previewSize,
-      maxWidth: previewSize,
-      width: previewSize,
+      maxHeight: STORY_PREVIEW_SIZE,
+      maxWidth: STORY_PREVIEW_SIZE,
+      width: STORY_PREVIEW_SIZE,
     },
     previewContainer: {
-      marginHorizontal: horizontalPadding / 2,
-      maxWidth: previewSize,
+      marginHorizontal: cellSpace / 2,
+      maxWidth: STORY_PREVIEW_SIZE,
       position: 'relative',
     },
     previewGradient: {
       backgroundColor: colors.imagePurple,
       borderRadius: 16,
-      height: previewSize,
+      height: STORY_PREVIEW_SIZE,
       left: 0,
       position: 'absolute',
       top: 0,
-      width: previewSize,
+      width: STORY_PREVIEW_SIZE,
     },
     previewImageContainer: {
       alignItems: 'center',

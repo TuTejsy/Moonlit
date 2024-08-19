@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
 import { MoreTalesComingFooter } from '@/components/Lists/MoreTalesComingFooter/MoreTalesComingFooter';
-import { usePreviewLayout } from '@/components/Lists/SmallStoriesList/components/StoryPreview/hooks/usePreviewLayout';
+import { useSmallStoriesListLayout } from '@/components/Lists/SmallStoriesList/hooks/useSmallStoriesListLayout';
 import { SmallStoriesList } from '@/components/Lists/SmallStoriesList/SmallStoriesList';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { useStories } from '@/hooks/database/useStories';
@@ -24,8 +24,8 @@ import { makeStyles } from './StoriesListScreen.styles';
 export const StoriesListScreen = () => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
-  const { horizontalPadding, windowHeight, windowWidth } = useLayout();
-  const { previewSize } = usePreviewLayout();
+  const { windowHeight } = useLayout();
+  const { numColumns } = useSmallStoriesListLayout();
 
   const { params } = useAppRoute<SharedRoutes.STORIES_LIST>();
   const { storiesFilter, storiesSortConfigs, title } = params || {};
@@ -33,10 +33,6 @@ export const StoriesListScreen = () => {
   const insets = useSafeAreaInsets();
 
   const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfigs);
-
-  const numColumns = useMemo(() => {
-    return Math.floor((windowWidth - horizontalPadding) / (previewSize + horizontalPadding / 2));
-  }, [horizontalPadding, previewSize, windowWidth]);
 
   const headerStories = useMemo(
     () => stories.slice(0, numColumns),

@@ -13,8 +13,9 @@ import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
+import { useSmallStoriesListLayout } from '../../hooks/useSmallStoriesListLayout';
+
 import { makeStyles } from './StoryPreview.styles';
-import { usePreviewLayout } from './hooks/usePreviewLayout';
 
 interface StoryPreviewPropTypes {
   description: string;
@@ -40,7 +41,7 @@ export const StoryPreview = memo(
     tab,
     title,
   }: StoryPreviewPropTypes) => {
-    const previewLayout = usePreviewLayout();
+    const previewLayout = useSmallStoriesListLayout();
     const styles = useMakeStyles(makeStyles, previewLayout);
 
     const isFullVersion = useAppSelector(selectIsFullVersion);

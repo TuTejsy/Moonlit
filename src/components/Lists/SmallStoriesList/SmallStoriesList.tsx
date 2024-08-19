@@ -10,14 +10,13 @@ import {
 } from 'react-native';
 
 import { StorySchema } from '@/database/schema/stories/types';
-import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
-import { usePreviewLayout } from './components/StoryPreview/hooks/usePreviewLayout';
 import { StoryPreview } from './components/StoryPreview/StoryPreview';
+import { useSmallStoriesListLayout } from './hooks/useSmallStoriesListLayout';
 import { makeStyles } from './SmallStoriesList.styles';
 
 interface SmallStoriesListPropTypes {
@@ -51,14 +50,8 @@ export function SmallStoriesList({
   style,
   tab,
 }: SmallStoriesListPropTypes) {
-  const { horizontalPadding, windowWidth } = useLayout();
-  const { previewSize } = usePreviewLayout();
-
-  const numColumns = useMemo(() => {
-    return Math.floor((windowWidth - horizontalPadding) / (previewSize + horizontalPadding / 2));
-  }, [horizontalPadding, previewSize, windowWidth]);
-
-  const styles = useMakeStyles(makeStyles, { numColumns });
+  const styles = useMakeStyles(makeStyles);
+  const { numColumns } = useSmallStoriesListLayout();
 
   const storiesToRender = useMemo(() => {
     if (displayCount) {

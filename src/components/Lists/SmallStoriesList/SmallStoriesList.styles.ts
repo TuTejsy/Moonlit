@@ -2,14 +2,10 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-interface Context {
-  numColumns: number;
-}
-
-export const makeStyles = ({ horizontalPadding }: MakeStylesProps, { numColumns }: Context) =>
+export const makeStyles = ({ horizontalPadding }: MakeStylesProps) =>
   StyleSheet.create({
     listContent: {
-      alignItems: numColumns > 2 ? 'center' : 'flex-start',
+      alignItems: 'flex-start',
       paddingHorizontal: horizontalPadding / 2,
     },
     separator: {
