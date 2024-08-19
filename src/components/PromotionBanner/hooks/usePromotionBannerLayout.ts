@@ -8,14 +8,14 @@ export interface PromotionBannerLayout {
 }
 
 export const usePromotionBannerLayout = (): PromotionBannerLayout => {
-  const { sufficientWindowWidth } = useLayout();
+  const { horizontalPadding, sufficientWindowWidth, windowWidth } = useLayout();
 
   const layout = useMemo(() => {
-    const promotionBannerWidth = sufficientWindowWidth - 32;
-    const promotionBannerHeight = (promotionBannerWidth / 343) * 480;
+    const promotionBannerWidth = windowWidth - horizontalPadding * 2;
+    const promotionBannerHeight = (sufficientWindowWidth / 343) * 480;
 
     return { promotionBannerHeight, promotionBannerWidth };
-  }, [sufficientWindowWidth]);
+  }, [horizontalPadding, sufficientWindowWidth, windowWidth]);
 
   return layout;
 };

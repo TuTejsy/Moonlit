@@ -7,15 +7,15 @@ export interface PreviewLayout {
 }
 
 export const usePreviewLayout = (): PreviewLayout => {
-  const { sufficientWindowWidth } = useLayout();
+  const { horizontalPadding, sufficientWindowWidth } = useLayout();
 
   const layout = useMemo(() => {
-    const previewSize = (sufficientWindowWidth - 16 * 3) / 2;
+    const previewSize = (sufficientWindowWidth - horizontalPadding * 3) / 2;
 
     return {
       previewSize,
     };
-  }, [sufficientWindowWidth]);
+  }, [sufficientWindowWidth, horizontalPadding]);
 
   return layout;
 };

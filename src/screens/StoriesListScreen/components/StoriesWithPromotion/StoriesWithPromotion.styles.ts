@@ -11,12 +11,11 @@ export const makeStyles = ({
   StyleSheet.create({
     container: {
       alignItems: 'center',
-      width: windowWidth,
+      width: '100%',
     },
     promotionContainer: {
-      marginLeft: -horizontalPadding,
       paddingVertical: 21,
-      width: '100%',
+      width: windowWidth,
     },
     separator: {
       backgroundColor: colors.opacityWhite(0.1),
@@ -26,7 +25,6 @@ export const makeStyles = ({
     stories: {
       flexDirection: 'row',
       justifyContent: 'center',
-      marginLeft: -horizontalPadding,
       width: '100%',
     },
     storiesSeparator: {

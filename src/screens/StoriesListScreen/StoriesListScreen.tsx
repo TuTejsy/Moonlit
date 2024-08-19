@@ -35,9 +35,7 @@ export const StoriesListScreen = () => {
   const [stories, storiesVersion] = useStories(storiesFilter, storiesSortConfigs);
 
   const numColumns = useMemo(() => {
-    return Math.floor(
-      (windowWidth - horizontalPadding * 2) / (previewSize + horizontalPadding / 2),
-    );
+    return Math.floor((windowWidth - horizontalPadding) / (previewSize + horizontalPadding / 2));
   }, [horizontalPadding, previewSize, windowWidth]);
 
   const headerStories = useMemo(
@@ -72,6 +70,7 @@ export const StoriesListScreen = () => {
 
       <SmallStoriesList
         contentContainerStyle={styles.smallListContainerStyle}
+        showsVerticalScrollIndicator={false}
         stories={listStories}
         storiesVersion={storiesVersion}
         tab={(title ?? 'All tales') as TabEventType}
