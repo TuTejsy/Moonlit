@@ -7,6 +7,8 @@ export interface Layout {
   dh: (size: number, maxHeight?: number) => number;
   dw: (size: number, maxWidth?: number) => number;
   horizontalPadding: number;
+  isLandscape: boolean;
+  isPortrait: boolean;
   isSquareScreen: boolean;
   sufficientWindowWidth: number;
   windowHeight: number;
@@ -39,6 +41,8 @@ export const useLayout = (): Layout => {
     const windowMaxWidth = Math.max((DESIGN_WIDTH / DESIGN_HEIGHT) * windowHeight, DESIGN_WIDTH);
     const sufficientWindowWidth = Math.min(windowWidth, windowMaxWidth);
     const isSquareScreen = windowHeight / windowWidth < 1.3;
+    const isLandscape = windowWidth > windowHeight;
+    const isPortrait = !isLandscape;
 
     const horizontalPadding = dw(16, windowMaxWidth);
     const maxModalHeight = windowHeight - 81;
@@ -47,6 +51,8 @@ export const useLayout = (): Layout => {
       dh,
       dw,
       horizontalPadding,
+      isLandscape,
+      isPortrait,
       isSquareScreen,
       maxModalHeight,
       sufficientWindowWidth,

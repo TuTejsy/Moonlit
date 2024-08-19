@@ -10,7 +10,7 @@ export const makeStyles = (
 ) =>
   StyleSheet.create({
     container: {
-      alignItems: 'flex-start',
+      alignItems: 'center',
       backgroundColor: colors.lightPurple,
       borderRadius: 16,
       flex: 1,
