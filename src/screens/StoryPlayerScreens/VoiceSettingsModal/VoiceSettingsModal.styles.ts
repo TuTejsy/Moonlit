@@ -2,17 +2,21 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({
-  colors,
-  dh,
-  dw,
-  fonts,
-  horizontalPadding,
-  insets,
-  sufficientWindowWidth,
-  windowHeight,
-  windowWidth,
-}: MakeStylesProps) =>
+import { AuidioRecordingLayout } from './components/AudioRecording/hooks/useAudioRecordingLayout';
+
+export const makeStyles = (
+  {
+    colors,
+    dh,
+    fonts,
+    horizontalPadding,
+    insets,
+    sufficientWindowWidth,
+    windowHeight,
+    windowWidth,
+  }: MakeStylesProps,
+  { cellSpace }: AuidioRecordingLayout,
+) =>
   StyleSheet.create({
     addVoiceText: {
       ...fonts.size_14,
@@ -23,7 +27,7 @@ export const makeStyles = ({
     },
     audioRecordingsListContainer: {
       alignItems: 'center',
-      paddingHorizontal: horizontalPadding - dw(7.5),
+      paddingHorizontal: horizontalPadding - cellSpace / 2,
       paddingTop: 10,
     },
     blurView: {

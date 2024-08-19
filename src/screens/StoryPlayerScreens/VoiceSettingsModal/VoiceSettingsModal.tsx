@@ -9,7 +9,6 @@ import { IS_IOS } from '@/constants/common';
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
-import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -43,16 +42,14 @@ export function VoiceSettingsModal() {
   const navigation = useAppNavigation<RootRoutes.VOICE_SETTINGS_MODAL>();
 
   const { colors } = useTheme();
-  const { windowWidth } = useLayout();
   const audioRecordingLayout = useAudioRecordingLayout();
-  const { audioRecordingMargin, audioRecordingWidth } = audioRecordingLayout;
+  const { numColumns } = audioRecordingLayout;
 
   const stylesContext = useMemo(
     () => ({ ...audioRecordingLayout, storyColor }),
     [audioRecordingLayout, storyColor],
   );
   const styles = useMakeStyles(makeStyles, stylesContext);
-  const { horizontalPadding } = useLayout();
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
 
@@ -88,12 +85,6 @@ export function VoiceSettingsModal() {
     },
     [handleClosePress, onSelectAudioRecording, selectedAudioRecordingId, source, storyName, tab],
   );
-
-  const numColumns = useMemo(() => {
-    return Math.floor(
-      (windowWidth - horizontalPadding) / (audioRecordingWidth + audioRecordingMargin / 2),
-    );
-  }, [audioRecordingMargin, audioRecordingWidth, horizontalPadding, windowWidth]);
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<AudioRecordingSchema | typeof MORE_VOICES_PLACEHOLDER>) => {

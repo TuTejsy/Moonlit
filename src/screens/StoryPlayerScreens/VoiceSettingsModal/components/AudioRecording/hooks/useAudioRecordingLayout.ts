@@ -4,24 +4,32 @@ import { useLayout } from '@/hooks/theme/useLayout';
 
 export interface AuidioRecordingLayout {
   audioRecordingHeight: number;
-  audioRecordingMargin: number;
   audioRecordingWidth: number;
+  cellSpace: number;
+  numColumns: number;
 }
 
 export const useAudioRecordingLayout = () => {
-  const { dw, windowMaxWidth } = useLayout();
+  const { dw, horizontalPadding, windowMaxWidth, windowWidth } = useLayout();
 
   const layout = useMemo(() => {
     const audioRecordingHeight = dw(184, windowMaxWidth);
     const audioRecordingWidth = dw(163, windowMaxWidth);
-    const audioRecordingMargin = dw(15);
+
+    const numColumns = Math.floor(
+      (windowWidth - horizontalPadding) / (audioRecordingWidth + horizontalPadding),
+    );
+
+    const cellSpace =
+      (windowWidth - horizontalPadding - audioRecordingWidth * numColumns) / numColumns;
 
     return {
       audioRecordingHeight,
-      audioRecordingMargin,
       audioRecordingWidth,
+      cellSpace,
+      numColumns,
     };
-  }, [dw, windowMaxWidth]);
+  }, [dw, horizontalPadding, windowMaxWidth, windowWidth]);
 
   return layout;
 };

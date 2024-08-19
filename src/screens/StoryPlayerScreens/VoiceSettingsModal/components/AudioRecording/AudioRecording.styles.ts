@@ -10,7 +10,7 @@ interface Context extends AuidioRecordingLayout {
 
 export const makeStyles = (
   { colors, dw, fonts, windowMaxWidth }: MakeStylesProps,
-  { audioRecordingHeight, audioRecordingMargin, audioRecordingWidth, isSelected }: Context,
+  { audioRecordingHeight, audioRecordingWidth, cellSpace, isSelected }: Context,
 ) =>
   StyleSheet.create({
     audioRecordingContainer: {
@@ -20,7 +20,7 @@ export const makeStyles = (
       height: audioRecordingHeight,
       justifyContent: 'center',
       marginBottom: 16,
-      marginHorizontal: audioRecordingMargin / 2,
+      marginHorizontal: cellSpace / 2,
       overflow: 'hidden',
       width: audioRecordingWidth,
     },
@@ -29,7 +29,7 @@ export const makeStyles = (
       backgroundColor: colors.opacityBlack(0.1),
       borderRadius: 12,
       color: colors.black,
-      left: dw(8),
+      left: dw(8, windowMaxWidth),
       overflow: 'hidden',
       paddingHorizontal: 25,
       paddingVertical: 2,
@@ -44,7 +44,7 @@ export const makeStyles = (
     },
     rightIcon: {
       position: 'absolute',
-      right: dw(8),
+      right: dw(8, windowMaxWidth),
     },
     text: {
       ...fonts.size_16,

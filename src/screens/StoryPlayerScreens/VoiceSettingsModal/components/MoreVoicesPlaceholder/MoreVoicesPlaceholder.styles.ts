@@ -6,7 +6,7 @@ import { AuidioRecordingLayout } from '../AudioRecording/hooks/useAudioRecording
 
 export const makeStyles = (
   { colors, dw, windowMaxWidth }: MakeStylesProps,
-  { audioRecordingHeight, audioRecordingMargin, audioRecordingWidth }: AuidioRecordingLayout,
+  { audioRecordingHeight, audioRecordingWidth, cellSpace }: AuidioRecordingLayout,
 ) =>
   StyleSheet.create({
     audioRecordingContainer: {
@@ -14,7 +14,7 @@ export const makeStyles = (
       borderRadius: dw(16, windowMaxWidth),
       height: audioRecordingHeight,
       marginBottom: 16,
-      marginHorizontal: audioRecordingMargin / 2,
+      marginHorizontal: cellSpace / 2,
       overflow: 'hidden',
       width: audioRecordingWidth,
     },
