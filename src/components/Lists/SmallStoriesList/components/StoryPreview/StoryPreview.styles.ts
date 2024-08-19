@@ -46,7 +46,7 @@ export const makeStyles = (
       width: previewSize,
     },
     previewContainer: {
-      marginRight: horizontalPadding,
+      marginHorizontal: horizontalPadding / 2,
       maxWidth: previewSize,
       position: 'relative',
     },

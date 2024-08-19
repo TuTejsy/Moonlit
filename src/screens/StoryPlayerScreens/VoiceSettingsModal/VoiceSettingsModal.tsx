@@ -91,7 +91,7 @@ export function VoiceSettingsModal() {
 
   const numColumns = useMemo(() => {
     return Math.floor(
-      (windowWidth - horizontalPadding * 2) / (audioRecordingWidth + audioRecordingMargin / 2),
+      (windowWidth - horizontalPadding) / (audioRecordingWidth + audioRecordingMargin / 2),
     );
   }, [audioRecordingMargin, audioRecordingWidth, horizontalPadding, windowWidth]);
 

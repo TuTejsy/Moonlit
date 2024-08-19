@@ -5,14 +5,15 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 import { PromotionBannerLayout } from './hooks/usePromotionBannerLayout';
 
 export const makeStyles = (
-  { colors, fonts, horizontalPadding, windowMaxWidth }: MakeStylesProps,
+  { colors, dw, fonts, horizontalPadding, sufficientWindowWidth, windowMaxWidth }: MakeStylesProps,
   { promotionBannerHeight, promotionBannerWidth }: PromotionBannerLayout,
 ) =>
   StyleSheet.create({
     container: {
-      alignItems: 'center',
+      alignItems: 'flex-start',
       backgroundColor: colors.lightPurple,
       borderRadius: 16,
+      flex: 1,
       height: promotionBannerHeight,
       overflow: 'hidden',
       position: 'relative',
@@ -21,7 +22,7 @@ export const makeStyles = (
     content: {
       flex: 1,
       justifyContent: 'flex-end',
-      maxWidth: windowMaxWidth,
+      maxWidth: sufficientWindowWidth - horizontalPadding * 2,
       paddingHorizontal: horizontalPadding,
     },
     image: {
@@ -47,6 +48,8 @@ export const makeStyles = (
       color: colors.white,
     },
     voicesImage: {
+      height: dw(72, windowMaxWidth),
       marginTop: 24,
+      width: dw(308, windowMaxWidth),
     },
   });

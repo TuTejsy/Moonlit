@@ -10,7 +10,7 @@ export const makeStyles = ({ horizontalPadding }: MakeStylesProps, { numColumns 
   StyleSheet.create({
     listContent: {
       alignItems: numColumns > 2 ? 'center' : 'flex-start',
-      paddingHorizontal: horizontalPadding,
+      paddingHorizontal: horizontalPadding / 2,
     },
     separator: {
       height: 34,

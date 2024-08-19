@@ -4,11 +4,9 @@ import { LARGE_TITLE_HEIGHT } from '@/components/Headers/ScreenHeader/ScreenHead
 import { TAB_BAR_HEIGHT, TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ horizontalPadding, insets }: MakeStylesProps) =>
+export const makeStyles = ({ insets }: MakeStylesProps) =>
   StyleSheet.create({
-    footer: {
-      marginLeft: -horizontalPadding,
-    },
+    footer: {},
     screen: {
       flex: 1,
     },
