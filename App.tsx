@@ -3,7 +3,6 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 
 import * as amplitude from '@amplitude/analytics-react-native';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { adapty } from 'react-native-adapty';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -62,14 +61,12 @@ function App(): JSX.Element {
                   theme={darkNavTheme}
                   onStateChange={navigationService.onStateChange}
                 >
-                  <BottomSheetModalProvider>
-                    <AppLogicProvider>
-                      {/* {__DEV__ && (
+                  <AppLogicProvider>
+                    {/* {__DEV__ && (
                         <RealmPlugin realms={[StoriesDB.realm, AudioRecordingsDB.realm]} />
                       )} */}
-                      <RootNavigator initialRouteName={initialRouteName} />
-                    </AppLogicProvider>
-                  </BottomSheetModalProvider>
+                    <RootNavigator initialRouteName={initialRouteName} />
+                  </AppLogicProvider>
                 </NavigationContainer>
               </GestureHandlerRootView>
             </SafeAreaProvider>
