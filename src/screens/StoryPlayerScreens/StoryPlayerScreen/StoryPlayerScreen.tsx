@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { View, Share, StatusBar } from 'react-native';
+import { View, Share, StatusBar, TouchableOpacity } from 'react-native';
 
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { useIsFocused } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
