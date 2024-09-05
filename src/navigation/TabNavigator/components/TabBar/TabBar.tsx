@@ -104,7 +104,7 @@ export const TabBar = ({ descriptors, navigation, state }: BottomTabBarProps) =>
                 >
                   <View style={styles.tabContainer}>
                     <Icon
-                      color={isFocused ? colors.white : colors.opacityWhite(0.5)}
+                      color={isFocused ? colors.white : colors.white_50}
                       fill={isFocused ? colors.white : 'none'}
                     />
                     <TextView style={isFocused ? styles.activeTabTitle : styles.inactiveTabTitle}>
