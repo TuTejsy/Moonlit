@@ -24,7 +24,12 @@ export const TabNavigator = ({ isInitialRoute = false }: TabNavigatorProps) => {
   const Settings = useCallback(() => <SharedNavigator parentRoute={TabRoutes.SETTINGS} />, []);
 
   return (
-    <Tab.Navigator backBehavior='history' screenOptions={rootTabOptions} tabBar={renderTabBar}>
+    <Tab.Navigator
+      backBehavior='history'
+      detachInactiveScreens={false}
+      screenOptions={rootTabOptions}
+      tabBar={renderTabBar}
+    >
       <Tab.Screen component={Home} name={TabRoutes.HOME} />
       <Tab.Screen component={Favorites} name={TabRoutes.FAVORITES} />
       <Tab.Screen component={Settings} name={TabRoutes.SETTINGS} />
