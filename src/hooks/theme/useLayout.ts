@@ -40,8 +40,12 @@ export const useLayout = (): Layout => {
   const layout = useMemo(() => {
     const windowMaxWidth = Math.max((DESIGN_WIDTH / DESIGN_HEIGHT) * windowHeight, DESIGN_WIDTH);
     const sufficientWindowWidth = Math.min(windowWidth, windowMaxWidth);
-    const isSquareScreen = windowHeight / windowWidth < 1.3;
+
     const isLandscape = windowWidth > windowHeight;
+    const isSquareScreen = isLandscape
+      ? windowWidth / windowHeight < 1.3
+      : windowHeight / windowWidth < 1.3;
+
     const isPortrait = !isLandscape;
 
     const horizontalPadding = dw(16, windowMaxWidth);

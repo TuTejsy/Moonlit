@@ -8,11 +8,33 @@ export const makeStyles = ({
   dw,
   fonts,
   horizontalPadding,
+  isLandscape,
+  isSquareScreen,
   sufficientWindowWidth,
+  windowHeight,
   windowMaxWidth,
   windowWidth,
 }: MakeStylesProps) =>
   StyleSheet.create({
+    block: StyleSheet.flatten([
+      {
+        alignItems: 'center',
+      },
+      isSquareScreen && {
+        flex: 1,
+        marginTop: dh(62),
+      },
+      isLandscape && {
+        flex: 1,
+        marginTop: windowHeight / 6,
+      },
+    ]),
+    button: {
+      marginTop: dh(16),
+    },
+    content: {
+      flexDirection: isSquareScreen || isLandscape ? 'row' : 'column',
+    },
     freeTrialContainer: {
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.1),
@@ -40,10 +62,11 @@ export const makeStyles = ({
       ...fonts.size_16,
       color: colors.white,
     },
+    productBlock: StyleSheet.flatten([{ justifyContent: 'flex-end' }, { marginBottom: dh(22) }]),
     promotionText: {
       ...fonts.size_14,
       color: colors.white,
-      marginTop: dh(32),
+      marginTop: !isLandscape && !isSquareScreen ? dh(32) : 0,
       textAlign: 'center',
     },
     subtitle: {
@@ -57,6 +80,17 @@ export const makeStyles = ({
       color: colors.white,
       textAlign: 'center',
     },
+    voicesFullImage: StyleSheet.flatten([
+      isSquareScreen && {
+        height: ((windowWidth - horizontalPadding * 4) / 512) * 152,
+        marginTop: dh(22),
+        width: windowWidth - horizontalPadding * 4,
+      },
+      isLandscape && {
+        marginTop: dh(40),
+        maxWidth: windowWidth / 2 - horizontalPadding * 4,
+      },
+    ]),
     voicesImage: {
       height: dw(140),
       marginTop: dh(40),

@@ -2,17 +2,21 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dh, fonts, insets }: MakeStylesProps) =>
+export const makeStyles = ({
+  colors,
+  dh,
+  fonts,
+  insets,
+  isLandscape,
+  isSquareScreen,
+}: MakeStylesProps) =>
   StyleSheet.create({
-    button: {
-      marginTop: dh(16),
-    },
     content: {
       alignItems: 'center',
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
       flex: 1,
-      justifyContent: 'flex-end',
+      justifyContent: isLandscape || isSquareScreen ? 'center' : 'flex-end',
       marginTop: insets.top,
       overflow: 'hidden',
       paddingBottom: insets.bottom,
