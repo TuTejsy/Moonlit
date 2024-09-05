@@ -8,6 +8,7 @@ export const commonColors = {
   opacityGrey: (float: number) => `rgba(217, 217, 217, ${float})`,
 
   opacityWhite: (float: number) => `rgba(255, 255, 255, ${float})`,
+
   red: '#FF4646',
   shadow: 'rgba(92, 95, 102, 0.1)',
   shadowDropIn: 'rgba(41, 44, 51, 0.04)',
@@ -15,4 +16,5 @@ export const commonColors = {
   shadowDropOut: 'rgba(41, 44, 51, 0.08)',
   transparent: 'transparent',
   white: '#FFFFFF',
+  white_50: '#88868D',
 };
