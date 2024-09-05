@@ -1,0 +1,1007 @@
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/results.bin b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/results.bin
+new file mode 100644
+index 0000000..7ed749e
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/results.bin
+@@ -0,0 +1 @@
++o/bundleLibRuntimeToDirDebug
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.dex b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.dex
+new file mode 100644
+index 0000000..7d60be3
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.dex differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.dex b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.dex
+new file mode 100644
+index 0000000..24e98dd
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.dex differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/BuildConfig.dex b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/BuildConfig.dex
+new file mode 100644
+index 0000000..cc2b1f4
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/BuildConfig.dex differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientManager.dex b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientManager.dex
+new file mode 100644
+index 0000000..b7ef713
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientManager.dex differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientManagerSpec.dex b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientManagerSpec.dex
+new file mode 100644
+index 0000000..b0e0c2f
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientManagerSpec.dex differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientPackage.dex b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientPackage.dex
+new file mode 100644
+index 0000000..faae296
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientPackage.dex differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientView.dex b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientView.dex
+new file mode 100644
+index 0000000..faf6015
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/bundleLibRuntimeToDirDebug_dex/com/rnlineargradient/LinearGradientView.dex differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin
+new file mode 100644
+index 0000000..601f245
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/c02b26d7b87f8a124904e777da5bddf8/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/ed34f8cbdcd6d54e11477977ecc94d48/results.bin b/node_modules/react-native-linear-gradient/android/build/.transforms/ed34f8cbdcd6d54e11477977ecc94d48/results.bin
+new file mode 100644
+index 0000000..0d259dd
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/.transforms/ed34f8cbdcd6d54e11477977ecc94d48/results.bin
+@@ -0,0 +1 @@
++o/classes
+diff --git a/node_modules/react-native-linear-gradient/android/build/.transforms/ed34f8cbdcd6d54e11477977ecc94d48/transformed/classes/classes_dex/classes.dex b/node_modules/react-native-linear-gradient/android/build/.transforms/ed34f8cbdcd6d54e11477977ecc94d48/transformed/classes/classes_dex/classes.dex
+new file mode 100644
+index 0000000..006eaa2
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/.transforms/ed34f8cbdcd6d54e11477977ecc94d48/transformed/classes/classes_dex/classes.dex differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/buildConfig/debug/com/rnlineargradient/BuildConfig.java b/node_modules/react-native-linear-gradient/android/build/generated/source/buildConfig/debug/com/rnlineargradient/BuildConfig.java
+new file mode 100644
+index 0000000..84237c2
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/buildConfig/debug/com/rnlineargradient/BuildConfig.java
+@@ -0,0 +1,12 @@
++/**
++ * Automatically generated file. DO NOT MODIFY
++ */
++package com.rnlineargradient;
++
++public final class BuildConfig {
++  public static final boolean DEBUG = Boolean.parseBoolean("true");
++  public static final String LIBRARY_PACKAGE_NAME = "com.rnlineargradient";
++  public static final String BUILD_TYPE = "debug";
++  // Field from default config.
++  public static final boolean IS_NEW_ARCHITECTURE_ENABLED = true;
++}
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/java/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.java b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/java/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.java
+new file mode 100644
+index 0000000..3c8d389
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/java/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.java
+@@ -0,0 +1,54 @@
++/**
++* This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++*
++* Do not edit this file as changes may cause incorrect behavior and will be lost
++* once the code is regenerated.
++*
++* @generated by codegen project: GeneratePropsJavaDelegate.js
++*/
++
++package com.facebook.react.viewmanagers;
++
++import android.view.View;
++import androidx.annotation.Nullable;
++import com.facebook.react.bridge.ReadableArray;
++import com.facebook.react.bridge.ReadableMap;
++import com.facebook.react.uimanager.BaseViewManagerDelegate;
++import com.facebook.react.uimanager.BaseViewManagerInterface;
++
++public class RNLinearGradientManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNLinearGradientManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++  public RNLinearGradientManagerDelegate(U viewManager) {
++    super(viewManager);
++  }
++  @Override
++  public void setProperty(T view, String propName, @Nullable Object value) {
++    switch (propName) {
++      case "startPoint":
++        mViewManager.setStartPoint(view, (ReadableMap) value);
++        break;
++      case "endPoint":
++        mViewManager.setEndPoint(view, (ReadableMap) value);
++        break;
++      case "colors":
++        mViewManager.setColors(view, (ReadableArray) value);
++        break;
++      case "locations":
++        mViewManager.setLocations(view, (ReadableArray) value);
++        break;
++      case "useAngle":
++        mViewManager.setUseAngle(view, value == null ? false : (boolean) value);
++        break;
++      case "angleCenter":
++        mViewManager.setAngleCenter(view, (ReadableMap) value);
++        break;
++      case "angle":
++        mViewManager.setAngle(view, value == null ? 0f : ((Double) value).floatValue());
++        break;
++      case "borderRadii":
++        mViewManager.setBorderRadii(view, (ReadableArray) value);
++        break;
++      default:
++        super.setProperty(view, propName, value);
++    }
++  }
++}
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/java/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.java b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/java/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.java
+new file mode 100644
+index 0000000..91fd02a
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/java/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.java
+@@ -0,0 +1,26 @@
++/**
++* This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++*
++* Do not edit this file as changes may cause incorrect behavior and will be lost
++* once the code is regenerated.
++*
++* @generated by codegen project: GeneratePropsJavaInterface.js
++*/
++
++package com.facebook.react.viewmanagers;
++
++import android.view.View;
++import androidx.annotation.Nullable;
++import com.facebook.react.bridge.ReadableArray;
++import com.facebook.react.bridge.ReadableMap;
++
++public interface RNLinearGradientManagerInterface<T extends View> {
++  void setStartPoint(T view, @Nullable ReadableMap value);
++  void setEndPoint(T view, @Nullable ReadableMap value);
++  void setColors(T view, @Nullable ReadableArray value);
++  void setLocations(T view, @Nullable ReadableArray value);
++  void setUseAngle(T view, boolean value);
++  void setAngleCenter(T view, @Nullable ReadableMap value);
++  void setAngle(T view, float value);
++  void setBorderRadii(T view, @Nullable ReadableArray value);
++}
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/CMakeLists.txt b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/CMakeLists.txt
+new file mode 100644
+index 0000000..c24990e
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/CMakeLists.txt
+@@ -0,0 +1,49 @@
++# Copyright (c) Meta Platforms, Inc. and affiliates.
++#
++# This source code is licensed under the MIT license found in the
++# LICENSE file in the root directory of this source tree.
++
++cmake_minimum_required(VERSION 3.13)
++set(CMAKE_VERBOSE_MAKEFILE on)
++
++file(GLOB react_codegen_SRCS CONFIGURE_DEPENDS *.cpp react/renderer/components/RNLinearGradientSpec/*.cpp)
++
++add_library(
++  react_codegen_RNLinearGradientSpec
++  SHARED
++  ${react_codegen_SRCS}
++)
++
++target_include_directories(react_codegen_RNLinearGradientSpec PUBLIC . react/renderer/components/RNLinearGradientSpec)
++
++target_link_libraries(
++  react_codegen_RNLinearGradientSpec
++  fbjni
++  folly_runtime
++  glog
++  jsi
++  react_codegen_rncore
++  react_debug
++  react_nativemodule_core
++  react_render_componentregistry
++  react_render_core
++  react_render_debug
++  react_render_graphics
++  react_render_imagemanager
++  react_render_mapbuffer
++  react_utils
++  rrc_image
++  rrc_view
++  turbomodulejsijni
++  yoga
++)
++
++target_compile_options(
++  react_codegen_RNLinearGradientSpec
++  PRIVATE
++  -DLOG_TAG=\"ReactNative\"
++  -fexceptions
++  -frtti
++  -std=c++20
++  -Wall
++)
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/RNLinearGradientSpec-generated.cpp b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/RNLinearGradientSpec-generated.cpp
+new file mode 100644
+index 0000000..23b31d8
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/RNLinearGradientSpec-generated.cpp
+@@ -0,0 +1,22 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateModuleJniCpp.js
++ */
++
++#include "RNLinearGradientSpec.h"
++
++namespace facebook::react {
++
++
++
++std::shared_ptr<TurboModule> RNLinearGradientSpec_ModuleProvider(const std::string &moduleName, const JavaTurboModule::InitParams &params) {
++
++  return nullptr;
++}
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/RNLinearGradientSpec.h b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/RNLinearGradientSpec.h
+new file mode 100644
+index 0000000..a6d081b
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/RNLinearGradientSpec.h
+@@ -0,0 +1,24 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateModuleJniH.js
++ */
++
++#pragma once
++
++#include <ReactCommon/JavaTurboModule.h>
++#include <ReactCommon/TurboModule.h>
++#include <jsi/jsi.h>
++
++namespace facebook::react {
++
++
++
++JSI_EXPORT
++std::shared_ptr<TurboModule> RNLinearGradientSpec_ModuleProvider(const std::string &moduleName, const JavaTurboModule::InitParams &params);
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ComponentDescriptors.cpp b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ComponentDescriptors.cpp
+new file mode 100644
+index 0000000..318b8c3
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ComponentDescriptors.cpp
+@@ -0,0 +1,22 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateComponentDescriptorCpp.js
++ */
++
++#include <react/renderer/components/RNLinearGradientSpec/ComponentDescriptors.h>
++#include <react/renderer/core/ConcreteComponentDescriptor.h>
++#include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
++
++namespace facebook::react {
++
++void RNLinearGradientSpec_registerComponentDescriptorsFromCodegen(
++  std::shared_ptr<const ComponentDescriptorProviderRegistry> registry) {
++registry->add(concreteComponentDescriptorProvider<RNLinearGradientComponentDescriptor>());
++}
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ComponentDescriptors.h b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ComponentDescriptors.h
+new file mode 100644
+index 0000000..a3824a1
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ComponentDescriptors.h
+@@ -0,0 +1,24 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateComponentDescriptorH.js
++ */
++
++#pragma once
++
++#include <react/renderer/components/RNLinearGradientSpec/ShadowNodes.h>
++#include <react/renderer/core/ConcreteComponentDescriptor.h>
++#include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
++
++namespace facebook::react {
++
++using RNLinearGradientComponentDescriptor = ConcreteComponentDescriptor<RNLinearGradientShadowNode>;
++
++void RNLinearGradientSpec_registerComponentDescriptorsFromCodegen(
++  std::shared_ptr<const ComponentDescriptorProviderRegistry> registry);
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/EventEmitters.cpp b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/EventEmitters.cpp
+new file mode 100644
+index 0000000..58d45a3
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/EventEmitters.cpp
+@@ -0,0 +1,16 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateEventEmitterCpp.js
++ */
++
++#include <react/renderer/components/RNLinearGradientSpec/EventEmitters.h>
++
++
++namespace facebook::react {
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/EventEmitters.h b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/EventEmitters.h
+new file mode 100644
+index 0000000..7c7a509
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/EventEmitters.h
+@@ -0,0 +1,23 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateEventEmitterH.js
++ */
++#pragma once
++
++#include <react/renderer/components/view/ViewEventEmitter.h>
++
++
++namespace facebook::react {
++class RNLinearGradientEventEmitter : public ViewEventEmitter {
++ public:
++  using ViewEventEmitter::ViewEventEmitter;
++
++  
++  
++};
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/Props.cpp b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/Props.cpp
+new file mode 100644
+index 0000000..cbf3936
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/Props.cpp
+@@ -0,0 +1,32 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GeneratePropsCpp.js
++ */
++
++#include <react/renderer/components/RNLinearGradientSpec/Props.h>
++#include <react/renderer/core/PropsParserContext.h>
++#include <react/renderer/core/propsConversions.h>
++
++namespace facebook::react {
++
++RNLinearGradientProps::RNLinearGradientProps(
++    const PropsParserContext &context,
++    const RNLinearGradientProps &sourceProps,
++    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
++
++    startPoint(convertRawProp(context, rawProps, "startPoint", sourceProps.startPoint, {})),
++    endPoint(convertRawProp(context, rawProps, "endPoint", sourceProps.endPoint, {})),
++    colors(convertRawProp(context, rawProps, "colors", sourceProps.colors, {})),
++    locations(convertRawProp(context, rawProps, "locations", sourceProps.locations, {})),
++    useAngle(convertRawProp(context, rawProps, "useAngle", sourceProps.useAngle, {false})),
++    angleCenter(convertRawProp(context, rawProps, "angleCenter", sourceProps.angleCenter, {})),
++    angle(convertRawProp(context, rawProps, "angle", sourceProps.angle, {0.0})),
++    borderRadii(convertRawProp(context, rawProps, "borderRadii", sourceProps.borderRadii, {}))
++      {}
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/Props.h b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/Props.h
+new file mode 100644
+index 0000000..f04485f
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/Props.h
+@@ -0,0 +1,37 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GeneratePropsH.js
++ */
++#pragma once
++
++#include <react/renderer/components/view/ViewProps.h>
++#include <react/renderer/core/PropsParserContext.h>
++#include <react/renderer/graphics/Color.h>
++#include <react/renderer/graphics/Point.h>
++#include <vector>
++
++namespace facebook::react {
++
++class RNLinearGradientProps final : public ViewProps {
++ public:
++  RNLinearGradientProps() = default;
++  RNLinearGradientProps(const PropsParserContext& context, const RNLinearGradientProps &sourceProps, const RawProps &rawProps);
++
++#pragma mark - Props
++
++  Point startPoint{};
++  Point endPoint{};
++  std::vector<SharedColor> colors{};
++  std::vector<Float> locations{};
++  bool useAngle{false};
++  Point angleCenter{};
++  Float angle{0.0};
++  std::vector<Float> borderRadii{};
++};
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/RNLinearGradientSpecJSI-generated.cpp b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/RNLinearGradientSpecJSI-generated.cpp
+new file mode 100644
+index 0000000..2c727e2
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/RNLinearGradientSpecJSI-generated.cpp
+@@ -0,0 +1,17 @@
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateModuleCpp.js
++ */
++
++#include "RNLinearGradientSpecJSI.h"
++
++namespace facebook::react {
++
++
++
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/RNLinearGradientSpecJSI.h b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/RNLinearGradientSpecJSI.h
+new file mode 100644
+index 0000000..ec16260
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/RNLinearGradientSpecJSI.h
+@@ -0,0 +1,19 @@
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateModuleH.js
++ */
++
++#pragma once
++
++#include <ReactCommon/TurboModule.h>
++#include <react/bridging/Bridging.h>
++
++namespace facebook::react {
++
++
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ShadowNodes.cpp b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ShadowNodes.cpp
+new file mode 100644
+index 0000000..49c6522
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ShadowNodes.cpp
+@@ -0,0 +1,17 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateShadowNodeCpp.js
++ */
++
++#include <react/renderer/components/RNLinearGradientSpec/ShadowNodes.h>
++
++namespace facebook::react {
++
++extern const char RNLinearGradientComponentName[] = "RNLinearGradient";
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ShadowNodes.h b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ShadowNodes.h
+new file mode 100644
+index 0000000..344f084
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/ShadowNodes.h
+@@ -0,0 +1,32 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateShadowNodeH.js
++ */
++
++#pragma once
++
++#include <react/renderer/components/RNLinearGradientSpec/EventEmitters.h>
++#include <react/renderer/components/RNLinearGradientSpec/Props.h>
++#include <react/renderer/components/RNLinearGradientSpec/States.h>
++#include <react/renderer/components/view/ConcreteViewShadowNode.h>
++#include <jsi/jsi.h>
++
++namespace facebook::react {
++
++JSI_EXPORT extern const char RNLinearGradientComponentName[];
++
++/*
++ * `ShadowNode` for <RNLinearGradient> component.
++ */
++using RNLinearGradientShadowNode = ConcreteViewShadowNode<
++    RNLinearGradientComponentName,
++    RNLinearGradientProps,
++    RNLinearGradientEventEmitter,
++    RNLinearGradientState>;
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/States.cpp b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/States.cpp
+new file mode 100644
+index 0000000..6a56320
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/States.cpp
+@@ -0,0 +1,16 @@
++
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateStateCpp.js
++ */
++#include <react/renderer/components/RNLinearGradientSpec/States.h>
++
++namespace facebook::react {
++
++
++
++} // namespace facebook::react
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/States.h b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/States.h
+new file mode 100644
+index 0000000..e8f822e
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/jni/react/renderer/components/RNLinearGradientSpec/States.h
+@@ -0,0 +1,29 @@
++/**
++ * This code was generated by [react-native-codegen](https://www.npmjs.com/package/react-native-codegen).
++ *
++ * Do not edit this file as changes may cause incorrect behavior and will be lost
++ * once the code is regenerated.
++ *
++ * @generated by codegen project: GenerateStateH.js
++ */
++#pragma once
++
++#ifdef ANDROID
++#include <folly/dynamic.h>
++#endif
++
++namespace facebook::react {
++
++class RNLinearGradientState {
++public:
++  RNLinearGradientState() = default;
++
++#ifdef ANDROID
++  RNLinearGradientState(RNLinearGradientState const &previousState, folly::dynamic data){};
++  folly::dynamic getDynamic() const {
++    return {};
++  };
++#endif
++};
++
++} // namespace facebook::react
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/schema.json b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/schema.json
+new file mode 100644
+index 0000000..1fcfcf8
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/generated/source/codegen/schema.json
+@@ -0,0 +1,92 @@
++{
++  "modules": {
++    "RNLinearGradient": {
++      "type": "Component",
++      "components": {
++        "RNLinearGradient": {
++          "extendsProps": [
++            {
++              "type": "ReactNativeBuiltInType",
++              "knownTypeName": "ReactNativeCoreViewProps"
++            }
++          ],
++          "events": [],
++          "props": [
++            {
++              "name": "startPoint",
++              "optional": true,
++              "typeAnnotation": {
++                "type": "ReservedPropTypeAnnotation",
++                "name": "PointPrimitive"
++              }
++            },
++            {
++              "name": "endPoint",
++              "optional": true,
++              "typeAnnotation": {
++                "type": "ReservedPropTypeAnnotation",
++                "name": "PointPrimitive"
++              }
++            },
++            {
++              "name": "colors",
++              "optional": false,
++              "typeAnnotation": {
++                "type": "ArrayTypeAnnotation",
++                "elementType": {
++                  "type": "ReservedPropTypeAnnotation",
++                  "name": "ColorPrimitive"
++                }
++              }
++            },
++            {
++              "name": "locations",
++              "optional": true,
++              "typeAnnotation": {
++                "type": "ArrayTypeAnnotation",
++                "elementType": {
++                  "type": "FloatTypeAnnotation"
++                }
++              }
++            },
++            {
++              "name": "useAngle",
++              "optional": true,
++              "typeAnnotation": {
++                "type": "BooleanTypeAnnotation",
++                "default": false
++              }
++            },
++            {
++              "name": "angleCenter",
++              "optional": true,
++              "typeAnnotation": {
++                "type": "ReservedPropTypeAnnotation",
++                "name": "PointPrimitive"
++              }
++            },
++            {
++              "name": "angle",
++              "optional": true,
++              "typeAnnotation": {
++                "type": "FloatTypeAnnotation",
++                "default": 0
++              }
++            },
++            {
++              "name": "borderRadii",
++              "optional": true,
++              "typeAnnotation": {
++                "type": "ArrayTypeAnnotation",
++                "elementType": {
++                  "type": "FloatTypeAnnotation"
++                }
++              }
++            }
++          ],
++          "commands": []
++        }
++      }
++    }
++  }
++}
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml b/node_modules/react-native-linear-gradient/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+new file mode 100644
+index 0000000..9612fe7
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.rnlineargradient" >
++
++    <uses-sdk android:minSdkVersion="34" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json b/node_modules/react-native-linear-gradient/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
+new file mode 100644
+index 0000000..cc2549a
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
+@@ -0,0 +1,18 @@
++{
++  "version": 3,
++  "artifactType": {
++    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
++    "kind": "Directory"
++  },
++  "applicationId": "com.rnlineargradient",
++  "variantName": "debug",
++  "elements": [
++    {
++      "type": "SINGLE",
++      "filters": [],
++      "attributes": [],
++      "outputFile": "AndroidManifest.xml"
++    }
++  ],
++  "elementType": "File"
++}
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties b/node_modules/react-native-linear-gradient/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties
+new file mode 100644
+index 0000000..1211b1e
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties
+@@ -0,0 +1,6 @@
++aarFormatVersion=1.0
++aarMetadataVersion=1.0
++minCompileSdk=1
++minCompileSdkExtension=0
++minAndroidGradlePluginVersion=1.0.0
++coreLibraryDesugaringEnabled=false
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json b/node_modules/react-native-linear-gradient/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+new file mode 100644
+index 0000000..9e26dfe
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+@@ -0,0 +1 @@
++{}
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar b/node_modules/react-native-linear-gradient/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar
+new file mode 100644
+index 0000000..cb46520
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/react-native-linear-gradient/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar
+new file mode 100644
+index 0000000..6859064
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt b/node_modules/react-native-linear-gradient/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..ae16c9f
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Thu Sep 05 13:19:38 MSK 2024
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+new file mode 100644
+index 0000000..42ff36e
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/build/generated/res/resValues/debug"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+new file mode 100644
+index 0000000..77e0322
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/debug/jniLibs"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+new file mode 100644
+index 0000000..5f13b4d
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/debug/shaders"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+new file mode 100644
+index 0000000..47312d5
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/assets"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/debug/assets"/></dataSet><dataSet config="generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/build/intermediates/shader_assets/debug/compileDebugShaders/out"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.class b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.class
+new file mode 100644
+index 0000000..0254edb
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.class b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.class
+new file mode 100644
+index 0000000..f0d0221
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/BuildConfig.class b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/BuildConfig.class
+new file mode 100644
+index 0000000..3bf23ab
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/BuildConfig.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientManager.class b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientManager.class
+new file mode 100644
+index 0000000..05024f9
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientManager.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientManagerSpec.class b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientManagerSpec.class
+new file mode 100644
+index 0000000..9060bad
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientManagerSpec.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientPackage.class b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientPackage.class
+new file mode 100644
+index 0000000..73ba3fb
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientPackage.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientView.class b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientView.class
+new file mode 100644
+index 0000000..9b982e7
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/rnlineargradient/LinearGradientView.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt b/node_modules/react-native-linear-gradient/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+new file mode 100644
+index 0000000..78ac5b8
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+@@ -0,0 +1,2 @@
++R_DEF: Internal format may change without notice
++local
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt b/node_modules/react-native-linear-gradient/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt
+new file mode 100644
+index 0000000..12678b7
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt
+@@ -0,0 +1,7 @@
++1<?xml version="1.0" encoding="utf-8"?>
++2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++3    package="com.rnlineargradient" >
++4
++5    <uses-sdk android:minSdkVersion="34" />
++6
++7</manifest>
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml b/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
+new file mode 100644
+index 0000000..9612fe7
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.rnlineargradient" >
++
++    <uses-sdk android:minSdkVersion="34" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json b/node_modules/react-native-linear-gradient/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
+new file mode 100644
+index 0000000..0637a08
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
+@@ -0,0 +1 @@
++[]
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt b/node_modules/react-native-linear-gradient/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+new file mode 100644
+index 0000000..08f4ebe
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+@@ -0,0 +1 @@
++0 Warning/Error
+\ No newline at end of file
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.class b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.class
+new file mode 100644
+index 0000000..0254edb
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/facebook/react/viewmanagers/RNLinearGradientManagerDelegate.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.class b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.class
+new file mode 100644
+index 0000000..f0d0221
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/facebook/react/viewmanagers/RNLinearGradientManagerInterface.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/BuildConfig.class b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/BuildConfig.class
+new file mode 100644
+index 0000000..3bf23ab
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/BuildConfig.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientManager.class b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientManager.class
+new file mode 100644
+index 0000000..05024f9
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientManager.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientManagerSpec.class b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientManagerSpec.class
+new file mode 100644
+index 0000000..9060bad
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientManagerSpec.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientPackage.class b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientPackage.class
+new file mode 100644
+index 0000000..73ba3fb
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientPackage.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientView.class b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientView.class
+new file mode 100644
+index 0000000..9b982e7
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/rnlineargradient/LinearGradientView.class differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar
+new file mode 100644
+index 0000000..3880fab
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/intermediates/runtime_library_classes_jar/debug/bundleLibRuntimeToJarDebug/classes.jar differ
+diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt b/node_modules/react-native-linear-gradient/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+new file mode 100644
+index 0000000..75c202f
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+@@ -0,0 +1 @@
++com.rnlineargradient
+diff --git a/node_modules/react-native-linear-gradient/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/react-native-linear-gradient/android/build/outputs/logs/manifest-merger-debug-report.txt
+new file mode 100644
+index 0000000..278be6c
+--- /dev/null
++++ b/node_modules/react-native-linear-gradient/android/build/outputs/logs/manifest-merger-debug-report.txt
+@@ -0,0 +1,15 @@
++-- Merging decision tree log ---
++manifest
++ADDED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml:1:1-44
++INJECTED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml:1:1-44
++	package
++		ADDED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml:1:11-41
++		INJECTED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml
++uses-sdk
++INJECTED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml
++INJECTED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml
++	android:targetSdkVersion
++		INJECTED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml
++	android:minSdkVersion
++		INJECTED from /Users/vasilihryb/Work/AI-Voice/Client/AIVoice/node_modules/react-native-linear-gradient/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/react-native-linear-gradient/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin b/node_modules/react-native-linear-gradient/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin
+new file mode 100644
+index 0000000..b52f579
+Binary files /dev/null and b/node_modules/react-native-linear-gradient/android/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin differ
+diff --git a/node_modules/react-native-linear-gradient/index.android.js b/node_modules/react-native-linear-gradient/index.android.js
+index 63d5981..11fe896 100644
+--- a/node_modules/react-native-linear-gradient/index.android.js
++++ b/node_modules/react-native-linear-gradient/index.android.js
+@@ -3,7 +3,7 @@
+  * @flow
+  */
+ import React, { Component, createRef } from 'react';
+-import { processColor, StyleSheet, View } from 'react-native';
++import { StyleSheet, View } from 'react-native';
+ 
+ import NativeLinearGradient, { type Props } from './src';
+ 
+@@ -85,7 +85,7 @@ export default class LinearGradient extends Component<Props> {
+       <View ref={this.gradientRef} {...otherProps} style={style}>
+         <NativeLinearGradient
+           style={{position: 'absolute', top: 0, left: 0, bottom: 0, right: 0}}
+-          colors={colors.map(processColor)}
++          colors={colors}
+           startPoint={convertPoint('start', start)}
+           endPoint={convertPoint('end', end)}
+           locations={locations ? locations.slice(0, colors.length) : null}

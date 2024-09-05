@@ -15,11 +15,11 @@ apply plugin: 'com.facebook.react'
 apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-  compileSdkVersion safeExtGet('compileSdkVersion', 33)
+  compileSdkVersion safeExtGet('compileSdkVersion', 34)
   namespace "com.mntaudioplayer"
 
    defaultConfig {
-        minSdkVersion rootProject.hasProperty('minSdkVersion') ? rootProject.minSdkVersion : 23
+        minSdkVersion rootProject.hasProperty('minSdkVersion') ? rootProject.minSdkVersion : 34
         targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : 34
     }
 }
