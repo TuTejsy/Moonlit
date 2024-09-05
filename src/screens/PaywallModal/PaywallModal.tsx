@@ -150,14 +150,17 @@ export const PaywallModal = () => {
 
   const renderPaywallContent = useCallback(() => {
     switch (placementId) {
-      case SWITCH_PLACEMENT_ID: {
+      case SELECTION_PLACEMENT_ID: {
         return (
           <SwitcherPaywallContent
             isFreeTrialEnabled={isFreeTrialEnabled}
             isTrialEligible={isTrialEligible}
             trialProduct={trialProduct}
+            unlockButtonText={unlockButtonText}
             yearlyProduct={yearlyProduct}
+            onRestorePress={handleRestorePress}
             onSelectProduct={setSelectedProduct}
+            onUnlockPress={handleUnlockPress}
           />
         );
       }
@@ -169,9 +172,12 @@ export const PaywallModal = () => {
             isTrialEligible={isTrialEligible}
             selectedProduct={selectedProduct}
             trialProduct={trialProduct}
+            unlockButtonText={unlockButtonText}
             weeklyProduct={weeklyProduct}
             yearlyProduct={yearlyProduct}
+            onRestorePress={handleRestorePress}
             onSelectProduct={setSelectedProduct}
+            onUnlockPress={handleUnlockPress}
           />
         );
       }
@@ -181,11 +187,14 @@ export const PaywallModal = () => {
       }
     }
   }, [
+    handleRestorePress,
+    handleUnlockPress,
     isFreeTrialEnabled,
     isTrialEligible,
     placementId,
     selectedProduct,
     trialProduct,
+    unlockButtonText,
     weeklyProduct,
     yearlyProduct,
   ]);
@@ -213,12 +222,6 @@ export const PaywallModal = () => {
         </TextView>
 
         {renderPaywallContent()}
-
-        <GradientButton style={styles.button} onPress={handleUnlockPress}>
-          {unlockButtonText}
-        </GradientButton>
-
-        <FooterActions onRestorePress={handleRestorePress} />
       </View>
 
       <AbsoluteSpinnerView show={isLoading} />

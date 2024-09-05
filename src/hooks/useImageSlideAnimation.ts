@@ -2,7 +2,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent } from 'react-native';
 
-import { useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
+import {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+  cancelAnimation,
+} from 'react-native-reanimated';
 
 export const useImageSlideAnimation = (containerWidth: number) => {
   const imageTranslateXSharedValue = useSharedValue(0);
@@ -32,7 +38,8 @@ export const useImageSlideAnimation = (containerWidth: number) => {
         -1,
         true,
       );
-    } else if (imageWidth < containerWidth) {
+    } else if (imageWidth <= containerWidth) {
+      cancelAnimation(imageTranslateXSharedValue);
       imageTranslateXSharedValue.value = 0;
       imageWidthSharedValue.value = containerWidth;
     }

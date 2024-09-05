@@ -8,12 +8,30 @@ export const makeStyles = ({
   dw,
   fonts,
   horizontalPadding,
+  isLandscape,
+  isSquareScreen,
   sufficientWindowWidth,
   windowHeight,
   windowMaxWidth,
   windowWidth,
 }: MakeStylesProps) =>
   StyleSheet.create({
+    block: StyleSheet.flatten([
+      {
+        alignItems: 'center',
+      },
+      isLandscape && {
+        flex: 1,
+        marginTop: windowHeight / 6,
+      },
+      isSquareScreen && {
+        flex: 1,
+        marginTop: dh(62),
+      },
+    ]),
+    button: {
+      marginTop: dh(16),
+    },
     checkbox: {
       alignItems: 'center',
       borderColor: colors.opacityWhite(0.2),
@@ -29,6 +47,9 @@ export const makeStyles = ({
       height: dw(12, windowMaxWidth),
       width: dw(12, windowMaxWidth),
     },
+    content: {
+      flexDirection: isLandscape || isSquareScreen ? 'row' : 'column',
+    },
     freeTrialContainer: {
       alignItems: 'center',
       borderColor: colors.opacityWhite(0.2),
@@ -37,7 +58,6 @@ export const makeStyles = ({
       flexDirection: 'row',
       height: dw(56, windowMaxWidth),
       justifyContent: 'space-between',
-      marginTop: dh(12),
       paddingLeft: horizontalPadding,
       paddingRight: 24,
       width: sufficientWindowWidth - horizontalPadding * 4,
@@ -81,7 +101,7 @@ export const makeStyles = ({
       flexDirection: 'row',
       height: dw(56, windowMaxWidth),
       justifyContent: 'space-between',
-      marginTop: dh(12),
+      marginBottom: dh(12),
       paddingLeft: horizontalPadding,
       paddingRight: 26,
       position: 'relative',
@@ -127,10 +147,21 @@ export const makeStyles = ({
       color: colors.white,
       textAlign: 'center',
     },
+    voicesFullImage: StyleSheet.flatten([
+      isSquareScreen && {
+        height: ((windowWidth - horizontalPadding * 4) / 512) * 152,
+        marginTop: dh(22),
+        width: windowWidth - horizontalPadding * 4,
+      },
+      isLandscape && {
+        marginTop: dh(40),
+        maxWidth: windowWidth / 2 - horizontalPadding * 4,
+      },
+    ]),
     voicesImage: {
       height: dw(140),
       marginBottom: dh(22),
-      marginTop: dh(18),
+      marginTop: dh(40),
       width: windowWidth,
     },
   });
