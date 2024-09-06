@@ -16,8 +16,9 @@ export const useAudioRecordingLayout = () => {
     const audioRecordingHeight = dw(184, windowMaxWidth);
     const audioRecordingWidth = dw(163, windowMaxWidth);
 
-    const numColumns = Math.floor(
-      (windowWidth - horizontalPadding) / (audioRecordingWidth + horizontalPadding),
+    const numColumns = Math.max(
+      Math.floor((windowWidth - horizontalPadding) / (audioRecordingWidth + horizontalPadding)),
+      2,
     );
 
     const cellSpace =

@@ -13,8 +13,9 @@ export const useSmallStoriesListLayout = (): SmallStoriesListLayout => {
   const { horizontalPadding, windowWidth } = useLayout();
 
   const layout = useMemo(() => {
-    const numColumns = Math.floor(
-      (windowWidth - horizontalPadding) / (STORY_PREVIEW_SIZE + horizontalPadding),
+    const numColumns = Math.max(
+      Math.floor((windowWidth - horizontalPadding) / (STORY_PREVIEW_SIZE + horizontalPadding)),
+      2,
     );
 
     const cellSpace =
