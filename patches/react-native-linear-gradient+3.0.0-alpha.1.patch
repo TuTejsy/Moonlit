@@ -737,7 +737,7 @@ index 0000000..9612fe7
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +    package="com.rnlineargradient" >
 +
-+    <uses-sdk android:minSdkVersion="34" />
++    <uses-sdk android:minSdkVersion="21" />
 +
 +</manifest>
 \ No newline at end of file
@@ -886,7 +886,7 @@ index 0000000..12678b7
 +2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +3    package="com.rnlineargradient" >
 +4
-+5    <uses-sdk android:minSdkVersion="34" />
++5    <uses-sdk android:minSdkVersion="21" />
 +6
 +7</manifest>
 diff --git a/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml b/node_modules/react-native-linear-gradient/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
@@ -899,7 +899,7 @@ index 0000000..9612fe7
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +    package="com.rnlineargradient" >
 +
-+    <uses-sdk android:minSdkVersion="34" />
++    <uses-sdk android:minSdkVersion="21" />
 +
 +</manifest>
 \ No newline at end of file

@@ -62,7 +62,7 @@ index 0000000..3f8be4c
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +    package="org.reactnative.maskedview" >
 +
-+    <uses-sdk android:minSdkVersion="34" />
++    <uses-sdk android:minSdkVersion="21" />
 +
 +</manifest>
 \ No newline at end of file
@@ -199,7 +199,7 @@ index 0000000..45719b2
 +2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +3    package="org.reactnative.maskedview" >
 +4
-+5    <uses-sdk android:minSdkVersion="34" />
++5    <uses-sdk android:minSdkVersion="21" />
 +6
 +7</manifest>
 diff --git a/node_modules/@react-native-masked-view/masked-view/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml b/node_modules/@react-native-masked-view/masked-view/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
@@ -212,7 +212,7 @@ index 0000000..3f8be4c
 +<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 +    package="org.reactnative.maskedview" >
 +
-+    <uses-sdk android:minSdkVersion="34" />
++    <uses-sdk android:minSdkVersion="21" />
 +
 +</manifest>
 \ No newline at end of file
