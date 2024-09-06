@@ -8,7 +8,6 @@ import Animated, {
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
-  useScrollViewOffset,
 } from 'react-native-reanimated';
 
 import { Empty } from '@/components/Empty/Empty';
@@ -19,6 +18,7 @@ import { useStories } from '@/hooks/database/useStories';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAnimatedScrollHandlerValue } from '@/hooks/useAnimatedScrollHandlerValue';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 import { AnalyticsService } from '@/services/analytics/analytics';
 
@@ -36,7 +36,9 @@ export const FavoritesScreen = () => {
   const styles = useMakeStyles(makeStyles, { tabWidth });
 
   const scrollViewRef = useAnimatedRef<Animated.ScrollView>();
-  const scrollOffsetSharedValue = useScrollViewOffset(scrollViewRef);
+
+  const { handleAnimatedScroll, scrollPositionSharedValue: scrollOffsetSharedValue } =
+    useAnimatedScrollHandlerValue({ horizontal: true });
 
   const startScrollPositionRef = useRef(0);
 
@@ -113,7 +115,7 @@ export const FavoritesScreen = () => {
   const handleRecentlyPlayedTabPress = useCallback(() => {
     scrollViewRef.current?.scrollTo({ x: windowWidth });
     changeBarColor(isSecondTabScrolled);
-  }, [changeBarColor, isSecondTabScrolled, scrollViewRef]);
+  }, [changeBarColor, isSecondTabScrolled, scrollViewRef, windowWidth]);
 
   const handleBeginEndDrag = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset } = event.nativeEvent;
@@ -140,7 +142,7 @@ export const FavoritesScreen = () => {
       const isScrolled = scrollPosition === 1 ? isSecondTabScrolled : isFirstTabScrolled;
       changeBarColor(isScrolled);
     },
-    [changeBarColor, isFirstTabScrolled, isSecondTabScrolled, scrollViewRef],
+    [changeBarColor, isFirstTabScrolled, isSecondTabScrolled, scrollViewRef, windowWidth],
   );
 
   const handleFirstTabScroll = useCallback(
@@ -190,6 +192,7 @@ export const FavoritesScreen = () => {
         ref={scrollViewRef}
         horizontal
         scrollEventThrottle={16}
+        onScroll={handleAnimatedScroll}
         onScrollBeginDrag={handleBeginEndDrag}
         onScrollEndDrag={handleScrollEndDrag}
       >

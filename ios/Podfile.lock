@@ -1809,7 +1809,7 @@ PODS:
     - React-Core
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.18.1):
+  - RNGestureHandler (2.19.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2390,7 +2390,7 @@ SPEC CHECKSUMS:
   RNFBRemoteConfig: 49021f613e958caab0b75bf13cce97693f53a47c
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: f769e1b9057085db07546aa3e259daa85c898dc7
+  RNGestureHandler: d87ddf84d6c46a0cb44a19da7f841a3d7aea693f
   RNLinearGradient: 626af15105a34f35b72ca682aa16545082af8e64
   RNReanimated: 76901886830e1032f16bbf820153f7dc3f02d51d
   RNScreens: 672e79111218a09700414b803be8c7647d2cd307
