@@ -141,3 +141,5 @@ export const useShowPaywallModal = (
     showPaywallModal,
   };
 };
+
+export type ShowPaywallModalType = ReturnType<typeof useShowPaywallModal>['showPaywallModal'];

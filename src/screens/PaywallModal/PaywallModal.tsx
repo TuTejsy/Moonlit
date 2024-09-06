@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { adapty, AdaptyPaywallProduct, AdaptyProfile, OfferEligibility } from 'react-native-adapty';
 
 import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
-import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { SELECTION_PLACEMENT_ID, SWITCH_PLACEMENT_ID } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -17,7 +16,6 @@ import { PAYWALL_TYPE } from '@/services/analytics/analytics.constants';
 import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
 import { unlockFullVersion } from '@/store/user/user.slice';
 
-import { FooterActions } from './components/FooterActions/FooterActions';
 import { PaywallBackground } from './components/PaywallBackground/PaywallBackground';
 import { SelectionPaywallContent } from './contentVariants/SelectionPaywallContent/SelectionPaywallContent';
 import { SwitcherPaywallContent } from './contentVariants/SwitcherPaywallContent/SwitcherPaywallContent';
@@ -150,7 +148,7 @@ export const PaywallModal = () => {
 
   const renderPaywallContent = useCallback(() => {
     switch (placementId) {
-      case SELECTION_PLACEMENT_ID: {
+      case SWITCH_PLACEMENT_ID: {
         return (
           <SwitcherPaywallContent
             isFreeTrialEnabled={isFreeTrialEnabled}

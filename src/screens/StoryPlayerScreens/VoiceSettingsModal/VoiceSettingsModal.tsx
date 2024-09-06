@@ -9,6 +9,7 @@ import { IS_IOS } from '@/constants/common';
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useAudioRecordings } from '@/hooks/database/useAudioRecordings';
+import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
@@ -40,6 +41,7 @@ export function VoiceSettingsModal() {
   } = useAppRoute<RootRoutes.VOICE_SETTINGS_MODAL>();
 
   const navigation = useAppNavigation<RootRoutes.VOICE_SETTINGS_MODAL>();
+  const { showPaywallModal } = useShowPaywallModal();
 
   const { colors } = useTheme();
   const audioRecordingLayout = useAudioRecordingLayout();
@@ -101,11 +103,12 @@ export function VoiceSettingsModal() {
           isSelected={selectedAudioRecordingId === item.id}
           name={audioRecording.voice_name}
           recordingId={audioRecording.id}
+          showPaywallModal={showPaywallModal}
           onSelect={handleSelectAudioRecording}
         />
       );
     },
-    [selectedAudioRecordingId, handleSelectAudioRecording],
+    [selectedAudioRecordingId, showPaywallModal, handleSelectAudioRecording],
   );
 
   const keyExtractor = useCallback(
