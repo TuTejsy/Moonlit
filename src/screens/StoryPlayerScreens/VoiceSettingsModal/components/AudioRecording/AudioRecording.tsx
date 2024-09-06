@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
+import { ShowPaywallModalType } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useVoicePreviewCachedPath } from '@/hooks/useVoicePreviewCachedPath';
@@ -21,6 +21,7 @@ interface AudioRecordingProps {
   name: string;
   onSelect: (recordingId: number, recordingName: string) => void;
   recordingId: number;
+  showPaywallModal: ShowPaywallModalType;
 }
 
 export function AudioRecording({
@@ -30,6 +31,7 @@ export function AudioRecording({
   name,
   onSelect,
   recordingId,
+  showPaywallModal,
 }: AudioRecordingProps) {
   const audioRecordingLayout = useAudioRecordingLayout();
   const stylesContext = useMemo(
@@ -40,8 +42,6 @@ export function AudioRecording({
 
   const isFullVersion = useAppSelector(selectIsFullVersion);
   const voicePreviewCachedPath = useVoicePreviewCachedPath(coverUrl);
-
-  const { showPaywallModal } = useShowPaywallModal();
 
   const handleSelect = useCallback(() => {
     if (!isFullVersion && !isFree) {
