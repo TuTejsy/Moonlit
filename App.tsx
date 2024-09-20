@@ -15,6 +15,7 @@ import { ADAPTY_API_KEY, AMPLITUDE_API_KEY } from '@/constants/auth';
 import { AudioRecordingsDB, StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
+import { useAdjustSetup } from '@/hooks/useAdjustSetup';
 import { useInitApp } from '@/hooks/useInitApp';
 import { SharedKeyboardHeightProvider } from '@/hooks/useSharedKeyboardHeight';
 import { RootNavigator } from '@/navigation/RootNavigator/RootNavigator';
@@ -37,9 +38,14 @@ adapty.activate(ADAPTY_API_KEY);
 
 amplitude.init(AMPLITUDE_API_KEY, undefined, {
   logLevel: __DEV__ ? amplitude.Types.LogLevel.Error : amplitude.Types.LogLevel.None,
+  trackingOptions: {
+    adid: false,
+  },
 });
 
 function App(): JSX.Element {
+  useAdjustSetup();
+
   const theme = useInitTheme();
 
   const { initialNavigationState, initialRouteName } = useInitApp();

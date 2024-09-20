@@ -7343,10 +7343,10 @@ react-native-adapty@^2.11.2:
   resolved "https://registry.yarnpkg.com/react-native-adapty/-/react-native-adapty-2.11.2.tgz#c4c3dbdf8b7b8d5741894e73272a2da2ffb04765"
   integrity sha512-0B1ZOkHrOloDzSeZOjmhXNbLc6gAAgnVoQQ6XdQO0eIIdlXgmW4ZRt5yYL60Zte1YfWKjdxgU/wA0CL880ABdw==
 
-react-native-adjust@^4.38.1:
-  version "4.38.1"
-  resolved "https://registry.yarnpkg.com/react-native-adjust/-/react-native-adjust-4.38.1.tgz#93ae5959a624715b5b3d0c48faf8b6c66b75575d"
-  integrity sha512-+FZU0DMPJ9GUcZZNHuhqd2OVQGmfDA+x/HeehFFjshGN+IdJ2hWGaLuMi2uAB2LScLQiBo4GKNLf3NyXb3La3A==
+react-native-adjust@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-adjust/-/react-native-adjust-5.0.1.tgz#867447a866d0934c993bf5be48499115a5b60739"
+  integrity sha512-F4H0L70b/C/X6/egXoBqxAOiJvm98txtZMD3uKd3Q21bBBVmo/6o81xBGZjZtBdvum6C1uI0HdPUhtlYWfTNag==
 
 react-native-config@^1.5.3:
   version "1.5.3"
