@@ -19,4 +19,6 @@ Moonlit is more than just an app; it's a gateway to a world of dreams and gentle
 
 [Download Moonlit](https://apps.apple.com/app/moonlit-tales/id6471524142) now and turn bedtime into the most enchanting part of your child's day. Let the stories begin!
 
-### [Get on the App Store](https://apps.apple.com/app/moonlit-tales/id6471524142)
+### [Download on the App Store](https://apps.apple.com/app/moonlit-tales/id6471524142)
+
+### [Get it on Google Play](https://play.google.com/store/apps/details?id=com.moonlit.tales)
