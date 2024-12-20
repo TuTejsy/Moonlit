@@ -9,6 +9,7 @@
 #
 ios/build/
 *.pbxuser
+ios/GoogleService-Info.plist
 !default.pbxuser
 *.mode1v3
 !default.mode1v3
@@ -30,6 +31,7 @@ DerivedData
 android/build/
 android/app/release
 android/app/build/
+android/app/google-services.json
 .idea
 .gradle
 local.properties
