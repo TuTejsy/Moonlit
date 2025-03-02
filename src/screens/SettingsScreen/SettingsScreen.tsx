@@ -89,31 +89,33 @@ export const SettingsScreen = () => {
       angle={180}
       colors={[colors.purple, colors.darkPurple]}
       locations={[0, 1]}
-      style={styles.screen}
+      style={styles.gradient}
     >
-      <TextView style={styles.title} type='bold' onPress={onDevModePress}>
-        Settings
-      </TextView>
+      <View style={styles.screen}>
+        <TextView style={styles.title} type='bold' onPress={onDevModePress}>
+          Settings
+        </TextView>
 
-      {!isFullVersion && <PromotionBanner />}
+        {!isFullVersion && <PromotionBanner />}
 
-      {isFullVersion && IS_ANDROID && (
-        <MenuItem
-          icon={<Icons.FilledStar />}
-          title='Manage your supscription'
-          onPress={handleManageSubscriptionPress}
-        />
-      )}
+        {isFullVersion && IS_ANDROID && (
+          <MenuItem
+            icon={<Icons.FilledStar />}
+            title='Manage your supscription'
+            onPress={handleManageSubscriptionPress}
+          />
+        )}
 
-      <MenuItem icon={<Icons.Info />} title='Contact us' onPress={handleHelpAndSupportPress} />
-      <MenuItem icon={<Icons.Doc />} title='Terms of service' onPress={openTermsOfService} />
-      <MenuItem icon={<Icons.Privacy />} title='Privacy policy' onPress={openPrivacyPolicy} />
+        <MenuItem icon={<Icons.Info />} title='Contact us' onPress={handleHelpAndSupportPress} />
+        <MenuItem icon={<Icons.Doc />} title='Terms of service' onPress={openTermsOfService} />
+        <MenuItem icon={<Icons.Privacy />} title='Privacy policy' onPress={openPrivacyPolicy} />
 
-      <View style={styles.separator} />
+        <View style={styles.separator} />
 
-      <MenuItem icon={<Icons.Star />} title='Rate App' onPress={handleRateAppPress} />
+        <MenuItem icon={<Icons.Star />} title='Rate App' onPress={handleRateAppPress} />
 
-      {renderDevModeDialog()}
+        {renderDevModeDialog()}
+      </View>
     </LinearGradient>
   );
 };

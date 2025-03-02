@@ -20,9 +20,9 @@ export function useBackHandler(
 
   useFocusEffect(
     useCallback(() => {
-      BackHandler.addEventListener('hardwareBackPress', backHandler);
+      const subscription = BackHandler.addEventListener('hardwareBackPress', backHandler);
 
-      return () => BackHandler.removeEventListener('hardwareBackPress', backHandler);
+      return () => subscription.remove();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, deps),
   );

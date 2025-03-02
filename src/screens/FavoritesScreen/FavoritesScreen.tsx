@@ -127,22 +127,10 @@ export const FavoritesScreen = () => {
       const { contentOffset } = event.nativeEvent;
       const scrollPosition = Math.round(contentOffset.x / windowWidth);
 
-      const scrollDiff = contentOffset.x - startScrollPositionRef.current;
-
-      if (Math.abs(scrollDiff) > 70) {
-        if (scrollDiff > 0) {
-          scrollViewRef.current?.scrollTo({ x: windowWidth });
-        } else {
-          scrollViewRef.current?.scrollTo({ x: 0 });
-        }
-      } else {
-        scrollViewRef.current?.scrollTo({ x: scrollPosition * windowWidth });
-      }
-
       const isScrolled = scrollPosition === 1 ? isSecondTabScrolled : isFirstTabScrolled;
       changeBarColor(isScrolled);
     },
-    [changeBarColor, isFirstTabScrolled, isSecondTabScrolled, scrollViewRef, windowWidth],
+    [changeBarColor, isFirstTabScrolled, isSecondTabScrolled, windowWidth],
   );
 
   const handleFirstTabScroll = useCallback(
@@ -191,6 +179,7 @@ export const FavoritesScreen = () => {
       <Animated.ScrollView
         ref={scrollViewRef}
         horizontal
+        pagingEnabled
         scrollEventThrottle={16}
         onScroll={handleAnimatedScroll}
         onScrollBeginDrag={handleBeginEndDrag}

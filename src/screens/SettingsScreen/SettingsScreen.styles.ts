@@ -4,6 +4,9 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 export const makeStyles = ({ colors, dh, fonts, horizontalPadding, insets }: MakeStylesProps) =>
   StyleSheet.create({
+    gradient: {
+      flex: 1,
+    },
     screen: {
       flex: 1,
       paddingHorizontal: horizontalPadding,
