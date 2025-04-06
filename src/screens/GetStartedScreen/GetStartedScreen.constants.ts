@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import firstStepImage from './images/firstStep/firstStep.png';
+import fourthStep from './images/fourthStep/fourthStep.png';
 import secondStepImage from './images/secondStep/secondStep.png';
 import thirdStepImage from './images/thirdStep/thirdStep.png';
 
@@ -20,8 +21,15 @@ export const STEPS = [
   },
   {
     description:
-      'Rediscover timeless stories that captivate\nand soothe, sparking imagination and\nsweet dreams.',
+      'Add a personal touch to bedtime — create\nstories in your voice for a warm and familiar\nsleep experience.',
     image: thirdStepImage,
+    tag: 'Personal Touch',
+    title: 'Sleep Stories\nby You',
+  },
+  {
+    description:
+      'Rediscover timeless stories that captivate\nand soothe, sparking imagination and\nsweet dreams.',
+    image: fourthStep,
     tag: 'Rich collection',
     title: 'A treasury of\ntimeless tales',
   },
