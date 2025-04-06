@@ -1,11 +1,11 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
 
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { Icons } from '@/assets/icons/Icons';
 import loonImage from '@/assets/images/moon/moon.png';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -53,7 +53,7 @@ export const StoryPreview = React.memo(
     });
 
     return (
-      <TouchableWithoutFeedback style={styles.previewContainer} onPress={handlePreviewPress}>
+      <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
         <LinearGradient
           useAngle
           angle={180}
@@ -86,7 +86,7 @@ export const StoryPreview = React.memo(
             {description}
           </TextView>
         </ImageBackground>
-      </TouchableWithoutFeedback>
+      </PressableView>
     );
   },
 );

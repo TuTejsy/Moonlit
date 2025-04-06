@@ -22,6 +22,10 @@ import { FavoritesTab } from './navigation/FavoritesTab';
 import { HomeTab } from './navigation/HomeTab';
 import { RoundClose } from './navigation/RoundClose';
 import { SettingsTab } from './navigation/SettingsTab';
+import { Crown } from './paywall/Crown';
+import { DownloadSmall } from './paywall/DownloadSmall';
+import { Mic } from './paywall/Mic';
+import { Record } from './paywall/Record';
 import { GoBack } from './player/GoBack';
 import { GoForward } from './player/GoForward';
 import { PauseBig } from './player/PauseBig';
@@ -60,4 +64,8 @@ export const Icons = {
   Star,
   Unlock,
   Waveframe,
+  Crown,
+  Record,
+  Mic,
+  DownloadSmall,
 };

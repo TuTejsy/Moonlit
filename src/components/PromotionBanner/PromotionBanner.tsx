@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { View, Image, ViewProps } from 'react-native';
 
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
 
@@ -14,6 +13,7 @@ import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectFreeOfferDays } from '@/store/user/user.selector';
 
 import { UnlockButton } from '../Buttons/UnlockButton/UnlockButton';
+import { PressableView } from '../Primitives/PressableView/PressableView';
 import { TextView } from '../Primitives/TextView/TextView';
 
 import { usePromotionBannerLayout } from './hooks/usePromotionBannerLayout';
@@ -42,7 +42,7 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   }, [showPaywallModal]);
 
   return (
-    <TouchableWithoutFeedback style={[styles.container, style]} onPress={handleBannerPress}>
+    <PressableView style={[styles.container, style]} onPress={handleBannerPress}>
       <Animated.Image
         resizeMode='cover'
         source={bannerImage}
@@ -68,6 +68,6 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
         <UnlockButton source={SOURCE.HOME_VIEW}>Get {freeOfferDays} days free</UnlockButton>
       </View>
-    </TouchableWithoutFeedback>
+    </PressableView>
   );
 }

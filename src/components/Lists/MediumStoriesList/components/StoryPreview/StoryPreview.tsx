@@ -1,10 +1,9 @@
 import React from 'react';
 import { Image } from 'react-native';
 
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-
 import { Icons } from '@/assets/icons/Icons';
 import loonImage from '@/assets/images/moon/moon.png';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -49,7 +48,7 @@ export function StoryPreview({
   });
 
   return (
-    <TouchableWithoutFeedback style={styles.previewContainer} onPress={handlePreviewPress}>
+    <PressableView style={styles.previewContainer} onPress={handlePreviewPress}>
       <Image
         blurRadius={!isImageLoaded ? 10 : 0}
         defaultSource={loonImage}
@@ -66,6 +65,6 @@ export function StoryPreview({
       <TextView numberOfLines={2} style={styles.descriptionText}>
         {description}
       </TextView>
-    </TouchableWithoutFeedback>
+    </PressableView>
   );
 }

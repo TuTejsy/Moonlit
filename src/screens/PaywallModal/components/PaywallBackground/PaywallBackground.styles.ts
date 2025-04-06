@@ -2,8 +2,14 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ insets, windowHeight, windowWidth }: MakeStylesProps) =>
+export const makeStyles = ({ dw, dh, insets, windowHeight, windowWidth }: MakeStylesProps) =>
   StyleSheet.create({
+    animatedImage: {
+      height: windowHeight - insets.top - insets.bottom - 120,
+      left: 0,
+      position: 'absolute',
+      top: 0,
+    },
     bottomOverlayGradient: {
       bottom: 0,
       height: (windowHeight * 2) / 3,
@@ -11,11 +17,20 @@ export const makeStyles = ({ insets, windowHeight, windowWidth }: MakeStylesProp
       position: 'absolute',
       width: windowWidth,
     },
+    scrollableGradient: {
+      bottom: 0,
+      height: dw(330),
+      left: 0,
+      top: dh(96),
+      position: 'absolute',
+      width: windowWidth,
+    },
     image: {
-      height: windowHeight - insets.top - insets.bottom - 120,
+      height: dw(507),
       left: 0,
       position: 'absolute',
       top: 0,
+      width: windowWidth,
     },
     topOverlayGradient: {
       height: (windowHeight * 2) / 3,

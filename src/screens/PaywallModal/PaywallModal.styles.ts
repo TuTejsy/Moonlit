@@ -1,15 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ColorValue } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({
-  colors,
-  dh,
-  fonts,
-  insets,
-  isLandscape,
-  isSquareScreen,
-}: MakeStylesProps) =>
+interface Context {
+  isScrollable: boolean;
+}
+
+export const makeStyles = (
+  { colors, dh, fonts, insets, isLandscape, isSquareScreen }: MakeStylesProps,
+  { isScrollable }: Context,
+) =>
   StyleSheet.create({
     content: {
       alignItems: 'center',
@@ -20,12 +20,12 @@ export const makeStyles = ({
       marginTop: insets.top,
       overflow: 'hidden',
       paddingBottom: insets.bottom,
-      paddingHorizontal: 34,
+      paddingHorizontal: isScrollable ? 0 : 34,
       paddingTop: dh(24),
       position: 'relative',
     },
     screen: {
-      backgroundColor: colors.purple,
+      backgroundColor: isScrollable ? colors.darkGradientPurple : colors.purple,
       flex: 1,
     },
     skipText: {

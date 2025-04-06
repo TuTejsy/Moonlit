@@ -26,6 +26,7 @@ export const IS_JEST_ENV = process.env.JEST_WORKER_ID;
 
 export const SWITCH_PLACEMENT_ID = 'FULL_ACCESS';
 export const SELECTION_PLACEMENT_ID = 'FULL_ACCESS_SELECTION';
+export const SCROLLABLE_PLACEMENT_ID = 'FULL_ACCESS_SCROLLABLE';
 
 export const BUNDLE_PATH = RNFS.MainBundlePath;
 

@@ -5,7 +5,11 @@ import { adapty, AdaptyPaywallProduct, AdaptyProfile, OfferEligibility } from 'r
 
 import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
-import { SELECTION_PLACEMENT_ID, SWITCH_PLACEMENT_ID } from '@/constants/common';
+import {
+  SCROLLABLE_PLACEMENT_ID,
+  SELECTION_PLACEMENT_ID,
+  SWITCH_PLACEMENT_ID,
+} from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
@@ -17,18 +21,25 @@ import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
 import { unlockFullVersion } from '@/store/user/user.slice';
 
 import { PaywallBackground } from './components/PaywallBackground/PaywallBackground';
+import { ScrollablePaywallContent } from './contentVariants/ScrollablePaywallContent/ScrollablePaywallContent';
 import { SelectionPaywallContent } from './contentVariants/SelectionPaywallContent/SelectionPaywallContent';
 import { SwitcherPaywallContent } from './contentVariants/SwitcherPaywallContent/SwitcherPaywallContent';
 import { makeStyles } from './PaywallModal.styles';
 
 export const PaywallModal = () => {
-  const styles = useMakeStyles(makeStyles);
-
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
 
-  const { contentName, onClose, placementId, products, productsOffersEligibility, source, tab } =
+  const { contentName, onClose, products, placementId, productsOffersEligibility, source, tab } =
     params;
+
+  const stylesContext = useMemo(
+    () => ({
+      isScrollable: placementId === SCROLLABLE_PLACEMENT_ID,
+    }),
+    [placementId],
+  );
+  const styles = useMakeStyles(makeStyles, stylesContext);
 
   const dispatch = useAppDispatch();
 
@@ -72,9 +83,6 @@ export const PaywallModal = () => {
   const unlockButtonText = isFreeTrialEnabled
     ? remoteConfigService.buyButtonTextTrial
     : remoteConfigService.buyButtonTextNoTrial;
-
-  const topGradientLocations = useMemo(() => [0, 0.8], []);
-  const bottomGradientLocations = useMemo(() => [0, 0.5], []);
 
   const makeUnlockFullAccess = useCallback(
     (product: AdaptyPaywallProduct | null) => (profile: AdaptyProfile) => {
@@ -180,6 +188,23 @@ export const PaywallModal = () => {
         );
       }
 
+      case SCROLLABLE_PLACEMENT_ID: {
+        return (
+          <ScrollablePaywallContent
+            isFreeTrialEnabled={isFreeTrialEnabled}
+            isTrialEligible={isTrialEligible}
+            selectedProduct={selectedProduct}
+            trialProduct={trialProduct}
+            unlockButtonText={unlockButtonText}
+            weeklyProduct={weeklyProduct}
+            yearlyProduct={yearlyProduct}
+            onRestorePress={handleRestorePress}
+            onSelectProduct={setSelectedProduct}
+            onUnlockPress={handleUnlockPress}
+          />
+        );
+      }
+
       default: {
         return null;
       }
@@ -210,16 +235,13 @@ export const PaywallModal = () => {
   return (
     <View style={styles.screen}>
       <View style={styles.content}>
-        <PaywallBackground
-          bottomGradientLocations={bottomGradientLocations}
-          topGradientLocations={topGradientLocations}
-        />
+        <PaywallBackground isScrollable={placementId === SCROLLABLE_PLACEMENT_ID} />
+
+        {renderPaywallContent()}
 
         <TextView style={styles.skipText} type='regular' onPress={handleSkipPress}>
           Skip
         </TextView>
-
-        {renderPaywallContent()}
       </View>
 
       <AbsoluteSpinnerView show={isLoading} />

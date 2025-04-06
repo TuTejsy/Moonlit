@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { Image, View } from 'react-native';
 
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-
 import { Icons } from '@/assets/icons/Icons';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -58,7 +57,7 @@ export const StoryPreview = React.memo(
     }, [onSaveStoryPress, storyId]);
 
     return (
-      <TouchableWithoutFeedback
+      <PressableView
         hitSlop={getHitSlop(-40, ['left', 'bottom', 'top'])}
         style={styles.previewContainer}
         onPress={handlePreviewPress}
@@ -77,16 +76,16 @@ export const StoryPreview = React.memo(
         </View>
 
         {showSaveButton && (
-          <TouchableWithoutFeedback
+          <PressableView
             disallowInterruption
             hitSlop={getHitSlop(5)}
             style={styles.button}
             onPress={handleStoryFavoritePress}
           >
             <Icons.Favorite height={20} isFavorite={isSaved ?? false} width={20} />
-          </TouchableWithoutFeedback>
+          </PressableView>
         )}
-      </TouchableWithoutFeedback>
+      </PressableView>
     );
   },
 );
