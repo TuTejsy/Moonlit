@@ -1,13 +1,12 @@
 import React from 'react';
 import { View, ViewProps } from 'react-native';
 
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './SectionHeader.styles';
 import { useAppLocalization } from '@/localization/useAppLocalization';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 
 interface SectionHeaderPropTypes extends ViewProps {
   onSeeAllPress: () => void;
@@ -28,9 +27,9 @@ export const SectionHeader = ({
       <TextView style={styles.titleText} type='bold'>
         {title}
       </TextView>
-      <TouchableOpacity onPress={onSeeAllPress}>
+      <PressableView onPress={onSeeAllPress}>
         <TextView style={styles.seeAllText}>{localize('common', 'seeAll')}</TextView>
-      </TouchableOpacity>
+      </PressableView>
     </View>
   );
 };

@@ -1,7 +1,6 @@
 import React, { ReactNode, useMemo, useState } from 'react';
 import { LayoutChangeEvent, StyleProp, TextStyle, View, ViewProps, ViewStyle } from 'react-native';
 
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
   SharedValue,
@@ -18,6 +17,7 @@ import { EXTRA_TOUCH_AREA } from '../Headers.constants';
 
 import { LARGE_TITLE_HEIGHT } from './ScreenHeader.constants';
 import { makeStyles } from './ScreenHeader.styles';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 
 export interface ScreenHeaderProps {
   color?: string;
@@ -109,9 +109,9 @@ export const ScreenHeader = ({
       <View style={styles.headerContainer}>
         <View style={styles.controls} onLayout={onLayout}>
           {renderLeft === undefined ? (
-            <TouchableOpacity hitSlop={EXTRA_TOUCH_AREA} onPress={goBackHandler}>
+            <PressableView hitSlop={EXTRA_TOUCH_AREA} onPress={goBackHandler}>
               <Icons.ArrowBack />
-            </TouchableOpacity>
+            </PressableView>
           ) : (
             renderLeft
           )}

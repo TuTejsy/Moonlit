@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
 import { BlurView } from '@react-native-community/blur';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolation,
   SharedValue,
@@ -150,9 +149,9 @@ export function StoryPlayer({
             />
 
             <View style={styles.playerControllsContainer}>
-              <TouchableOpacity onPress={handleGoBackPress}>
+              <PressableView onPress={handleGoBackPress}>
                 <Icons.GoBack />
-              </TouchableOpacity>
+              </PressableView>
 
               {isStoryPlaying ? (
                 <Icons.PauseBig onPress={pauseStoryPlaying} />
@@ -160,9 +159,9 @@ export function StoryPlayer({
                 <Icons.PlayBig onPress={startStoryPlaying} />
               )}
 
-              <TouchableOpacity onPress={handleGoForwardPress}>
+              <PressableView onPress={handleGoForwardPress}>
                 <Icons.GoForward />
-              </TouchableOpacity>
+              </PressableView>
             </View>
           </>
         )}

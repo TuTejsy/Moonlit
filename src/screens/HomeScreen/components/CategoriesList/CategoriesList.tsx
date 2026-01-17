@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
 import { FlatList, View, ListRenderItemInfo } from 'react-native';
 
-import { TouchableHighlight } from 'react-native-gesture-handler';
-
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_KEYS } from '@/constants/stories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -13,6 +11,7 @@ import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
 import { makeStyles } from './CategoriesList.styles';
 import { useAppLocalization } from '@/localization/useAppLocalization';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 
 const CATEGORIES = [
   [CATEGORY_IDS.CLASSIC_TRANSFORMATIONS, CATEGORY_IDS.FOREST_ADVENTURES],
@@ -44,7 +43,7 @@ export const CategoriesList = () => {
       return (
         <View key={`${item[0]}-${item[1]}`} style={styles.categoryPreviewsContainer}>
           {item.map((categoryId) => (
-            <TouchableHighlight
+            <PressableView
               key={categoryId}
               style={styles.categoryPreview}
               onPress={() => handleCategoryPress(categoryId)}
@@ -52,7 +51,7 @@ export const CategoriesList = () => {
               <TextView numberOfLines={2} style={styles.cateogryText}>
                 {localize("categories", MAP_CATEGORY_ID_TO_KEYS[categoryId])}
               </TextView>
-            </TouchableHighlight>
+            </PressableView>
           ))}
         </View>
       );
