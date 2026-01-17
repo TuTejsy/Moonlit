@@ -15,6 +15,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { Icons } from '@/assets/icons/Icons';
 import yearlyProductBackgroundImage from './images/yearlyProductBackground/yearlyProductBackground.png';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 // eslint-disable-next-line import/no-unresolved
 
@@ -47,6 +48,8 @@ export const ScrollablePaywallContent = ({
 
   const [isFreeTrialToggle, setIsFreeTrialToggle] = useState(isFreeTrialEnabled);
 
+  const { localize } = useAppLocalization();
+
   const yearlyPricePerWeek = useMemo(
     () => (yearlyProduct?.price?.amount || 0) / WEEKS_IN_YEAR,
     [yearlyProduct?.price?.amount],
@@ -68,14 +71,14 @@ export const ScrollablePaywallContent = ({
       const offerDays =
         trialProduct?.subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
 
-      return `${offerDays}-DAY FREE TRIAL`;
+      return `${offerDays}-${localize("paywall", "DAY_FREE_TRIAL")}`;
     }
 
-    return 'WEEKLY';
+    return localize("paywall", "WEEKLY");
   }, [isFreeTrialToggle, trialProduct?.subscriptionDetails?.introductoryOffers]);
 
   const yearlyPricePerWeekText = useMemo(
-    () => `${yearlyProduct?.price?.currencySymbol}${yearlyPricePerWeek.toFixed(2)} / week`,
+    () => `${yearlyProduct?.price?.currencySymbol}${yearlyPricePerWeek.toFixed(2)} / ${localize("paywall", "week")}`,
     [yearlyPricePerWeek, yearlyProduct?.price?.currencySymbol],
   );
 
@@ -99,10 +102,10 @@ export const ScrollablePaywallContent = ({
       const price = trialProduct?.price?.amount;
       const currencySymbol = trialProduct?.price?.currencySymbol;
 
-      return `${offerDays} days free, then ${currencySymbol}${price}/week`;
+      return `${offerDays} ${localize("paywall", "daysFreeThen")} ${currencySymbol}${price}/${localize("paywall", "week")}`;
     }
 
-    return `${secondProduct?.price?.currencySymbol}${secondProduct?.price?.amount || 0} /week`;
+    return `${secondProduct?.price?.currencySymbol}${secondProduct?.price?.amount || 0} /${localize("paywall", "week")}`;
   }, [secondProduct?.price?.amount, secondProduct?.price?.currencySymbol, isFreeTrialToggle]);
 
   const handleTrialEnabledChanged = useCallback(
@@ -132,25 +135,25 @@ export const ScrollablePaywallContent = ({
         <View style={styles.benefit}>
           <Icons.Crown />
           <TextView style={styles.benefitText} type='medium'>
-            Rich collection of fairy tales
+            {localize("paywall", "richCollectionOfFairyTails")}
           </TextView>
         </View>
         <View style={styles.benefit}>
           <Icons.Record />
           <TextView style={styles.benefitText} type='medium'>
-            Unique custom voices
+            {localize("paywall", "uniqueCustomVoices")}
           </TextView>
         </View>
         <View style={styles.benefit}>
           <Icons.Mic />
           <TextView style={styles.benefitText} type='medium'>
-            Your personalized voices
+            {localize("paywall", "yourPersonalizedVoices")}
           </TextView>
         </View>
         <View style={styles.benefit}>
           <Icons.DownloadSmall />
           <TextView style={styles.benefitText} type='medium'>
-            Offline mode player
+            {localize("paywall", "offlineModePlayer")}
           </TextView>
         </View>
       </View>
@@ -180,7 +183,7 @@ export const ScrollablePaywallContent = ({
         <Image source={yearlyProductBackgroundImage} style={styles.productContainerImage} />
 
         <View style={styles.productNameContainer}>
-          <TextView style={styles.productTitle}>YEARLY</TextView>
+          <TextView style={styles.productTitle}>{localize("paywall", "YEARLY")}</TextView>
           <TextView style={styles.productSubtitle} type='light'>
             {yearlyPricePerWeekText}
           </TextView>
@@ -189,7 +192,7 @@ export const ScrollablePaywallContent = ({
         <View style={styles.separator} />
 
         <View style={styles.productPriceContainer}>
-          <TextView style={styles.priceSubtitle}>Save</TextView>
+          <TextView style={styles.priceSubtitle}>{localize("paywall", "save")}</TextView>
           <TextView style={styles.priceSale} type='bold'>
             {pricesDiffInPercentsText}
           </TextView>
@@ -204,9 +207,9 @@ export const ScrollablePaywallContent = ({
         <View style={styles.freeTrialContainer}>
           <View style={styles.freeTrialTextContainer}>
             <TextView style={styles.freeTrialTitle} type='bold'>
-              Not sure yet
+              {localize("paywall", "notSureYet")}
             </TextView>
-            <TextView style={styles.freeTrialSubtitle}>Enable free trial</TextView>
+            <TextView style={styles.freeTrialSubtitle}>{localize("paywall", "enableFreeTrial")}</TextView>
           </View>
 
           <TrialSwitch value={isFreeTrialEnabled} onValueChange={handleTrialEnabledChanged} />
@@ -218,7 +221,7 @@ export const ScrollablePaywallContent = ({
       </TextView>
 
       <TextView style={styles.promotionText} type='bold'>
-        Auto-renewable. Cancel anytime
+        {localize("paywall", "autoRenewableCancelAnytime")}
       </TextView>
 
       <FooterActions
@@ -228,9 +231,7 @@ export const ScrollablePaywallContent = ({
       />
 
       <TextView style={styles.subscriptionInfo}>
-        Auto-renewal will be charged at the subscription price 24 hours before expiration. Until
-        then, you can manually turn off auto-renewal by accessing the iTunes subscription section or
-        account settings in the app, and clicking cancel subscription.
+        {localize("paywall", "cancelPolicy")}
       </TextView>
     </ScrollView>
   );

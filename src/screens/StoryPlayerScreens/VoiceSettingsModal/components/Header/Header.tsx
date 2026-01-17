@@ -7,6 +7,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './Header.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface HeaderProps {
   onCloseIconPress: () => void;
@@ -14,6 +15,7 @@ interface HeaderProps {
 
 export function Header({ onCloseIconPress }: HeaderProps) {
   const styles = useMakeStyles(makeStyles);
+  const { localize } = useAppLocalization();
 
   return (
     <View style={styles.titleContainer}>
@@ -22,8 +24,9 @@ export function Header({ onCloseIconPress }: HeaderProps) {
       </PressableView>
 
       <TextView style={styles.title} type='medium'>
-        Select voice
+       {localize('common', 'selectVoice')}
       </TextView>
     </View>
   );
 }
+

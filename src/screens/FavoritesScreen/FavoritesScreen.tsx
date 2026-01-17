@@ -23,10 +23,12 @@ import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 import { AnalyticsService } from '@/services/analytics/analytics';
 
 import { makeStyles } from './FavoritesScreen.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const FavoritesScreen = () => {
   const { colors } = useTheme();
   const { horizontalPadding, sufficientWindowWidth, windowWidth } = useLayout();
+  const { localize } = useAppLocalization();
 
   const tabWidth = useMemo(
     () => (sufficientWindowWidth - horizontalPadding * 2 - 8) / 2,
@@ -188,7 +190,7 @@ export const FavoritesScreen = () => {
         <View style={styles.listContainer}>
           <SmallStoriesPlainList
             showSaveButton
-            ListEmptyComponent={<Empty text={`You don't have any\nsaved stories`} />}
+            ListEmptyComponent={<Empty text={localize('favorites', 'emptyListTitle')} />}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
             stories={savedStories}
@@ -197,7 +199,7 @@ export const FavoritesScreen = () => {
             ListHeaderComponent={
               savedStories.length ? (
                 <TextView style={styles.listTitleText} type='bold'>
-                  Your saved tales
+                  {localize('stories', 'yourSavedTales')}
                 </TextView>
               ) : undefined
             }
@@ -208,7 +210,7 @@ export const FavoritesScreen = () => {
         <View style={styles.listContainer}>
           <SmallStoriesPlainList
             showsHorizontalScrollIndicator
-            ListEmptyComponent={<Empty text={`You don't have any\nrecent played stories`} />}
+            ListEmptyComponent={<Empty text={localize('stories', 'emptyRecentListTitle')} />}
             contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
             stories={recentlyPlayedStories}
@@ -217,7 +219,7 @@ export const FavoritesScreen = () => {
             ListHeaderComponent={
               recentlyPlayedStories.length ? (
                 <TextView style={styles.listTitleText} type='bold'>
-                  Recent Played
+                  {localize('stories', 'recentPlayed')}
                 </TextView>
               ) : undefined
             }
@@ -235,12 +237,12 @@ export const FavoritesScreen = () => {
 
             <Animated.View style={animatedSavedTabStyle}>
               <TextView style={styles.tabText} type='medium' onPress={handleSavedTabPress}>
-                Saved
+                {localize('common', 'saved')}
               </TextView>
             </Animated.View>
             <Animated.View style={animatedRecentlyPlayedTabStyle}>
               <TextView style={styles.tabText} type='medium' onPress={handleRecentlyPlayedTabPress}>
-                Recent Played
+                {localize('stories', 'recentPlayed')}
               </TextView>
             </Animated.View>
           </Animated.View>

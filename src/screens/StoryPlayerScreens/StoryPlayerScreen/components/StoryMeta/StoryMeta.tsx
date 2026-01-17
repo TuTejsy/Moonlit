@@ -14,6 +14,7 @@ import { formatSecondsToMins } from '@/utils/formatters/formatSecondsToMins';
 
 import { makeStyles } from './StoryMeta.styles';
 import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface StoryMetaPropTypes {
   description: string;
@@ -28,6 +29,8 @@ export function StoryMeta({
   storyPlayingSharedValue,
   style,
 }: StoryMetaPropTypes) {
+  const { localize } = useAppLocalization();
+
   const storyPlayerScreenLayout = useStoryPlayerScreenLayout()
   const styles = useMakeStyles(makeStyles, storyPlayerScreenLayout);
 
@@ -42,7 +45,7 @@ export function StoryMeta({
   return (
     <Animated.View style={[styles.storyMetaContainer, style, animatedTextStyle]}>
       <TextView style={styles.durationTitle}>
-        Story duration: <TextView style={styles.durationText}>{formattedDuration} min</TextView>
+        {localize('stories', 'storyDuration')}: <TextView style={styles.durationText}>{formattedDuration} {localize('common', 'min')}</TextView>
       </TextView>
       <TextView style={styles.storyText}>{description}</TextView>
     </Animated.View>

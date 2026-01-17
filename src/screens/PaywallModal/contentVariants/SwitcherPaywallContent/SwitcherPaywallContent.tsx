@@ -15,6 +15,7 @@ import voicesImage from '../../images/voices/voices.png';
 import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.png';
 
 import { makeStyles } from './SwitcherPaywallContent.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface SwitcherPaywallContentProps {
   isFreeTrialEnabled: boolean;
@@ -39,6 +40,7 @@ export const SwitcherPaywallContent = ({
 }: SwitcherPaywallContentProps) => {
   const styles = useMakeStyles(makeStyles);
   const { isLandscape, isSquareScreen } = useLayout();
+  const { localize } = useAppLocalization();
 
   const productText = useMemo(() => {
     if (isFreeTrialEnabled) {
@@ -48,14 +50,14 @@ export const SwitcherPaywallContent = ({
       const price = trialProduct?.price?.amount;
       const currencyCode = trialProduct?.price?.currencyCode;
 
-      return `${offerDays} days free, then ${price} ${currencyCode}/week`;
+      return `${offerDays} ${localize("paywall", "daysFreeThen")} ${price} ${currencyCode}/${localize("paywall", "week")}`;
     }
     const price = yearlyProduct?.price?.amount;
     const currencyCode = yearlyProduct?.price?.currencyCode;
 
     const subscriptionPeriod = yearlyProduct?.subscriptionDetails?.subscriptionPeriod.unit;
 
-    return `Try it now, just ${price} ${currencyCode}/${subscriptionPeriod}`;
+    return `${localize("paywall", "tryItNotJust")} ${price} ${currencyCode}/${subscriptionPeriod}`;
   }, [
     yearlyProduct?.price?.amount,
     yearlyProduct?.price?.currencyCode,
@@ -80,11 +82,11 @@ export const SwitcherPaywallContent = ({
       <View style={styles.content}>
         <View style={styles.block}>
           <TextView style={styles.title} type='bold'>
-            Get access to{`\n`}all tales
+            {localize("paywall", "getAccessToAllTales")}
           </TextView>
 
           <TextView style={styles.subtitle} type='regular'>
-            Discover unique voices and{`\n`}listen to classic fary tales
+            {localize("paywall", "discoverUniqueVoicesAndListenToClassicFairyTales")}
           </TextView>
 
           {!isSquareScreen && (
@@ -99,15 +101,15 @@ export const SwitcherPaywallContent = ({
           <TextView style={styles.promotionText} type='regular'>
             {productText}
             {`\n`}
-            Auto-renewable. Cancel anytime
+            {localize("paywall", "autoRenewableCancelAnytime")}
           </TextView>
 
           <View style={styles.freeTrialContainer}>
             <View style={styles.freeTrialTextContainer}>
               <TextView style={styles.freeTrialTitle} type='bold'>
-                Not sure yet
+                {localize("paywall", "notSureYet")}
               </TextView>
-              <TextView style={styles.freeTrialSubtitle}>Enable free trial</TextView>
+              <TextView style={styles.freeTrialSubtitle}>{localize("paywall", "enableFreeTrial")}</TextView>
             </View>
 
             <TrialSwitch value={isFreeTrialEnabled} onValueChange={handleTrialEnabledChanged} />

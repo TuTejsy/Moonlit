@@ -17,7 +17,7 @@ import {
   SANDBOX,
 } from '@/constants/common';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
-import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_NAMES } from '@/constants/stories';
+import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_KEYS} from '@/constants/stories';
 import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
 import { useStory } from '@/hooks/database/useStory';
 import { useLayout } from '@/hooks/theme/useLayout';
@@ -47,11 +47,13 @@ import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
 import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
 import { useStoryPlayerScreenLayout } from './hooks/useStoryPlayerScreenLayout';
 import { makeStyles } from './StoryPlayerScreen.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
   const { dh, windowHeight } = useLayout();
   const storyPlayerScreenLayout = useStoryPlayerScreenLayout();
+  const { localize } = useAppLocalization();
 
   const storyContainerMinHeight =
     windowHeight -
@@ -95,7 +97,7 @@ export const StoryPlayerScreen = () => {
 
   const storyCategories = useMemo(
     () =>
-      story?.category_ids.map((categoryId: CATEGORY_IDS) => MAP_CATEGORY_ID_TO_NAMES[categoryId]),
+      story?.category_ids.map((categoryId: CATEGORY_IDS) => localize("categories", MAP_CATEGORY_ID_TO_KEYS[categoryId])),
     [story?.category_ids],
   );
 

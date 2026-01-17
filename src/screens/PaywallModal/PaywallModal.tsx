@@ -25,10 +25,13 @@ import { ScrollablePaywallContent } from './contentVariants/ScrollablePaywallCon
 import { SelectionPaywallContent } from './contentVariants/SelectionPaywallContent/SelectionPaywallContent';
 import { SwitcherPaywallContent } from './contentVariants/SwitcherPaywallContent/SwitcherPaywallContent';
 import { makeStyles } from './PaywallModal.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
   const { params } = useAppRoute<RootRoutes.PAYWALL_MODAL>();
+
+  const { localize } = useAppLocalization();
 
   const { contentName, onClose, products, placementId, productsOffersEligibility, source, tab } =
     params;
@@ -240,7 +243,7 @@ export const PaywallModal = () => {
         {renderPaywallContent()}
 
         <TextView style={styles.skipText} type='regular' onPress={handleSkipPress}>
-          Skip
+          {localize('common', 'skip')}
         </TextView>
       </View>
 

@@ -34,6 +34,7 @@ import { selectIsFullVersion } from '@/store/user/user.selector';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
 import { makeStyles } from './DefaultList.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface DefaultListPropTypes {
   allStories: Realm.Results<StorySchema>;
@@ -62,6 +63,7 @@ export const DefaultList = React.memo(
 
     const insets = useSafeAreaInsets();
     const navigation = useAppNavigation<SharedRoutes.HOME>();
+    const { localize } = useAppLocalization();
 
     const [isRefreshing, updateStories] = useStoriesUpdate(false);
     const currentScrollRef = useRef(0);
@@ -147,7 +149,7 @@ export const DefaultList = React.memo(
         onScrollEndDrag={handleScrollEndDrag}
         onScrollToTop={handleScrollToTop}
       >
-        <SectionHeader title='Featuring tales' onSeeAllPress={handleSeeFeaturingTales} />
+        <SectionHeader title={localize("home", "featuringTales")} onSeeAllPress={handleSeeFeaturingTales} />
 
         <LargeStoriesList
           stories={featuringStories}
@@ -159,7 +161,7 @@ export const DefaultList = React.memo(
 
         {!isFullVersion && (
           <>
-            <SectionHeader title='Free tales' onSeeAllPress={handleSeeFreeTales} />
+            <SectionHeader title={localize("home", "freeTales")} onSeeAllPress={handleSeeFreeTales} />
             <MediumStoriesList
               stories={freeStories}
               storiesVersion={freeStoriesVersion}
@@ -171,7 +173,7 @@ export const DefaultList = React.memo(
           </>
         )}
 
-        <SectionHeader title='Popular tales' onSeeAllPress={handleSeePopularTales} />
+        <SectionHeader title={localize("home", "popularTales")} onSeeAllPress={handleSeePopularTales} />
         <MediumStoriesList
           stories={popularStories}
           storiesVersion={popularStoriesVersion}
@@ -179,7 +181,7 @@ export const DefaultList = React.memo(
           tab='Popular tales'
         />
 
-        <SectionHeader title='All tales' onSeeAllPress={handleSeeAllTales} />
+        <SectionHeader title={localize("home", "allTales")} onSeeAllPress={handleSeeAllTales} />
         <SmallStoriesList
           displayCount={6}
           isScrollable={false}

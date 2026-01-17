@@ -5,6 +5,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './PopularSearch.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface PopularSearchPropTypes {
   onPopularSearchItemSelected: (item: string) => void;
@@ -15,6 +16,7 @@ interface PopularSearchPropTypes {
 export const PopularSearch = React.memo(
   ({ onPopularSearchItemSelected, onScroll, popularSearchItems }: PopularSearchPropTypes) => {
     const styles = useMakeStyles(makeStyles);
+    const { localize } = useAppLocalization();
 
     const handleScrollToTop = useCallback(() => {
       onScroll?.({
@@ -38,7 +40,7 @@ export const PopularSearch = React.memo(
         onScrollToTop={handleScrollToTop}
       >
         <TextView style={styles.titleText} type='bold'>
-          Popular search
+          {localize('common', 'popularSearch')}
         </TextView>
         <View style={styles.separator} />
 

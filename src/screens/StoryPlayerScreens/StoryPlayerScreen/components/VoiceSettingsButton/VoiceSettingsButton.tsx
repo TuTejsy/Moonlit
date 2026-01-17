@@ -14,6 +14,7 @@ import { useVoicePreviewCachedPath } from '@/hooks/useVoicePreviewCachedPath';
 import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
 import { makeStyles } from './VoiceSettingsButton.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface VoiceSettingsButtonProps {
   onPress: () => void;
@@ -28,6 +29,8 @@ export function VoiceSettingsButton({
   voiceCoverUrl,
   voiceName,
 }: VoiceSettingsButtonProps) {
+  const { localize } = useAppLocalization();
+
   const storyPlayerScreenLayout = useStoryPlayerScreenLayout();
 
   const stylesContext = useMemo(
@@ -61,11 +64,11 @@ export function VoiceSettingsButton({
 
         <View style={styles.titleContainer}>
           <TextView style={styles.title} type='bold'>
-            Select voice
+            {localize('common', 'selectVoice')}
           </TextView>
 
           <TextView style={styles.subTitle} type='regular'>
-            {voiceName} Voice
+            {voiceName} {localize('common', 'voice')}
           </TextView>
         </View>
 

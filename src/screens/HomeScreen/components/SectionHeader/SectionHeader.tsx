@@ -7,6 +7,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './SectionHeader.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface SectionHeaderPropTypes extends ViewProps {
   onSeeAllPress: () => void;
@@ -20,6 +21,7 @@ export const SectionHeader = ({
   ...props
 }: SectionHeaderPropTypes) => {
   const styles = useMakeStyles(makeStyles);
+  const { localize } = useAppLocalization();
 
   return (
     <View style={[styles.sectionHeaderContainer, style]} {...props}>
@@ -27,7 +29,7 @@ export const SectionHeader = ({
         {title}
       </TextView>
       <TouchableOpacity onPress={onSeeAllPress}>
-        <TextView style={styles.seeAllText}>See all</TextView>
+        <TextView style={styles.seeAllText}>{localize('common', 'seeAll')}</TextView>
       </TouchableOpacity>
     </View>
   );

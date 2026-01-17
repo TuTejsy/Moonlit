@@ -1,0 +1,25 @@
+export const paywallLocalization = {
+  en: {
+    richCollectionOfFairyTails: 'Rich collection of fairy tales',
+    uniqueCustomVoices: 'Unique custom voices',
+    yourPersonalizedVoices: 'Your personalized voices',
+    offlineModePlayer: 'Offline mode player',
+    YEARLY: 'YEARLY',
+    WEEKLY: 'WEEKLY',
+    DAY_FREE_TRIAL: "DAY FREE TRIAL",
+    ACCESS: "ACCESS",
+    daysFreeThen: 'days free, then',
+    week: 'week',
+    year: 'year',
+    per: 'per',
+    just: 'Just',
+    save: 'Save',
+    notSureYet: "Not sure yet",
+    tryItNotJust: "Try it now, just",
+    enableFreeTrial: "Enable free trial",
+    autoRenewableCancelAnytime: "Auto-renewable. Cancel anytime",
+    cancelPolicy: "Auto-renewal will be charged at the subscription price 24 hours before expiration. Until then, you can manually turn off auto-renewal by accessing the iTunes subscription section or account settings in the app, and clicking cancel subscription.",
+    getAccessToAllTales: "Get access\nto all tales",
+    discoverUniqueVoicesAndListenToClassicFairyTales: "Discover unique voices and\nlisten to classic fairy tales"
+  },
+};

@@ -27,6 +27,7 @@ import { selectIsFullVersion } from '@/store/user/user.selector';
 import { MenuItem } from './components/MenuItem/MenuItem';
 import { PromotionBanner } from './components/PromotionBanner/PromotionBanner';
 import { makeStyles } from './SettingsScreen.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const SettingsScreen = () => {
   const styles = useMakeStyles(makeStyles);
@@ -36,6 +37,7 @@ export const SettingsScreen = () => {
 
   const { openPrivacyPolicy, openTermsOfService } = useWebPagesNavigation();
   const { onDevModePress, renderDevModeDialog } = useDevMode();
+  const { localize } = useAppLocalization()
 
   const handleHelpAndSupportPress = useCallback(() => {
     openComposer({
@@ -93,7 +95,7 @@ export const SettingsScreen = () => {
     >
       <View style={styles.screen}>
         <TextView style={styles.title} type='bold' onPress={onDevModePress}>
-          Settings
+          {localize("settings", "title")}
         </TextView>
 
         {!isFullVersion && <PromotionBanner />}
@@ -101,18 +103,18 @@ export const SettingsScreen = () => {
         {isFullVersion && IS_ANDROID && (
           <MenuItem
             icon={<Icons.FilledStar />}
-            title='Manage your supscription'
+            title={localize("settings", "manageYourSubscription")}
             onPress={handleManageSubscriptionPress}
           />
         )}
 
-        <MenuItem icon={<Icons.Info />} title='Contact us' onPress={handleHelpAndSupportPress} />
-        <MenuItem icon={<Icons.Doc />} title='Terms of service' onPress={openTermsOfService} />
-        <MenuItem icon={<Icons.Privacy />} title='Privacy policy' onPress={openPrivacyPolicy} />
+        <MenuItem icon={<Icons.Info />} title={localize("settings", "contactUs")} onPress={handleHelpAndSupportPress} />
+        <MenuItem icon={<Icons.Doc />} title={localize("settings", "termsOfService")} onPress={openTermsOfService} />
+        <MenuItem icon={<Icons.Privacy />} title={localize("settings", "privacyPolicy")} onPress={openPrivacyPolicy} />
 
         <View style={styles.separator} />
 
-        <MenuItem icon={<Icons.Star />} title='Rate App' onPress={handleRateAppPress} />
+        <MenuItem icon={<Icons.Star />} title={localize("settings", "rateApp")} onPress={handleRateAppPress} />
 
         {renderDevModeDialog()}
       </View>

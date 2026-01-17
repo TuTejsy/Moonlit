@@ -20,12 +20,14 @@ import { TabEventType } from '@/services/analytics/analytics.types';
 
 import { StoriesWithPromotion } from './components/StoriesWithPromotion/StoriesWithPromotion';
 import { makeStyles } from './StoriesListScreen.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const StoriesListScreen = () => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
   const { windowHeight } = useLayout();
   const { numColumns } = useSmallStoriesListLayout();
+  const { localize } = useAppLocalization();
 
   const { params } = useAppRoute<SharedRoutes.STORIES_LIST>();
   const { storiesFilter, storiesSortConfigs, title } = params || {};
@@ -61,7 +63,7 @@ export const StoriesListScreen = () => {
       <ScreenHeader
         color={colors.purple}
         scrollPositionSharedValue={scrollPositionSharedValue}
-        title={title ?? 'All tales'}
+        title={title ?? localize('stories', 'allTales')}
       />
 
       <SmallStoriesList
@@ -69,12 +71,12 @@ export const StoriesListScreen = () => {
         showsVerticalScrollIndicator={false}
         stories={listStories}
         storiesVersion={storiesVersion}
-        tab={(title ?? 'All tales') as TabEventType}
+        tab={(title ?? localize('stories', 'allTales')) as TabEventType}
         ListFooterComponent={
           <MoreTalesComingFooter
             source={SOURCE.CONTENT}
             style={styles.footer}
-            tab={(title ?? 'All tales') as TabEventType}
+            tab={(title ?? localize('stories', 'allTales')) as TabEventType}
           />
         }
         ListHeaderComponent={
@@ -82,7 +84,7 @@ export const StoriesListScreen = () => {
             source={SOURCE.CONTENT}
             stories={headerStories}
             storiesVersion={storiesVersion}
-            tab={(title ?? 'All tales') as TabEventType}
+            tab={(title ?? localize('stories', 'allTales')) as TabEventType}
           />
         }
         onScroll={handleAnimatedScroll}

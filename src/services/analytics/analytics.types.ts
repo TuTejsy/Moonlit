@@ -1,9 +1,9 @@
-import { CATEGORY_NAMES } from '@/constants/stories';
+import { CATEGORY_KEYS } from '@/constants/stories';
 
 import { SOURCE, PAYWALL_TYPE } from './analytics.constants';
 
 export type TabEventType =
-  | CATEGORY_NAMES
+  | CATEGORY_KEYS
   | 'Featuring tales'
   | 'Free tales'
   | 'All tales'

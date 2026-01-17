@@ -15,6 +15,7 @@ import { selectIsFullVersion } from '@/store/user/user.selector';
 import { useSmallStoriesListLayout } from '../../hooks/useSmallStoriesListLayout';
 
 import { makeStyles } from './StoryPreview.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface StoryPreviewPropTypes {
   description: string;
@@ -42,6 +43,7 @@ export const StoryPreview = memo(
   }: StoryPreviewPropTypes) => {
     const previewLayout = useSmallStoriesListLayout();
     const styles = useMakeStyles(makeStyles, previewLayout);
+    const { localize } = useAppLocalization();
 
     const isFullVersion = useAppSelector(selectIsFullVersion);
 
@@ -72,7 +74,7 @@ export const StoryPreview = memo(
             <>
               <View style={styles.comingSoonOverlay} />
               <View style={styles.comingSoonLabel}>
-                <TextView style={styles.comingSoonText}>Coming Soon</TextView>
+                <TextView style={styles.comingSoonText}>{localize('common', 'comingSoon')}</TextView>
               </View>
             </>
           )}

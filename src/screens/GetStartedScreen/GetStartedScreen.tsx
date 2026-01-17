@@ -30,11 +30,13 @@ import { StorageKeys } from '@/services/storage/storage.constants';
 import { StepIndicator } from './components/StepIndicator/StepIndicator';
 import { ANIMATION_DAMPING, ANIMATION_STIFFNESS, STEPS } from './GetStartedScreen.constants';
 import { makeStyles } from './GetStartedScreen.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const GetStartedScreen = () => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
   const { windowWidth } = useLayout();
+  const { localize } = useAppLocalization();
 
   const navigation = useAppNavigation<RootRoutes.GET_STARTED_SCREEN>();
 
@@ -187,13 +189,13 @@ export const GetStartedScreen = () => {
 
       <View style={styles.controls}>
         <GradientButton style={styles.continueButton} onPress={handleContinuePress}>
-          Continue
+          {localize('common', 'continue')}
         </GradientButton>
 
         {IS_ANDROID && (
           <Animated.View style={[styles.backButtonContainer, backButtonAnimatedStyle]}>
             <TextView style={styles.backText} type='bold' onPress={handleBackPress}>
-              Back
+              {localize('common', 'back')}
             </TextView>
           </Animated.View>
         )}

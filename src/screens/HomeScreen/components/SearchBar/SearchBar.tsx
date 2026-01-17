@@ -23,6 +23,7 @@ import { useScrollOpacity } from '@/hooks/useScrollOpacity';
 
 import { CLOSE_BUTTON_MARGIN_LEFT, CLOSE_BUTTON_WIDTH } from './SearchBar.constants';
 import { makeStyles } from './SearchBar.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface SearchBarPropTypes {
   onChangeText: (text: string) => void;
@@ -35,6 +36,7 @@ interface SearchBarPropTypes {
 export const SearchBar = React.memo(
   ({ onChangeText, onInputBlur, onInputFocus, opacityAnimStyle, value }: SearchBarPropTypes) => {
     const { horizontalPadding, windowWidth } = useLayout();
+    const { localize } = useAppLocalization();
     const [isInputFocused, setIsInputFocused] = useState(false);
 
     const stylesContext = useMemo(() => ({ isInputFocused }), [isInputFocused]);
@@ -145,7 +147,7 @@ export const SearchBar = React.memo(
           <Animated.View style={closeButtonAnimatedStyle}>
             <PressableView style={styles.closeButton} onPress={handleCloseButtonPress}>
               <TextView style={styles.closeButtonText} type='bold'>
-                Close
+                {localize('common', 'close')}
               </TextView>
             </PressableView>
           </Animated.View>

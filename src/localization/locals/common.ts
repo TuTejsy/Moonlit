@@ -1,0 +1,23 @@
+export const commonLocalization = {
+  en: {
+    continue: 'Continue',
+    back: 'Back',
+    close: 'Close',
+    skip: 'Skip',
+    comingSoon: 'Coming soon',
+    saved: 'Saved',
+    seeAll: 'See all',
+    free: 'Free',
+    moreMoonlitTalesComingSoon: "More Moonlit tales{'\n'}coming soon",
+    noResultForSearch: 'No results{`\n`}for this prompt',
+    popularSearch: 'Popular search',
+    terms: 'Terms',
+    privacy: 'Privacy',
+    restore: 'Restore',
+    voice: 'Voice',
+    selectVoice: 'Select voice',
+    min: 'min',
+    subscription: 'Subscription',
+    upgrade: 'Upgrade',
+  },
+};

@@ -21,6 +21,7 @@ import { TabEventType } from '@/services/analytics/analytics.types';
 
 import { makeStyles } from './StoryActions.styles';
 import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface StoryActionsPropTyps {
   startStoryPlaying: () => void;
@@ -40,6 +41,7 @@ export const StoryActions = ({
   const storyPlayerScreenLayout = useStoryPlayerScreenLayout()
   const styles = useMakeStyles(makeStyles, storyPlayerScreenLayout);
   const { colors } = useTheme();
+  const { localize } = useAppLocalization();
 
   const { handleStoryFavoritePress, isFavorite } = useHandleStoryFavorite({
     source: SOURCE.TALE_PREVIEW,
@@ -64,7 +66,7 @@ export const StoryActions = ({
         <PressableView style={styles.listenButton} onPress={startStoryPlaying}>
           <Icons.PlaySmall style={styles.playIcon} />
           <TextView style={styles.listenText} type='bold'>
-            Listen Story
+            {localize('stories', 'listenStory')}
           </TextView>
         </PressableView>
 

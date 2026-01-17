@@ -77,7 +77,6 @@ export const StoryPreview = React.memo(
 
         {showSaveButton && (
           <PressableView
-            disallowInterruption
             hitSlop={getHitSlop(5)}
             style={styles.button}
             onPress={handleStoryFavoritePress}

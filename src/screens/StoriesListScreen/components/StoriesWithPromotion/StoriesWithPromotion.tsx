@@ -15,6 +15,7 @@ import { selectFreeOfferDays, selectIsFullVersion } from '@/store/user/user.sele
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { makeStyles } from './StoriesWithPromotion.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface StoriesWithPromotionProps {
   source: SOURCE;
@@ -27,6 +28,7 @@ export const StoriesWithPromotion = memo(
   ({ source, stories, storiesVersion, tab }: StoriesWithPromotionProps) => {
     const styles = useMakeStyles(makeStyles);
     const { colors } = useTheme();
+    const { localize } = useAppLocalization();
 
     const isFullVersion = useAppSelector(selectIsFullVersion);
     const freeOfferDays = useAppSelector(selectFreeOfferDays);
@@ -71,7 +73,7 @@ export const StoriesWithPromotion = memo(
               tab={tab}
               theme='light'
             >
-              Try {freeOfferDays} days for free
+            {localize('promotion', 'tryFreeOffer', { count: freeOfferDays })}
             </UnlockButton>
 
             <View style={styles.separator} />

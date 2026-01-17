@@ -23,6 +23,8 @@ import { navigationService } from '@/services/navigation/navigationService';
 import { store, storePersistor } from '@/store/store';
 import { darkNavTheme } from '@/styles/themes/dark';
 
+import '@/localization/localization';
+
 if (!__DEV__) {
   console.log = () => undefined;
   console.warn = () => undefined;

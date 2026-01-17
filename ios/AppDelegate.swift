@@ -18,6 +18,7 @@ class AppDelegate: RCTAppDelegate {
     self.moduleName = "AIVoice"
     self.dependencyProvider = RCTAppDependencyProvider()
     
+    // Need to init FileHelper that creates required directories
     FileHelper.shared
 
     // You can add your custom initial props in the dictionary below.

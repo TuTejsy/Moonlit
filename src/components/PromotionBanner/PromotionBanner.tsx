@@ -20,11 +20,13 @@ import { usePromotionBannerLayout } from './hooks/usePromotionBannerLayout';
 import bannerImage from './images/banner/banner.png';
 import voicesImage from './images/voices/voices.png';
 import { makeStyles } from './PromotionBanner.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface PromotionBannerPropTypes extends ViewProps {}
 
 export function PromotionBanner({ style }: PromotionBannerPropTypes) {
   const { colors } = useTheme();
+  const { localize } = useAppLocalization();
 
   const promotionBannerLayout = usePromotionBannerLayout();
   const { promotionBannerWidth } = promotionBannerLayout;
@@ -58,15 +60,15 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
       <View style={styles.content}>
         <TextView style={styles.title} type='bold'>
-          Unlock all fairytales
+          {localize('promotion', 'unlockAllFairytalesTitle')}
         </TextView>
         <TextView style={styles.subtitle}>
-          and calming voices to{`\n`}gently lull your little one to sleep
+          {localize('promotion', 'unlockAllFairytalesSubtitle')}
         </TextView>
 
         <Image source={voicesImage} style={styles.voicesImage} />
 
-        <UnlockButton source={SOURCE.HOME_VIEW}>Get {freeOfferDays} days free</UnlockButton>
+        <UnlockButton source={SOURCE.HOME_VIEW}>{localize('promotion', 'getFreeOffer', {count: freeOfferDays})}</UnlockButton>
       </View>
     </PressableView>
   );

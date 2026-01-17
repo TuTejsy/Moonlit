@@ -13,6 +13,7 @@ import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './AudioRecording.styles';
 import { useAudioRecordingLayout } from './hooks/useAudioRecordingLayout';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface AudioRecordingProps {
   coverUrl: string;
@@ -33,6 +34,8 @@ export function AudioRecording({
   recordingId,
   showPaywallModal,
 }: AudioRecordingProps) {
+  const { localize } = useAppLocalization();
+
   const audioRecordingLayout = useAudioRecordingLayout();
   const stylesContext = useMemo(
     () => ({ isSelected, ...audioRecordingLayout }),
@@ -58,7 +61,7 @@ export function AudioRecording({
           <>
             {isFree && !isFullVersion && (
               <TextView style={styles.freeLabel} type='medium'>
-                Free
+                {localize('common', 'free')}
               </TextView>
             )}
             <Icons.Check style={styles.rightIcon} />

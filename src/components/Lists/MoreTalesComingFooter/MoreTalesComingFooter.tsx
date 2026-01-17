@@ -14,6 +14,7 @@ import moreTalesComingBackgroundImage from './images/moreTalesComingBackground/m
 // eslint-disable-next-line import/no-unresolved
 import moreTalesComingLogoImage from './images/moreTalesComingLogo/moreTalesComingLogo.png';
 import { makeStyles } from './MoreTalesComingFooter.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface MoreTalesComingFooterProps extends ViewProps {
   source: SOURCE;
@@ -23,6 +24,7 @@ interface MoreTalesComingFooterProps extends ViewProps {
 export const MoreTalesComingFooter = ({ source, style, tab }: MoreTalesComingFooterProps) => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
+  const { localize } = useAppLocalization();
 
   const { isFullVerion, showPaywallModal } = useShowPaywallModal();
 
@@ -43,12 +45,12 @@ export const MoreTalesComingFooter = ({ source, style, tab }: MoreTalesComingFoo
         style={styles.title}
         type='bold'
       >
-        More Moonlit tales{'\n'}coming soon
+        {localize('common', 'moreMoonlitTalesComingSoon')}
       </GradientTextView>
 
       {!isFullVerion && (
         <GradientButton style={styles.button} onPress={handleUnlockPress}>
-          Begin your adventure
+          {localize('promotion', 'beginYourAdventure')}
         </GradientButton>
       )}
     </View>

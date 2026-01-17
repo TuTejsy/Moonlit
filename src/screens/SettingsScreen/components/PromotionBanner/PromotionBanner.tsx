@@ -11,9 +11,11 @@ import { selectFreeOfferDays } from '@/store/user/user.selector';
 
 import bannerBackgroundImage from './images/bannerBackground/bannerBackground.png';
 import { makeStyles } from './PromotionBanner.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const PromotionBanner = memo(() => {
   const styles = useMakeStyles(makeStyles);
+  const { localize } = useAppLocalization();
 
   const { showPaywallModal } = useShowPaywallModal();
   const freeOfferDays = useAppSelector(selectFreeOfferDays);
@@ -27,17 +29,18 @@ export const PromotionBanner = memo(() => {
       <ImageBackground source={bannerBackgroundImage} style={styles.container}>
         <View style={styles.textContainer}>
           <TextView style={styles.title} type='bold'>
-            Subscription
+            {localize('common', 'subscription')}
           </TextView>
-          <TextView style={styles.subtitle}>{freeOfferDays} days for free</TextView>
+          <TextView style={styles.subtitle}>{localize('stories', 'freeDays', {count: freeOfferDays})}</TextView>
         </View>
 
         <View style={styles.button}>
           <TextView style={styles.buttonText} type='medium'>
-            Upgrade
+            {localize('common', 'upgrade')}
           </TextView>
         </View>
       </ImageBackground>
     </PressableView>
   );
 });
+

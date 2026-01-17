@@ -19,6 +19,7 @@ import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.p
 
 import { WEEKS_IN_YEAR } from './SelectionPaywallContent.constants';
 import { makeStyles } from './SelectionPaywallContent.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface SelectionPaywallContentProps {
   isFreeTrialEnabled: boolean;
@@ -48,6 +49,7 @@ export const SelectionPaywallContent = ({
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
   const { isLandscape, isSquareScreen } = useLayout();
+  const { localize } = useAppLocalization();
 
   const [isFreeTrialToggle, setIsFreeTrialToggle] = useState(isFreeTrialEnabled);
 
@@ -88,10 +90,10 @@ export const SelectionPaywallContent = ({
       const offerDays =
         trialProduct?.subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
 
-      return `${offerDays}-DAY FREE TRIAL`;
+      return `${offerDays}-${localize("paywall", "DAY_FREE_TRIAL")}`;
     }
 
-    return 'WEEKLY ACCESS';
+    return `${localize("paywall", "WEEKLY")} ${localize("paywall", "ACCESS")}`;
   }, [isFreeTrialToggle, trialProduct?.subscriptionDetails?.introductoryOffers]);
 
   const handleTrialEnabledChanged = useCallback(
@@ -122,11 +124,11 @@ export const SelectionPaywallContent = ({
       <View style={styles.content}>
         <View style={styles.block}>
           <TextView style={styles.title} type='bold'>
-            Get access{`\n`}to all tales
+            {localize("paywall", "getAccessToAllTales")}
           </TextView>
 
           <TextView style={styles.subtitle} type='regular'>
-            Discover unique voices and{`\n`}listen to classic fary tales
+            {localize("paywall", "discoverUniqueVoicesAndListenToClassicFairyTales")}
           </TextView>
 
           {!isSquareScreen && (
@@ -157,16 +159,16 @@ export const SelectionPaywallContent = ({
 
             <View style={styles.productNameContainer}>
               <TextView style={styles.productSubtitle} type='light'>
-                YEARLY ACCESS
+                {localize("paywall", "YEARLY")} {localize("paywall", "ACCESS")}
               </TextView>
               <TextView style={styles.productDescription}>
-                Just {yearlyPriceText} per year{' '}
+                {localize("paywall", "just")} {yearlyPriceText} {localize("paywall", "per")} {localize("paywall", "year")}{' '}
               </TextView>
             </View>
 
             <View style={styles.productPriceContainer}>
               <TextView style={styles.price}>{yearlyPricePerWeekText}</TextView>
-              <TextView style={styles.priceSubtitle}>per week</TextView>
+              <TextView style={styles.priceSubtitle}>{localize("paywall", "per")} {localize("paywall", "week")}</TextView>
             </View>
 
             <View style={styles.checkbox}>
@@ -185,7 +187,7 @@ export const SelectionPaywallContent = ({
 
             <View style={styles.productPriceContainer}>
               <TextView style={styles.price}>{weeklyPricePerWeekText}</TextView>
-              <TextView style={styles.priceSubtitle}>per week</TextView>
+              <TextView style={styles.priceSubtitle}>{localize("paywall", "per")} {localize("paywall", "week")}</TextView>
             </View>
 
             <View style={styles.checkbox}>
@@ -196,7 +198,7 @@ export const SelectionPaywallContent = ({
           {isTrialEligible && (
             <View style={styles.freeTrialContainer}>
               <TextView style={styles.freeTrialText} type='light'>
-                Enable free trial
+                {localize("paywall", "enableFreeTrial")}
               </TextView>
 
               <TrialSwitch value={isFreeTrialToggle} onValueChange={handleTrialEnabledChanged} />
@@ -204,7 +206,7 @@ export const SelectionPaywallContent = ({
           )}
 
           <TextView style={styles.promotionText} type='regular'>
-            Auto-renewable. Cancel anytime
+            {localize("paywall", "autoRenewableCancelAnytime")}
           </TextView>
 
           <GradientButton style={styles.button} onPress={onUnlockPress}>

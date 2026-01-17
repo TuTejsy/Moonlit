@@ -26,6 +26,7 @@ import { Header } from './components/Header/Header';
 import { MoreVoicesPlaceholder } from './components/MoreVoicesPlaceholder/MoreVoicesPlaceholder';
 import { MORE_VOICES_PLACEHOLDER } from './VoiceSettingsModal.constants';
 import { makeStyles } from './VoiceSettingsModal.styles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export function VoiceSettingsModal() {
   const {
@@ -39,6 +40,8 @@ export function VoiceSettingsModal() {
       tab,
     },
   } = useAppRoute<RootRoutes.VOICE_SETTINGS_MODAL>();
+
+  const { localize } = useAppLocalization();
 
   const navigation = useAppNavigation<RootRoutes.VOICE_SETTINGS_MODAL>();
   const { showPaywallModal } = useShowPaywallModal();
@@ -155,7 +158,7 @@ export function VoiceSettingsModal() {
       />
       {!isFullVersion && (
         <UnlockButton source={SOURCE.ALL_VOICES} style={styles.unlockButton}>
-          Unlock all voices
+          {localize('promotion', 'unlockAllVoices')}
         </UnlockButton>
       )}
     </View>
