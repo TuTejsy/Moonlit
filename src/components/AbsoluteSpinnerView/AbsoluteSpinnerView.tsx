@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
 
-import { VibrancyView } from '@react-native-community/blur';
+import { VibrancyView } from '@sbaiahmed1/react-native-blur';
 
 import { Spinner } from '@/components/Spinner/Spinner';
 import { IS_IOS } from '@/constants/common';

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { JSX } from 'react';
 import { StatusBar } from 'react-native';
 
 import * as amplitude from '@amplitude/analytics-react-native';
@@ -39,6 +39,7 @@ AudioRecordingsDB.open();
 adapty.activate(ADAPTY_API_KEY);
 
 amplitude.init(AMPLITUDE_API_KEY, undefined, {
+  disableCookies: true,
   logLevel: __DEV__ ? amplitude.Types.LogLevel.Error : amplitude.Types.LogLevel.None,
   trackingOptions: {
     adid: false,

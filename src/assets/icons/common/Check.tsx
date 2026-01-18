@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import { BlurView } from '@sbaiahmed1/react-native-blur';
 import Svg, { SvgProps, Path } from 'react-native-svg';
 
 import { IS_ANDROID, IS_IOS } from '@/constants/common';
@@ -13,7 +13,6 @@ import { useTheme } from '@/hooks/theme/useTheme';
 const makeStyles = ({ colors }: MakeStylesProps) =>
   StyleSheet.create({
     blurView: {
-      backgroundColor: colors.opacityBlack(0.1),
       height: 24,
       left: 0,
       position: 'absolute',
@@ -47,6 +46,7 @@ export const Check = ({ style, ...props }: SvgProps) => {
         <BlurView
           blurAmount={5}
           blurType='light'
+          overlayColor={colors.opacityBlack(0.1)}
           reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
           style={styles.blurView}
         />

@@ -205,7 +205,11 @@ export const SelectionPaywallContent = ({
                 {localize('paywall', 'enableFreeTrial')}
               </TextView>
 
-              <TrialSwitch value={isFreeTrialToggle} onValueChange={handleTrialEnabledChanged} />
+              <TrialSwitch
+                style={styles.freeTrialSwitch}
+                value={isFreeTrialToggle}
+                onValueChange={handleTrialEnabledChanged}
+              />
             </View>
           )}
 

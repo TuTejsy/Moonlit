@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { FlatList, ListRenderItemInfo, View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import { BlurView } from '@sbaiahmed1/react-native-blur';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { UnlockButton } from '@/components/Buttons/UnlockButton/UnlockButton';
@@ -128,7 +128,7 @@ export function VoiceSettingsModal() {
     <View style={styles.modalContainer}>
       {IS_IOS && (
         <BlurView
-          blurAmount={15}
+          blurAmount={50}
           blurType='dark'
           reducedTransparencyFallbackColor={colors.opacityBlack(0.6)}
           style={styles.blurView}

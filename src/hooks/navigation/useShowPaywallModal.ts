@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import { adapty, AdaptyPaywallProduct, OfferEligibility } from 'react-native-adapty';
+import { adapty, AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
@@ -8,11 +8,8 @@ import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.route
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
-import {
-  selectProducts,
-  selectProductsOffersEligibility,
-} from '@/store/subscription/subscription.selector';
-import { setProducts, setProductsOffersEligibility } from '@/store/subscription/subscription.slice';
+import { selectProducts } from '@/store/subscription/subscription.selector';
+import { setProducts } from '@/store/subscription/subscription.slice';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { setFreeOfferDays } from '@/store/user/user.slice';
 
@@ -36,7 +33,6 @@ export const useShowPaywallModal = (
 
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectProducts);
-  const productsOffersEligibility = useAppSelector(selectProductsOffersEligibility);
 
   const palcementIdRef = useRef(remoteConfigService.placementId);
 
@@ -50,10 +46,8 @@ export const useShowPaywallModal = (
       });
 
       const products = await adapty.getPaywallProducts(paywall);
-      const offersEligibility = await adapty.getProductsIntroductoryOfferEligibility(products);
 
       dispatch(setProducts(products));
-      dispatch(setProductsOffersEligibility(offersEligibility));
 
       return products;
     } catch (err) {
@@ -75,10 +69,7 @@ export const useShowPaywallModal = (
       isSubscriptionExpired?: boolean;
       tab?: TabEventType;
     }) => {
-      const openPaywall = (
-        products: AdaptyPaywallProduct[],
-        productsOffersEligibility: Record<string, OfferEligibility>,
-      ) => {
+      const openPaywall = (products: AdaptyPaywallProduct[]) => {
         (shouldReplace ? navigation.replace : navigation.navigate)(
           animationType === 'push' ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
           {
@@ -86,15 +77,13 @@ export const useShowPaywallModal = (
             onClose,
             placementId: palcementIdRef.current,
             products,
-            productsOffersEligibility,
             source,
             tab,
           },
         );
 
-        const offerDays = products.find(
-          (product) => !!product.subscriptionDetails?.introductoryOffers?.[0],
-        )?.subscriptionDetails?.introductoryOffers?.[0]?.subscriptionPeriod.numberOfUnits;
+        const offerDays = products.find((product) => !!product.subscription?.offer)?.subscription
+          ?.offer?.phases?.[0]?.subscriptionPeriod?.numberOfUnits;
 
         if (offerDays) {
           dispatch(setFreeOfferDays(offerDays));
@@ -103,8 +92,8 @@ export const useShowPaywallModal = (
 
       try {
         if (!isFullVerion || isSubscriptionExpired) {
-          if (products && productsOffersEligibility) {
-            openPaywall(products, productsOffersEligibility);
+          if (products) {
+            openPaywall(products);
           } else {
             remoteConfigService.fetchAndActivate().then(loadProducts);
           }
@@ -124,7 +113,6 @@ export const useShowPaywallModal = (
       dispatch,
       isFullVerion,
       products,
-      productsOffersEligibility,
       loadProducts,
     ],
   );
@@ -135,7 +123,7 @@ export const useShowPaywallModal = (
   }, []);
 
   return {
-    areProductsLoaded: !!products && !!productsOffersEligibility,
+    areProductsLoaded: !!products,
     isFullVerion,
     isSubscriptionAvailable: !isFullVerion,
     showPaywallModal,

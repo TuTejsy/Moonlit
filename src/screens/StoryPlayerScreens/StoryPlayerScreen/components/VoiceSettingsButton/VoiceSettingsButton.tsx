@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, Image } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import { BlurView } from '@sbaiahmed1/react-native-blur';
 
 import { Icons } from '@/assets/icons/Icons';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
@@ -11,6 +11,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useVoicePreviewCachedPath } from '@/hooks/useVoicePreviewCachedPath';
 import { useAppLocalization } from '@/localization/useAppLocalization';
+import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 
 import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
@@ -33,15 +34,7 @@ export function VoiceSettingsButton({
 
   const storyPlayerScreenLayout = useStoryPlayerScreenLayout();
 
-  const stylesContext = useMemo(
-    () => ({
-      storyColor,
-      ...storyPlayerScreenLayout,
-    }),
-    [storyColor, storyPlayerScreenLayout],
-  );
-
-  const styles = useMakeStyles(makeStyles, stylesContext);
+  const styles = useMakeStyles(makeStyles, storyPlayerScreenLayout);
   const { colors } = useTheme();
 
   const voicePreviewCachedPath = useVoicePreviewCachedPath(voiceCoverUrl);
@@ -51,8 +44,9 @@ export function VoiceSettingsButton({
       <View style={styles.blurViewContainer}>
         {IS_IOS && (
           <BlurView
-            blurAmount={5}
+            blurAmount={15}
             blurType='light'
+            overlayColor={IS_IOS ? convertHEXtoRGBA(storyColor, 0.3) : storyColor}
             reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
             style={styles.blurView}
           />

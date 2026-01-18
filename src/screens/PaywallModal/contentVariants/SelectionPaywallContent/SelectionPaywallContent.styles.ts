@@ -63,8 +63,7 @@ export const makeStyles = ({
       width: sufficientWindowWidth - horizontalPadding * 4,
     },
     freeTrialSwitch: {
-      height: 28,
-      width: 52,
+      alignSelf: 'center',
     },
     freeTrialText: {
       ...fonts.size_12,

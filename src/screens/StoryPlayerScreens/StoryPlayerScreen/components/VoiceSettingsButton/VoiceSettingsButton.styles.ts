@@ -1,27 +1,24 @@
 import { StyleSheet } from 'react-native';
 
-import { IS_IOS } from '@/constants/common';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
-import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 
 import { StoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
 import { BUTTON_BOTTOM_PADDING, BUTTON_HEIGHT } from './VoiceSettingsButton.constants';
 
 interface Context extends StoryPlayerScreenLayout {
-  storyColor: string;
+  storyContainerMinWidth: number;
 }
 
 export const makeStyles = (
   { colors, fonts, insets }: MakeStylesProps,
-  { storyColor, storyContainerMinWidth }: Context,
+  { storyContainerMinWidth }: Context,
 ) =>
   StyleSheet.create({
     blurView: {
       flex: 1,
     },
     blurViewContainer: {
-      backgroundColor: IS_IOS ? convertHEXtoRGBA(storyColor, 0.3) : storyColor,
       borderRadius: 16,
       height: BUTTON_HEIGHT,
       left: 0,

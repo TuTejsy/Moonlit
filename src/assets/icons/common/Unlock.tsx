@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import { BlurView } from '@sbaiahmed1/react-native-blur';
 import Svg, { SvgProps, Path } from 'react-native-svg';
 
 import { IS_IOS } from '@/constants/common';
@@ -38,7 +38,7 @@ export const Unlock = ({ style, ...props }: SvgProps) => {
     <View style={[styles.container, style]}>
       {IS_IOS && (
         <BlurView
-          blurAmount={2}
+          blurAmount={5}
           blurType='light'
           overlayColor={colors.opacityWhite(0.1)}
           reducedTransparencyFallbackColor={colors.opacityWhite(0.1)}

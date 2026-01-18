@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View } from 'react-native';
 
-import { adapty, AdaptyPaywallProduct, AdaptyProfile, OfferEligibility } from 'react-native-adapty';
+import {
+  adapty,
+  AdaptyPaywallProduct,
+  AdaptyProfile,
+  AdaptyPurchaseResult,
+} from 'react-native-adapty';
 
 import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
@@ -33,8 +38,7 @@ export const PaywallModal = () => {
 
   const { localize } = useAppLocalization();
 
-  const { contentName, onClose, placementId, products, productsOffersEligibility, source, tab } =
-    params;
+  const { contentName, onClose, placementId, products, source, tab } = params;
 
   const stylesContext = useMemo(
     () => ({
@@ -47,7 +51,7 @@ export const PaywallModal = () => {
   const dispatch = useAppDispatch();
 
   const trialProduct = useMemo(
-    () => products.find((product) => !!product.subscriptionDetails?.introductoryOffers?.length),
+    () => products.find((product) => !!product.subscription?.offer),
     [products],
   );
 
@@ -55,8 +59,7 @@ export const PaywallModal = () => {
     () =>
       products.find(
         (product) =>
-          !product.subscriptionDetails?.introductoryOffers?.length &&
-          product.price?.amount === trialProduct?.price?.amount,
+          !product.subscription?.offer && product.price?.amount === trialProduct?.price?.amount,
       ),
     [products, trialProduct?.price?.amount],
   );
@@ -65,7 +68,7 @@ export const PaywallModal = () => {
     () =>
       products.find(
         (product) =>
-          !product.subscriptionDetails?.introductoryOffers?.length &&
+          !product.subscription?.offer &&
           product.price?.amount &&
           trialProduct?.price?.amount &&
           product.price.amount > trialProduct.price.amount,
@@ -73,9 +76,7 @@ export const PaywallModal = () => {
     [products, trialProduct?.price?.amount],
   );
 
-  const isTrialEligible =
-    !!trialProduct &&
-    productsOffersEligibility[trialProduct.vendorProductId] === OfferEligibility.Eligible;
+  const isTrialEligible = !!trialProduct;
 
   const [isLoading, setIsLoading] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<AdaptyPaywallProduct | undefined>(
@@ -87,9 +88,27 @@ export const PaywallModal = () => {
     ? remoteConfigService.buyButtonTextTrial
     : remoteConfigService.buyButtonTextNoTrial;
 
-  const makeUnlockFullAccess = useCallback(
-    (product: AdaptyPaywallProduct | null) => (profile: AdaptyProfile) => {
+  const onPurchaseRestore = useCallback(
+    (profile: AdaptyProfile) => {
       const isSubscribed = profile.accessLevels?.premium?.isActive;
+
+      if (isSubscribed) {
+        dispatch(unlockFullVersion());
+        AnalyticsService.setIsUserPaid(true);
+
+        if (onClose) {
+          onClose();
+        } else {
+          navigation.goBack();
+        }
+      }
+    },
+    [dispatch, navigation, onClose],
+  );
+
+  const makeOnPurchase = useCallback(
+    (product: AdaptyPaywallProduct | null) => (purhcaseResult: AdaptyPurchaseResult) => {
+      const isSubscribed = purhcaseResult.type === 'success';
 
       if (isSubscribed) {
         dispatch(unlockFullVersion());
@@ -137,25 +156,25 @@ export const PaywallModal = () => {
 
       adapty
         .makePurchase(selectedProduct)
-        .then(makeUnlockFullAccess(selectedProduct))
+        .then(makeOnPurchase(selectedProduct))
         .catch(console.error)
         .finally(() => {
           setIsLoading(false);
         });
     }
-  }, [makeUnlockFullAccess, selectedProduct]);
+  }, [makeOnPurchase, selectedProduct]);
 
   const handleRestorePress = useCallback(() => {
     setIsLoading(true);
 
     adapty
       .restorePurchases()
-      .then(makeUnlockFullAccess(null))
+      .then(onPurchaseRestore)
       .catch(console.error)
       .finally(() => {
         setIsLoading(false);
       });
-  }, [makeUnlockFullAccess]);
+  }, [onPurchaseRestore]);
 
   const renderPaywallContent = useCallback(() => {
     switch (placementId) {

@@ -1,5 +1,5 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { AdaptyPaywallProduct, OfferEligibility } from 'react-native-adapty';
+import { AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
@@ -19,7 +19,6 @@ export interface RootStackParams extends Record<string, object | undefined> {
   [RootRoutes.PAYWALL_MODAL]: {
     placementId: string;
     products: AdaptyPaywallProduct[];
-    productsOffersEligibility: Record<string, OfferEligibility>;
     source: SOURCE;
     contentName?: string;
     onClose?: () => void;
@@ -29,7 +28,6 @@ export interface RootStackParams extends Record<string, object | undefined> {
   [RootRoutes.PAYWALL_SCREEN]: {
     placementId: string;
     products: AdaptyPaywallProduct[];
-    productsOffersEligibility: Record<string, OfferEligibility>;
     source: SOURCE;
     contentName?: string;
     onClose?: () => void;

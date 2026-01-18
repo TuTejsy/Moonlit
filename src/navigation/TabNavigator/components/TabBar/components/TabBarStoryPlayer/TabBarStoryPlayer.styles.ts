@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { IS_ANDROID } from '@/constants/common';
 import { TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
-import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 
 interface Context {
   storyColor: string;
@@ -15,7 +14,6 @@ export const makeStyles = (
 ) =>
   StyleSheet.create({
     blurView: {
-      backgroundColor: storyColor ? convertHEXtoRGBA(storyColor, 0.3) : colors.imagePurple,
       height: TAB_BAR_STORY_PLAYER_HEIGHT,
       left: 0,
       position: 'absolute',

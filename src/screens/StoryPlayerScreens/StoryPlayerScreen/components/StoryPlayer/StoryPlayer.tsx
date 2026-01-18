@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import { BlurView } from '@sbaiahmed1/react-native-blur';
 import Animated, {
   Extrapolation,
   SharedValue,
@@ -115,9 +115,8 @@ export function StoryPlayer({
       >
         {IS_IOS && (
           <BlurView
-            blurAmount={3}
+            blurAmount={20}
             blurType='dark'
-            pointerEvents='none'
             reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
             style={styles.blurView}
           />

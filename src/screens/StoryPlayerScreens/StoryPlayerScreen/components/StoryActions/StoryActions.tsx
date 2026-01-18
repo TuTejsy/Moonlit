@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import { BlurView } from '@sbaiahmed1/react-native-blur';
 import Animated, {
   SharedValue,
   useAnimatedStyle,
@@ -74,7 +74,7 @@ export const StoryActions = ({
         <PressableView style={styles.button} onPress={handleStoryFavoritePress}>
           {IS_IOS && (
             <BlurView
-              blurAmount={5}
+              blurAmount={50}
               blurType='light'
               reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
               style={styles.buttonBlurView}

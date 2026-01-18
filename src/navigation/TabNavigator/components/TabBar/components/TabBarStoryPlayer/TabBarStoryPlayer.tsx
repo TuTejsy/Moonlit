@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useMemo } from 'react';
 import { Image, View } from 'react-native';
 
-import { BlurView } from '@react-native-community/blur';
+import { BlurView } from '@sbaiahmed1/react-native-blur';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { Icons } from '@/assets/icons/Icons';
@@ -16,6 +16,7 @@ import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { navigationService } from '@/services/navigation/navigationService';
+import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 import { getHitSlop } from '@/utils/getHitSlop';
 
 import { makeStyles } from './TabBarStoryPlayer.styles';
@@ -111,8 +112,9 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
     <PressableView style={styles.container} onPress={handlePreviewPress}>
       {IS_IOS && (
         <BlurView
-          blurAmount={5}
+          blurAmount={15}
           blurType='light'
+          overlayColor={storyColor ? convertHEXtoRGBA(storyColor, 0.3) : colors.imagePurple}
           reducedTransparencyFallbackColor={colors.opacityWhite(0.2)}
           style={styles.blurView}
         />

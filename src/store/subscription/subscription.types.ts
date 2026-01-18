@@ -1,6 +1,5 @@
-import { AdaptyPaywallProduct, OfferEligibility } from 'react-native-adapty';
+import { AdaptyPaywallProduct } from 'react-native-adapty';
 
 export interface SubscriptionState {
   products: AdaptyPaywallProduct[] | null;
-  productsOffersEligibility: Record<string, OfferEligibility> | null;
 }

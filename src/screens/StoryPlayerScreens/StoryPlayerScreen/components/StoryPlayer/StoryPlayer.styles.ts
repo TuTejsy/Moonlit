@@ -14,14 +14,15 @@ export const makeStyles = ({
 }: MakeStylesProps) =>
   StyleSheet.create({
     blurView: {
-      flex: 1,
+      height: windowHeight + insets.top,
+      width: windowWidth + insets.bottom,
     },
     blurViewContainer: StyleSheet.flatten([
       {
         height: windowHeight,
         left: 0,
         position: 'absolute',
-        top: 0,
+        top: -insets.top,
         width: windowWidth,
       },
       IS_ANDROID && {
