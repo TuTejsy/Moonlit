@@ -37,7 +37,7 @@ export const AbsoluteSpinnerView = memo(
 
     return enableBlur ? (
       IS_IOS ? (
-        <VibrancyView blurAmount={5} blurType='dark' style={[styles.spinnerContainer, style]}>
+        <VibrancyView blurAmount={30} blurType='dark' style={[styles.spinnerContainer, style]}>
           <Spinner color={color} style={spinnerStyle} />
         </VibrancyView>
       ) : (
