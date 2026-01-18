@@ -10,11 +10,11 @@ import { IS_IOS } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useVoicePreviewCachedPath } from '@/hooks/useVoicePreviewCachedPath';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
 import { makeStyles } from './VoiceSettingsButton.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface VoiceSettingsButtonProps {
   onPress: () => void;

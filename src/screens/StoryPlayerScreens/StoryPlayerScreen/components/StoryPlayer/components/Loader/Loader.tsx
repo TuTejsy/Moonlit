@@ -4,9 +4,9 @@ import { View } from 'react-native';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { Spinner } from '@/components/Spinner/Spinner';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { makeStyles } from './Loader.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export function Loader() {
   const styles = useMakeStyles(makeStyles);

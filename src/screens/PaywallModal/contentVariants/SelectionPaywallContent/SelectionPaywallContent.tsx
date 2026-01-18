@@ -10,6 +10,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { FooterActions } from '../../components/FooterActions/FooterActions';
 import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
@@ -19,7 +20,6 @@ import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.p
 
 import { WEEKS_IN_YEAR } from './SelectionPaywallContent.constants';
 import { makeStyles } from './SelectionPaywallContent.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface SelectionPaywallContentProps {
   isFreeTrialEnabled: boolean;
@@ -87,14 +87,13 @@ export const SelectionPaywallContent = ({
 
   const secondProductText = useMemo(() => {
     if (isFreeTrialToggle) {
-      const offerDays =
-        trialProduct?.subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
+      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
 
-      return `${offerDays}-${localize("paywall", "DAY_FREE_TRIAL")}`;
+      return `${offerDays}-${localize('paywall', 'DAY_FREE_TRIAL')}`;
     }
 
-    return `${localize("paywall", "WEEKLY")} ${localize("paywall", "ACCESS")}`;
-  }, [isFreeTrialToggle, trialProduct?.subscriptionDetails?.introductoryOffers]);
+    return `${localize('paywall', 'WEEKLY')} ${localize('paywall', 'ACCESS')}`;
+  }, [isFreeTrialToggle, localize, trialProduct?.subscription?.subscriptionPeriod.numberOfUnits]);
 
   const handleTrialEnabledChanged = useCallback(
     (isEnabled: boolean) => {
@@ -124,11 +123,11 @@ export const SelectionPaywallContent = ({
       <View style={styles.content}>
         <View style={styles.block}>
           <TextView style={styles.title} type='bold'>
-            {localize("paywall", "getAccessToAllTales")}
+            {localize('paywall', 'getAccessToAllTales')}
           </TextView>
 
           <TextView style={styles.subtitle} type='regular'>
-            {localize("paywall", "discoverUniqueVoicesAndListenToClassicFairyTales")}
+            {localize('paywall', 'discoverUniqueVoicesAndListenToClassicFairyTales')}
           </TextView>
 
           {!isSquareScreen && (
@@ -159,16 +158,19 @@ export const SelectionPaywallContent = ({
 
             <View style={styles.productNameContainer}>
               <TextView style={styles.productSubtitle} type='light'>
-                {localize("paywall", "YEARLY")} {localize("paywall", "ACCESS")}
+                {localize('paywall', 'YEARLY')} {localize('paywall', 'ACCESS')}
               </TextView>
               <TextView style={styles.productDescription}>
-                {localize("paywall", "just")} {yearlyPriceText} {localize("paywall", "per")} {localize("paywall", "year")}{' '}
+                {localize('paywall', 'just')} {yearlyPriceText} {localize('paywall', 'per')}{' '}
+                {localize('paywall', 'year')}{' '}
               </TextView>
             </View>
 
             <View style={styles.productPriceContainer}>
               <TextView style={styles.price}>{yearlyPricePerWeekText}</TextView>
-              <TextView style={styles.priceSubtitle}>{localize("paywall", "per")} {localize("paywall", "week")}</TextView>
+              <TextView style={styles.priceSubtitle}>
+                {localize('paywall', 'per')} {localize('paywall', 'week')}
+              </TextView>
             </View>
 
             <View style={styles.checkbox}>
@@ -187,7 +189,9 @@ export const SelectionPaywallContent = ({
 
             <View style={styles.productPriceContainer}>
               <TextView style={styles.price}>{weeklyPricePerWeekText}</TextView>
-              <TextView style={styles.priceSubtitle}>{localize("paywall", "per")} {localize("paywall", "week")}</TextView>
+              <TextView style={styles.priceSubtitle}>
+                {localize('paywall', 'per')} {localize('paywall', 'week')}
+              </TextView>
             </View>
 
             <View style={styles.checkbox}>
@@ -198,7 +202,7 @@ export const SelectionPaywallContent = ({
           {isTrialEligible && (
             <View style={styles.freeTrialContainer}>
               <TextView style={styles.freeTrialText} type='light'>
-                {localize("paywall", "enableFreeTrial")}
+                {localize('paywall', 'enableFreeTrial')}
               </TextView>
 
               <TrialSwitch value={isFreeTrialToggle} onValueChange={handleTrialEnabledChanged} />
@@ -206,7 +210,7 @@ export const SelectionPaywallContent = ({
           )}
 
           <TextView style={styles.promotionText} type='regular'>
-            {localize("paywall", "autoRenewableCancelAnytime")}
+            {localize('paywall', 'autoRenewableCancelAnytime')}
           </TextView>
 
           <GradientButton style={styles.button} onPress={onUnlockPress}>

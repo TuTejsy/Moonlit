@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -7,12 +8,12 @@ import { AppLocalizeFunctionOptions, LocalizedResources, LocalsNamespace } from 
 import 'intl-pluralrules';
 
 i18n.use(initReactI18next).init({
-  resources: localizedResources,
-  lng: 'en',
   fallbackLng: 'en',
   interpolation: {
     escapeValue: false,
   },
+  lng: 'en',
+  resources: localizedResources,
 });
 
 class Localization {

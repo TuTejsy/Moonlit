@@ -20,10 +20,10 @@ import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { CLOSE_BUTTON_MARGIN_LEFT, CLOSE_BUTTON_WIDTH } from './SearchBar.constants';
 import { makeStyles } from './SearchBar.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface SearchBarPropTypes {
   onChangeText: (text: string) => void;

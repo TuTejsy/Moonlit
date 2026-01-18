@@ -1,24 +1,23 @@
-
-import { commonLocalization } from './common';
-import { onboardingLocalization } from './onboarding';
-import { promotionLocalization } from './promotion';
-import { favoritesLocalization } from './favorites';
-import { storiesLocalization } from './stories';
 import { categoriesLocalization } from './categories';
-import { paywallLocalization } from './paywall';
-import { settingsLocalization } from './settings';
+import { commonLocalization } from './common';
+import { favoritesLocalization } from './favorites';
 import { homeLocalization } from './home';
+import { onboardingLocalization } from './onboarding';
+import { paywallLocalization } from './paywall';
+import { promotionLocalization } from './promotion';
+import { settingsLocalization } from './settings';
+import { storiesLocalization } from './stories';
 
 export const localizedResources = {
   en: {
-    common: commonLocalization.en,
-    onboarding: onboardingLocalization.en,
-    promotion: promotionLocalization.en,
-    favorites: favoritesLocalization.en,
-    stories: storiesLocalization.en,
     categories: categoriesLocalization.en,
-    paywall: paywallLocalization.en,
-    settings: settingsLocalization.en,
+    common: commonLocalization.en,
+    favorites: favoritesLocalization.en,
     home: homeLocalization.en,
+    onboarding: onboardingLocalization.en,
+    paywall: paywallLocalization.en,
+    promotion: promotionLocalization.en,
+    settings: settingsLocalization.en,
+    stories: storiesLocalization.en,
   },
 };

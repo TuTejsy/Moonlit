@@ -1,9 +1,10 @@
 import { createMMKV } from 'react-native-mmkv';
 
-import { StorageKeys } from './storage.constants';
 import { STORAGE_ENCRYPTION_KEY } from '@/constants/auth';
 
-export const storage = new createMMKV({
+import { StorageKeys } from './storage.constants';
+
+export const storage = createMMKV({
   encryptionKey: STORAGE_ENCRYPTION_KEY,
   id: `app-storage`,
 });

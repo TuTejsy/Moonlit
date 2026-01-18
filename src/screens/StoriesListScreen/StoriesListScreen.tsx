@@ -13,6 +13,7 @@ import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAnimatedScrollHandlerValue } from '@/hooks/useAnimatedScrollHandlerValue';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { SOURCE } from '@/services/analytics/analytics.constants';
@@ -20,7 +21,6 @@ import { TabEventType } from '@/services/analytics/analytics.types';
 
 import { StoriesWithPromotion } from './components/StoriesWithPromotion/StoriesWithPromotion';
 import { makeStyles } from './StoriesListScreen.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const StoriesListScreen = () => {
   const styles = useMakeStyles(makeStyles);

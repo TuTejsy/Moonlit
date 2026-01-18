@@ -6,6 +6,7 @@ import { GradientTextView } from '@/components/Primitives/GradientTextView/Gradi
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 
@@ -14,7 +15,6 @@ import moreTalesComingBackgroundImage from './images/moreTalesComingBackground/m
 // eslint-disable-next-line import/no-unresolved
 import moreTalesComingLogoImage from './images/moreTalesComingLogo/moreTalesComingLogo.png';
 import { makeStyles } from './MoreTalesComingFooter.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface MoreTalesComingFooterProps extends ViewProps {
   source: SOURCE;

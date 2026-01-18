@@ -9,6 +9,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useImageSlideAnimation } from '@/hooks/useImageSlideAnimation';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectFreeOfferDays } from '@/store/user/user.selector';
 
@@ -20,7 +21,6 @@ import { usePromotionBannerLayout } from './hooks/usePromotionBannerLayout';
 import bannerImage from './images/banner/banner.png';
 import voicesImage from './images/voices/voices.png';
 import { makeStyles } from './PromotionBanner.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface PromotionBannerPropTypes extends ViewProps {}
 
@@ -68,7 +68,9 @@ export function PromotionBanner({ style }: PromotionBannerPropTypes) {
 
         <Image source={voicesImage} style={styles.voicesImage} />
 
-        <UnlockButton source={SOURCE.HOME_VIEW}>{localize('promotion', 'getFreeOffer', {count: freeOfferDays})}</UnlockButton>
+        <UnlockButton source={SOURCE.HOME_VIEW}>
+          {localize('promotion', 'getFreeOffer', { count: freeOfferDays })}
+        </UnlockButton>
       </View>
     </PressableView>
   );

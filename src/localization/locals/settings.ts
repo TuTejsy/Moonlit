@@ -1,10 +1,10 @@
 export const settingsLocalization = {
   en: {
-    title: "Settings",
-    manageYourSubscription: "Manage your subscription",
-    contactUs: "Contact us",
-    termsOfService: "Terms of Service",
-    privacyPolicy: "Privacy policy",
-    rateApp: "Rate App",
+    contactUs: 'Contact us',
+    manageYourSubscription: 'Manage your subscription',
+    privacyPolicy: 'Privacy policy',
+    rateApp: 'Rate App',
+    termsOfService: 'Terms of Service',
+    title: 'Settings',
   },
 };

@@ -13,6 +13,19 @@ export const makeStyles = ({
   windowMaxWidth,
 }: MakeStylesProps) =>
   StyleSheet.create({
+    benefit: {
+      flexDirection: 'row',
+      marginTop: dh(18),
+    },
+    benefitText: {
+      ...fonts.size_12_4,
+      color: colors.white,
+      marginLeft: 8,
+    },
+    benefitsContainer: {
+      marginBottom: dh(24),
+      marginTop: dh(142),
+    },
     button: {
       marginTop: dh(14),
     },
@@ -55,6 +68,11 @@ export const makeStyles = ({
       ...fonts.size_16,
       color: colors.white,
     },
+    price: {
+      ...fonts.size_14,
+      color: colors.opacityWhite(0.6),
+      marginTop: dh(16),
+    },
     priceSale: {
       ...fonts.size_20,
       color: colors.white,
@@ -69,22 +87,22 @@ export const makeStyles = ({
       borderRadius: 16,
       borderWidth: 2,
       flexDirection: 'row',
-      marginTop: dh(16),
       height: dw(56, windowMaxWidth),
       justifyContent: 'space-between',
-      paddingLeft: horizontalPadding,
-      paddingRight: 26,
+      marginTop: dh(16),
       opacity: 0.5,
       overflow: 'hidden',
+      paddingLeft: horizontalPadding,
+      paddingRight: 26,
       position: 'relative',
       width: sufficientWindowWidth - horizontalPadding * 4,
     },
     productContainerImage: {
-      position: 'absolute',
-      width: sufficientWindowWidth - horizontalPadding * 4,
       height: '100%',
       left: 0,
+      position: 'absolute',
       top: 0,
+      width: sufficientWindowWidth - horizontalPadding * 4,
     },
     productNameContainer: {
       flex: 1,
@@ -94,12 +112,6 @@ export const makeStyles = ({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    separator: {
-      backgroundColor: colors.pink,
-      marginHorizontal: 18,
-      width: 1,
-      height: dw(40, windowMaxWidth),
-    },
     productSubtitle: {
       ...fonts.size_12,
       color: colors.opacityWhite(0.8),
@@ -107,11 +119,6 @@ export const makeStyles = ({
     productTitle: {
       ...fonts.size_16,
       marginBottom: 1,
-    },
-    price: {
-      ...fonts.size_14,
-      color: colors.opacityWhite(0.6),
-      marginTop: dh(16),
     },
     promotionText: {
       ...fonts.size_14,
@@ -122,6 +129,12 @@ export const makeStyles = ({
     selectedProductContainer: {
       borderColor: colors.pink,
       opacity: 1,
+    },
+    separator: {
+      backgroundColor: colors.pink,
+      height: dw(40, windowMaxWidth),
+      marginHorizontal: 18,
+      width: 1,
     },
     subscriptionInfo: {
       ...fonts.size_12,
@@ -141,18 +154,5 @@ export const makeStyles = ({
       ...fonts.size_40,
       color: colors.white,
       textAlign: 'center',
-    },
-    benefit: {
-      flexDirection: 'row',
-      marginTop: dh(18),
-    },
-    benefitText: {
-      ...fonts.size_12_4,
-      color: colors.white,
-      marginLeft: 8,
-    },
-    benefitsContainer: {
-      marginTop: dh(142),
-      marginBottom: dh(24),
     },
   });

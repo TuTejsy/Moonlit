@@ -7,6 +7,7 @@ import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { FooterActions } from '../../components/FooterActions/FooterActions';
 import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
@@ -15,7 +16,6 @@ import voicesImage from '../../images/voices/voices.png';
 import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.png';
 
 import { makeStyles } from './SwitcherPaywallContent.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface SwitcherPaywallContentProps {
   isFreeTrialEnabled: boolean;
@@ -44,28 +44,31 @@ export const SwitcherPaywallContent = ({
 
   const productText = useMemo(() => {
     if (isFreeTrialEnabled) {
-      const offerDays =
-        trialProduct?.subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
+      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
 
       const price = trialProduct?.price?.amount;
       const currencyCode = trialProduct?.price?.currencyCode;
 
-      return `${offerDays} ${localize("paywall", "daysFreeThen")} ${price} ${currencyCode}/${localize("paywall", "week")}`;
+      return `${offerDays} ${localize(
+        'paywall',
+        'daysFreeThen',
+      )} ${price} ${currencyCode}/${localize('paywall', 'week')}`;
     }
     const price = yearlyProduct?.price?.amount;
     const currencyCode = yearlyProduct?.price?.currencyCode;
 
-    const subscriptionPeriod = yearlyProduct?.subscriptionDetails?.subscriptionPeriod.unit;
+    const subscriptionPeriod = yearlyProduct?.subscription?.subscriptionPeriod.unit;
 
-    return `${localize("paywall", "tryItNotJust")} ${price} ${currencyCode}/${subscriptionPeriod}`;
+    return `${localize('paywall', 'tryItNotJust')} ${price} ${currencyCode}/${subscriptionPeriod}`;
   }, [
+    isFreeTrialEnabled,
     yearlyProduct?.price?.amount,
     yearlyProduct?.price?.currencyCode,
-    yearlyProduct?.subscriptionDetails?.subscriptionPeriod.unit,
-    isFreeTrialEnabled,
+    yearlyProduct?.subscription?.subscriptionPeriod.unit,
+    localize,
+    trialProduct?.subscription?.subscriptionPeriod.numberOfUnits,
     trialProduct?.price?.amount,
     trialProduct?.price?.currencyCode,
-    trialProduct?.subscriptionDetails?.introductoryOffers,
   ]);
 
   const handleTrialEnabledChanged = useCallback(
@@ -82,11 +85,11 @@ export const SwitcherPaywallContent = ({
       <View style={styles.content}>
         <View style={styles.block}>
           <TextView style={styles.title} type='bold'>
-            {localize("paywall", "getAccessToAllTales")}
+            {localize('paywall', 'getAccessToAllTales')}
           </TextView>
 
           <TextView style={styles.subtitle} type='regular'>
-            {localize("paywall", "discoverUniqueVoicesAndListenToClassicFairyTales")}
+            {localize('paywall', 'discoverUniqueVoicesAndListenToClassicFairyTales')}
           </TextView>
 
           {!isSquareScreen && (
@@ -101,15 +104,17 @@ export const SwitcherPaywallContent = ({
           <TextView style={styles.promotionText} type='regular'>
             {productText}
             {`\n`}
-            {localize("paywall", "autoRenewableCancelAnytime")}
+            {localize('paywall', 'autoRenewableCancelAnytime')}
           </TextView>
 
           <View style={styles.freeTrialContainer}>
             <View style={styles.freeTrialTextContainer}>
               <TextView style={styles.freeTrialTitle} type='bold'>
-                {localize("paywall", "notSureYet")}
+                {localize('paywall', 'notSureYet')}
               </TextView>
-              <TextView style={styles.freeTrialSubtitle}>{localize("paywall", "enableFreeTrial")}</TextView>
+              <TextView style={styles.freeTrialSubtitle}>
+                {localize('paywall', 'enableFreeTrial')}
+              </TextView>
             </View>
 
             <TrialSwitch value={isFreeTrialEnabled} onValueChange={handleTrialEnabledChanged} />

@@ -9,13 +9,13 @@ import { StorySchema } from '@/database/schema/stories/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 import { selectFreeOfferDays, selectIsFullVersion } from '@/store/user/user.selector';
 import { getImageFilePathForStory } from '@/utils/urls/getImageFilePathForStory';
 
 import { makeStyles } from './StoriesWithPromotion.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface StoriesWithPromotionProps {
   source: SOURCE;
@@ -73,7 +73,7 @@ export const StoriesWithPromotion = memo(
               tab={tab}
               theme='light'
             >
-            {localize('promotion', 'tryFreeOffer', { count: freeOfferDays })}
+              {localize('promotion', 'tryFreeOffer', { count: freeOfferDays })}
             </UnlockButton>
 
             <View style={styles.separator} />

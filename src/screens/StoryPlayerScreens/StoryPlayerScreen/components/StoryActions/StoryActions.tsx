@@ -16,12 +16,13 @@ import { IS_IOS } from '@/constants/common';
 import { useHandleStoryFavorite } from '@/hooks/database/useHandleStoryFavorite';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 
-import { makeStyles } from './StoryActions.styles';
 import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
-import { useAppLocalization } from '@/localization/useAppLocalization';
+
+import { makeStyles } from './StoryActions.styles';
 
 interface StoryActionsPropTyps {
   startStoryPlaying: () => void;
@@ -38,7 +39,7 @@ export const StoryActions = ({
   storyTitle,
   tab,
 }: StoryActionsPropTyps) => {
-  const storyPlayerScreenLayout = useStoryPlayerScreenLayout()
+  const storyPlayerScreenLayout = useStoryPlayerScreenLayout();
   const styles = useMakeStyles(makeStyles, storyPlayerScreenLayout);
   const { colors } = useTheme();
   const { localize } = useAppLocalization();

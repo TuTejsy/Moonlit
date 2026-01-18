@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+
 import { StoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
-
 export const makeStyles = (
-  { colors, dh, fonts, horizontalPadding }: MakeStylesProps, 
-  { storyContainerMinWidth }: StoryPlayerScreenLayout) =>
+  { colors, dh, fonts, horizontalPadding }: MakeStylesProps,
+  { storyContainerMinWidth }: StoryPlayerScreenLayout,
+) =>
   StyleSheet.create({
     durationText: {
       ...fonts.size_14,

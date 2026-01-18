@@ -19,6 +19,7 @@ import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
@@ -30,7 +31,6 @@ import { StorageKeys } from '@/services/storage/storage.constants';
 import { StepIndicator } from './components/StepIndicator/StepIndicator';
 import { ANIMATION_DAMPING, ANIMATION_STIFFNESS, STEPS } from './GetStartedScreen.constants';
 import { makeStyles } from './GetStartedScreen.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const GetStartedScreen = () => {
   const styles = useMakeStyles(makeStyles);

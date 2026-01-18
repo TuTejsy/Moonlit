@@ -3,10 +3,10 @@ import { Image, View } from 'react-native';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { makeStyles } from './EmptySearch.styles';
 import noSearchResultsImage from './images/noSearchResults/noSearchResults.png';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const EmptySearch = memo(() => {
   const styles = useMakeStyles(makeStyles);

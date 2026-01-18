@@ -8,12 +8,12 @@ import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useImageSlideAnimation } from '@/hooks/useImageSlideAnimation';
+import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 
 import backgroundImage from '../../images/background/background.png';
 
 import scrollableBackground from './images/scrollableBackground/scrollableBackground.png';
 import { makeStyles } from './PaywallBackground.styles';
-import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 
 interface PaywallBackgroundProps {
   isScrollable?: boolean;

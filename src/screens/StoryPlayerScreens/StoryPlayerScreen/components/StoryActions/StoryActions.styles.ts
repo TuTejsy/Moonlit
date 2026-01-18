@@ -5,7 +5,10 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { StoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
-export const makeStyles = ({ colors, dh, fonts, horizontalPadding }: MakeStylesProps, { storyContainerMinWidth }: StoryPlayerScreenLayout) =>
+export const makeStyles = (
+  { colors, dh, fonts, horizontalPadding }: MakeStylesProps,
+  { storyContainerMinWidth }: StoryPlayerScreenLayout,
+) =>
   StyleSheet.create({
     actions: {
       alignItems: 'center',

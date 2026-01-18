@@ -4,10 +4,9 @@ import { View, Share, StatusBar, TouchableOpacity } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, {useAnimatedReaction, withTiming } from 'react-native-reanimated';
-import { scheduleOnRN } from 'react-native-worklets';
-
+import Animated, { useAnimatedReaction, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { scheduleOnRN } from 'react-native-worklets';
 
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
@@ -19,7 +18,7 @@ import {
   SANDBOX,
 } from '@/constants/common';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
-import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_KEYS} from '@/constants/stories';
+import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_KEYS } from '@/constants/stories';
 import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
 import { useStory } from '@/hooks/database/useStory';
 import { useLayout } from '@/hooks/theme/useLayout';
@@ -27,6 +26,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { MOVE_TO_PROPS } from '@/hooks/useStoryPlayer/useStoryPlayers.types';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { ShareIOS } from '@/native_modules/MNTShare/NativeShareManager';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
@@ -49,7 +49,6 @@ import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
 import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
 import { useStoryPlayerScreenLayout } from './hooks/useStoryPlayerScreenLayout';
 import { makeStyles } from './StoryPlayerScreen.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
@@ -99,8 +98,10 @@ export const StoryPlayerScreen = () => {
 
   const storyCategories = useMemo(
     () =>
-      story?.category_ids.map((categoryId: CATEGORY_IDS) => localize("categories", MAP_CATEGORY_ID_TO_KEYS[categoryId])),
-    [story?.category_ids],
+      story?.category_ids.map((categoryId: CATEGORY_IDS) =>
+        localize('categories', MAP_CATEGORY_ID_TO_KEYS[categoryId]),
+      ),
+    [localize, story?.category_ids],
   );
 
   const gradientColor = useMemo(

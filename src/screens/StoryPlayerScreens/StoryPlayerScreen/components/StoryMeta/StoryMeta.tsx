@@ -10,11 +10,12 @@ import Animated, {
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { formatSecondsToMins } from '@/utils/formatters/formatSecondsToMins';
 
-import { makeStyles } from './StoryMeta.styles';
 import { useStoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
-import { useAppLocalization } from '@/localization/useAppLocalization';
+
+import { makeStyles } from './StoryMeta.styles';
 
 interface StoryMetaPropTypes {
   description: string;
@@ -31,7 +32,7 @@ export function StoryMeta({
 }: StoryMetaPropTypes) {
   const { localize } = useAppLocalization();
 
-  const storyPlayerScreenLayout = useStoryPlayerScreenLayout()
+  const storyPlayerScreenLayout = useStoryPlayerScreenLayout();
   const styles = useMakeStyles(makeStyles, storyPlayerScreenLayout);
 
   const formattedDuration = useMemo(() => formatSecondsToMins(duration), [duration]);
@@ -45,7 +46,10 @@ export function StoryMeta({
   return (
     <Animated.View style={[styles.storyMetaContainer, style, animatedTextStyle]}>
       <TextView style={styles.durationTitle}>
-        {localize('stories', 'storyDuration')}: <TextView style={styles.durationText}>{formattedDuration} {localize('common', 'min')}</TextView>
+        {localize('stories', 'storyDuration')}:{' '}
+        <TextView style={styles.durationText}>
+          {formattedDuration} {localize('common', 'min')}
+        </TextView>
       </TextView>
       <TextView style={styles.storyText}>{description}</TextView>
     </Animated.View>

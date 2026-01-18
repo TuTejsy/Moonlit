@@ -15,5 +15,5 @@ export const useAppLocalization = () => {
     [t],
   );
 
-  return { localize, localization };
+  return { localization, localize };
 };

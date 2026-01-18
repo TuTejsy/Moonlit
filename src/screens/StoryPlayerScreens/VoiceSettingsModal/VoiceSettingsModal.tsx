@@ -13,6 +13,7 @@ import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
@@ -26,7 +27,6 @@ import { Header } from './components/Header/Header';
 import { MoreVoicesPlaceholder } from './components/MoreVoicesPlaceholder/MoreVoicesPlaceholder';
 import { MORE_VOICES_PLACEHOLDER } from './VoiceSettingsModal.constants';
 import { makeStyles } from './VoiceSettingsModal.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export function VoiceSettingsModal() {
   const {

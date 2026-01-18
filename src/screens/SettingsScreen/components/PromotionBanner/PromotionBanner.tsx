@@ -6,12 +6,12 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectFreeOfferDays } from '@/store/user/user.selector';
 
 import bannerBackgroundImage from './images/bannerBackground/bannerBackground.png';
 import { makeStyles } from './PromotionBanner.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const PromotionBanner = memo(() => {
   const styles = useMakeStyles(makeStyles);
@@ -31,7 +31,9 @@ export const PromotionBanner = memo(() => {
           <TextView style={styles.title} type='bold'>
             {localize('common', 'subscription')}
           </TextView>
-          <TextView style={styles.subtitle}>{localize('stories', 'freeDays', {count: freeOfferDays})}</TextView>
+          <TextView style={styles.subtitle}>
+            {localize('stories', 'freeDays', { count: freeOfferDays })}
+          </TextView>
         </View>
 
         <View style={styles.button}>
@@ -43,4 +45,3 @@ export const PromotionBanner = memo(() => {
     </PressableView>
   );
 });
-

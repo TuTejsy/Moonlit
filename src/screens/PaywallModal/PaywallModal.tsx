@@ -12,6 +12,7 @@ import {
 } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
@@ -25,7 +26,6 @@ import { ScrollablePaywallContent } from './contentVariants/ScrollablePaywallCon
 import { SelectionPaywallContent } from './contentVariants/SelectionPaywallContent/SelectionPaywallContent';
 import { SwitcherPaywallContent } from './contentVariants/SwitcherPaywallContent/SwitcherPaywallContent';
 import { makeStyles } from './PaywallModal.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
@@ -33,7 +33,7 @@ export const PaywallModal = () => {
 
   const { localize } = useAppLocalization();
 
-  const { contentName, onClose, products, placementId, productsOffersEligibility, source, tab } =
+  const { contentName, onClose, placementId, products, productsOffersEligibility, source, tab } =
     params;
 
   const stylesContext = useMemo(

@@ -4,9 +4,9 @@ import { TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useWebPagesNavigation } from '@/hooks/navigation/useWebPagesNavigation';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { makeStyles } from './FooterActions.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface FooterActionsProps {
   onRestorePress: () => void;

@@ -8,12 +8,12 @@ import { ShowPaywallModalType } from '@/hooks/navigation/useShowPaywallModal';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useVoicePreviewCachedPath } from '@/hooks/useVoicePreviewCachedPath';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
 import { makeStyles } from './AudioRecording.styles';
 import { useAudioRecordingLayout } from './hooks/useAudioRecordingLayout';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface AudioRecordingProps {
   coverUrl: string;

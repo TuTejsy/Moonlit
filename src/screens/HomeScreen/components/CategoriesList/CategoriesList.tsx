@@ -1,17 +1,17 @@
 import React, { useCallback } from 'react';
 import { FlatList, View, ListRenderItemInfo } from 'react-native';
 
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_KEYS } from '@/constants/stories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { navigationService } from '@/services/navigation/navigationService';
 import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
 import { makeStyles } from './CategoriesList.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 
 const CATEGORIES = [
   [CATEGORY_IDS.CLASSIC_TRANSFORMATIONS, CATEGORY_IDS.FOREST_ADVENTURES],
@@ -32,10 +32,10 @@ export const CategoriesList = () => {
     (categoryId: CATEGORY_IDS) => {
       navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, navigationService.activeTab), {
         storiesFilter: `ANY category_ids == ${categoryId}`,
-        title: localize("categories", MAP_CATEGORY_ID_TO_KEYS[categoryId]),
+        title: localize('categories', MAP_CATEGORY_ID_TO_KEYS[categoryId]),
       });
     },
-    [navigation],
+    [localize, navigation],
   );
 
   const renderItem = useCallback(
@@ -49,7 +49,7 @@ export const CategoriesList = () => {
               onPress={() => handleCategoryPress(categoryId)}
             >
               <TextView numberOfLines={2} style={styles.cateogryText}>
-                {localize("categories", MAP_CATEGORY_ID_TO_KEYS[categoryId])}
+                {localize('categories', MAP_CATEGORY_ID_TO_KEYS[categoryId])}
               </TextView>
             </PressableView>
           ))}
@@ -58,6 +58,7 @@ export const CategoriesList = () => {
     },
     [
       handleCategoryPress,
+      localize,
       styles.categoryPreview,
       styles.categoryPreviewsContainer,
       styles.cateogryText,

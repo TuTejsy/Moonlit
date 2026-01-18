@@ -20,10 +20,10 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAnimatedScrollHandlerValue } from '@/hooks/useAnimatedScrollHandlerValue';
 import { useScrollOpacity } from '@/hooks/useScrollOpacity';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { AnalyticsService } from '@/services/analytics/analytics';
 
 import { makeStyles } from './FavoritesScreen.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 export const FavoritesScreen = () => {
   const { colors } = useTheme();

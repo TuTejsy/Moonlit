@@ -1,8 +1,9 @@
-import { REDUX_STORAGE_ENCRYPTION_KEY } from '@/constants/auth';
 import { createMMKV } from 'react-native-mmkv';
 import { Storage } from 'redux-persist';
 
-export const reduxMMKVStorage = new createMMKV({
+import { REDUX_STORAGE_ENCRYPTION_KEY } from '@/constants/auth';
+
+export const reduxMMKVStorage = createMMKV({
   encryptionKey: REDUX_STORAGE_ENCRYPTION_KEY,
   id: 'redux-persist-storage',
 });

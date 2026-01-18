@@ -1,4 +1,4 @@
-import { StyleSheet, ColorValue } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 

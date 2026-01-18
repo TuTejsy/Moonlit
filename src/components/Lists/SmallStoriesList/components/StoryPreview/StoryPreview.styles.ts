@@ -2,11 +2,14 @@ import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-import { PreviewLayout } from '../../hooks/useSmallStoriesListLayout';
+import { SmallStoriesListLayout } from '../../hooks/useSmallStoriesListLayout';
 
 import { STORY_PREVIEW_SIZE } from './StoryPreview.constants';
 
-export const makeStyles = ({ colors, fonts }: MakeStylesProps, { cellSpace }: PreviewLayout) =>
+export const makeStyles = (
+  { colors, fonts }: MakeStylesProps,
+  { cellSpace }: SmallStoriesListLayout,
+) =>
   StyleSheet.create({
     comingSoonLabel: {
       backgroundColor: colors.opacityWhite(0.2),

@@ -3,9 +3,9 @@ import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, View } from 'react
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { makeStyles } from './PopularSearch.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface PopularSearchPropTypes {
   onPopularSearchItemSelected: (item: string) => void;

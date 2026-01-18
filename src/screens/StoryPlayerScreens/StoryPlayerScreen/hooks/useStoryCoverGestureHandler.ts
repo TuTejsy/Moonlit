@@ -8,7 +8,6 @@ import {
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 
-
 export function useStoryCoverGestureHandler(
   storyPlayingSharedValue: SharedValue<number>,
   onCoverCollapsed: () => void,

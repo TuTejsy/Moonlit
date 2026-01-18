@@ -8,6 +8,7 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useHandleStoryPlayerNavigate } from '@/hooks/navigation/useHandleStoryPlayerNavigate';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppLocalization } from '@/localization/useAppLocalization';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
 import { selectIsFullVersion } from '@/store/user/user.selector';
@@ -15,7 +16,6 @@ import { selectIsFullVersion } from '@/store/user/user.selector';
 import { useSmallStoriesListLayout } from '../../hooks/useSmallStoriesListLayout';
 
 import { makeStyles } from './StoryPreview.styles';
-import { useAppLocalization } from '@/localization/useAppLocalization';
 
 interface StoryPreviewPropTypes {
   description: string;
@@ -74,7 +74,9 @@ export const StoryPreview = memo(
             <>
               <View style={styles.comingSoonOverlay} />
               <View style={styles.comingSoonLabel}>
-                <TextView style={styles.comingSoonText}>{localize('common', 'comingSoon')}</TextView>
+                <TextView style={styles.comingSoonText}>
+                  {localize('common', 'comingSoon')}
+                </TextView>
               </View>
             </>
           )}

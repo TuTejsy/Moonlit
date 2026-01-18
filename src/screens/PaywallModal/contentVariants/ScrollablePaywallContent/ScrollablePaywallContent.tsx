@@ -3,19 +3,19 @@ import { View, Image, ScrollView } from 'react-native';
 
 import { AdaptyPaywallProduct } from 'react-native-adapty';
 
-import { FooterActions } from '../../components/FooterActions/FooterActions';
-import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
-
-import { WEEKS_IN_YEAR } from './ScrollablePaywallContent.constants';
-import { makeStyles } from './ScrollablePaywallContent.styles';
-
+import { Icons } from '@/assets/icons/Icons';
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { Icons } from '@/assets/icons/Icons';
-import yearlyProductBackgroundImage from './images/yearlyProductBackground/yearlyProductBackground.png';
 import { useAppLocalization } from '@/localization/useAppLocalization';
+
+import { FooterActions } from '../../components/FooterActions/FooterActions';
+import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
+
+import yearlyProductBackgroundImage from './images/yearlyProductBackground/yearlyProductBackground.png';
+import { WEEKS_IN_YEAR } from './ScrollablePaywallContent.constants';
+import { makeStyles } from './ScrollablePaywallContent.styles';
 
 // eslint-disable-next-line import/no-unresolved
 
@@ -56,30 +56,34 @@ export const ScrollablePaywallContent = ({
   );
 
   const selectedProductPriceText = useMemo(() => {
-    const period = selectedProduct?.subscriptionDetails?.localizedSubscriptionPeriod?.replace(
-      '1 ',
-      '',
-    );
+    const period = selectedProduct?.subscription?.localizedSubscriptionPeriod?.replace('1 ', '');
 
     return `${selectedProduct?.price?.currencySymbol}${
       selectedProduct?.price?.amount || 0
     } /${period}`;
-  }, [selectedProduct?.price?.amount, selectedProduct?.price?.currencySymbol]);
+  }, [
+    selectedProduct?.price?.amount,
+    selectedProduct?.price?.currencySymbol,
+    selectedProduct?.subscription?.localizedSubscriptionPeriod,
+  ]);
 
   const secondProductText = useMemo(() => {
     if (isFreeTrialToggle) {
-      const offerDays =
-        trialProduct?.subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
+      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
 
-      return `${offerDays}-${localize("paywall", "DAY_FREE_TRIAL")}`;
+      return `${offerDays}-${localize('paywall', 'DAY_FREE_TRIAL')}`;
     }
 
-    return localize("paywall", "WEEKLY");
-  }, [isFreeTrialToggle, trialProduct?.subscriptionDetails?.introductoryOffers]);
+    return localize('paywall', 'WEEKLY');
+  }, [isFreeTrialToggle, localize, trialProduct?.subscription?.subscriptionPeriod.numberOfUnits]);
 
   const yearlyPricePerWeekText = useMemo(
-    () => `${yearlyProduct?.price?.currencySymbol}${yearlyPricePerWeek.toFixed(2)} / ${localize("paywall", "week")}`,
-    [yearlyPricePerWeek, yearlyProduct?.price?.currencySymbol],
+    () =>
+      `${yearlyProduct?.price?.currencySymbol}${yearlyPricePerWeek.toFixed(2)} / ${localize(
+        'paywall',
+        'week',
+      )}`,
+    [localize, yearlyPricePerWeek, yearlyProduct?.price?.currencySymbol],
   );
 
   const pricesDiffInPercentsText = useMemo(() => {
@@ -96,17 +100,30 @@ export const ScrollablePaywallContent = ({
 
   const weeklyPricePerWeekText = useMemo(() => {
     if (isFreeTrialToggle) {
-      const offerDays =
-        trialProduct?.subscriptionDetails?.introductoryOffers?.[0].subscriptionPeriod.numberOfUnits;
+      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
 
       const price = trialProduct?.price?.amount;
       const currencySymbol = trialProduct?.price?.currencySymbol;
 
-      return `${offerDays} ${localize("paywall", "daysFreeThen")} ${currencySymbol}${price}/${localize("paywall", "week")}`;
+      return `${offerDays} ${localize(
+        'paywall',
+        'daysFreeThen',
+      )} ${currencySymbol}${price}/${localize('paywall', 'week')}`;
     }
 
-    return `${secondProduct?.price?.currencySymbol}${secondProduct?.price?.amount || 0} /${localize("paywall", "week")}`;
-  }, [secondProduct?.price?.amount, secondProduct?.price?.currencySymbol, isFreeTrialToggle]);
+    return `${secondProduct?.price?.currencySymbol}${secondProduct?.price?.amount || 0} /${localize(
+      'paywall',
+      'week',
+    )}`;
+  }, [
+    isFreeTrialToggle,
+    secondProduct?.price?.currencySymbol,
+    secondProduct?.price?.amount,
+    localize,
+    trialProduct?.subscription?.subscriptionPeriod.numberOfUnits,
+    trialProduct?.price?.amount,
+    trialProduct?.price?.currencySymbol,
+  ]);
 
   const handleTrialEnabledChanged = useCallback(
     (isEnabled: boolean) => {
@@ -135,25 +152,25 @@ export const ScrollablePaywallContent = ({
         <View style={styles.benefit}>
           <Icons.Crown />
           <TextView style={styles.benefitText} type='medium'>
-            {localize("paywall", "richCollectionOfFairyTails")}
+            {localize('paywall', 'richCollectionOfFairyTails')}
           </TextView>
         </View>
         <View style={styles.benefit}>
           <Icons.Record />
           <TextView style={styles.benefitText} type='medium'>
-            {localize("paywall", "uniqueCustomVoices")}
+            {localize('paywall', 'uniqueCustomVoices')}
           </TextView>
         </View>
         <View style={styles.benefit}>
           <Icons.Mic />
           <TextView style={styles.benefitText} type='medium'>
-            {localize("paywall", "yourPersonalizedVoices")}
+            {localize('paywall', 'yourPersonalizedVoices')}
           </TextView>
         </View>
         <View style={styles.benefit}>
           <Icons.DownloadSmall />
           <TextView style={styles.benefitText} type='medium'>
-            {localize("paywall", "offlineModePlayer")}
+            {localize('paywall', 'offlineModePlayer')}
           </TextView>
         </View>
       </View>
@@ -183,7 +200,7 @@ export const ScrollablePaywallContent = ({
         <Image source={yearlyProductBackgroundImage} style={styles.productContainerImage} />
 
         <View style={styles.productNameContainer}>
-          <TextView style={styles.productTitle}>{localize("paywall", "YEARLY")}</TextView>
+          <TextView style={styles.productTitle}>{localize('paywall', 'YEARLY')}</TextView>
           <TextView style={styles.productSubtitle} type='light'>
             {yearlyPricePerWeekText}
           </TextView>
@@ -192,7 +209,7 @@ export const ScrollablePaywallContent = ({
         <View style={styles.separator} />
 
         <View style={styles.productPriceContainer}>
-          <TextView style={styles.priceSubtitle}>{localize("paywall", "save")}</TextView>
+          <TextView style={styles.priceSubtitle}>{localize('paywall', 'save')}</TextView>
           <TextView style={styles.priceSale} type='bold'>
             {pricesDiffInPercentsText}
           </TextView>
@@ -207,9 +224,11 @@ export const ScrollablePaywallContent = ({
         <View style={styles.freeTrialContainer}>
           <View style={styles.freeTrialTextContainer}>
             <TextView style={styles.freeTrialTitle} type='bold'>
-              {localize("paywall", "notSureYet")}
+              {localize('paywall', 'notSureYet')}
             </TextView>
-            <TextView style={styles.freeTrialSubtitle}>{localize("paywall", "enableFreeTrial")}</TextView>
+            <TextView style={styles.freeTrialSubtitle}>
+              {localize('paywall', 'enableFreeTrial')}
+            </TextView>
           </View>
 
           <TrialSwitch value={isFreeTrialEnabled} onValueChange={handleTrialEnabledChanged} />
@@ -221,7 +240,7 @@ export const ScrollablePaywallContent = ({
       </TextView>
 
       <TextView style={styles.promotionText} type='bold'>
-        {localize("paywall", "autoRenewableCancelAnytime")}
+        {localize('paywall', 'autoRenewableCancelAnytime')}
       </TextView>
 
       <FooterActions
@@ -230,9 +249,7 @@ export const ScrollablePaywallContent = ({
         onRestorePress={onRestorePress}
       />
 
-      <TextView style={styles.subscriptionInfo}>
-        {localize("paywall", "cancelPolicy")}
-      </TextView>
+      <TextView style={styles.subscriptionInfo}>{localize('paywall', 'cancelPolicy')}</TextView>
     </ScrollView>
   );
 };

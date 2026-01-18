@@ -10,7 +10,6 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-
 import { scheduleOnRN } from 'react-native-worklets';
 
 import { Icons } from '@/assets/icons/Icons';
