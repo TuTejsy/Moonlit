@@ -52,8 +52,7 @@ export const makeStyles = ({
       marginTop: dh(4),
     },
     freeTrialSwitch: {
-      height: 28,
-      width: 52,
+      alignSelf: 'center',
     },
     freeTrialTextContainer: {
       flex: 1,

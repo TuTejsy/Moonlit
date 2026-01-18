@@ -231,7 +231,11 @@ export const ScrollablePaywallContent = ({
             </TextView>
           </View>
 
-          <TrialSwitch value={isFreeTrialEnabled} onValueChange={handleTrialEnabledChanged} />
+          <TrialSwitch
+            style={styles.freeTrialSwitch}
+            value={isFreeTrialEnabled}
+            onValueChange={handleTrialEnabledChanged}
+          />
         </View>
       )}
 
