@@ -5,12 +5,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   Easing,
   interpolate,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+
+import { scheduleOnRN } from 'react-native-worklets';
 
 import { Icons } from '@/assets/icons/Icons';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
@@ -108,9 +109,9 @@ export const SplashViewModal = () => {
 
         if (finished) {
           if (isOnboarded) {
-            runOnJS(handleCheckSubscription)();
+            scheduleOnRN(handleCheckSubscription);
           } else {
-            runOnJS(navigation.goBack)();
+            scheduleOnRN(navigation.goBack);
           }
         }
       });

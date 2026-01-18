@@ -1,5 +1,5 @@
 import RNFS from 'react-native-fs';
-import { getColorFromURL } from 'rn-dominant-color';
+import { getColors } from 'react-native-image-colors'
 
 import { StoryCoverType } from '@/constants/stories';
 import { StoriesDB } from '@/database';
@@ -51,8 +51,23 @@ export async function downloadPreviews(
           const cachedName = filesCachedNames[i];
           const colorURL = `file://${getSandboxPathForCoverType(type)}/${cachedName}`;
 
-          const storyColors = await getColorFromURL(colorURL);
-          colors.push(storyColors);
+          const storyColors = await getColors(colorURL);
+
+          if (storyColors.platform === 'ios') {
+            colors.push({
+              primary: storyColors.primary,
+              secondary: storyColors.secondary,
+              detail: storyColors.detail,
+              background: storyColors.background
+            });
+          } else if (storyColors.platform === 'android') {
+            colors.push({
+              primary: storyColors.vibrant,
+              secondary: storyColors.lightVibrant,
+              detail: storyColors.dominant,
+              background: storyColors.average
+            });
+          }
         }
       } catch (err) {
         if (!colors[i]) {

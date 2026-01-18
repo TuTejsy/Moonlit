@@ -4,7 +4,9 @@ import { View, Share, StatusBar, TouchableOpacity } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, { runOnJS, useAnimatedReaction, withTiming } from 'react-native-reanimated';
+import Animated, {useAnimatedReaction, withTiming } from 'react-native-reanimated';
+import { scheduleOnRN } from 'react-native-worklets';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icons } from '@/assets/icons/Icons';
@@ -227,7 +229,7 @@ export const StoryPlayerScreen = () => {
     (isStoryPlayingSharedValue, previousIsStoryPlayingSharedValue) => {
       if (isStoryPlayingSharedValue !== previousIsStoryPlayingSharedValue) {
         if (!isStoryPlayingSharedValue) {
-          runOnJS(handlePauseStory);
+          scheduleOnRN(handlePauseStory);
         }
       }
     },

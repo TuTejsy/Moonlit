@@ -3,10 +3,11 @@ import {
   Extrapolation,
   SharedValue,
   interpolate,
-  runOnJS,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { scheduleOnRN } from 'react-native-worklets';
+
 
 export function useStoryCoverGestureHandler(
   storyPlayingSharedValue: SharedValue<number>,
@@ -36,7 +37,7 @@ export function useStoryCoverGestureHandler(
 
         if (e.translationY < -40) {
           storyPlayingSharedValue.value = withTiming(0);
-          runOnJS(onCoverCollapsed)();
+          scheduleOnRN(onCoverCollapsed);
         } else {
           storyPlayingSharedValue.value = withTiming(1);
         }

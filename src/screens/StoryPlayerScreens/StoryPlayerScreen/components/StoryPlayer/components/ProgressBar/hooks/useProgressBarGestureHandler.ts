@@ -1,7 +1,8 @@
 import { useCallback, useRef } from 'react';
 
 import { ComposedGesture, Gesture } from 'react-native-gesture-handler';
-import { Extrapolation, SharedValue, interpolate, runOnJS } from 'react-native-reanimated';
+import { Extrapolation, SharedValue, interpolate } from 'react-native-reanimated';
+import { scheduleOnRN } from 'react-native-worklets';
 
 import { useLayout } from '@/hooks/theme/useLayout';
 
@@ -39,7 +40,7 @@ export function useProgressBarGestureHandler(
   const tapGesture = Gesture.Tap()
     .numberOfTaps(1)
     .onTouchesDown((e) => {
-      runOnJS(setIsTapActiveRef)(true);
+      scheduleOnRN(setIsTapActiveRef, true);
 
       progressSharedValue.value = interpolate(
         e.allTouches[0].absoluteX,
@@ -49,16 +50,16 @@ export function useProgressBarGestureHandler(
       );
     })
     .onFinalize(() => {
-      runOnJS(setIsTapActiveRef)(false);
+      scheduleOnRN(setIsTapActiveRef, false);
     })
     .onEnd(() => {
-      runOnJS(setIsTapActiveRef)(false);
-      runOnJS(onUpdatePlayPercent)(progressSharedValue.value);
+      scheduleOnRN(setIsTapActiveRef, false);
+      scheduleOnRN(onUpdatePlayPercent, progressSharedValue.value);
     });
 
   const panGesture = Gesture.Pan()
     .onStart(() => {
-      runOnJS(setIsPanActiveRef)(true);
+      scheduleOnRN(setIsPanActiveRef, true);
     })
     .onUpdate((e) => {
       progressSharedValue.value = interpolate(
@@ -68,12 +69,12 @@ export function useProgressBarGestureHandler(
         Extrapolation.CLAMP,
       );
 
-      runOnJS(setPlayedTimeText)(progressSharedValue.value);
+      scheduleOnRN(setPlayedTimeText, progressSharedValue.value);
     })
     .onEnd(() => {
-      runOnJS(setIsPanActiveRef)(false);
+      scheduleOnRN(setIsPanActiveRef, false);
 
-      runOnJS(onUpdatePlayPercent)(progressSharedValue.value);
+      scheduleOnRN(onUpdatePlayPercent, progressSharedValue.value);
     });
 
   const composedGesture = Gesture.Race(panGesture, tapGesture);
