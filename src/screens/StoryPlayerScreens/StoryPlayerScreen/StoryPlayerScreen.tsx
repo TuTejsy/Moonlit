@@ -50,6 +50,9 @@ import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler
 import { useStoryPlayerScreenLayout } from './hooks/useStoryPlayerScreenLayout';
 import { makeStyles } from './StoryPlayerScreen.styles';
 
+const BACKGROUND_GRADIENT_LOCATIONS = [0, 1];
+const BOTTOM_GRADIENT_LOCATIONS = [0.5, 1];
+
 export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
   const { dh, windowHeight } = useLayout();
@@ -110,6 +113,21 @@ export const StoryPlayerScreen = () => {
   );
 
   const backgroundColor = useMemo(() => convertHEXtoRGBA(gradientColor, 0.3), [gradientColor]);
+
+  const backgroundGradientColors = useMemo(
+    () => [backgroundColor, colors.black],
+    [backgroundColor, colors.black],
+  );
+
+  const bottomGradientColors1 = useMemo(
+    () => [colors.opacityBlack(0), gradientColor],
+    [colors, gradientColor],
+  );
+
+  const bottomGradientColors2 = useMemo(
+    () => [colors.opacityBlack(0), colors.opacityBlack(0.4)],
+    [colors],
+  );
 
   const stylesContext = useMemo(
     () => ({ gradientColor, storyContainerMinHeight, ...storyPlayerScreenLayout }),
@@ -254,8 +272,8 @@ export const StoryPlayerScreen = () => {
   return (
     <LinearGradient
       angle={180}
-      colors={[backgroundColor, colors.black]}
-      locations={[0, 1]}
+      colors={backgroundGradientColors}
+      locations={BACKGROUND_GRADIENT_LOCATIONS}
       style={styles.screen}
     >
       <ScreenHeader
@@ -281,16 +299,16 @@ export const StoryPlayerScreen = () => {
 
             <LinearGradient
               angle={180}
-              colors={[colors.opacityBlack(0), gradientColor]}
-              locations={[0.5, 1]}
+              colors={bottomGradientColors1}
+              locations={BOTTOM_GRADIENT_LOCATIONS}
               pointerEvents='none'
               style={styles.bottomGradient}
             />
 
             <LinearGradient
               angle={180}
-              colors={[colors.opacityBlack(0), colors.opacityBlack(0.4)]}
-              locations={[0.5, 1]}
+              colors={bottomGradientColors2}
+              locations={BOTTOM_GRADIENT_LOCATIONS}
               pointerEvents='none'
               style={styles.bottomGradient}
             />
