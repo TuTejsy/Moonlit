@@ -106,7 +106,10 @@
     "typescript": "5.8.3"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupJest.ts"
+    ]
   },
   "engines": {
     "node": ">=20"
