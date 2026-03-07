@@ -35,8 +35,11 @@ StoriesDB.open();
 AudioRecordingsDB.open();
 // StoriesDB.open().then(() => StoriesDB.dropDatabase());
 // AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
-
-adapty.activate(ADAPTY_API_KEY);
+adapty.isActivated().then((isActivated) => {
+  if (!isActivated) {
+    adapty.activate(ADAPTY_API_KEY);
+  }
+});
 
 amplitude.init(AMPLITUDE_API_KEY, undefined, {
   disableCookies: true,
