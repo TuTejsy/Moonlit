@@ -39,6 +39,7 @@ Moonlit is a React Native mobile application featuring fairytales for children.
 4. **Test Directory Organization**: ALWAYS place test files inside a `__tests__` folder at the top level of the module (e.g., `src/components/__tests__`, `src/utils/__tests__`, `src/screens/__tests__`). NEVER place test files adjacent to the source files (e.g., avoid `src/components/MyComponent/MyComponent.test.tsx`). This centralized module-level test directory structure must be strictly enforced.
 5. **Navigation Hooks**: ALWAYS use the custom `useAppRoute` (from `src/navigation/hooks/useAppRoute.ts`) and `useAppNavigation` (from `src/navigation/hooks/useAppNavigation.ts`) hooks for navigation. NEVER use the `useRoute` and `useNavigation` hooks directly from `@react-navigation/native`.
 6. **Security & Secrets**: ALWAYS store secrets and sensitive keys in the `src/constants/auth.ts` file. NEVER use `.env` files for secrets, because `.env` files might be extracted from unarchived builds (`.ipa`/`.apk`), whereas `auth.ts` is ignored by Git and injected only during the build process, making it safer.
+7. **Interface Segregation**: ALWAYS follow the Interface Segregation principle from SOLID during React component creation. A component should ALWAYS receive only the specific data fields it needs via props, NEVER a whole, large object.
 
 ## Project Structure
 
