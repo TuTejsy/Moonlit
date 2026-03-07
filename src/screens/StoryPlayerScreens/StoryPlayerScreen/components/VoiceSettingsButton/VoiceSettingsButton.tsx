@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View, Image } from 'react-native';
 
 import { BlurView } from '@sbaiahmed1/react-native-blur';
