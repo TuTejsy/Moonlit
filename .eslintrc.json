@@ -48,7 +48,7 @@
         "no-plusplus": "off",
         "no-await-in-loop": "off",
         "no-nested-ternary": "off",
-       "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/ban-ts-comment": "off",
         "import/extensions": "off",
@@ -71,6 +71,11 @@
           ["useNavigation", "useRoute"]
         ]
       }
+    },
+    {
+      // Test files only
+      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+      "extends": ["plugin:testing-library/react"]
     }
   ],
   "rules": {
