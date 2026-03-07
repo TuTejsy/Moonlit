@@ -1,0 +1,33 @@
+#!/bin/sh
+
+echo "🔍 Running pre-push checks..."
+echo ""
+
+# Run lint
+echo "📏 Running yarn lint..."
+yarn lint
+LINT_EXIT_CODE=$?
+
+if [ $LINT_EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "❌ Lint failed. Push aborted."
+  exit 1
+fi
+
+echo ""
+echo "✅ Lint passed."
+echo ""
+
+# Run tests
+echo "🧪 Running yarn test..."
+yarn test
+TEST_EXIT_CODE=$?
+
+if [ $TEST_EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "❌ Tests failed. Push aborted."
+  exit 1
+fi
+
+echo ""
+echo "✅ All checks passed. Pushing..."
