@@ -1,4 +1,3 @@
-import { useCallback, useMemo } from 'react';
 import { View, Image } from 'react-native';
 
 import { AdaptyPaywallProduct } from 'react-native-adapty';
@@ -10,11 +9,12 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { FooterActions } from '../../components/FooterActions/FooterActions';
-import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
 // eslint-disable-next-line import/no-unresolved
 import voicesImage from '../../images/voices/voices.png';
 import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.png';
+import { FreeTrialToggle } from '../components/FreeTrialToggle/FreeTrialToggle';
 
+import { useSwitcherPaywallProducts } from './hooks/useSwitcherPaywallProducts';
 import { makeStyles } from './SwitcherPaywallContent.styles';
 
 interface SwitcherPaywallContentProps {
@@ -42,41 +42,13 @@ export const SwitcherPaywallContent = ({
   const { isLandscape, isSquareScreen } = useLayout();
   const { localize } = useAppLocalization();
 
-  const productText = useMemo(() => {
-    if (isFreeTrialEnabled) {
-      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
-
-      const price = trialProduct?.price?.amount;
-      const currencyCode = trialProduct?.price?.currencyCode;
-
-      return `${offerDays} ${localize(
-        'paywall',
-        'daysFreeThen',
-      )} ${price} ${currencyCode}/${localize('paywall', 'week')}`;
-    }
-    const price = yearlyProduct?.price?.amount;
-    const currencyCode = yearlyProduct?.price?.currencyCode;
-
-    const subscriptionPeriod = yearlyProduct?.subscription?.subscriptionPeriod.unit;
-
-    return `${localize('paywall', 'tryItNotJust')} ${price} ${currencyCode}/${subscriptionPeriod}`;
-  }, [
+  const { handleTrialEnabledChanged, productText } = useSwitcherPaywallProducts({
     isFreeTrialEnabled,
-    yearlyProduct?.price?.amount,
-    yearlyProduct?.price?.currencyCode,
-    yearlyProduct?.subscription?.subscriptionPeriod.unit,
-    localize,
-    trialProduct?.subscription?.subscriptionPeriod.numberOfUnits,
-    trialProduct?.price?.amount,
-    trialProduct?.price?.currencyCode,
-  ]);
-
-  const handleTrialEnabledChanged = useCallback(
-    (isEnabled: boolean) => {
-      onSelectProduct(isEnabled && isTrialEligible ? trialProduct : yearlyProduct);
-    },
-    [onSelectProduct, isTrialEligible, trialProduct, yearlyProduct],
-  );
+    isTrialEligible,
+    onSelectProduct,
+    trialProduct,
+    yearlyProduct,
+  });
 
   return (
     <>
@@ -107,22 +79,12 @@ export const SwitcherPaywallContent = ({
             {localize('paywall', 'autoRenewableCancelAnytime')}
           </TextView>
 
-          <View style={styles.freeTrialContainer}>
-            <View style={styles.freeTrialTextContainer}>
-              <TextView style={styles.freeTrialTitle} type='bold'>
-                {localize('paywall', 'notSureYet')}
-              </TextView>
-              <TextView style={styles.freeTrialSubtitle}>
-                {localize('paywall', 'enableFreeTrial')}
-              </TextView>
-            </View>
-
-            <TrialSwitch
-              style={styles.freeTrialSwitch}
-              value={isFreeTrialEnabled}
+          {isTrialEligible && (
+            <FreeTrialToggle
+              isFreeTrialEnabled={isFreeTrialEnabled}
               onValueChange={handleTrialEnabledChanged}
             />
-          </View>
+          )}
           <GradientButton style={styles.button} onPress={onUnlockPress}>
             {unlockButtonText}
           </GradientButton>

@@ -10,9 +10,7 @@ export const makeStyles = ({
   horizontalPadding,
   isLandscape,
   isSquareScreen,
-  sufficientWindowWidth,
   windowHeight,
-  windowMaxWidth,
   windowWidth,
 }: MakeStylesProps) =>
   StyleSheet.create({
@@ -34,32 +32,6 @@ export const makeStyles = ({
     },
     content: {
       flexDirection: isSquareScreen || isLandscape ? 'row' : 'column',
-    },
-    freeTrialContainer: {
-      alignItems: 'center',
-      backgroundColor: colors.opacityWhite(0.1),
-      borderRadius: 16,
-      flexDirection: 'row',
-      height: dw(72, windowMaxWidth),
-      marginTop: dh(24),
-      paddingLeft: horizontalPadding,
-      paddingRight: 24,
-      width: sufficientWindowWidth - horizontalPadding * 4,
-    },
-    freeTrialSubtitle: {
-      ...fonts.size_12,
-      color: colors.opacityWhite(0.5),
-      marginTop: dh(4),
-    },
-    freeTrialSwitch: {
-      alignSelf: 'center',
-    },
-    freeTrialTextContainer: {
-      flex: 1,
-    },
-    freeTrialTitle: {
-      ...fonts.size_16,
-      color: colors.white,
     },
     productBlock: StyleSheet.flatten([{ justifyContent: 'flex-end' }, { marginBottom: dh(22) }]),
     promotionText: {

@@ -13,6 +13,7 @@ interface TrialSwitchProps {
 
 export const TrialSwitch = React.memo(({ onValueChange, style, value }: TrialSwitchProps) => {
   const { colors } = useTheme();
+
   return (
     <Switch
       style={[styles.switch, style]}
