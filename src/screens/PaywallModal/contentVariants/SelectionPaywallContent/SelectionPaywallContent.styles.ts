@@ -32,21 +32,6 @@ export const makeStyles = ({
     button: {
       marginTop: dh(16),
     },
-    checkbox: {
-      alignItems: 'center',
-      borderColor: colors.opacityWhite(0.2),
-      borderRadius: dw(12, windowMaxWidth),
-      borderWidth: 1,
-      height: dw(24, windowMaxWidth),
-      justifyContent: 'center',
-      width: dw(24, windowMaxWidth),
-    },
-    checkboxMark: {
-      backgroundColor: colors.white,
-      borderRadius: dw(6, windowMaxWidth),
-      height: dw(12, windowMaxWidth),
-      width: dw(12, windowMaxWidth),
-    },
     content: {
       flexDirection: isLandscape || isSquareScreen ? 'row' : 'column',
     },
@@ -69,70 +54,11 @@ export const makeStyles = ({
       ...fonts.size_12,
       color: colors.white,
     },
-    fullBenifitLabel: {
-      alignItems: 'center',
-      borderRadius: 16,
-      height: 16,
-      justifyContent: 'center',
-      left: sufficientWindowWidth / 2 - horizontalPadding * 2 - 34,
-      position: 'absolute',
-      top: -8,
-      width: 68,
-    },
-    fullBenifitLabelText: {
-      ...fonts.size_10,
-      color: colors.white,
-    },
-    price: {
-      ...fonts.size_14,
-      color: colors.white,
-    },
-    priceSubtitle: {
-      ...fonts.size_12,
-      color: colors.opacityWhite(0.6),
-    },
-    productContainer: {
-      alignItems: 'center',
-      backgroundColor: colors.opacityWhite(0.1),
-      borderColor: colors.transparent,
-      borderRadius: 16,
-      borderWidth: 1,
-      flexDirection: 'row',
-      height: dw(56, windowMaxWidth),
-      justifyContent: 'space-between',
-      marginBottom: dh(12),
-      paddingLeft: horizontalPadding,
-      paddingRight: 26,
-      position: 'relative',
-      width: sufficientWindowWidth - horizontalPadding * 4,
-    },
-    productDescription: {
-      ...fonts.size_14,
-      color: colors.white,
-    },
-    productNameContainer: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    productPriceContainer: {
-      paddingRight: 16,
-    },
-    productSubtitle: {
-      ...fonts.size_12,
-      color: colors.opacityWhite(0.8),
-    },
-    productTitle: {
-      ...fonts.size_12,
-      flex: 1,
-    },
     promotionText: {
       ...fonts.size_12,
       color: colors.opacityWhite(0.2),
       marginTop: dh(16),
       textAlign: 'center',
-    },
-    selectedProductContainer: {
-      borderColor: colors.pink,
     },
     subtitle: {
       ...fonts.size_14,

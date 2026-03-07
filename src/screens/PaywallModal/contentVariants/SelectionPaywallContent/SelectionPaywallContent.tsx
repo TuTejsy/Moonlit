@@ -1,15 +1,11 @@
-import { useCallback, useMemo, useState } from 'react';
 import { View, Image } from 'react-native';
 
 import { AdaptyPaywallProduct } from 'react-native-adapty';
-import LinearGradient from 'react-native-linear-gradient';
 
 import { GradientButton } from '@/components/GradientButton/GradientButton';
-import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { FooterActions } from '../../components/FooterActions/FooterActions';
@@ -18,7 +14,9 @@ import { TrialSwitch } from '../../components/TrialSwitch/TrialSwitch';
 import voicesImage from '../../images/voices/voices.png';
 import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.png';
 
-import { WEEKS_IN_YEAR } from './SelectionPaywallContent.constants';
+import { WeeklyProductCard } from './components/WeeklyProductCard/WeeklyProductCard';
+import { YearlyProductCard } from './components/YearlyProductCard/YearlyProductCard';
+import { useSelectionPaywallProducts } from './hooks/useSelectionPaywallProducts';
 import { makeStyles } from './SelectionPaywallContent.styles';
 
 interface SelectionPaywallContentProps {
@@ -47,74 +45,28 @@ export const SelectionPaywallContent = ({
   yearlyProduct,
 }: SelectionPaywallContentProps) => {
   const styles = useMakeStyles(makeStyles);
-  const { colors } = useTheme();
   const { isLandscape, isSquareScreen } = useLayout();
   const { localize } = useAppLocalization();
 
-  const [isFreeTrialToggle, setIsFreeTrialToggle] = useState(isFreeTrialEnabled);
-
-  const yearlyPricePerWeek = useMemo(
-    () => (yearlyProduct?.price?.amount || 0) / WEEKS_IN_YEAR,
-    [yearlyProduct?.price?.amount],
-  );
-
-  const yearlyProductBenifitText = useMemo(() => {
-    const trialPricePerWeek = trialProduct?.price?.amount || 0;
-
-    const pricesDiffInPercents = Math.round(
-      ((trialPricePerWeek - yearlyPricePerWeek) / trialPricePerWeek) * 100,
-    );
-
-    return `Save ${pricesDiffInPercents}%`;
-  }, [yearlyPricePerWeek, trialProduct?.price?.amount]);
-
-  const yearlyPriceText = useMemo(
-    () => `${yearlyProduct?.price?.currencySymbol}${yearlyProduct?.price?.amount || 0}`,
-    [yearlyProduct?.price?.amount, yearlyProduct?.price?.currencySymbol],
-  );
-
-  const yearlyPricePerWeekText = useMemo(
-    () => `${yearlyProduct?.price?.currencySymbol}${yearlyPricePerWeek.toFixed(2)}`,
-    [yearlyPricePerWeek, yearlyProduct?.price?.currencySymbol],
-  );
-
-  const secondProduct = isFreeTrialToggle ? trialProduct : weeklyProduct || trialProduct;
-
-  const weeklyPricePerWeekText = useMemo(
-    () => `${secondProduct?.price?.currencySymbol}${secondProduct?.price?.amount || 0}`,
-    [secondProduct?.price?.amount, secondProduct?.price?.currencySymbol],
-  );
-
-  const secondProductText = useMemo(() => {
-    if (isFreeTrialToggle) {
-      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
-
-      return `${offerDays}-${localize('paywall', 'DAY_FREE_TRIAL')}`;
-    }
-
-    return `${localize('paywall', 'WEEKLY')} ${localize('paywall', 'ACCESS')}`;
-  }, [isFreeTrialToggle, localize, trialProduct?.subscription?.subscriptionPeriod.numberOfUnits]);
-
-  const handleTrialEnabledChanged = useCallback(
-    (isEnabled: boolean) => {
-      if (isEnabled) {
-        onSelectProduct(trialProduct);
-      } else if (selectedProduct === trialProduct) {
-        onSelectProduct(weeklyProduct);
-      }
-
-      setIsFreeTrialToggle(isEnabled);
-    },
-    [onSelectProduct, selectedProduct, trialProduct, weeklyProduct],
-  );
-
-  const handleYearlyProductPress = useCallback(() => {
-    onSelectProduct(yearlyProduct);
-  }, [onSelectProduct, yearlyProduct]);
-
-  const handleWeeklyProductPress = useCallback(() => {
-    onSelectProduct(isFreeTrialToggle ? trialProduct : weeklyProduct);
-  }, [isFreeTrialToggle, onSelectProduct, trialProduct, weeklyProduct]);
+  const {
+    handleTrialEnabledChanged,
+    handleWeeklyProductPress,
+    handleYearlyProductPress,
+    isFreeTrialToggle,
+    secondProduct,
+    secondProductText,
+    weeklyPricePerWeekText,
+    yearlyPricePerWeekText,
+    yearlyPriceText,
+    yearlyProductBenifitText,
+  } = useSelectionPaywallProducts({
+    isFreeTrialEnabled,
+    onSelectProduct,
+    selectedProduct,
+    trialProduct,
+    weeklyProduct,
+    yearlyProduct,
+  });
 
   return (
     <>
@@ -139,65 +91,20 @@ export const SelectionPaywallContent = ({
         </View>
 
         <View style={styles.block}>
-          <PressableView
-            style={[
-              styles.productContainer,
-              selectedProduct === yearlyProduct && styles.selectedProductContainer,
-            ]}
+          <YearlyProductCard
+            isSelected={selectedProduct === yearlyProduct}
+            yearlyPricePerWeekText={yearlyPricePerWeekText}
+            yearlyPriceText={yearlyPriceText}
+            yearlyProductBenifitText={yearlyProductBenifitText}
             onPress={handleYearlyProductPress}
-          >
-            <LinearGradient
-              useAngle
-              angle={276}
-              colors={[colors.gradientPinkStart, colors.gradientPinkEnd]}
-              locations={[0, 1]}
-              style={styles.fullBenifitLabel}
-            >
-              <TextView style={styles.fullBenifitLabelText}>{yearlyProductBenifitText}</TextView>
-            </LinearGradient>
+          />
 
-            <View style={styles.productNameContainer}>
-              <TextView style={styles.productSubtitle} type='light'>
-                {localize('paywall', 'YEARLY')} {localize('paywall', 'ACCESS')}
-              </TextView>
-              <TextView style={styles.productDescription}>
-                {localize('paywall', 'just')} {yearlyPriceText} {localize('paywall', 'per')}{' '}
-                {localize('paywall', 'year')}{' '}
-              </TextView>
-            </View>
-
-            <View style={styles.productPriceContainer}>
-              <TextView style={styles.price}>{yearlyPricePerWeekText}</TextView>
-              <TextView style={styles.priceSubtitle}>
-                {localize('paywall', 'per')} {localize('paywall', 'week')}
-              </TextView>
-            </View>
-
-            <View style={styles.checkbox}>
-              {selectedProduct === yearlyProduct && <View style={styles.checkboxMark} />}
-            </View>
-          </PressableView>
-
-          <PressableView
-            style={[
-              styles.productContainer,
-              selectedProduct === secondProduct && styles.selectedProductContainer,
-            ]}
+          <WeeklyProductCard
+            isSelected={selectedProduct === secondProduct}
+            secondProductText={secondProductText}
+            weeklyPricePerWeekText={weeklyPricePerWeekText}
             onPress={handleWeeklyProductPress}
-          >
-            <TextView style={styles.productTitle}>{secondProductText}</TextView>
-
-            <View style={styles.productPriceContainer}>
-              <TextView style={styles.price}>{weeklyPricePerWeekText}</TextView>
-              <TextView style={styles.priceSubtitle}>
-                {localize('paywall', 'per')} {localize('paywall', 'week')}
-              </TextView>
-            </View>
-
-            <View style={styles.checkbox}>
-              {selectedProduct === secondProduct && <View style={styles.checkboxMark} />}
-            </View>
-          </PressableView>
+          />
 
           {isTrialEligible && (
             <View style={styles.freeTrialContainer}>
