@@ -1,43 +1,32 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { View, Share, StatusBar, TouchableOpacity } from 'react-native';
+import { StatusBar, TouchableOpacity } from 'react-native';
 
 import { useIsFocused } from '@react-navigation/native';
-import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, { useAnimatedReaction, withTiming } from 'react-native-reanimated';
+import { useAnimatedReaction, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scheduleOnRN } from 'react-native-worklets';
 
 import { Icons } from '@/assets/icons/Icons';
 import { ScreenHeader } from '@/components/Headers/ScreenHeader/ScreenHeader';
-import {
-  IS_ANDROID,
-  IS_IOS,
-  MOONLIT_IOS_APP_LINK,
-  MOONLIT_PLAY_STORE_APP_LINK,
-  SANDBOX,
-} from '@/constants/common';
+import { IS_ANDROID, SANDBOX } from '@/constants/common';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { CATEGORY_IDS, MAP_CATEGORY_ID_TO_KEYS } from '@/constants/stories';
 import { useSelectedAudioRecording } from '@/hooks/database/useSelectedAudioRecording';
 import { useStory } from '@/hooks/database/useStory';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useTheme } from '@/hooks/theme/useTheme';
 import { useStoryPlayer } from '@/hooks/useStoryPlayer/useStoryPlayer';
 import { MOVE_TO_PROPS } from '@/hooks/useStoryPlayer/useStoryPlayers.types';
 import { useAppLocalization } from '@/localization/useAppLocalization';
-import { ShareIOS } from '@/native_modules/MNTShare/NativeShareManager';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { SOURCE } from '@/services/analytics/analytics.constants';
-import { convertHEXtoRGBA } from '@/utils/converters/convertHEXtoRGBA';
 import { getHitSlop } from '@/utils/getHitSlop';
 
-import { StoryActions } from './components/StoryActions/StoryActions';
-import { StoryMeta } from './components/StoryMeta/StoryMeta';
+import { StoryCover } from './components/StoryCover/StoryCover';
 import { StoryPlayer } from './components/StoryPlayer/StoryPlayer';
 import { VoiceSettingsButton } from './components/VoiceSettingsButton/VoiceSettingsButton';
 import {
@@ -48,10 +37,11 @@ import { useStoryAudioRecordingsUpdate } from './hooks/useStoryAudioRecordingsUp
 import { useStoryCoverAnimation } from './hooks/useStoryCoverAnimation';
 import { useStoryCoverGestureHandler } from './hooks/useStoryCoverGestureHandler';
 import { useStoryPlayerScreenLayout } from './hooks/useStoryPlayerScreenLayout';
+import { useStoryPlayerTheme } from './hooks/useStoryPlayerTheme';
+import { useStoryShare } from './hooks/useStoryShare';
 import { makeStyles } from './StoryPlayerScreen.styles';
 
 const BACKGROUND_GRADIENT_LOCATIONS = [0, 1];
-const BOTTOM_GRADIENT_LOCATIONS = [0.5, 1];
 
 export const StoryPlayerScreen = () => {
   const insets = useSafeAreaInsets();
@@ -68,8 +58,6 @@ export const StoryPlayerScreen = () => {
     BUTTON_BOTTOM_PADDING -
     (StatusBar.currentHeight ?? 0) -
     dh(24);
-
-  const { colors } = useTheme();
 
   const navigation = useAppNavigation<RootRoutes.STORY_PLAYER>();
   const route = useAppRoute<RootRoutes.STORY_PLAYER>();
@@ -107,27 +95,8 @@ export const StoryPlayerScreen = () => {
     [localize, story?.category_ids],
   );
 
-  const gradientColor = useMemo(
-    () => story?.colors?.primary ?? colors.imagePurple,
-    [colors.imagePurple, story?.colors?.primary],
-  );
-
-  const backgroundColor = useMemo(() => convertHEXtoRGBA(gradientColor, 0.3), [gradientColor]);
-
-  const backgroundGradientColors = useMemo(
-    () => [backgroundColor, colors.black],
-    [backgroundColor, colors.black],
-  );
-
-  const bottomGradientColors1 = useMemo(
-    () => [colors.opacityBlack(0), gradientColor],
-    [colors, gradientColor],
-  );
-
-  const bottomGradientColors2 = useMemo(
-    () => [colors.opacityBlack(0), colors.opacityBlack(0.4)],
-    [colors],
-  );
+  const { backgroundGradientColors, bottomGradientColors1, bottomGradientColors2, gradientColor } =
+    useStoryPlayerTheme({ storyColorPrimary: story?.colors?.primary });
 
   const stylesContext = useMemo(
     () => ({ gradientColor, storyContainerMinHeight, ...storyPlayerScreenLayout }),
@@ -194,25 +163,7 @@ export const StoryPlayerScreen = () => {
 
   const gesture = useStoryCoverGestureHandler(storyPlayingSharedValue, handlePauseStory);
 
-  const handleSharePress = useCallback(() => {
-    if (IS_IOS) {
-      ShareIOS?.share({
-        message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_IOS_APP_LINK}`,
-        subtitle: 'and more amazing stories in the Moonlit app.',
-        title: `Explore ${story?.name}`,
-        url: smallCoverURL,
-      });
-    } else {
-      Share.share(
-        {
-          message: `Explore ${story?.name} and more amazing stories in the Moonlit app. ${MOONLIT_PLAY_STORE_APP_LINK}`,
-        },
-        {
-          dialogTitle: `Explore ${story?.name}`,
-        },
-      );
-    }
-  }, [smallCoverURL, story?.name]);
+  const { handleSharePress } = useStoryShare({ smallCoverURL, storyName: story?.name });
 
   const handleVoiceSettingsPress = useCallback(() => {
     if (selectedAudioRecording) {
@@ -288,47 +239,23 @@ export const StoryPlayerScreen = () => {
         }
       />
 
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={[styles.storyContainer, storyContainerAnimatedStyles]}>
-          <View style={styles.imageContainer}>
-            <Animated.Image
-              resizeMode='cover'
-              source={{ uri: coverURL }}
-              style={[styles.cover, coverAnimatedStyles]}
-            />
-
-            <LinearGradient
-              angle={180}
-              colors={bottomGradientColors1}
-              locations={BOTTOM_GRADIENT_LOCATIONS}
-              pointerEvents='none'
-              style={styles.bottomGradient}
-            />
-
-            <LinearGradient
-              angle={180}
-              colors={bottomGradientColors2}
-              locations={BOTTOM_GRADIENT_LOCATIONS}
-              pointerEvents='none'
-              style={styles.bottomGradient}
-            />
-
-            <StoryActions
-              startStoryPlaying={handlePlayStory}
-              storyId={storyId}
-              storyPlayingSharedValue={storyPlayingSharedValue}
-              storyTitle={story?.name ?? ''}
-              tab={tab}
-            />
-          </View>
-          <StoryMeta
-            description={story?.description_large ?? ''}
-            duration={selectedAudioRecording?.duration ?? 0}
-            storyPlayingSharedValue={storyPlayingSharedValue}
-            style={styles.storyMeta}
-          />
-        </Animated.View>
-      </GestureDetector>
+      <StoryCover
+        bottomGradientColors1={bottomGradientColors1}
+        bottomGradientColors2={bottomGradientColors2}
+        coverAnimatedStyles={coverAnimatedStyles}
+        coverURL={coverURL}
+        gesture={gesture}
+        gradientColor={gradientColor}
+        selectedAudioRecording={selectedAudioRecording}
+        startStoryPlaying={handlePlayStory}
+        storyContainerAnimatedStyles={storyContainerAnimatedStyles}
+        storyContainerMinHeight={storyContainerMinHeight}
+        storyDescription={story?.description_large ?? ''}
+        storyId={storyId}
+        storyPlayingSharedValue={storyPlayingSharedValue}
+        storyTitle={story?.name ?? ''}
+        tab={tab}
+      />
 
       <StoryPlayer
         audioRecordingDuration={selectedAudioRecording?.duration || 0}

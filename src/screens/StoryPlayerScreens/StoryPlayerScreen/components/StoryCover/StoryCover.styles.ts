@@ -1,0 +1,46 @@
+import { StyleSheet } from 'react-native';
+
+import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+import { StoryPlayerScreenLayout } from '@/screens/StoryPlayerScreens/StoryPlayerScreen/hooks/useStoryPlayerScreenLayout';
+
+interface Context extends StoryPlayerScreenLayout {
+  gradientColor: string;
+  storyContainerMinHeight: number;
+}
+
+export const makeStyles = (
+  { windowHeight, windowWidth }: MakeStylesProps,
+  { gradientColor, storyContainerMinHeight, storyContainerMinWidth, storyCoverMinHeight }: Context,
+) =>
+  StyleSheet.create({
+    bottomGradient: {
+      height: windowHeight,
+      position: 'absolute',
+      width: windowWidth,
+    },
+    cover: {
+      minHeight: storyCoverMinHeight,
+      minWidth: storyContainerMinWidth,
+      width: '100%',
+    },
+    imageContainer: {
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      minHeight: storyCoverMinHeight,
+      minWidth: storyContainerMinWidth,
+      overflow: 'hidden',
+      position: 'relative',
+      width: '100%',
+    },
+    storyContainer: {
+      alignItems: 'center',
+      backgroundColor: gradientColor,
+      borderRadius: 16,
+      minHeight: storyContainerMinHeight,
+      minWidth: storyContainerMinWidth,
+      overflow: 'hidden',
+    },
+    storyMeta: {
+      minHeight: storyContainerMinHeight - storyCoverMinHeight,
+    },
+  });

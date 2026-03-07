@@ -18,6 +18,7 @@ Moonlit is a React Native mobile application featuring fairytales for children.
 ### UI & Styling System (`useMakeStyles`)
 
 - **Strict Rule**: DO NOT use plain `StyleSheet.create` directly in components, create `makeStyles` functions in the (${componentName}.styles.ts) file in the same directory.
+- **Strict Rule**: ALWAYS remove unused styles from the `makeStyles` function in the `${componentName}.styles.ts` file when refactoring or updating components.
 - **Strict Rule**: ALWAYS use destructuring of the `theme` param in `makeStyle` functions. NEVER access theme constants directly via `theme.[value]` (always use the values obtained from the destructured theme param instead).
 - **Strict Rule**: DO NOT use literal constants (e.g., hardcoded colors, padding numbers, border radii) in styles. ALWAYS use the theme's values provided via the `makeStyles` function's parameters.
 - **Implementation**: Every style object MUST be created using a custom `useMakeStyles` hook.

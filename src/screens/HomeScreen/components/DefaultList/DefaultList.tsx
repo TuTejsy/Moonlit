@@ -15,8 +15,6 @@ import {
   FEATURING_STORIES_CONFIG,
   FEATURING_STORIES_FILTER,
   FREE_STORIES_FILTER,
-  POPULAR_STORIES_CONFIG,
-  POPULAR_STORIES_FILTER,
 } from '@/constants/stories';
 import { StorySchema } from '@/database/schema/stories/types';
 import { useStoriesUpdate } from '@/hooks/content/useStoriesUpdate';
@@ -25,16 +23,13 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppLocalization } from '@/localization/useAppLocalization';
-import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
-import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
-import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 import { CategoriesList } from '@/screens/HomeScreen/components/CategoriesList/CategoriesList';
 import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/SectionHeader';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
-import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 
 import { makeStyles } from './DefaultList.styles';
+import { useDefaultListNavigation } from './hooks/useDefaultListNavigation';
 
 interface DefaultListPropTypes {
   allStories: Realm.Results<StorySchema>;
@@ -62,7 +57,6 @@ export const DefaultList = React.memo(
     const { colors } = useTheme();
 
     const insets = useSafeAreaInsets();
-    const navigation = useAppNavigation<SharedRoutes.HOME>();
     const { localize } = useAppLocalization();
 
     const [isRefreshing, updateStories] = useStoriesUpdate(false);
@@ -74,31 +68,13 @@ export const DefaultList = React.memo(
     );
     const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER, undefined, 5);
 
-    const handleSeeFeaturingTales = useCallback(() => {
-      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
-        storiesFilter: FEATURING_STORIES_FILTER,
-        title: 'Featuring tales',
-      });
-    }, [navigation]);
+    const {
+      handleSeeAllTales,
+      handleSeeFeaturingTales,
+      handleSeeFreeTales,
+      handleSeePopularTales,
+    } = useDefaultListNavigation();
 
-    const handleSeeAllTales = useCallback(() => {
-      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME));
-    }, [navigation]);
-
-    const handleSeePopularTales = useCallback(() => {
-      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
-        storiesFilter: POPULAR_STORIES_FILTER,
-        storiesSortConfigs: POPULAR_STORIES_CONFIG,
-        title: 'Popular tales',
-      });
-    }, [navigation]);
-
-    const handleSeeFreeTales = useCallback(() => {
-      navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
-        storiesFilter: FREE_STORIES_FILTER,
-        title: 'Free tales',
-      });
-    }, [navigation]);
     const handleScrollToTop = useCallback(() => {
       onScroll?.({
         nativeEvent: {

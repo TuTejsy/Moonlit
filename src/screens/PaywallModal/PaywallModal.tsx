@@ -1,12 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
-
-import {
-  adapty,
-  AdaptyPaywallProduct,
-  AdaptyProfile,
-  AdaptyPurchaseResult,
-} from 'react-native-adapty';
 
 import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
@@ -16,20 +9,19 @@ import {
   SWITCH_PLACEMENT_ID,
 } from '@/constants/common';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
 import { PAYWALL_TYPE } from '@/services/analytics/analytics.constants';
-import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
-import { unlockFullVersion } from '@/store/user/user.slice';
 
 import { PaywallBackground } from './components/PaywallBackground/PaywallBackground';
 import { ScrollablePaywallContent } from './contentVariants/ScrollablePaywallContent/ScrollablePaywallContent';
 import { SelectionPaywallContent } from './contentVariants/SelectionPaywallContent/SelectionPaywallContent';
 import { SwitcherPaywallContent } from './contentVariants/SwitcherPaywallContent/SwitcherPaywallContent';
+import { usePaywallActions } from './hooks/usePaywallActions';
+import { usePaywallProducts } from './hooks/usePaywallProducts';
 import { makeStyles } from './PaywallModal.styles';
 
 export const PaywallModal = () => {
@@ -48,133 +40,26 @@ export const PaywallModal = () => {
   );
   const styles = useMakeStyles(makeStyles, stylesContext);
 
-  const dispatch = useAppDispatch();
+  const {
+    isFreeTrialEnabled,
+    isTrialEligible,
+    selectedProduct,
+    setSelectedProduct,
+    trialProduct,
+    unlockButtonText,
+    weeklyProduct,
+    yearlyProduct,
+  } = usePaywallProducts(products);
 
-  const trialProduct = useMemo(
-    () => products.find((product) => !!product.subscription?.offer),
-    [products],
-  );
-
-  const weeklyProduct = useMemo(
-    () =>
-      products.find(
-        (product) =>
-          !product.subscription?.offer && product.price?.amount === trialProduct?.price?.amount,
-      ),
-    [products, trialProduct?.price?.amount],
-  );
-
-  const yearlyProduct = useMemo(
-    () =>
-      products.find(
-        (product) =>
-          !product.subscription?.offer &&
-          product.price?.amount &&
-          trialProduct?.price?.amount &&
-          product.price.amount > trialProduct.price.amount,
-      ),
-    [products, trialProduct?.price?.amount],
-  );
-
-  const isTrialEligible = !!trialProduct;
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<AdaptyPaywallProduct | undefined>(
-    remoteConfigService.toggleState && isTrialEligible ? trialProduct : yearlyProduct,
-  );
-
-  const isFreeTrialEnabled = selectedProduct === trialProduct;
-  const unlockButtonText = isFreeTrialEnabled
-    ? remoteConfigService.buyButtonTextTrial
-    : remoteConfigService.buyButtonTextNoTrial;
-
-  const onPurchaseRestore = useCallback(
-    (profile: AdaptyProfile) => {
-      const isSubscribed = profile.accessLevels?.premium?.isActive;
-
-      if (isSubscribed) {
-        dispatch(unlockFullVersion());
-        AnalyticsService.setIsUserPaid(true);
-
-        if (onClose) {
-          onClose();
-        } else {
-          navigation.goBack();
-        }
-      }
-    },
-    [dispatch, navigation, onClose],
-  );
-
-  const makeOnPurchase = useCallback(
-    (product: AdaptyPaywallProduct | null) => (purhcaseResult: AdaptyPurchaseResult) => {
-      const isSubscribed = purhcaseResult.type === 'success';
-
-      if (isSubscribed) {
-        dispatch(unlockFullVersion());
-        AnalyticsService.setIsUserPaid(true);
-
-        if (product) {
-          AnalyticsService.logStartSubscriptionEvent({
-            contentName,
-            hasTrial: isFreeTrialEnabled,
-            productId: product.vendorProductId,
-            source,
-            tab,
-            type: PAYWALL_TYPE.WITH_SWITCHER,
-          });
-        }
-
-        if (onClose) {
-          onClose();
-        } else {
-          navigation.goBack();
-        }
-      }
-    },
-    [contentName, dispatch, isFreeTrialEnabled, navigation, onClose, source, tab],
-  );
-
-  const handleSkipPress = useCallback(() => {
-    if (onClose) {
-      onClose();
-    } else {
-      navigation.goBack();
-    }
-
-    AnalyticsService.logPaywallClosedEvent({
-      contentName,
-      source,
-      tab,
-      type: PAYWALL_TYPE.WITH_SWITCHER,
-    });
-  }, [contentName, navigation, onClose, source, tab]);
-
-  const handleUnlockPress = useCallback(() => {
-    if (selectedProduct) {
-      setIsLoading(true);
-
-      adapty
-        .makePurchase(selectedProduct)
-        .then(makeOnPurchase(selectedProduct))
-        .catch(console.error)
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [makeOnPurchase, selectedProduct]);
-
-  const handleRestorePress = useCallback(() => {
-    setIsLoading(true);
-
-    adapty
-      .restorePurchases()
-      .then(onPurchaseRestore)
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [onPurchaseRestore]);
+  const { handleRestorePress, handleSkipPress, handleUnlockPress, isLoading } = usePaywallActions({
+    contentName,
+    isFreeTrialEnabled,
+    navigation,
+    onClose,
+    selectedProduct,
+    source,
+    tab,
+  });
 
   const renderPaywallContent = useCallback(() => {
     switch (placementId) {
@@ -238,6 +123,7 @@ export const PaywallModal = () => {
     isTrialEligible,
     placementId,
     selectedProduct,
+    setSelectedProduct,
     trialProduct,
     unlockButtonText,
     weeklyProduct,

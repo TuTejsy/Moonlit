@@ -1,36 +1,23 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { View, Image } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, {
-  Extrapolation,
-  interpolate,
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { IS_ANDROID } from '@/constants/common';
-import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppLocalization } from '@/localization/useAppLocalization';
-import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
-import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
-import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { AnalyticsService } from '@/services/analytics/analytics';
-import { SOURCE } from '@/services/analytics/analytics.constants';
-import { storage } from '@/services/storage/storage';
-import { StorageKeys } from '@/services/storage/storage.constants';
 
 import { StepIndicator } from './components/StepIndicator/StepIndicator';
-import { ANIMATION_DAMPING, ANIMATION_STIFFNESS, STEPS } from './GetStartedScreen.constants';
+import { STEPS } from './GetStartedScreen.constants';
 import { makeStyles } from './GetStartedScreen.styles';
+import { useOnboardingAnimations } from './hooks/useOnboardingAnimations';
+import { useOnboardingSteps } from './hooks/useOnboardingSteps';
 
 export const GetStartedScreen = () => {
   const styles = useMakeStyles(makeStyles);
@@ -38,96 +25,18 @@ export const GetStartedScreen = () => {
   const { windowWidth } = useLayout();
   const { localize } = useAppLocalization();
 
-  const navigation = useAppNavigation<RootRoutes.GET_STARTED_SCREEN>();
+  const { currentStepSharedValue, handleBackPress, handleContinuePress } = useOnboardingSteps();
 
-  const currentStepRef = useRef(0);
-  const currentStepSharedValue = useSharedValue(currentStepRef.current);
-  const currentTranslateXSharedValue = useDerivedValue(
-    () => -currentStepSharedValue.value * windowWidth,
-  );
-
-  const handleClosePaywallModal = useCallback(() => {
-    navigation.replace(RootRoutes.TAB, {
-      screen: SharedRoutes.HOME,
-    });
-  }, [navigation]);
-
-  const { showPaywallModal } = useShowPaywallModal({
-    animationType: 'push',
-    onClose: handleClosePaywallModal,
-    shouldReplace: true,
+  const {
+    backButtonAnimatedStyle,
+    stepDescriptionsAnimatedStyle,
+    stepImagesAnimatedStyle,
+    stepTagsAnimatedStyle,
+    stepTitlesAnimatedStyle,
+  } = useOnboardingAnimations({
+    currentStepSharedValue,
+    windowWidth,
   });
-
-  const handleContinuePress = useCallback(() => {
-    if (currentStepRef.current === STEPS.length - 1) {
-      storage.set(StorageKeys.isOnboarded, true);
-
-      showPaywallModal({ source: SOURCE.ONBOARDING });
-    } else {
-      currentStepRef.current += 1;
-      AnalyticsService.logOnboardingEvent({ screen: currentStepRef.current + 1 });
-    }
-
-    currentStepSharedValue.value = withTiming(currentStepRef.current);
-  }, [currentStepSharedValue, showPaywallModal]);
-
-  const handleBackPress = useCallback(() => {
-    if (currentStepRef.current !== 0) {
-      currentStepRef.current -= 1;
-      currentStepSharedValue.value = withTiming(currentStepRef.current);
-    }
-  }, [currentStepSharedValue]);
-
-  const stepImagesAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: withSpring(currentTranslateXSharedValue.value, {
-          damping: ANIMATION_DAMPING,
-          mass: 1,
-        }),
-      },
-    ],
-  }));
-
-  const stepTagsAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: withSpring(currentTranslateXSharedValue.value, {
-          damping: ANIMATION_DAMPING,
-          mass: 1.3,
-          stiffness: ANIMATION_STIFFNESS,
-        }),
-      },
-    ],
-  }));
-
-  const stepTitlesAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: withSpring(currentTranslateXSharedValue.value, {
-          damping: ANIMATION_DAMPING,
-          mass: 1.3,
-          stiffness: ANIMATION_STIFFNESS,
-        }),
-      },
-    ],
-  }));
-
-  const stepDescriptionsAnimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: withSpring(currentTranslateXSharedValue.value, {
-          damping: ANIMATION_DAMPING,
-          mass: 1.7,
-          stiffness: ANIMATION_STIFFNESS,
-        }),
-      },
-    ],
-  }));
-
-  const backButtonAnimatedStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(currentStepSharedValue.value, [0, 1], [0, 1], Extrapolation.CLAMP),
-  }));
 
   useEffect(() => {
     AnalyticsService.setIsUserPaid(false);
