@@ -2,6 +2,8 @@ import { renderHook } from '@testing-library/react-native';
 
 import { useUnmount } from '../useUnmount';
 
+jest.unmock('@/hooks/useUnmount');
+
 describe('useUnmount', () => {
   it('calls the callback on unmount', () => {
     const callback = jest.fn();

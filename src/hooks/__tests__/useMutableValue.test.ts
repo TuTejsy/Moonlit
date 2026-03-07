@@ -2,6 +2,8 @@ import { renderHook } from '@testing-library/react-native';
 
 import { useMutableValue } from '../useMutableValue';
 
+jest.unmock('@/hooks/useMutableValue');
+
 describe('useMutableValue', () => {
   it('returns a ref with the initial value', () => {
     const { result } = renderHook(() => useMutableValue(42));

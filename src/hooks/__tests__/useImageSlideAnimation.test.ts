@@ -2,6 +2,8 @@ import { renderHook } from '@testing-library/react-native';
 
 import { useImageSlideAnimation } from '../useImageSlideAnimation';
 
+jest.unmock('@/hooks/useImageSlideAnimation');
+
 describe('useImageSlideAnimation', () => {
   it('returns handleImageLayout and imageAnimatedStyle', () => {
     const { result } = renderHook(() => useImageSlideAnimation(300));

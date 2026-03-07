@@ -2,6 +2,8 @@ import { renderHook } from '@testing-library/react-native';
 
 import { useScrollOpacity } from '../useScrollOpacity';
 
+jest.unmock('@/hooks/useScrollOpacity');
+
 describe('useScrollOpacity', () => {
   it('returns handleOpacityScroll and opacityAnimStyle', () => {
     const { result } = renderHook(() => useScrollOpacity());

@@ -3,6 +3,8 @@ import * as amplitude from '@amplitude/analytics-react-native';
 import { AnalyticsService } from '../analytics/analytics';
 import { SOURCE, PAYWALL_TYPE } from '../analytics/analytics.constants';
 
+jest.unmock('@/services/analytics/analytics');
+
 const mockLogEvent = jest.fn();
 const mockSetUserProperties = jest.fn();
 

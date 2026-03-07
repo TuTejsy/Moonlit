@@ -2,6 +2,8 @@ import { renderHook, act } from '@testing-library/react-native';
 
 import { useImageLoaded } from '../useImageLoaded';
 
+jest.unmock('@/hooks/useImageLoaded');
+
 describe('useImageLoaded', () => {
   it('starts with isImageLoaded as false', () => {
     const { result } = renderHook(() => useImageLoaded());

@@ -2,6 +2,8 @@ import { renderHook } from '@testing-library/react-native';
 
 import { useAppDispatch } from '../useAppDispatch';
 
+jest.unmock('@/hooks/useAppDispatch');
+
 jest.mock('react-redux', () => ({
   useDispatch: jest.fn().mockReturnValue(jest.fn()),
 }));

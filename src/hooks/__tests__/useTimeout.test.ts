@@ -2,6 +2,8 @@ import { renderHook, act } from '@testing-library/react-native';
 
 import { useTimeout } from '../useTimeout';
 
+jest.unmock('@/hooks/useTimeout');
+
 jest.useFakeTimers();
 
 describe('useTimeout', () => {

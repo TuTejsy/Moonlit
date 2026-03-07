@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 
 import { useAppSelector } from '../useAppSelector';
 
+jest.unmock('../useAppSelector');
+jest.unmock('@/hooks/useAppSelector');
+
 jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
 }));

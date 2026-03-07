@@ -2,6 +2,8 @@ import { renderHook, act } from '@testing-library/react-native';
 
 import { useDelayedValue } from '../useDelayedValue';
 
+jest.unmock('@/hooks/useDelayedValue');
+
 jest.useFakeTimers();
 
 describe('useDelayedValue', () => {

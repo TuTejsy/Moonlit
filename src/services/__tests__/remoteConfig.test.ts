@@ -6,6 +6,8 @@ import {
   REMOTE_CONFIG_FIELDS,
 } from '../remoteConfig/remoteConfig.constants';
 
+jest.unmock('@/services/remoteConfig/remoteConfig');
+
 jest.mock('@react-native-firebase/remote-config', () => {
   const mockGetValue = jest.fn().mockReturnValue({
     asBoolean: jest.fn().mockReturnValue(false),

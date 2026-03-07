@@ -3,6 +3,8 @@ import { TabRoutes } from '@/navigation/TabNavigator/TabNavigator.routes';
 
 import { navigationService } from '../navigation/navigationService';
 
+jest.unmock('@/services/navigation/navigationService');
+
 jest.mock('@/navigation/RootNavigator/RootNavigator.types', () => ({}));
 jest.mock('@/navigation/types/allRoutes', () => ({}));
 jest.mock('@/navigation/types/props', () => ({}));

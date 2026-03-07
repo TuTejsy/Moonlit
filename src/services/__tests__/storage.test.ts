@@ -1,6 +1,8 @@
 import { storage, getStorageData } from '../storage/storage';
 import { StorageKeys } from '../storage/storage.constants';
 
+jest.unmock('@/services/storage/storage');
+
 jest.mock('react-native-mmkv', () => {
   const store: Record<string, string | boolean | number> = {};
 
