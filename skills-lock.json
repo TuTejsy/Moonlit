@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "react-native-testing": {
+      "source": "callstack/react-native-testing-library",
+      "sourceType": "github",
+      "computedHash": "7ffa231b9f3e4caefca0cc45de10871a0455968f9466c46d1f49ff95527cba28"
+    },
     "vercel-composition-patterns": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",

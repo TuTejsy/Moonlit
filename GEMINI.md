@@ -13,7 +13,7 @@ Moonlit is a React Native mobile application featuring fairytales for children.
 - **Framework**: Bare React Native (Do NOT use Expo).
 - **Language**: TypeScript. Use strict typing for all components, functions, props, and state. NEVER use force unwrapping (`!`) or casting to `any` (`as any`).
 - **Navigation**: Use `react-navigation`.
-- **Testing**: `jest` for unit tests, `@testing-library/react-native` for integration tests. ALWAYS add global jest mocks to the created `setupJest.ts` file.
+- **Testing**: `jest` for unit tests, `@testing-library/react-native` for integration tests. ALWAYS add global jest mocks to the created `setupJest.ts` file. ALWAYS use the `react-native-testing` skill when writing unit or integration tests. Ignore this skill in other scenarios.
 
 ### UI & Styling System (`useMakeStyles`)
 
