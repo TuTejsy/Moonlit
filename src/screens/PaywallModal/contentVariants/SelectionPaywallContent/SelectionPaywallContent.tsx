@@ -9,10 +9,10 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { FooterActions } from '../../components/FooterActions/FooterActions';
-import { TrialSwitch } from '../components/TrialSwitch/TrialSwitch';
 // eslint-disable-next-line import/no-unresolved
 import voicesImage from '../../images/voices/voices.png';
 import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.png';
+import { TrialSwitch } from '../components/TrialSwitch/TrialSwitch';
 
 import { WeeklyProductCard } from './components/WeeklyProductCard/WeeklyProductCard';
 import { YearlyProductCard } from './components/YearlyProductCard/YearlyProductCard';
