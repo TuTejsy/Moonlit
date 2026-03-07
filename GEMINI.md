@@ -11,7 +11,7 @@ Moonlit is a React Native mobile application featuring fairytales for children.
 
 - **Package Manager**: ALWAYS use `yarn`. ALWAYS run `yarn restart` after adding or removing dependencies in `package.json`.
 - **Framework**: Bare React Native (Do NOT use Expo).
-- **Language**: TypeScript. Use strict typing for all components, functions, props, and state.
+- **Language**: TypeScript. Use strict typing for all components, functions, props, and state. NEVER use force unwrapping (`!`) or casting to `any` (`as any`).
 - **Navigation**: Use `react-navigation`.
 - **Testing**: `jest` for unit tests, `@testing-library/react-native` for integration tests.
 
@@ -26,6 +26,9 @@ Moonlit is a React Native mobile application featuring fairytales for children.
   - Safe area values (e.g., integrating with `react-native-safe-area-context`).
   - The ability to pass custom variables to generate conditional styles dynamically.
 - **No External UI Libraries**: Do not use component libraries (like NativeBase, UI Kitten, etc.). Rely solely on the customized `useMakeStyles` architecture.
+- **Strict Rule**: ALWAYS use `TextView` component from `src/components/Primitives/TextView/TextView.tsx` instead of `Text` from `react-native`.
+- **Strict Rule**: ALWAYS use `PressableView` component from `src/components/Primitives/PressableView/PressableView.tsx` for all clickable elements instead of React Native's `Button`, `TouchableOpacity`, `TouchableFeedback` and other clickable components.
+- **Strict Rule**: NEVER use hardcoded text. ALWAYS use the `localize` function from the `useAppLocalization` (`src/localization/useAppLocalization.ts`) hook. Before adding any text, check if it exists in `src/localization/locals` and use its key if it exists, or add a new one to the relevant file.
 
 ### Architectural Principles
 
