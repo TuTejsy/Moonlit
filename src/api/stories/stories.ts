@@ -22,7 +22,7 @@ export const StoriesRepository = {
   getConfig: async () => {
     const response = await networkClient.instance.get<GetConfigResponse>('config');
 
-    return response.data.data;
+    return response.data;
   },
 
   getStories: async () => {
