@@ -44,3 +44,9 @@ export interface GetStoriesResponse {
 export interface GetAudioRecordingsResponse {
   data: AudioRecording[];
 }
+
+export interface GetConfigResponse {
+  data: {
+    s3AccessToken?: string;
+  };
+}

@@ -2,6 +2,9 @@
 
 This document provides essential context about the Moonlit React Native mobile application. It is designed to help AI assistants (like Antigravity) understand the project's architecture, dependencies, and structure to provide context-aware and high-quality assistance.
 
+> 🚨 **META RULE: CONTINUOUS CONTEXT MAINTENANCE** 🚨
+> As an AI agent (e.g., Antigravity, Cursor, etc.), you **MUST ALWAYS** update this `GEMINI.md` file whenever you introduce or modify new core services, global utilities, meaningful architectural patterns, or standard practices in the project. You must proactively document these additions to ensure this file remains the highly-accurate, single source of truth and memory for future sessions. Failure to do so will result in lost coding context.
+
 ## Product Context
 
 Moonlit is a React Native mobile application featuring fairytales for children.
@@ -14,6 +17,7 @@ Moonlit is a React Native mobile application featuring fairytales for children.
 - **Language**: TypeScript. Use strict typing for all components, functions, props, and state. NEVER use force unwrapping (`!`) or casting to `any` (`as any`).
 - **Navigation**: Use `react-navigation`.
 - **Testing**: `jest` for unit tests, `@testing-library/react-native` for integration tests. ALWAYS add global jest mocks to the created `setupJest.ts` file. ALWAYS use the `react-native-testing` skill when writing unit or integration tests. Ignore this skill in other scenarios.
+  - 🚨 **META RULE: CONTINUOUS TESTING** 🚨 As an AI agent, you **MUST ALWAYS** update existing tests or implement new unit/integration tests whenever you modify or add any components, hooks, utilities, or services. You must verify that `yarn test` passes completely before concluding any task involving logic or UI changes. Code changes without corresponding test updates are strictly prohibited.
 
 ### UI & Styling System (`useMakeStyles`)
 
@@ -44,6 +48,8 @@ Moonlit is a React Native mobile application featuring fairytales for children.
 5. **Navigation Hooks**: ALWAYS use the custom `useAppRoute` (from `src/navigation/hooks/useAppRoute.ts`) and `useAppNavigation` (from `src/navigation/hooks/useAppNavigation.ts`) hooks for navigation. NEVER use the `useRoute` and `useNavigation` hooks directly from `@react-navigation/native`.
 6. **Security & Secrets**: ALWAYS store secrets and sensitive keys in the `src/constants/auth.ts` file. NEVER use `.env` files for secrets, because `.env` files might be extracted from unarchived builds (`.ipa`/`.apk`), whereas `auth.ts` is ignored by Git and injected only during the build process, making it safer.
 7. **Interface Segregation**: ALWAYS follow the Interface Segregation principle from SOLID during React component creation. A component should ALWAYS receive only the specific data fields it needs via props, NEVER a whole, large object.
+8. **App Initialization & Blocking**: The `useInitApp` hook (`src/hooks/useInitApp.ts`) MUST be utilized to block the app from rendering its main content until all required data is fetched or necessary configuration is complete. If the app needs to execute ANY operation that is crucial for its core functionality before becoming interactive, it MUST be implemented within this hook.
+9. **Secure Storage**: ALWAYS use the `SecuredStorage` service (`src/services/securedStorage/securedStorage.ts`) to store, read, or delete sensitive user data (like tokens or credentials). NEVER use `AsyncStorage`, `react-native-mmkv`, or direct `react-native-keychain` access for sensitive information across the app. The `SecuredStorage` service abstracts the underlying secure storage implementation, ensuring that the actual persistence mechanism can be easily swapped in the future without affecting the consuming codebase.
 
 ## Project Structure
 

@@ -994,3 +994,13 @@ jest.mock('@/components/Primitives/ScrollShadow/ScrollShadow', () => ({
 jest.mock('@/components/PromotionBanner/PromotionBanner', () => ({
   PromotionBanner: 'PromotionBanner',
 }));
+
+// Mock react-native-keychain
+jest.mock('react-native-keychain', () => ({
+  SECURITY_LEVEL_ANY: 'MOCK_SECURITY_LEVEL_ANY',
+  SECURITY_LEVEL_SECURE_HARDWARE: 'MOCK_SECURITY_LEVEL_SECURE_HARDWARE',
+  SECURITY_LEVEL_SECURE_SOFTWARE: 'MOCK_SECURITY_LEVEL_SECURE_SOFTWARE',
+  getGenericPassword: jest.fn().mockResolvedValue(false),
+  resetGenericPassword: jest.fn().mockResolvedValue(true),
+  setGenericPassword: jest.fn().mockResolvedValue(true),
+}));

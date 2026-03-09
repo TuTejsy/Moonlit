@@ -1,7 +1,7 @@
 import { SERVER_URL } from '@/constants/common';
 import { NetworkClient } from '@/services/networkClient/networkClient';
 
-import { GetAudioRecordingsResponse, GetStoriesResponse } from './stories.types';
+import { GetAudioRecordingsResponse, GetConfigResponse, GetStoriesResponse } from './stories.types';
 
 const networkClient = new NetworkClient({
   baseURL: SERVER_URL,
@@ -15,6 +15,12 @@ export const StoriesRepository = {
         params: { storyId },
       },
     );
+
+    return response.data.data;
+  },
+
+  getConfig: async () => {
+    const response = await networkClient.instance.get<GetConfigResponse>('config');
 
     return response.data.data;
   },
