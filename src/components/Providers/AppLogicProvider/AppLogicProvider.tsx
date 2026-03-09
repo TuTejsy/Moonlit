@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { ViewProps } from 'react-native';
 
 import { useStoriesUpdate } from '@/hooks/content/useStoriesUpdate';

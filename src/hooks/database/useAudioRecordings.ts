@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 
-import Realm, { CollectionChangeCallback } from 'realm';
+import Realm from 'realm';
 
 import { AudioRecordingsDB } from '@/database';
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
@@ -18,7 +18,7 @@ const DEFAULT_SORT_CONFIG: SortConfig = {
 export function useAudioRecordings(
   filter?: string,
   sortConfig?: SortConfig,
-): [Realm.Results<AudioRecordingSchema>, number] {
+): [Realm.Results<Realm.Object<AudioRecordingSchema> & AudioRecordingSchema>, number] {
   const audioRecordings = useMemo(() => {
     let result = AudioRecordingsDB.objects();
 
@@ -41,7 +41,7 @@ export function useAudioRecordings(
   const audioRecordingsVersionRef = useRef(audioRecordingsVersion);
 
   useEffect(() => {
-    const listener: CollectionChangeCallback<AudioRecordingSchema> = (nextCollection) => {
+    const listener = () => {
       setaudioRecordingsVersion(++audioRecordingsVersionRef.current);
     };
 

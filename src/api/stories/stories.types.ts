@@ -46,4 +46,3 @@ export interface GetAudioRecordingsResponse {
 }
 
 export interface GetConfigResponse {}
-
