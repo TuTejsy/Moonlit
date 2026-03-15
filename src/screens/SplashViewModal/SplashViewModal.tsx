@@ -13,6 +13,7 @@ import Animated, {
 import { scheduleOnRN } from 'react-native-worklets';
 
 import { Icons } from '@/assets/icons/Icons';
+import { useCredentialsConfig } from '@/hooks/core/useCredentialsConfig';
 import { useShowPaywallModal } from '@/hooks/navigation/useShowPaywallModal';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -42,6 +43,7 @@ export const SplashViewModal = () => {
     animationType: 'modal',
     shouldReplace: true,
   });
+  const { isConfigLoaded } = useCredentialsConfig();
 
   const { isOnboarded } = getStorageData();
 
@@ -102,7 +104,7 @@ export const SplashViewModal = () => {
   }));
 
   useEffect(() => {
-    if (areProductsLoaded) {
+    if (areProductsLoaded && isConfigLoaded) {
       animationProgress.value = withTiming(1, { duration: 1000 }, (finished?: boolean) => {
         'worklet';
 
@@ -116,7 +118,7 @@ export const SplashViewModal = () => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [areProductsLoaded]);
+  }, [areProductsLoaded, isConfigLoaded]);
 
   useEffect(() => {
     pulseAnimationProgress.value = withRepeat(
