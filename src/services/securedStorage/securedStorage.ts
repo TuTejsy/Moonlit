@@ -1,7 +1,10 @@
 import * as Keychain from 'react-native-keychain';
 
 export enum SecuredStorageKey {
-  s3AccessToken = 's3AccessToken',
+  awsAccessToken = 'awsAccessToken',
+  awsAccountId = 'awsAccountId',
+  awsConnectionString = 'awsConnectionString',
+  awsSecretKey = 'awsSecretKey',
 }
 
 /**

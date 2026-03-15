@@ -45,4 +45,3 @@ export interface GetAudioRecordingsResponse {
   data: AudioRecording[];
 }
 
-export interface GetConfigResponse {}
