@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -17,7 +17,7 @@ import { makeStyles } from './AIVoiceScreen.styles';
 import type { AIVoiceScreenProps } from './AIVoiceScreen.types';
 import { SelectStoryList } from './components/SelectStoryList/SelectStoryList';
 
-export const AIVoiceScreen = memo((_props: AIVoiceScreenProps) => {
+export const AIVoiceScreen = (_props: AIVoiceScreenProps) => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
   const { localize } = useAppLocalization();
@@ -44,8 +44,8 @@ export const AIVoiceScreen = memo((_props: AIVoiceScreenProps) => {
   return (
     <View style={styles.screen}>
       <LinearGradient
-        colors={[colors.purple, colors.darkPurple]}
-        locations={[0.3, 1]}
+        colors={[colors.purple, colors.opacityPink(0.1)]}
+        locations={[0.4, 0.8]}
         style={styles.gradient}
       >
         <ScrollView
@@ -105,6 +105,4 @@ export const AIVoiceScreen = memo((_props: AIVoiceScreenProps) => {
       </LinearGradient>
     </View>
   );
-});
-
-AIVoiceScreen.displayName = 'AIVoiceScreen';
+};

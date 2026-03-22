@@ -8,6 +8,7 @@ export const makeStyles = ({
   horizontalPadding,
   insets,
   sufficientWindowWidth,
+  windowHeight,
 }: MakeStylesProps) =>
   StyleSheet.create({
     createVoiceButton: {

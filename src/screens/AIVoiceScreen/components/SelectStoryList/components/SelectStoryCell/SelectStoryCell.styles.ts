@@ -21,7 +21,7 @@ export const makeStyles = (
       borderStyle: 'solid',
       borderWidth: 4,
       height: CARD_HEIGHT,
-      marginRight: 16,
+      marginRight: 8,
       overflow: 'hidden',
       width: CARD_WIDTH,
     },
