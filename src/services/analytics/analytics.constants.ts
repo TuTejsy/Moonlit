@@ -1,4 +1,5 @@
 export enum SOURCE {
+  AI_VOICE_SCREEN = 'ai_voice_screen',
   ALL_VOICES = 'all_voices',
   COLD_START = 'cold_start',
   CONTENT = 'content',

@@ -1,4 +1,5 @@
 export const commonColors = {
+  accentPurple: '#C5A4FF',
   black: '#000000',
   gradientButtonEnd: 'rgba(205, 160, 243, 1)',
   gradientButtonMiddle: 'rgba(162, 67, 239, 1)',

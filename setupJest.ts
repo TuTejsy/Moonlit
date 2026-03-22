@@ -265,6 +265,7 @@ jest.mock('@/hooks/theme/useMakeStyles', () => ({
     try {
       const theme = {
         colors: {
+          accentPurple: '#C5A4FF',
           black: '#000000',
           dark: '#2D2D2D',
           darkBlack: '#141C1A',
@@ -324,6 +325,7 @@ jest.mock('@/hooks/theme/useTheme', () => ({
   ThemeValues: { Dark: 'Dark' },
   useTheme: jest.fn().mockReturnValue({
     colors: {
+      accentPurple: '#C5A4FF',
       black: '#000000',
       dark: '#2D2D2D',
       darkBlack: '#141C1A',

@@ -14,6 +14,10 @@ import { getRouteNameForTab } from '@/utils/navigation/getRouteNameForTab';
 export const useDefaultListNavigation = () => {
   const navigation = useAppNavigation<SharedRoutes.HOME>();
 
+  const handleCreateAIVoice = useCallback(() => {
+    navigation.navigate(TabRoutes.AI_VOICE);
+  }, [navigation]);
+
   const handleSeeFeaturingTales = useCallback(() => {
     navigation.push(getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME), {
       storiesFilter: FEATURING_STORIES_FILTER,
@@ -41,6 +45,7 @@ export const useDefaultListNavigation = () => {
   }, [navigation]);
 
   return {
+    handleCreateAIVoice,
     handleSeeAllTales,
     handleSeeFeaturingTales,
     handleSeeFreeTales,

@@ -3,10 +3,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import { CreateYourVoiceButton } from '../Buttons/CreateYourVoiceButton/CreateYourVoiceButton';
-import {
-  TEST_ID_CREATE_YOUR_VOICE_BUTTON,
-  TEST_ID_CREATE_YOUR_VOICE_PRESSABLE,
-} from '../Buttons/CreateYourVoiceButton/CreateYourVoiceButton.constants';
+import { TEST_ID_CREATE_YOUR_VOICE_BUTTON } from '../Buttons/CreateYourVoiceButton/CreateYourVoiceButton.constants';
 
 describe('CreateYourVoiceButton', () => {
   it('renders correctly', () => {
@@ -19,7 +16,7 @@ describe('CreateYourVoiceButton', () => {
     const onPressMock = jest.fn();
     render(<CreateYourVoiceButton onPress={onPressMock} />);
 
-    const pressable = screen.getByTestId(TEST_ID_CREATE_YOUR_VOICE_PRESSABLE);
+    const pressable = screen.getByTestId(TEST_ID_CREATE_YOUR_VOICE_BUTTON);
     fireEvent.press(pressable);
 
     expect(onPressMock).toHaveBeenCalledTimes(1);

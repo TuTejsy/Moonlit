@@ -1,9 +1,11 @@
 export const commonLocalization = {
   en: {
     back: 'Back',
+    chooseATale: 'Choose a tale',
     close: 'Close',
     comingSoon: 'Coming soon',
     continue: 'Continue',
+    createYourFairytale: 'Create your fairytale',
     createYourVoice: 'Create your voice',
     free: 'Free',
     min: 'min',

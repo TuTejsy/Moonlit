@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 
 import { useScrollToTop } from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Realm from 'realm';
 
@@ -78,6 +77,7 @@ export const DefaultList = React.memo(
     const [freeStories, freeStoriesVersion] = useStories(FREE_STORIES_FILTER, undefined, 5);
 
     const {
+      handleCreateAIVoice,
       handleSeeAllTales,
       handleSeeFeaturingTales,
       handleSeeFreeTales,
@@ -136,7 +136,10 @@ export const DefaultList = React.memo(
       >
         <View style={styles.header}>
           <MoonlitHeader />
-          <CreateYourVoiceButton style={styles.createYourVoiceButton} onPress={() => {}} />
+          <CreateYourVoiceButton
+            style={styles.createYourVoiceButton}
+            onPress={handleCreateAIVoice}
+          />
         </View>
 
         <SectionHeader

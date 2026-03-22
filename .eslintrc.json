@@ -21,10 +21,7 @@
     "react-hooks",
     "@typescript-eslint",
     "react-native",
-    "require-explicit-generics",
-    "sort-destructure-keys",
-    "typescript-sort-keys",
-    "sort-keys-fix"
+    "require-explicit-generics"
   ],
   "env": {
     "amd": true,
@@ -208,50 +205,6 @@
           "consistent": true,
           "multiline": true
         }
-      }
-    ],
-    "sort-destructure-keys/sort-destructure-keys": [
-      1,
-      {
-        "caseSensitive": true
-      }
-    ],
-    "typescript-sort-keys/interface": [
-      1,
-      "asc",
-      {
-        "caseSensitive": true,
-        "natural": true,
-        "requiredFirst": true
-      }
-    ],
-    "typescript-sort-keys/string-enum": [
-      1,
-      "asc",
-      {
-        "caseSensitive": true,
-        "natural": true
-      }
-    ],
-    "react/jsx-sort-props": [
-      1,
-      {
-        "callbacksLast": true,
-        "shorthandFirst": true,
-        "shorthandLast": false,
-        "multiline": "last",
-        "ignoreCase": false,
-        "noSortAlphabetically": false,
-        "reservedFirst": true,
-        "locale": "auto"
-      }
-    ],
-    "sort-keys-fix/sort-keys-fix": [
-      1,
-      "asc",
-      {
-        "caseSensitive": true,
-        "natural": true
       }
     ]
   }
