@@ -5,7 +5,6 @@ import { useScrollToTop } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Realm from 'realm';
 
-import { CreateYourVoiceButton } from '@/components/Buttons/CreateYourVoiceButton/CreateYourVoiceButton';
 import { LargeStoriesList } from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumStoriesList';
 import { MoreTalesComingFooter } from '@/components/Lists/MoreTalesComingFooter/MoreTalesComingFooter';
@@ -126,8 +125,6 @@ export const DefaultList = React.memo(
         onScrollEndDrag={handleScrollEndDrag}
         onScrollToTop={handleScrollToTop}
       >
-        <CreateYourVoiceButton onPress={() => {}} />
-
         <SectionHeader
           title={localize('home', 'featuringTales')}
           onSeeAllPress={handleSeeFeaturingTales}
