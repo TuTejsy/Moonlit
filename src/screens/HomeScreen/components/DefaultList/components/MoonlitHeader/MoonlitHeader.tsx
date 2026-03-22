@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { Icons } from '@/assets/icons/Icons';
+import { MoonlitStars } from '@/components/Decorations/MoonlitStars/MoonlitStars';
 import { GradientTextView } from '@/components/Primitives/GradientTextView/GradientTextView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -14,7 +15,6 @@ import {
 } from './MoonlitHeader.constants';
 import { makeStyles } from './MoonlitHeader.styles';
 import { MoonlitHeaderProps } from './MoonlitHeader.types';
-import { MoonlitStars } from './MoonlitStars';
 
 export const MoonlitHeader = ({ style, ...props }: MoonlitHeaderProps) => {
   const styles = useMakeStyles(makeStyles);
