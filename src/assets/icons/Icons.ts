@@ -18,6 +18,7 @@ import { Share } from './common/Share';
 import { Star } from './common/Star';
 import { Unlock } from './common/Unlock';
 import { Waveframe } from './common/Waveframe';
+import { AIVoiceTab } from './navigation/AIVoiceTab';
 import { ArrowBack } from './navigation/ArrowBack';
 import { Close } from './navigation/Close';
 import { FavoritesTab } from './navigation/FavoritesTab';
@@ -36,6 +37,7 @@ import { PlayBig } from './player/PlayBig';
 import { PlaySmall } from './player/PlaySmall';
 
 export const Icons = {
+  AIVoiceTab,
   ArrowBack,
   Check,
   Clock,

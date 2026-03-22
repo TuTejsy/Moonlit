@@ -54,6 +54,17 @@ Moonlit is a React Native mobile application featuring fairytales for children.
 7. **Interface Segregation**: ALWAYS follow the Interface Segregation principle from SOLID during React component creation. A component should ALWAYS receive only the specific data fields it needs via props, NEVER a whole, large object.
 8. **Secure Storage**: ALWAYS use the `SecuredStorage` service (`src/services/securedStorage/securedStorage.ts`) to store, read, or delete sensitive user data (like tokens or credentials). NEVER use `AsyncStorage`, `react-native-mmkv`, or direct `react-native-keychain` access for sensitive information across the app. The `SecuredStorage` service abstracts the underlying secure storage implementation, ensuring that the actual persistence mechanism can be easily swapped in the future without affecting the consuming codebase.
 9. **Global App Logic & Operations**: ALWAYS use the `AppLogicProvider` (`src/components/Providers/AppLogicProvider/AppLogicProvider.tsx`) as the central orchestrator for global app-level side effects, background fetchings, and initialization logic. This component is the designated place to invoke global custom hooks (e.g., tracking app launches, downloading previews, updating content) to keep individual screens clean and focused purely on UI presentation. DO NOT add global background logic to navigation routers or root components directly; place it inside `AppLogicProvider` instead.
+### Database Access & Realm Hooks
+
+- **Strict Rule**: ALWAYS use the custom hooks from `src/hooks/database/` to subscribe to and interact with Realm database objects instead of using `Realm` queries directly inside components. These hooks provide reactive wrapper over Realm results, thus automatically triggering re-renders when the underlying data is mutated in the database, preventing stale UI.
+- **Available Data Hooks**:
+  - `useStory(storyId, propsToWatch?)`: Retrieves a single `StorySchema` object by its ID and reacts to changes. Use `propsToWatch` (array of property names) to optimize performance by limiting re-renders to explicit property changes.
+  - `useStories(filter?, sortConfigs?, maxNum?)`: Retrieves a reactive list of `StorySchema` objects, with optional filtering (via Realm string queries), custom sorting logic, and returning limits.
+  - `useAudioRecording(audioRecordingId, propsToWatch?)`: Retrieves a single `AudioRecordingSchema` object by ID and reacts to its changes. Similar to `useStory`, it supports `propsToWatch` optimization.
+  - `useAudioRecordings(filter?, sortConfig?)`: Retrieves a reactive list of `AudioRecordingSchema` objects, optionally filtered and sorted.
+- **Available Action Hooks**:
+  - `useSelectedAudioRecording(storyId)`: Retrieves the currently selected audio recording object for a given tale. Returns `{ selectedAudioRecording, selectedAudioRecordingVersion, setSelectedAudioRecording }`. The setter function correctly writes the user's choice back into the database.
+  - `useHandleStoryFavorite({ source, storyId, storyName, tab })`: Manages the `is_favorite` status of a tale. Returns `{ isFavorite, handleStoryFavoritePress }`. It automatically toggles the local database record value and logs the appropriate user analytics event (`AnalyticsService.logTaleLikedEvent`) during interactions.
 
 ## Project Structure
 

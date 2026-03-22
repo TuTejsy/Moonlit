@@ -3,6 +3,7 @@ import { memo, useMemo } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { useTheme } from '@/hooks/theme/useTheme';
+import { AIVoiceScreen } from '@/screens/AIVoiceScreen/AIVoiceScreen';
 import { FavoritesScreen } from '@/screens/FavoritesScreen/FavoritesScreen';
 import { HomeScreen } from '@/screens/HomeScreen/HomeScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen/SettingsScreen';
@@ -42,6 +43,10 @@ export const SharedNavigator = memo(({ isInitialRoute = false, parentRoute }: Pr
             name={getRouteNameForTab(SharedRoutes.STORIES_LIST, TabRoutes.HOME)}
           />
         </>
+      )}
+
+      {parentRoute === TabRoutes.AI_VOICE && (
+        <Stack.Screen component={AIVoiceScreen} name={SharedRoutes.AI_VOICE} />
       )}
 
       {parentRoute === TabRoutes.FAVORITES && (

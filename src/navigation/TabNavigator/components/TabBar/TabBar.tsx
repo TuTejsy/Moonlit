@@ -21,6 +21,7 @@ import { makeStyles } from './TabBar.styles';
 
 const MAP_ICON_AND_TITLE_BY_ROUTE: { [key: string]: [typeof Icons.HomeTab, string] } = {
   [TabRoutes.HOME]: [Icons.HomeTab, 'Home'],
+  [TabRoutes.AI_VOICE]: [Icons.AIVoiceTab, 'AI Voice'],
   [TabRoutes.FAVORITES]: [Icons.FavoritesTab, 'Saved'],
   [TabRoutes.SETTINGS]: [Icons.SettingsTab, 'Settings'],
 };

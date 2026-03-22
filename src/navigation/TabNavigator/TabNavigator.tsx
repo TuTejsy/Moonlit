@@ -20,6 +20,7 @@ export const TabNavigator = ({ isInitialRoute = false }: TabNavigatorProps) => {
     () => <SharedNavigator isInitialRoute={isInitialRoute} parentRoute={TabRoutes.HOME} />,
     [isInitialRoute],
   );
+  const AIVoice = useCallback(() => <SharedNavigator parentRoute={TabRoutes.AI_VOICE} />, []);
   const Favorites = useCallback(() => <SharedNavigator parentRoute={TabRoutes.FAVORITES} />, []);
   const Settings = useCallback(() => <SharedNavigator parentRoute={TabRoutes.SETTINGS} />, []);
 
@@ -31,6 +32,7 @@ export const TabNavigator = ({ isInitialRoute = false }: TabNavigatorProps) => {
       tabBar={renderTabBar}
     >
       <Tab.Screen component={Home} name={TabRoutes.HOME} />
+      <Tab.Screen component={AIVoice} name={TabRoutes.AI_VOICE} />
       <Tab.Screen component={Favorites} name={TabRoutes.FAVORITES} />
       <Tab.Screen component={Settings} name={TabRoutes.SETTINGS} />
     </Tab.Navigator>
