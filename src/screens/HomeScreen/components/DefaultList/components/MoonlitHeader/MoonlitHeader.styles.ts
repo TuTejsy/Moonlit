@@ -15,7 +15,7 @@ export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
     starsContainer: {
       height: 122,
       position: 'absolute',
-      top: 46,
+      top: 0,
       width: 312,
       zIndex: 0,
     },
