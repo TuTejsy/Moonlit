@@ -1,6 +1,6 @@
-/* eslint-disable typescript-sort-keys/string-enum */
 export enum SharedRoutes {
   AI_VOICE = 'aiVoice',
+  CREATE_VOICE_FIRST_STEP = 'createVoiceFirstStep',
   FAVORITES = 'favorites',
   HOME = 'home',
   SETTINGS = 'settings',

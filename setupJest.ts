@@ -289,6 +289,7 @@ jest.mock('@/hooks/theme/useMakeStyles', () => ({
           opacityLightGradientPurple: (f: number) => `rgba(26, 0, 67, ${f})`,
           opacityLightPurple: (f: number) => `rgba(31, 6, 71, ${f})`,
           opacityOrange: (f: number) => `rgba(236, 119, 72, ${f})`,
+          opacityPink: (f: number) => `rgba(212, 75, 237, ${f})`,
           opacityPurple: (f: number) => `rgba(23, 6, 52, ${f})`,
           opacitySkin: (f: number) => `rgba(202, 166, 144, ${f})`,
           opacityWhite: (f: number) => `rgba(255, 255, 255, ${f})`,
@@ -349,6 +350,7 @@ jest.mock('@/hooks/theme/useTheme', () => ({
       opacityLightGradientPurple: (f: number) => `rgba(26, 0, 67, ${f})`,
       opacityLightPurple: (f: number) => `rgba(31, 6, 71, ${f})`,
       opacityOrange: (f: number) => `rgba(236, 119, 72, ${f})`,
+      opacityPink: (f: number) => `rgba(212, 75, 237, ${f})`,
       opacityPurple: (f: number) => `rgba(23, 6, 52, ${f})`,
       opacitySkin: (f: number) => `rgba(202, 166, 144, ${f})`,
       opacityWhite: (f: number) => `rgba(255, 255, 255, ${f})`,
@@ -970,14 +972,17 @@ jest.mock('@/components/GradientButton/GradientButton', () => {
     GradientButton: ({
       children,
       onPress,
+      renderLeftIcon,
       ...props
     }: {
-      children: React.ReactNode;
+      children?: React.ReactNode;
       onPress?: () => void;
+      renderLeftIcon?: () => React.ReactNode;
     }) =>
       React.createElement(
         TouchableOpacity,
         { onPress, ...props },
+        renderLeftIcon && renderLeftIcon(),
         typeof children === 'string' ? React.createElement(Text, null, children) : children,
       ),
   };

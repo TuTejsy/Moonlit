@@ -66,6 +66,28 @@ Moonlit is a React Native mobile application featuring fairytales for children.
   - `useSelectedAudioRecording(storyId)`: Retrieves the currently selected audio recording object for a given tale. Returns `{ selectedAudioRecording, selectedAudioRecordingVersion, setSelectedAudioRecording }`. The setter function correctly writes the user's choice back into the database.
   - `useHandleStoryFavorite({ source, storyId, storyName, tab })`: Manages the `is_favorite` status of a tale. Returns `{ isFavorite, handleStoryFavoritePress }`. It automatically toggles the local database record value and logs the appropriate user analytics event (`AnalyticsService.logTaleLikedEvent`) during interactions.
 
+## Header Components (`src/components/Headers/`)
+
+The project uses a set of standard header components to ensure consistency across screens.
+
+### `ScreenHeader`
+The primary header component for most screens.
+- **Key Features**: Supports back navigation, custom left/right rendering, titles, and subtitles.
+- **Scroll Integration**: If `scrollPositionSharedValue` (a Reanimated `SharedValue<number>`) is provided, it automatically handles the transition from a "Large Title" to a standard title as the user scrolls.
+- **Back Navigation**: Standard back button is rendered by default unless `renderLeft` is provided. `onGoBack` can override the default `navigation.goBack()` behavior.
+
+### `ModalHeader`
+A specialized version of `ScreenHeader` designed specifically for modal screens.
+- **Behavior**: It forces `renderLeft={null}` and provides a standard `Icons.Close` button on the right.
+- **Props**: Inherits from `ScreenHeaderProps` but adds `onClosePress`, `hideClose`, and `disableClose`.
+
+### `SearchHeader`
+A header variation that provides a search trigger.
+- **Behavior**: Typically used to navigate to a search-enabled home view.
+
+### Shared Constants
+- **`EXTRA_TOUCH_AREA`**: Always use this constant (from `Headers.constants.ts`) for `hitSlop` on header buttons to ensure accessible touch targets (16dp inset).
+
 ## Project Structure
 
 The application source code is located within the `src/` directory. The architecture follows a standard React Native module-based structure:

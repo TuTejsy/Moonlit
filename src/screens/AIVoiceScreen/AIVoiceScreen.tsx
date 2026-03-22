@@ -11,6 +11,8 @@ import { useStories } from '@/hooks/database/useStories';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppLocalization } from '@/localization/useAppLocalization';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 
 import { FREE_STORIES_CONFIG } from './AIVoiceScreen.constants';
 import { makeStyles } from './AIVoiceScreen.styles';
@@ -21,6 +23,7 @@ export const AIVoiceScreen = (_props: AIVoiceScreenProps) => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
   const { localize } = useAppLocalization();
+  const navigation = useAppNavigation<SharedRoutes.AI_VOICE>();
 
   const [stories, storiesVersion] = useStories(undefined, FREE_STORIES_CONFIG, 5);
   const [selectedStoryId, setSelectedStoryId] = useState<number | null>(null);
@@ -38,8 +41,8 @@ export const AIVoiceScreen = (_props: AIVoiceScreenProps) => {
   }, []);
 
   const handleCreateFairytalePress = useCallback(() => {
-    // TODO: Handle create fairytale
-  }, []);
+    navigation.navigate(SharedRoutes.CREATE_VOICE_FIRST_STEP);
+  }, [navigation]);
 
   return (
     <View style={styles.screen}>

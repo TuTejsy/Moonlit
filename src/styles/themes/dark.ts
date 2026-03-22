@@ -26,6 +26,7 @@ export const darkColors = {
   orange: '#EC7748',
   pink: '#D44BED',
   purple: '#170634',
+  purpleTipDot: '#7C3AED',
 };
 
 export const darkTheme = {

@@ -1,6 +1,7 @@
 import { aiVoiceLocalization } from './aiVoice';
 import { categoriesLocalization } from './categories';
 import { commonLocalization } from './common';
+import { createVoiceLocalization } from './createVoice';
 import { favoritesLocalization } from './favorites';
 import { homeLocalization } from './home';
 import { onboardingLocalization } from './onboarding';
@@ -14,6 +15,7 @@ export const localizedResources = {
     aiVoice: aiVoiceLocalization.en,
     categories: categoriesLocalization.en,
     common: commonLocalization.en,
+    createVoice: createVoiceLocalization.en,
     favorites: favoritesLocalization.en,
     home: homeLocalization.en,
     onboarding: onboardingLocalization.en,

@@ -8,7 +8,8 @@ export const makeStyles = ({
   horizontalPadding,
   insets,
   sufficientWindowWidth,
-  windowHeight,
+  dw,
+  windowMaxWidth,
 }: MakeStylesProps) =>
   StyleSheet.create({
     createVoiceButton: {
@@ -24,6 +25,7 @@ export const makeStyles = ({
     gradientButton: {
       opacity: 0.2,
       width: sufficientWindowWidth - horizontalPadding * 2,
+      height: dw(56, windowMaxWidth),
     },
     gradientButtonContainer: {
       marginHorizontal: horizontalPadding,

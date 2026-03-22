@@ -1,5 +1,5 @@
-import { memo, useMemo } from 'react';
-import { ViewStyle } from 'react-native';
+import { ReactNode, memo, useMemo } from 'react';
+import { View, ViewStyle } from 'react-native';
 
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
 
@@ -16,10 +16,18 @@ interface GradientButtonProps extends Omit<LinearGradientProps, 'colors'> {
   children?: string;
   colors?: Array<string>;
   style?: ViewStyle;
+  renderLeftIcon?: () => ReactNode;
 }
 
 export const GradientButton = memo(
-  ({ children, colors: gradientColors, onPress, style, ...props }: GradientButtonProps) => {
+  ({
+    children,
+    colors: gradientColors,
+    onPress,
+    style,
+    renderLeftIcon,
+    ...props
+  }: GradientButtonProps) => {
     const styles = useMakeStyles(makeStyles);
 
     const { colors } = useTheme();
@@ -38,6 +46,7 @@ export const GradientButton = memo(
           style={styles.buttonGradient}
           {...props}
         >
+          {renderLeftIcon && <View style={styles.leftIconContainer}>{renderLeftIcon()}</View>}
           <TextView style={styles.buttonText} type='bold'>
             {children}
           </TextView>

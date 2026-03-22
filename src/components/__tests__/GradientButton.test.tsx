@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { render, screen, fireEvent } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import { GradientButton } from '../GradientButton/GradientButton';
+
+jest.unmock('../GradientButton/GradientButton');
 
 describe('GradientButton', () => {
   it('renders the button text', () => {
@@ -25,5 +27,13 @@ describe('GradientButton', () => {
     render(<GradientButton onPress={jest.fn()} />);
 
     expect(screen.toJSON()).toBeTruthy();
+  });
+
+  it('renders left icon when renderLeftIcon is provided', () => {
+    const renderLeftIcon = jest.fn(() => <React.Fragment key='icon' />);
+
+    render(<GradientButton onPress={jest.fn()} renderLeftIcon={renderLeftIcon} />);
+
+    expect(renderLeftIcon).toHaveBeenCalledTimes(1);
   });
 });
