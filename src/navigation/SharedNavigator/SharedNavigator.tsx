@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { AIVoiceScreen } from '@/screens/AIVoiceScreen/AIVoiceScreen';
 import { CreateVoiceFirstStep } from '@/screens/CreateVoice/CreateVoiceFirstStep/CreateVoiceFirstStep';
+import { CreateVoiceSecondStep } from '@/screens/CreateVoice/CreateVoiceSecondStep/CreateVoiceSecondStep';
 import { FavoritesScreen } from '@/screens/FavoritesScreen/FavoritesScreen';
 import { HomeScreen } from '@/screens/HomeScreen/HomeScreen';
 import { SettingsScreen } from '@/screens/SettingsScreen/SettingsScreen';
@@ -52,6 +53,10 @@ export const SharedNavigator = memo(({ isInitialRoute = false, parentRoute }: Pr
           <Stack.Screen
             component={CreateVoiceFirstStep}
             name={SharedRoutes.CREATE_VOICE_FIRST_STEP}
+          />
+          <Stack.Screen
+            component={CreateVoiceSecondStep}
+            name={SharedRoutes.CREATE_VOICE_SECOND_STEP}
           />
         </>
       )}

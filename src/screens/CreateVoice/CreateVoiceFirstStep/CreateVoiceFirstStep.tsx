@@ -12,6 +12,8 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppLocalization } from '@/localization/useAppLocalization';
+import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 
 import { VoiceTipsCard } from './components/VoiceTipsCard/VoiceTipsCard';
 import { makeStyles } from './CreateVoiceFirstStep.styles';
@@ -21,10 +23,11 @@ export const CreateVoiceFirstStep = (_props: CreateVoiceFirstStepProps) => {
   const styles = useMakeStyles(makeStyles);
   const { colors } = useTheme();
   const { localize } = useAppLocalization();
+  const navigation = useAppNavigation();
 
   const handleStartRecording = useCallback(() => {
-    // TODO: Navigate to recording flow
-  }, []);
+    navigation.navigate(SharedRoutes.CREATE_VOICE_SECOND_STEP);
+  }, [navigation]);
 
   const renderLeftIcon = useCallback(() => <Icons.Mic color={colors.white} />, [colors.white]);
 
