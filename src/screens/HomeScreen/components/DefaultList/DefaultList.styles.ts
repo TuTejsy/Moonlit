@@ -22,15 +22,6 @@ export const makeStyles = ({ horizontalPadding, insets }: MakeStylesProps) =>
     },
     header: {
       paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 20,
-      position: 'relative',
-    },
-    headerGradient: {
-      height: '100%',
-      left: 0,
-      opacity: 0.4,
-      position: 'absolute',
-      top: 0,
-      width: '100%',
     },
     popularList: {
       marginBottom: 40,

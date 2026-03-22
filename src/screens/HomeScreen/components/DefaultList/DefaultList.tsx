@@ -135,13 +135,6 @@ export const DefaultList = React.memo(
         onScrollToTop={handleScrollToTop}
       >
         <View style={styles.header}>
-          <LinearGradient
-            angle={180}
-            colors={[colors.pink, colors.purple]}
-            locations={[0.8, 1]}
-            style={styles.headerGradient}
-          />
-
           <MoonlitHeader />
           <CreateYourVoiceButton style={styles.createYourVoiceButton} onPress={() => {}} />
         </View>

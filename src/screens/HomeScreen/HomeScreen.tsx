@@ -18,15 +18,15 @@ import { PopularSearch } from './components/PopularSearch/PopularSearch';
 import { SearchBar } from './components/SearchBar/SearchBar';
 import { makeStyles } from './HomeScreen.styles';
 
-const GRADIENT_LOCATIONS = [0.3, 1];
+const GRADIENT_LOCATIONS = [0, 0.4, 1];
 
 export const HomeScreen = () => {
   const { colors } = useTheme();
   const styles = useMakeStyles(makeStyles);
 
   const gradientColors = useMemo(
-    () => [colors.purple, colors.darkPurple],
-    [colors.purple, colors.darkPurple],
+    () => [colors.opacityPink(0.1), colors.purple, colors.darkPurple],
+    [colors],
   );
 
   const [searchText, setSearchText] = useState('');
