@@ -4,7 +4,7 @@ import Svg, { SvgProps, Path } from 'react-native-svg';
 
 import { useTheme } from '@/hooks/theme/useTheme';
 
-export const Mic = (props: SvgProps) => {
+export const MicSmall = (props: SvgProps) => {
   const { colors } = useTheme();
 
   return (

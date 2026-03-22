@@ -11,6 +11,7 @@ export const darkColors = {
   gradientPinkEnd: '#D44BED',
   gradientPinkStart: '#CC9DF3',
   green: '#247F8A',
+  iconPurple: '#A243EF',
   imagePurple: '#4C3F55',
   lightGradientPurple: '#1E004E',
   lightPurple: '#1F0647',

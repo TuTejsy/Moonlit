@@ -18,13 +18,17 @@ Moonlit is a React Native mobile application featuring fairytales for children.
 - **Navigation**: Use `react-navigation`.
 - **Testing**: `jest` for unit tests, `@testing-library/react-native` for integration tests. ALWAYS add global jest mocks to the created `setupJest.ts` file. ALWAYS use the `react-native-testing` skill when writing unit or integration tests. Ignore this skill in other scenarios.
   - 🚨 **META RULE: CONTINUOUS TESTING** 🚨 As an AI agent, you **MUST ALWAYS** update existing tests or implement new unit/integration tests whenever you modify or add any components, hooks, utilities, or services. You must verify that `yarn test` passes completely before concluding any task involving logic or UI changes. Code changes without corresponding test updates are strictly prohibited.
+- **Linting**: ALWAYS run `yarn lint` after file changes.
+  - 🚨 **META RULE: CONTINUOUS LINTING** 🚨 As an AI agent, you **MUST ALWAYS** run `yarn lint` and fix any linting errors that arise whenever you modify or add any files. You must verify that `yarn lint` passes completely before concluding any task. Code changes with unresolved lint errors are strictly prohibited.
 
 ### UI & Styling System (`useMakeStyles`)
 
 - **Strict Rule**: DO NOT use plain `StyleSheet.create` directly in components, create `makeStyles` functions in the (${componentName}.styles.ts) file in the same directory.
+- **Strict Rule**: ALWAYS use the `MakeStylesProps` prop type imported from `'@/hooks/theme/useMakeStyles'` for `makeStyles` function params.
 - **Strict Rule**: ALWAYS remove unused styles from the `makeStyles` function in the `${componentName}.styles.ts` file when refactoring or updating components.
 - **Strict Rule**: ALWAYS use destructuring of the `theme` param in `makeStyle` functions. NEVER access theme constants directly via `theme.[value]` (always use the values obtained from the destructured theme param instead).
 - **Strict Rule**: DO NOT use literal constants (e.g., hardcoded colors, padding numbers, border radii) in styles. ALWAYS use the theme's values provided via the `makeStyles` function's parameters.
+- **Strict Rule**: ALWAYS use font styles from the `fonts` object passed to the `makeStyles` parameters. NEVER use hardcoded `fontSize`, `lineHeight`, or `fontFamily` in component styles. If a required `fontSize` or `lineHeight` does not exist in `src/styles/fonts.ts`, you MUST add a new font definition there instead of hardcoding it.
 - **Implementation**: Every style object MUST be created using a custom `useMakeStyles` hook.
 - **Capabilities**: The `useMakeStyles` hook must provide:
   - Reactively-updated theme values (colors, typography, padding, and size constants).

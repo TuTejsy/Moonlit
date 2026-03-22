@@ -26,7 +26,7 @@ export const BenefitsList = () => {
         </TextView>
       </View>
       <View style={styles.benefit}>
-        <Icons.Mic />
+        <Icons.MicSmall />
         <TextView style={styles.benefitText} type='medium'>
           {localize('paywall', 'yourPersonalizedVoices')}
         </TextView>

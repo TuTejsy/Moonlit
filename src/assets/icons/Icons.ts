@@ -10,6 +10,7 @@ import { FilledStar } from './common/FilledStar';
 import { Info } from './common/Info';
 import { Loader } from './common/Loader';
 import { Lock } from './common/Lock';
+import { Mic } from './common/Mic';
 import { Privacy } from './common/Privacy';
 import { Search } from './common/Search';
 import { Share } from './common/Share';
@@ -24,7 +25,7 @@ import { RoundClose } from './navigation/RoundClose';
 import { SettingsTab } from './navigation/SettingsTab';
 import { Crown } from './paywall/Crown';
 import { DownloadSmall } from './paywall/DownloadSmall';
-import { Mic } from './paywall/Mic';
+import { MicSmall } from './paywall/MicSmall';
 import { Record } from './paywall/Record';
 import { GoBack } from './player/GoBack';
 import { GoForward } from './player/GoForward';
@@ -54,6 +55,7 @@ export const Icons = {
   Loader,
   Lock,
   Mic,
+  MicSmall,
   Moon,
   PauseBig,
   PauseSmall,

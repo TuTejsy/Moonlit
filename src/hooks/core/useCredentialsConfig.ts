@@ -21,10 +21,10 @@ export function useCredentialsConfig() {
       const config = await CoreRepository.getConfig();
 
       await persistConfig(config);
-
-      setIsConfigLoaded(true);
     } catch (error) {
       console.error('useCredentialsConfig: Failed to fetch or persist config', error);
+    } finally {
+      setIsConfigLoaded(true);
     }
   }, []);
 
