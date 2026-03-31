@@ -59,9 +59,6 @@ function parseBucketAndKey(url: string, endpoint: string): { bucket: string; key
     key = pathParts.slice(1).join('/');
   }
 
-  console.log('bucket', bucket);
-  console.log('key', key);
-
   if (!bucket || !key) {
     throw new Error(`getPresignedFileURL: Unable to parse bucket and key from URL: ${url}`);
   }
@@ -90,7 +87,6 @@ export async function getPresignedFileURL(url: string): Promise<string> {
     const presignedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: PRESIGNED_URL_EXPIRATION_SECONDS,
     });
-    console.log('presignedUrl', presignedUrl);
     return presignedUrl;
   } catch (error) {
     console.error(error);
