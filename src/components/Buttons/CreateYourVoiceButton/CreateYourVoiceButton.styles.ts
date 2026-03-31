@@ -19,11 +19,11 @@ export const makeStyles = ({ colors, fonts, horizontalPadding }: MakeStylesProps
       alignItems: 'center',
       backgroundColor: colors.opacityWhite(0.05),
       borderRadius: 16,
+      flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
       overflow: 'hidden',
       padding: 16,
-      width: '100%',
     },
     iconContainer: {
       alignItems: 'center',

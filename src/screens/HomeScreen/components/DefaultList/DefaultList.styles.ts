@@ -11,13 +11,26 @@ export const makeStyles = ({ horizontalPadding, insets }: MakeStylesProps) =>
   StyleSheet.create({
     content: {
       paddingBottom: insets.bottom + TAB_BAR_HEIGHT + TAB_BAR_STORY_PLAYER_HEIGHT,
-      paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 40,
+    },
+    createYourVoiceButton: {
+      marginBottom: 41,
+      marginHorizontal: horizontalPadding,
+      marginTop: 34,
     },
     freeList: {
       marginTop: 16,
     },
-    gradient: {
-      paddingTop: insets.top,
+    header: {
+      paddingTop: insets.top + DEFAULT_HEADER_HEIGHT + 20,
+      position: 'relative',
+    },
+    headerGradient: {
+      height: '100%',
+      left: 0,
+      opacity: 0.4,
+      position: 'absolute',
+      top: 0,
+      width: '100%',
     },
     popularList: {
       marginBottom: 40,

@@ -1,4 +1,5 @@
 import { Moon } from './brand/Moon';
+import { PlumpMoon } from './brand/PlumpMoon';
 import { Check } from './common/Check';
 import { Clock } from './common/Clock';
 import { Doc } from './common/Doc';
@@ -61,6 +62,7 @@ export const Icons = {
   PauseSmall,
   PlayBig,
   PlaySmall,
+  PlumpMoon,
   Privacy,
   Record,
   RoundClose,

@@ -114,6 +114,7 @@ jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
 // Mock react-native-svg
 jest.mock('react-native-svg', () => ({
+  __esModule: true,
   Circle: 'Circle',
   Defs: 'Defs',
   G: 'G',

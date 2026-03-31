@@ -7,6 +7,8 @@ export const commonLocalization = {
     createYourVoice: 'Create your voice',
     free: 'Free',
     min: 'min',
+    moonlit: 'Moonlit',
+    moonlitFairytaleAtmosphere: 'Create a magical, fairytale\natmosphere',
     moreMoonlitTalesComingSoon: 'More Moonlit tales\ncoming soon',
     noResultForSearch: 'No results\nfor this prompt',
     popularSearch: 'Popular search',

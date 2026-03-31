@@ -1,10 +1,18 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, ScrollView } from 'react-native';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  RefreshControl,
+  ScrollView,
+  View,
+} from 'react-native';
 
 import { useScrollToTop } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Realm from 'realm';
 
+import { CreateYourVoiceButton } from '@/components/Buttons/CreateYourVoiceButton/CreateYourVoiceButton';
 import { LargeStoriesList } from '@/components/Lists/LargeStoriesList/LargeStoriesList';
 import { MediumStoriesList } from '@/components/Lists/MediumStoriesList/MediumStoriesList';
 import { MoreTalesComingFooter } from '@/components/Lists/MoreTalesComingFooter/MoreTalesComingFooter';
@@ -28,6 +36,7 @@ import { SectionHeader } from '@/screens/HomeScreen/components/SectionHeader/Sec
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 
+import { MoonlitHeader } from './components/MoonlitHeader/MoonlitHeader';
 import { makeStyles } from './DefaultList.styles';
 import { useDefaultListNavigation } from './hooks/useDefaultListNavigation';
 
@@ -125,6 +134,18 @@ export const DefaultList = React.memo(
         onScrollEndDrag={handleScrollEndDrag}
         onScrollToTop={handleScrollToTop}
       >
+        <View style={styles.header}>
+          <LinearGradient
+            angle={180}
+            colors={[colors.pink, colors.purple]}
+            locations={[0.8, 1]}
+            style={styles.headerGradient}
+          />
+
+          <MoonlitHeader />
+          <CreateYourVoiceButton style={styles.createYourVoiceButton} onPress={() => {}} />
+        </View>
+
         <SectionHeader
           title={localize('home', 'featuringTales')}
           onSeeAllPress={handleSeeFeaturingTales}

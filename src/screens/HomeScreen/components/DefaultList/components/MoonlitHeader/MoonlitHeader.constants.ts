@@ -1,0 +1,4 @@
+export const MOONLIT_GRADIENT_COLORS = ['#FFFFFF', 'rgba(255, 255, 255, 0.5)'];
+
+export const MOONLIT_GRADIENT_LOCATIONS = [0.178, 0.628];
+export const MOONLIT_GRADIENT_ANGLE = 103;
