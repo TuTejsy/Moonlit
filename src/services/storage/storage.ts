@@ -29,6 +29,10 @@ export const getStorageData = (): StorageDataReturn => {
     ? storage.getBoolean(StorageKeys.isRemoteConfigLiveUpdateEnabled) ?? false
     : false;
 
+  const isPresignedURLsEnabled = devMode
+    ? storage.getBoolean(StorageKeys.isPresignedURLsEnabled) ?? false
+    : false;
+
   const isOnboarded = storage.getBoolean(StorageKeys.isOnboarded);
   const isFirstLaunch = storage.getBoolean(StorageKeys.isFirstLaunch) ?? true;
   const isReviewAsked = storage.getBoolean(StorageKeys.isReviewAsked) ?? false;
@@ -40,7 +44,7 @@ export const getStorageData = (): StorageDataReturn => {
     [StorageKeys.isReviewAsked]: isReviewAsked,
     [StorageKeys.isAnaltyticsEnabled]: isAnaltyticsEnabled,
     [StorageKeys.isRemoteConfigLiveUpdateEnabled]: isRemoteConfigLiveUpdateEnabled,
-    [StorageKeys.isPresignedURLsEnabled]: storage.getBoolean(StorageKeys.isPresignedURLsEnabled),
+    [StorageKeys.isPresignedURLsEnabled]: isPresignedURLsEnabled,
   };
 };
 
