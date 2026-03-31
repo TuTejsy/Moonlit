@@ -44,4 +44,3 @@ export interface GetStoriesResponse {
 export interface GetAudioRecordingsResponse {
   data: AudioRecording[];
 }
-
