@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "react-native-reanimated": {
+      "source": "dralgorhythm/claude-agentic-framework",
+      "sourceType": "github",
+      "computedHash": "456790e1db75301d220f2b03252d5885ab62ba1b1773b3549a65c96fe677075a"
+    },
     "react-native-testing": {
       "source": "callstack/react-native-testing-library",
       "sourceType": "github",
