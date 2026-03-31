@@ -6,6 +6,7 @@ import { StoriesDB } from '@/database';
 import { ColorSchema, StorySchema } from '@/database/schema/stories/types';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { generateStoryCoverCachedName } from '@/utils/generators/generateStoryCoverCachedName';
+import { getPresignedFileURL } from '@/utils/urls/getPresignedFileURL';
 import { getSandboxPathForCoverType } from '@/utils/urls/getSandboxPathForCoverType';
 import { getStoryCachedNameFieldForCoverType } from '@/utils/urls/getStoryCachedNameFieldForCoverType';
 import { getStoryPreviewURLFieldForCoverType } from '@/utils/urls/getStoryPreviewURLFieldForCoverType';
@@ -26,15 +27,17 @@ export async function downloadPreviews(
       const cachedName = generateStoryCoverCachedName(story, type);
       const saveToFilePath = `${getSandboxPathForCoverType(type)}/${cachedName}`;
 
-      const { promise } = RNFS.downloadFile({
-        fromUrl: formatServerFileURLToAbsolutePath(
-          story[getStoryPreviewURLFieldForCoverType(type)],
-        ),
-        toFile: saveToFilePath,
-      });
+      getPresignedFileURL(
+        formatServerFileURLToAbsolutePath(story[getStoryPreviewURLFieldForCoverType(type)]),
+      ).then((url) => {
+        const { promise } = RNFS.downloadFile({
+          fromUrl: url,
+          toFile: saveToFilePath,
+        });
 
-      promises.push(promise);
-      filesCachedNames.push(cachedName);
+        promises.push(promise);
+        filesCachedNames.push(cachedName);
+      });
     } catch (err) {
       console.error(err);
     }

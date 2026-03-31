@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import RNFS from 'react-native-fs';
 
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
+import { getPresignedFileURL } from '@/utils/urls/getPresignedFileURL';
 import { getVoicePreviewPathForCoverURL } from '@/utils/urls/getVoicePreviewPathForCoverURL';
 
 export const useVoicePreviewCachedPath = (voiceCoverUrl: string | undefined) => {
@@ -32,13 +33,15 @@ export const useVoicePreviewCachedPath = (voiceCoverUrl: string | undefined) => 
       if (!isFileExist) {
         setIsFileDownloaded(false);
 
-        RNFS.downloadFile({
-          fromUrl: absoluteCoverPath,
-          toFile: voicePreviewCachedPath,
-        }).promise.then(({ statusCode }) => {
-          if (statusCode === 200) {
-            setIsFileDownloaded(true);
-          }
+        getPresignedFileURL(absoluteCoverPath).then((url) => {
+          RNFS.downloadFile({
+            fromUrl: url,
+            toFile: voicePreviewCachedPath,
+          }).promise.then(({ statusCode }) => {
+            if (statusCode === 200) {
+              setIsFileDownloaded(true);
+            }
+          });
         });
       }
     });
