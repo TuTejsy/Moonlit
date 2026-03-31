@@ -4,6 +4,7 @@ export enum StorageKeys {
   isFirstLaunch = 'isFirstLaunch',
 
   isOnboarded = 'isOnboarded',
+  isPresignedURLsEnabled = 'isPresignedURLsEnabled',
   isRemoteConfigLiveUpdateEnabled = 'isRemoteConfigLiveUpdateEnabled',
   isReviewAsked = 'isReviewAsked',
 }

@@ -3,6 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { CoreRepository } from '@/api/core/core';
 import { ConfigResponse } from '@/api/core/core.types';
 import { SecuredStorage, SecuredStorageKey } from '@/services/securedStorage/securedStorage';
+import { storage } from '@/services/storage/storage';
+import { StorageKeys } from '@/services/storage/storage.constants';
 
 async function persistConfig(config: ConfigResponse): Promise<void> {
   await Promise.all([
@@ -11,6 +13,8 @@ async function persistConfig(config: ConfigResponse): Promise<void> {
     SecuredStorage.setItem(SecuredStorageKey.awsConnectionString, config.awsConnectionString),
     SecuredStorage.setItem(SecuredStorageKey.awsSecretKey, config.awsSecretKey),
   ]);
+
+  storage.set(StorageKeys.isPresignedURLsEnabled, config.presignedURLsEnabled);
 }
 
 export function useCredentialsConfig() {

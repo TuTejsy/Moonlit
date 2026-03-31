@@ -3,4 +3,5 @@ export interface ConfigResponse {
   awsAccountId: string;
   awsConnectionString: string;
   awsSecretKey: string;
+  presignedURLsEnabled: boolean;
 }
