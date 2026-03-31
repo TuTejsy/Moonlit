@@ -5,6 +5,20 @@ import { SecuredStorage, SecuredStorageKey } from '@/services/securedStorage/sec
 
 const PRESIGNED_URL_EXPIRATION_SECONDS = 3600;
 
+const R2_SUFFIX = 'r2.cloudflarestorage.com';
+
+function normalizeR2Endpoint(endpoint: string) {
+  const url = new URL(endpoint);
+  const labels = url.host.split('.');
+
+  if (labels.slice(-3).join('.') === R2_SUFFIX && labels.length > 4) {
+    url.host = labels.slice(-4).join('.');
+    url.pathname = '/';
+  }
+
+  return url.toString().replace(/\/$/, '');
+}
+
 async function createS3Client(): Promise<S3Client> {
   const [accessKeyId, secretAccessKey, endpoint] = await Promise.all([
     SecuredStorage.getItem(SecuredStorageKey.awsAccountId),
@@ -21,7 +35,7 @@ async function createS3Client(): Promise<S3Client> {
       accessKeyId,
       secretAccessKey,
     },
-    endpoint,
+    endpoint: normalizeR2Endpoint(endpoint),
     region: 'auto',
   });
 }
