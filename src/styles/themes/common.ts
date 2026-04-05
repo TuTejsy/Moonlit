@@ -11,6 +11,7 @@ export const commonColors = {
   opacityWhite: (float: number) => `rgba(255, 255, 255, ${float})`,
 
   red: '#FF4646',
+  recordingRed: '#EF4444',
   shadow: 'rgba(92, 95, 102, 0.1)',
   shadowDropIn: 'rgba(41, 44, 51, 0.04)',
 

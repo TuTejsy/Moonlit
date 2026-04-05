@@ -16,11 +16,17 @@ export const makeStyles = (
   StyleSheet.create({
     waveformFrame: {
       backgroundColor: color,
-      borderRadius: 8,
-      marginHorizontal: 4,
+      borderRadius: 100,
       maxHeight,
       minHeight,
       opacity,
-      width: 4,
+      width: 3,
+    },
+    waveformGradientFrame: {
+      borderRadius: 100,
+      maxHeight,
+      minHeight,
+      opacity,
+      width: 3,
     },
   });

@@ -12,6 +12,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 
 import { FREE_STORIES_CONFIG } from './AIVoiceScreen.constants';
@@ -41,7 +42,7 @@ export const AIVoiceScreen = (_props: AIVoiceScreenProps) => {
   }, []);
 
   const handleCreateFairytalePress = useCallback(() => {
-    navigation.navigate(SharedRoutes.CREATE_VOICE_FIRST_STEP);
+    navigation.navigate(RootRoutes.CREATE_VOICE_FIRST_STEP);
   }, [navigation]);
 
   return (

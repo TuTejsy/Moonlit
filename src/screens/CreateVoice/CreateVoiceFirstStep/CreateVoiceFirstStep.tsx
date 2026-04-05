@@ -13,7 +13,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
-import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
+import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 
 import { VoiceTipsCard } from './components/VoiceTipsCard/VoiceTipsCard';
 import { makeStyles } from './CreateVoiceFirstStep.styles';
@@ -26,7 +26,7 @@ export const CreateVoiceFirstStep = (_props: CreateVoiceFirstStepProps) => {
   const navigation = useAppNavigation();
 
   const handleStartRecording = useCallback(() => {
-    navigation.navigate(SharedRoutes.CREATE_VOICE_SECOND_STEP);
+    navigation.navigate(RootRoutes.CREATE_VOICE_SECOND_STEP);
   }, [navigation]);
 
   const renderLeftIcon = useCallback(() => <Icons.Mic color={colors.white} />, [colors.white]);

@@ -15,6 +15,8 @@ interface VoiceWaveformPropTypes {
   numberOfFrames: number;
   voicePowerSharedValue: SharedValue<number>;
   color?: string;
+  gap?: number;
+  gradientColors?: string[];
 }
 
 function VoiceWaveform({
@@ -23,8 +25,10 @@ function VoiceWaveform({
   minHeight,
   voicePowerSharedValue,
   color = commonColors.white,
+  gap = 2,
+  gradientColors,
 }: VoiceWaveformPropTypes) {
-  const stylesContext = useMemo(() => ({ maxHeight }), [maxHeight]);
+  const stylesContext = useMemo(() => ({ gap, maxHeight }), [gap, maxHeight]);
 
   const styles = useMakeStyles(makeStyles, stylesContext);
 
@@ -45,6 +49,7 @@ function VoiceWaveform({
             key={index}
             color={color}
             delay={frameDelay}
+            gradientColors={gradientColors}
             maxHeight={frameMaxHeight > minHeight ? frameMaxHeight : minHeight}
             minHeight={minHeight}
             opacity={opacity}

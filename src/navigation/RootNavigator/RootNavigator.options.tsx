@@ -74,6 +74,10 @@ export const webPageScreenOptions: StackNavigationOptions = {
   headerShown: false,
 };
 
+export const createVoiceScreenOptions: StackNavigationOptions = {
+  headerShown: false,
+};
+
 export const paywallScreenOptions: StackNavigationOptions = {
   headerShown: false,
   transitionSpec: {

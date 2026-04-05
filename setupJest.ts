@@ -46,11 +46,15 @@ jest.mock('react-native-reanimated', () => {
       createAnimatedComponent: (component: unknown) => component,
     },
     interpolate: jest.fn(),
+    scrollTo: jest.fn(),
+    useAnimatedRef: jest.fn(() => ({ current: null })),
     useAnimatedScrollHandler: jest.fn((cb) => cb?.onScroll ?? cb),
     useAnimatedStyle: jest.fn().mockReturnValue({}),
     useDerivedValue: jest.fn((cb) => ({ value: cb() })),
     useSharedValue: jest.fn((initial: unknown) => ({ value: initial })),
+    withDelay: jest.fn(),
     withRepeat: jest.fn(),
+    withSequence: jest.fn(),
     withTiming: jest.fn(),
   };
 });

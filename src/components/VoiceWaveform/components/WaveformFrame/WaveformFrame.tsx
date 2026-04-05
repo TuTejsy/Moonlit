@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 
+import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   SharedValue,
   interpolate,
@@ -12,12 +13,15 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './WaveformFrame.styles';
 
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+
 interface WaveformFramePropTypes {
   color: string;
   delay: number;
   maxHeight: number;
   minHeight: number;
   voicePowerSharedValue: SharedValue<number>;
+  gradientColors?: string[];
   opacity?: number;
 }
 
@@ -28,6 +32,7 @@ function WaveformFrame({
   minHeight,
   opacity,
   voicePowerSharedValue,
+  gradientColors,
 }: WaveformFramePropTypes) {
   const stylesContext = useMemo(
     () => ({ color, maxHeight, minHeight, opacity }),
@@ -44,6 +49,15 @@ function WaveformFrame({
       ),
     };
   });
+
+  if (gradientColors) {
+    return (
+      <AnimatedLinearGradient
+        colors={gradientColors}
+        style={[styles.waveformGradientFrame, animatedStyles]}
+      />
+    );
+  }
 
   return <Animated.View style={[styles.waveformFrame, animatedStyles]} />;
 }

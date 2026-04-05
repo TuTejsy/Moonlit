@@ -3,6 +3,9 @@ export const createVoiceLocalization = {
     readyToRecord: 'Ready to record?',
     recordDescription:
       'Read the text aloud clearly for about 2 minutes. Our AI will learn your voice and narrate the tale.',
+    readTextOutLoud: 'Read the text below out loud',
+    recording: 'Recording...',
+    save: 'Save',
     startRecording: 'Start recording',
     tipHoldPhone: 'Hold the phone 20–30 cm from your mouth',
     tipQuietPlace: 'Find a quiet place without background noise',

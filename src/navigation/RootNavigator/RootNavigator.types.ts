@@ -34,6 +34,9 @@ export interface RootStackParams extends Record<string, object | undefined> {
     tab?: TabEventType;
   };
 
+  [RootRoutes.CREATE_VOICE_FIRST_STEP]?: undefined;
+  [RootRoutes.CREATE_VOICE_SECOND_STEP]?: undefined;
+
   [RootRoutes.WEB_PAGE_SCREEN]: {
     url: string;
   };
