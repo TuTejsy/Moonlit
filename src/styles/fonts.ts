@@ -52,6 +52,10 @@ export const makeFonts = () =>
       fontSize: 14,
       lineHeight: 20,
     },
+    size_14_21: {
+      fontSize: 14,
+      lineHeight: 21,
+    },
     size_15: {
       fontSize: 15,
       lineHeight: 22,

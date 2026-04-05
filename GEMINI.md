@@ -101,7 +101,7 @@ The application source code is located within the `src/` directory. The architec
 - `src/localization/`: Multi-language support configuration and string translations.
 - `src/native_modules/`: Bridges and custom native modules (contains `mnt-audioplayer`).
 - `src/navigation/`: React Navigation stack definitions, tab configurations, and routing logic.
-- `src/screens/`: High-level feature screens where components are composed (e.g., `HomeScreen`, `StoryPlayerScreens`, `StoriesListScreen`, `PaywallModal`, `GetStartedScreen`). Feature-specific domains are generally isolated here.
+- `src/screens/`: High-level feature screens where components are composed (e.g., `HomeScreen`, `StoryPlayerScreens`, `StoriesListScreen`, `PaywallModal`, `GetStartedScreen`, `CreateVoice/` with `CreateVoiceFirstStep`, `CreateVoiceSecondStep`, `CreateVoiceThirdStep`). Feature-specific domains are generally isolated here.
 - `src/services/`: Integrations with external SDKs (`analytics`, `networkClient`, `remoteConfig`, `storage`).
 - `src/store/`: Redux configuration (`store.ts`, `rootReducer.ts`), and feature slices (`player/`, `user/`, `subscription/`).
 - `src/styles/`: Global stylesheets or styling themes.

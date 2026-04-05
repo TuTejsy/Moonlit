@@ -7,6 +7,7 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { TabNavigator } from '@/navigation/TabNavigator/TabNavigator';
 import { CreateVoiceFirstStep } from '@/screens/CreateVoice/CreateVoiceFirstStep/CreateVoiceFirstStep';
 import { CreateVoiceSecondStep } from '@/screens/CreateVoice/CreateVoiceSecondStep/CreateVoiceSecondStep';
+import { CreateVoiceThirdStep } from '@/screens/CreateVoice/CreateVoiceThirdStep/CreateVoiceThirdStep';
 import { DevMenuModal } from '@/screens/DevMenuScreens/DevMenuModal/DevMenuModal';
 import { GetStartedScreen } from '@/screens/GetStartedScreen/GetStartedScreen';
 import { PaywallModal } from '@/screens/PaywallModal/PaywallModal';
@@ -80,6 +81,12 @@ export const RootNavigator = ({ initialRouteName }: RootNavigatorParams) => {
       <RootStack.Screen
         component={CreateVoiceSecondStep}
         name={RootRoutes.CREATE_VOICE_SECOND_STEP}
+        options={createVoiceScreenOptions}
+      />
+
+      <RootStack.Screen
+        component={CreateVoiceThirdStep}
+        name={RootRoutes.CREATE_VOICE_THIRD_STEP}
         options={createVoiceScreenOptions}
       />
 

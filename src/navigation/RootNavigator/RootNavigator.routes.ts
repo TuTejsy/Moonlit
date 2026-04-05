@@ -12,6 +12,7 @@ export enum RootRoutes {
   VOICE_SETTINGS_MODAL = 'voiceSettingsModal',
   CREATE_VOICE_FIRST_STEP = 'createVoiceFirstStep',
   CREATE_VOICE_SECOND_STEP = 'createVoiceSecondStep',
+  CREATE_VOICE_THIRD_STEP = 'createVoiceThirdStep',
 
   DEV_MENU_MODAL = 'devMenuModal',
 }

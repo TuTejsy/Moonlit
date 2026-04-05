@@ -10,6 +10,7 @@ import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
+import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 
 import { FairyTaleTextBlock } from './components/FairyTaleTextBlock/FairyTaleTextBlock';
 import { RecordingActionButtons } from './components/RecordingActionButtons/RecordingActionButtons';
@@ -46,7 +47,9 @@ export const CreateVoiceSecondStep = (_props: CreateVoiceSecondStepProps) => {
   }, [navigation]);
 
   const handleSavePress = useCallback(() => {
-    navigation.goBack();
+    navigation.navigate(RootRoutes.CREATE_VOICE_THIRD_STEP, {
+      storyName: 'The Elves and the Shoemaker',
+    });
   }, [navigation]);
 
   return (

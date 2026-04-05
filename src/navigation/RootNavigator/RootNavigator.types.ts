@@ -36,6 +36,9 @@ export interface RootStackParams extends Record<string, object | undefined> {
 
   [RootRoutes.CREATE_VOICE_FIRST_STEP]?: undefined;
   [RootRoutes.CREATE_VOICE_SECOND_STEP]?: undefined;
+  [RootRoutes.CREATE_VOICE_THIRD_STEP]: {
+    storyName: string;
+  };
 
   [RootRoutes.WEB_PAGE_SCREEN]: {
     url: string;
