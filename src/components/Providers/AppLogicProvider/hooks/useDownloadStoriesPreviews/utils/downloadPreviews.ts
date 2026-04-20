@@ -4,10 +4,8 @@ import { getColorFromURL } from 'rn-dominant-color';
 import { StoryCoverType } from '@/constants/stories';
 import { StoriesDB } from '@/database';
 import { ColorSchema, StorySchema } from '@/database/schema/stories/types';
-import { getStorageData } from '@/services/storage/storage';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { generateStoryCoverCachedName } from '@/utils/generators/generateStoryCoverCachedName';
-import { getPresignedFileURL } from '@/utils/urls/getPresignedFileURL';
 import { getSandboxPathForCoverType } from '@/utils/urls/getSandboxPathForCoverType';
 import { getStoryCachedNameFieldForCoverType } from '@/utils/urls/getStoryCachedNameFieldForCoverType';
 import { getStoryPreviewURLFieldForCoverType } from '@/utils/urls/getStoryPreviewURLFieldForCoverType';
@@ -28,8 +26,8 @@ export async function downloadPreviews(
       const cachedName = generateStoryCoverCachedName(story, type);
       const saveToFilePath = `${getSandboxPathForCoverType(type)}/${cachedName}`;
 
-      const url = await getPresignedFileURL(
-        formatServerFileURLToAbsolutePath(story[getStoryPreviewURLFieldForCoverType(type)]),
+      const url = formatServerFileURLToAbsolutePath(
+        story[getStoryPreviewURLFieldForCoverType(type)],
       );
 
       const { promise } = RNFS.downloadFile({

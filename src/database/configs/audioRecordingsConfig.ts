@@ -7,5 +7,5 @@ export const audioRecordingsConfig: ZRKRealmConfiguration = {
   deleteRealmIfMigrationNeeded: true,
 
   schema: [AudioRecordingSchema],
-  schemaVersion: 1,
+  schemaVersion: 2,
 };

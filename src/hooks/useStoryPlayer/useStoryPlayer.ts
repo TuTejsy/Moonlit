@@ -15,7 +15,6 @@ import { selectIsPlaying, selectSelectedAudioRecoringId } from '@/store/player/p
 import { startPlaying, stopPlaying } from '@/store/player/player.slice';
 import { formatServerFileURLToAbsolutePath } from '@/utils/formatters/formatServerFileURLToAbsolutePath';
 import { generateAudioRecordingCachedName } from '@/utils/generators/generateAudioRecordingCachedName';
-import { getPresignedFileURL } from '@/utils/urls/getPresignedFileURL';
 
 import { useAudioRecording } from '../database/useAudioRecording';
 import { useAppDispatch } from '../useAppDispatch';
@@ -120,9 +119,7 @@ export function useStoryPlayer({
         if (!isFileExist) {
           setIsLoading(true);
 
-          const presingedURL = await getPresignedFileURL(
-            formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
-          );
+          const presingedURL = formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url);
 
           await RNFS.downloadFile({
             fromUrl: presingedURL,
