@@ -6,7 +6,7 @@
 #import "React/RCTBridgeModule.h"
 #endif
 
-@interface ZRKKeepAwake : NSObject <RCTBridgeModule>
+@interface MNTKeepAwake : NSObject <RCTBridgeModule>
 
 + (void)activate;
 + (void)deactivate;

@@ -124,10 +124,16 @@ export function useStoryPlayer({
             formatServerFileURLToAbsolutePath(selectedAudioRecording.audio_url),
           );
 
-          await RNFS.downloadFile({
+          console.log('presingedURL: ', presingedURL);
+
+          const result = await RNFS.downloadFile({
             fromUrl: presingedURL,
             toFile: filePath,
           }).promise;
+
+          if (result.statusCode !== 200) {
+            throw new Error('Failed to download audio recording');
+          }
         }
 
         await AudioRecordingsDB.update([selectedAudioRecording.id], (recording) => {
@@ -135,6 +141,8 @@ export function useStoryPlayer({
         });
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
+        return null;
       }
 
       setIsLoading(false);
@@ -165,6 +173,11 @@ export function useStoryPlayer({
 
         const filePath = await downloadAudioRecording();
 
+        if (!filePath) {
+          reduxDispatch(stopPlaying());
+          return;
+        }
+
         if (storySelectedAudioRecordingId !== audioRecordingIdRef.current) {
           pauseStoryPlaying();
           return;
@@ -182,15 +195,19 @@ export function useStoryPlayer({
           filePath,
           fileTitle: title,
         });
-        const startPlatinResult = audioPlayer.startPlayingFromTime(timeToStart);
+        const startPlayingResult = audioPlayer.startPlayingFromTime(timeToStart);
 
         if (
           !isStoryPlayNotifiedRef.current &&
           setToPlayResult !== false &&
-          startPlatinResult !== false
+          startPlayingResult !== false
         ) {
           isStoryPlayNotifiedRef.current = true;
           notifyStoryPlay(storyId);
+        }
+
+        if (setToPlayResult === false || startPlayingResult === false) {
+          reduxDispatch(stopPlaying());
         }
       } catch (err) {
         reduxDispatch(stopPlaying());

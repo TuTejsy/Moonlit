@@ -4,7 +4,7 @@ import AVFoundation
 let kFramePowerInterval = TimeInterval(0.01)
 let kMaxFramePowerCount = 60
 
-@objc protocol ZRKAudioRecorderDelegate {
+@objc protocol MNTAudioRecorderDelegate {
   func recordingDidStart()
   func recordingDidFinish(fileURL: URL, framesPower: [Int], duration: Double)
   
@@ -12,9 +12,9 @@ let kMaxFramePowerCount = 60
   func framePowerDidUpdate(framePower: Int)
 }
 
-class ZRKAudioRecorder: NSObject, AVAudioRecorderDelegate {
-  static let shared = ZRKAudioRecorder()
-  weak var delegate: ZRKAudioRecorderDelegate?
+class MNTAudioRecorder: NSObject, AVAudioRecorderDelegate {
+  static let shared = MNTAudioRecorder()
+  weak var delegate: MNTAudioRecorderDelegate?
   
   private var recordingSession: AVAudioSession {
     return AVAudioSession.sharedInstance()

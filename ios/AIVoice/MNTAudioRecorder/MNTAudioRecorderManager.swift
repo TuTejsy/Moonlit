@@ -13,13 +13,13 @@ enum AudioRecorderEvents: String {
 
 let kAudioMimeType = "audio/x-m4a"
 
-@objc(ZRKAudioRecorderManager)
-class ZRKAudioRecorderManager: RCTEventEmitter, ZRKAudioRecorderDelegate {
+@objc(MNTAudioRecorderManager)
+class MNTAudioRecorderManager: RCTEventEmitter, MNTAudioRecorderDelegate {
   func framePowerDidUpdate(framePower: Int) {
     sendEvent(withName: AudioRecorderEvents.RECORDING_FRAME_POWER_UPDATE.rawValue, body: framePower)
   }
   
-  private let audioRecorder = ZRKAudioRecorder.shared
+  private let audioRecorder = MNTAudioRecorder.shared
   
   private var recordingDidFinishResolveBlock: RCTPromiseResolveBlock?
   
@@ -68,7 +68,7 @@ class ZRKAudioRecorderManager: RCTEventEmitter, ZRKAudioRecorderDelegate {
     sendEvent(withName: AudioRecorderEvents.RECORDING_DID_START.rawValue, body: [
     ])
     
-    ZRKKeepAwake.activate()
+    MNTKeepAwake.activate()
   }
   
   @objc func handleInterruption(notification: NSNotification) {
@@ -82,14 +82,14 @@ class ZRKAudioRecorderManager: RCTEventEmitter, ZRKAudioRecorderDelegate {
     case .began:
       sendEvent(withName: AudioRecorderEvents.RECORDING_DID_INTERRUPT.rawValue, body: [])
       
-      ZRKKeepAwake.deactivate()
+      MNTKeepAwake.deactivate()
     default :
       return
     }
   }
   
   func recordingDidFinish(fileURL: URL, framesPower: [Int], duration: Double) {
-    ZRKKeepAwake.deactivate()
+    MNTKeepAwake.deactivate()
     
     var fileSize: Int?
     

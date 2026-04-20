@@ -30,11 +30,11 @@
 		88C611AB2BF125620051AA1D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C611AA2BF125620051AA1D /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		88C611AD2BF125710051AA1D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C611AC2BF125710051AA1D /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		88C611AF2BF1257D0051AA1D /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C611AE2BF1257D0051AA1D /* AppTrackingTransparency.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		88E122BA29E1BC8A00C30444 /* ZRKAudioRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */; };
-		88E122BB29E1BC8A00C30444 /* ZRKAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */; };
-		88E122BC29E1BC8A00C30444 /* ZRKAudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */; };
+		88E122BA29E1BC8A00C30444 /* MNTAudioRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B329E1BC8A00C30444 /* MNTAudioRecorderManager.m */; };
+		88E122BB29E1BC8A00C30444 /* MNTAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B429E1BC8A00C30444 /* MNTAudioRecorder.swift */; };
+		88E122BC29E1BC8A00C30444 /* MNTAudioRecorderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B529E1BC8A00C30444 /* MNTAudioRecorderManager.swift */; };
 		88E122BE29E1BC8A00C30444 /* MNTAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122B829E1BC8A00C30444 /* MNTAudioPlayer.swift */; };
-		88E122C329E1BDCD00C30444 /* ZRKKeepAwake.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122C129E1BDCD00C30444 /* ZRKKeepAwake.m */; };
+		88E122C329E1BDCD00C30444 /* MNTKeepAwake.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122C129E1BDCD00C30444 /* MNTKeepAwake.m */; };
 		88E122CA29E1C1BF00C30444 /* FileHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122C929E1C1BF00C30444 /* FileHelper.swift */; };
 		88E122CD29E1C1CB00C30444 /* ZRKNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122CC29E1C1CB00C30444 /* ZRKNative.m */; };
 		88E122D029E1C3F400C30444 /* Extensions+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122CF29E1C3F400C30444 /* Extensions+String.swift */; };
@@ -89,12 +89,12 @@
 		88C611AA2BF125620051AA1D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		88C611AC2BF125710051AA1D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		88C611AE2BF1257D0051AA1D /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
-		88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZRKAudioRecorderManager.m; sourceTree = "<group>"; };
-		88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioRecorder.swift; sourceTree = "<group>"; };
-		88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZRKAudioRecorderManager.swift; sourceTree = "<group>"; };
+		88E122B329E1BC8A00C30444 /* MNTAudioRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNTAudioRecorderManager.m; sourceTree = "<group>"; };
+		88E122B429E1BC8A00C30444 /* MNTAudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNTAudioRecorder.swift; sourceTree = "<group>"; };
+		88E122B529E1BC8A00C30444 /* MNTAudioRecorderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNTAudioRecorderManager.swift; sourceTree = "<group>"; };
 		88E122B829E1BC8A00C30444 /* MNTAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MNTAudioPlayer.swift; sourceTree = "<group>"; };
-		88E122C129E1BDCD00C30444 /* ZRKKeepAwake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZRKKeepAwake.m; sourceTree = "<group>"; };
-		88E122C229E1BDCD00C30444 /* ZRKKeepAwake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZRKKeepAwake.h; sourceTree = "<group>"; };
+		88E122C129E1BDCD00C30444 /* MNTKeepAwake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNTKeepAwake.m; sourceTree = "<group>"; };
+		88E122C229E1BDCD00C30444 /* MNTKeepAwake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNTKeepAwake.h; sourceTree = "<group>"; };
 		88E122C729E1C07E00C30444 /* AIVoice-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AIVoice-Bridging-Header.h"; sourceTree = "<group>"; };
 		88E122C929E1C1BF00C30444 /* FileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHelper.swift; sourceTree = "<group>"; };
 		88E122CB29E1C1CB00C30444 /* ZRKNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZRKNative.h; path = AIVoice/ZRKNative.h; sourceTree = "<group>"; };
@@ -160,8 +160,8 @@
 				883424A72A93C23400AED6E9 /* Views */,
 				88E122D329E1C47D00C30444 /* Helpers */,
 				88E122CE29E1C3E300C30444 /* Extensions */,
-				88E122C029E1BDCD00C30444 /* ZRKKeepAwake */,
-				88E122B229E1BC8A00C30444 /* ZRKAudioRecorder */,
+				88E122C029E1BDCD00C30444 /* MNTKeepAwake */,
+				88E122B229E1BC8A00C30444 /* MNTAudioRecorder */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -283,25 +283,25 @@
 			path = GradientView;
 			sourceTree = "<group>";
 		};
-		88E122B229E1BC8A00C30444 /* ZRKAudioRecorder */ = {
+		88E122B229E1BC8A00C30444 /* MNTAudioRecorder */ = {
 			isa = PBXGroup;
 			children = (
-				88E122B329E1BC8A00C30444 /* ZRKAudioRecorderManager.m */,
-				88E122B429E1BC8A00C30444 /* ZRKAudioRecorder.swift */,
-				88E122B529E1BC8A00C30444 /* ZRKAudioRecorderManager.swift */,
+				88E122B329E1BC8A00C30444 /* MNTAudioRecorderManager.m */,
+				88E122B429E1BC8A00C30444 /* MNTAudioRecorder.swift */,
+				88E122B529E1BC8A00C30444 /* MNTAudioRecorderManager.swift */,
 			);
-			name = ZRKAudioRecorder;
-			path = AIVoice/ZRKAudioRecorder;
+			name = MNTAudioRecorder;
+			path = AIVoice/MNTAudioRecorder;
 			sourceTree = "<group>";
 		};
-		88E122C029E1BDCD00C30444 /* ZRKKeepAwake */ = {
+		88E122C029E1BDCD00C30444 /* MNTKeepAwake */ = {
 			isa = PBXGroup;
 			children = (
-				88E122C129E1BDCD00C30444 /* ZRKKeepAwake.m */,
-				88E122C229E1BDCD00C30444 /* ZRKKeepAwake.h */,
+				88E122C129E1BDCD00C30444 /* MNTKeepAwake.m */,
+				88E122C229E1BDCD00C30444 /* MNTKeepAwake.h */,
 			);
-			name = ZRKKeepAwake;
-			path = AIVoice/ZRKKeepAwake;
+			name = MNTKeepAwake;
+			path = AIVoice/MNTKeepAwake;
 			sourceTree = "<group>";
 		};
 		88E122C829E1C1BF00C30444 /* FileHelper */ = {
@@ -558,7 +558,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88E122BB29E1BC8A00C30444 /* ZRKAudioRecorder.swift in Sources */,
+				88E122BB29E1BC8A00C30444 /* MNTAudioRecorder.swift in Sources */,
 				8805A8682B6A308A009EDE6C /* MNTShareManagerSpec-generated.mm in Sources */,
 				8805A8622B6A27E9009EDE6C /* MNTActivityItemSource.swift in Sources */,
 				88E122CD29E1C1CB00C30444 /* ZRKNative.m in Sources */,
@@ -566,11 +566,11 @@
 				8828EF482B65AB79006D4AED /* MNTAudioPlayerManager.mm in Sources */,
 				88E122DA29E1C61500C30444 /* Extensions+optional.swift in Sources */,
 				88E122D829E1C59000C30444 /* NSString+Helper.m in Sources */,
-				88E122BC29E1BC8A00C30444 /* ZRKAudioRecorderManager.swift in Sources */,
-				88E122C329E1BDCD00C30444 /* ZRKKeepAwake.m in Sources */,
+				88E122BC29E1BC8A00C30444 /* MNTAudioRecorderManager.swift in Sources */,
+				88E122C329E1BDCD00C30444 /* MNTKeepAwake.m in Sources */,
 				8828EF5A2B65D569006D4AED /* MNTAudioPlayerSpec-generated.mm in Sources */,
 				88E122D229E1C44200C30444 /* Extensions+UIColor.swift in Sources */,
-				88E122BA29E1BC8A00C30444 /* ZRKAudioRecorderManager.m in Sources */,
+				88E122BA29E1BC8A00C30444 /* MNTAudioRecorderManager.m in Sources */,
 				88E122D029E1C3F400C30444 /* Extensions+String.swift in Sources */,
 				8805A8652B6A307D009EDE6C /* MNTShareManagerSpecJSI-generated.cpp in Sources */,
 				88E122BE29E1BC8A00C30444 /* MNTAudioPlayer.swift in Sources */,
@@ -785,6 +785,7 @@
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DRN_FABRIC_ENABLED",
+					"-DRCT_REMOVE_LEGACY_ARCH=1",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -794,11 +795,13 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 					"-DRN_FABRIC_ENABLED",
+					"-DRCT_REMOVE_LEGACY_ARCH=1",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "AIVoice-Bridging-Header.h";
 				USE_HERMES = true;
 			};
@@ -864,6 +867,7 @@
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DRN_FABRIC_ENABLED",
+					"-DRCT_REMOVE_LEGACY_ARCH=1",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -873,10 +877,12 @@
 					"-DRN_FABRIC_ENABLED",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
+					"-DRCT_REMOVE_LEGACY_ARCH=1",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "AIVoice-Bridging-Header.h";
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;

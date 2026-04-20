@@ -1,13 +1,13 @@
-#import "ZRKKeepAwake.h"
+#import "MNTKeepAwake.h"
 #import "UIKit/UIKit.h"
 
 
-@interface ZRKKeepAwake()
+@interface MNTKeepAwake()
   @property(class) int activateCount;
 @end
 
 
-@implementation ZRKKeepAwake
+@implementation MNTKeepAwake
 RCT_EXPORT_MODULE();
 
 static int _activateCount = 0;
@@ -40,11 +40,11 @@ static int _activateCount = 0;
 }
 
 RCT_EXPORT_METHOD(activate) {
-  [ZRKKeepAwake activate];
+  [MNTKeepAwake activate];
 }
 
 RCT_EXPORT_METHOD(deactivate) {
-  [ZRKKeepAwake deactivate];
+  [MNTKeepAwake deactivate];
 }
 
 @end

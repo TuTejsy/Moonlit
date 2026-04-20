@@ -29,9 +29,7 @@ export const getStorageData = (): StorageDataReturn => {
     ? storage.getBoolean(StorageKeys.isRemoteConfigLiveUpdateEnabled) ?? false
     : false;
 
-  const isPresignedURLsEnabled = devMode
-    ? storage.getBoolean(StorageKeys.isPresignedURLsEnabled) ?? false
-    : false;
+  const isPresignedURLsEnabled = storage.getBoolean(StorageKeys.isPresignedURLsEnabled) ?? false;
 
   const isOnboarded = storage.getBoolean(StorageKeys.isOnboarded);
   const isFirstLaunch = storage.getBoolean(StorageKeys.isFirstLaunch) ?? true;
