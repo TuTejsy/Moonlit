@@ -40,7 +40,6 @@ export const getStorageData = (): StorageDataReturn => {
     [StorageKeys.isReviewAsked]: isReviewAsked,
     [StorageKeys.isAnaltyticsEnabled]: isAnaltyticsEnabled,
     [StorageKeys.isRemoteConfigLiveUpdateEnabled]: isRemoteConfigLiveUpdateEnabled,
-    [StorageKeys.isPresignedURLsEnabled]: storage.getBoolean(StorageKeys.isPresignedURLsEnabled),
   };
 };
 

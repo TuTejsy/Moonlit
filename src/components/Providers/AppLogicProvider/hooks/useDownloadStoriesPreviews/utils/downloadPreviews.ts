@@ -28,29 +28,17 @@ export async function downloadPreviews(
       const cachedName = generateStoryCoverCachedName(story, type);
       const saveToFilePath = `${getSandboxPathForCoverType(type)}/${cachedName}`;
 
-      if (getStorageData().isPresignedURLsEnabled) {
-        getPresignedFileURL(
-          formatServerFileURLToAbsolutePath(story[getStoryPreviewURLFieldForCoverType(type)]),
-        ).then((url) => {
-          const { promise } = RNFS.downloadFile({
-            fromUrl: url,
-            toFile: saveToFilePath,
-          });
+      const url = await getPresignedFileURL(
+        formatServerFileURLToAbsolutePath(story[getStoryPreviewURLFieldForCoverType(type)]),
+      );
 
-          promises.push(promise);
-          filesCachedNames.push(cachedName);
-        });
-      } else {
-        const { promise } = RNFS.downloadFile({
-          fromUrl: formatServerFileURLToAbsolutePath(
-            story[getStoryPreviewURLFieldForCoverType(type)],
-          ),
-          toFile: saveToFilePath,
-        });
+      const { promise } = RNFS.downloadFile({
+        fromUrl: url,
+        toFile: saveToFilePath,
+      });
 
-        promises.push(promise);
-        filesCachedNames.push(cachedName);
-      }
+      promises.push(promise);
+      filesCachedNames.push(cachedName);
     } catch (err) {
       console.error(err);
     }
