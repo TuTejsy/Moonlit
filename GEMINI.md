@@ -3,7 +3,7 @@
 This document provides essential context about the Moonlit React Native mobile application. It is designed to help AI assistants (like Antigravity) understand the project's architecture, dependencies, and structure to provide context-aware and high-quality assistance.
 
 > 🚨 **META RULE: CONTINUOUS CONTEXT MAINTENANCE** 🚨
-> As an AI agent (e.g., Antigravity, Cursor, etc.), you **MUST ALWAYS** update this `GEMINI.md` file whenever you introduce or modify new core services, global utilities, meaningful architectural patterns, or standard practices in the project. You must proactively document these additions to ensure this file remains the highly-accurate, single source of truth and memory for future sessions. Failure to do so will result in lost coding context.
+> As an AI agent you **MUST ALWAYS** update this `GEMINI.md` file whenever you introduce or modify new core services, global utilities, meaningful architectural patterns, or standard practices in the project. You must proactively document these additions to ensure this file remains the highly-accurate, single source of truth and memory for future sessions. Failure to do so will result in lost coding context.
 
 ## Product Context
 
