@@ -21,7 +21,7 @@ export function useAudioRecording(
 
   useEffect(() => {
     if (!audioRecordingId) {
-      return;
+      return undefined;
     }
 
     const audioRecording = AudioRecordingsDB.object(audioRecordingId);
@@ -55,6 +55,8 @@ export function useAudioRecording(
         audioRecording.removeListener(listener);
       };
     }
+
+    return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audioRecordingId]);
 

@@ -1,0 +1,12 @@
+---
+description: Realm database query constraints, reactive hooks (useStory, useStories), and action hooks.
+globs: src/database/**,src/hooks/database/**
+alwaysApply: false
+---
+
+# Database Access & Realm Hooks
+
+- ALWAYS use hooks from `src/hooks/database/` — never query Realm directly in components.
+- **Data hooks**: `useStory`, `useStories`, `useAudioRecording`, `useAudioRecordings`.
+- **Action hooks**: `useSelectedAudioRecording(storyId)`, `useHandleStoryFavorite({ source, storyId, storyName, tab })`.
+- Use `propsToWatch` on data hooks to limit re-renders to specific property changes.

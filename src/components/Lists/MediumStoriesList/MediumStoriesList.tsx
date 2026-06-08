@@ -55,7 +55,7 @@ export function MediumStoriesList({
     [tab],
   );
 
-  const keyExtractor = useCallback((item: StorySchema, index: number) => `${item.id}`, []);
+  const keyExtractor = useCallback((item: StorySchema) => `${item.id}`, []);
 
   return (
     <FlatList

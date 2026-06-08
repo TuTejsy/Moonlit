@@ -45,7 +45,7 @@ expect(await screen.findByText('Loaded')).toBeOnTheScreen();
 
 ```tsx
 // BAD: testID when accessible query works
-<Pressable testID="submit-btn" role="button">
+<Pressable testID='submit-btn' role='button'>
   <Text>Submit</Text>
 </Pressable>;
 screen.getByTestId('submit-btn');

@@ -37,7 +37,7 @@ export function ProgressBar({
   const [remainedTimeText, setRemainedTimeText] = useState('');
 
   const playedTimeRef = useMutableValue(playedTime);
-  const timerRef = useRef<NodeJS.Timer | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const progressSharedValue = useSharedValue(0);
 

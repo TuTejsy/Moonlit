@@ -32,7 +32,7 @@ function VoiceWaveform({
 
   return (
     <View style={styles.voiceWaveform}>
-      {frames.map((value, index) => {
+      {frames.map((_, index) => {
         const middle = numberOfFrames / 2;
         const diffMiddle = Math.abs(middle - index);
         const opacity = 1 - diffMiddle * (2 / numberOfFrames);

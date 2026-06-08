@@ -38,6 +38,8 @@ export function useStory(
         story.removeListener(listener);
       };
     }
+
+    return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storyId]);
 

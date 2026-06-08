@@ -63,16 +63,16 @@ describe('useAudioRecording', () => {
   });
 
   it('sets up a listener and updates state when properties change', () => {
-    const { result } = renderHook(() => useAudioRecording(1, ['title']));
+    const { result } = renderHook(() => useAudioRecording(1, ['name']));
 
-    expect(addListenerMock).toHaveBeenCalledWith(expect.any(Function), ['title']);
+    expect(addListenerMock).toHaveBeenCalledWith(expect.any(Function), ['name']);
 
     const listener = addListenerMock.mock.calls[0][0];
 
-    const updatedRecording = { ...mockRecordingNode, title: 'Updated title' };
+    const updatedRecording = { ...mockRecordingNode, name: 'Updated name' };
 
     act(() => {
-      listener(updatedRecording, { changedProperties: ['title'], deleted: false });
+      listener(updatedRecording, { changedProperties: ['name'], deleted: false });
     });
 
     expect(result.current[0]).toEqual(updatedRecording);

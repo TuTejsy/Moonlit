@@ -6,12 +6,12 @@ interface Context {
   maxHeight: number;
 }
 
-export const makeStyles = ({ colors }: MakeStylesProps, { maxHeight }: Context) =>
+export const makeStyles = (_props: MakeStylesProps, { maxHeight }: Context) =>
   StyleSheet.create({
     voiceWaveform: {
       alignItems: 'center',
       flexDirection: 'row',
       height: maxHeight,
-      justifyItems: 'center',
+      justifyContent: 'center',
     },
   });

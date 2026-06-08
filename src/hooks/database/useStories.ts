@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 
-import Realm, { CollectionChangeCallback, SortDescriptor } from 'realm';
+import Realm, { SortDescriptor } from 'realm';
 
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
@@ -48,7 +48,7 @@ export function useStories(
   const storiesVersionRef = useRef(storiesVersion);
 
   useEffect(() => {
-    const listener: CollectionChangeCallback<StorySchema> = (nextCollection) => {
+    const listener = () => {
       setstoriesVersion(++storiesVersionRef.current);
     };
 

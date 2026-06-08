@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/dependency-restart.sh",
+        "timeout": 600
+      }
+    ],
+    "stop": [
+      {
+        "command": ".cursor/hooks/quality-check.sh",
+        "timeout": 600,
+        "loop_limit": 2
+      }
+    ]
+  }
+}

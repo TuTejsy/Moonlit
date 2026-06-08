@@ -1,7 +1,7 @@
 ---
 trigger: model_decision
 description: Realm database query constraints, reactive hooks (useStory, useStories), and action hooks.
-globs: "src/database/**/*, src/hooks/database/**/*, src/screens/**/*.tsx, src/components/**/*.tsx"
+globs: 'src/database/**/*, src/hooks/database/**/*, src/screens/**/*.tsx, src/components/**/*.tsx'
 ---
 
 # Database Access & Realm Hooks

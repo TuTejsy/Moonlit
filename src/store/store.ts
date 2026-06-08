@@ -1,21 +1,16 @@
-import { Action, configureStore, PreloadedState, ThunkAction } from '@reduxjs/toolkit';
+import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { persistStore } from 'redux-persist';
 
 import { rootReducer } from './rootReducer';
 
-const middlewares: any[] = [];
+type StoreState = ReturnType<typeof rootReducer>;
 
-if (__DEV__) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires, global-require
-  // middlewares.push(createDebugger());
-}
-
-export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
+export const setupStore = (preloadedState?: Partial<StoreState>) =>
   configureStore({
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }).concat(middlewares),
-    preloadedState,
+      getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }),
+    preloadedState: preloadedState as StoreState | undefined,
     reducer: rootReducer,
   });
 

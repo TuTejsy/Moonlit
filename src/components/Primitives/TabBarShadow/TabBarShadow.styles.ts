@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { PURE_TAB_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
-export const makeStyles = ({ colors, dw, zIndex }: MakeStylesProps) =>
+export const makeStyles = ({ colors, zIndex }: MakeStylesProps) =>
   StyleSheet.create({
     view: {
       backgroundColor: colors.white,

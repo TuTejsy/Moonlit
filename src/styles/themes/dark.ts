@@ -51,4 +51,5 @@ export const darkNavTheme: Theme = {
     text: commonColors.white,
   },
   dark: true,
+  fonts: defaultNavigationTheme.fonts,
 };

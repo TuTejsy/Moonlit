@@ -65,7 +65,7 @@ export const SettingsScreen = () => {
             Linking.openURL(STORE_LINK);
           },
         )
-        .catch((err) => {
+        .catch(() => {
           Linking.openURL(STORE_LINK);
         })
         .finally(() => {

@@ -12,7 +12,7 @@ interface Context {
 
 export const makeStyles = (
   { colors, fonts, horizontalPadding, insets, zIndex }: MakeStylesProps,
-  { color, horizontalInset }: Context,
+  { color }: Context,
 ) => {
   const HEADER_HEIGHT = DEFAULT_HEADER_HEIGHT;
 

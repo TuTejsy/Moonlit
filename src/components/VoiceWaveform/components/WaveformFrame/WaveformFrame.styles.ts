@@ -10,7 +10,7 @@ interface Context {
 }
 
 export const makeStyles = (
-  { colors }: MakeStylesProps,
+  _props: MakeStylesProps,
   { color, maxHeight, minHeight, opacity }: Context,
 ) =>
   StyleSheet.create({

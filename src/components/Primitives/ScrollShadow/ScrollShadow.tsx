@@ -10,7 +10,7 @@ import { useTheme } from '@/hooks/theme/useTheme';
 import { makeStyles } from './ScrollShadow.styles';
 
 interface Props {
-  opacityAnimStyle: StyleProp<Animated.AnimateStyle<StyleProp<ViewStyle>>>;
+  opacityAnimStyle: StyleProp<ViewStyle>;
   gradientStyle?: ViewStyle;
 }
 

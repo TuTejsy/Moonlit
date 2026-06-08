@@ -1,0 +1,11 @@
+---
+description: Moonlit project structure, provider hierarchy, and available scripts.
+globs: src/**/*
+alwaysApply: false
+---
+
+# Project Context
+
+- Source in `src/` — see `.agents/rules/project-context.md` for full directory map.
+- Provider hierarchy: `SafeAreaProvider → ThemeProvider → LocalizationProvider → Redux → AppLogicProvider → Navigation`.
+- Key scripts: `yarn start`, `yarn ios`, `yarn android`, `yarn test`, `yarn lint`, `yarn format`, `yarn tsc`, `yarn restart`, `yarn pod-reinstall`.

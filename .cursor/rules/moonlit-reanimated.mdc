@@ -1,0 +1,14 @@
+---
+description: Reanimated 4 and react-native-worklets threading APIs for Moonlit.
+globs: src/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Reanimated & Worklets
+
+Moonlit uses **Reanimated 4** + **`react-native-worklets`** (`babel.config.js` plugin).
+
+- Use **`scheduleOnRN`** from `react-native-worklets` to call JS from worklets/gestures.
+- **Don't** use `runOnJS` from `react-native-reanimated` (deprecated in Reanimated 4).
+- Baseline: StoryPlayer gestures, ProgressBar, SplashViewModal.
+- Jest: `scheduleOnRN` mocked in `setupJest.ts`.

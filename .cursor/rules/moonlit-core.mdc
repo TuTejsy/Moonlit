@@ -1,0 +1,35 @@
+---
+description: Moonlit core context, tech stack, and universal mandatory rules
+alwaysApply: true
+---
+
+# Moonlit — Core Project Rules
+
+Moonlit is a React Native app featuring fairytales for children. Users choose a pre-defined voice or record their own for tale synthesis.
+
+## Technology Stack
+
+- **Package manager**: `yarn` only. Run `yarn restart` after dependency changes.
+- **Framework**: Bare React Native (no Expo).
+- **Language**: Strict TypeScript. Never use `any` or non-null assertion (`!`).
+- **Navigation**: `react-navigation` with JS stack (`@react-navigation/stack`) and bottom tabs.
+
+## Universal Mandatory Rules
+
+1. Use the theme-aware `useMakeStyles` system and primitive components (`TextView`, `PressableView`).
+
+## Meta Rule: Continuous Context Maintenance
+
+When introducing or modifying core services, global utilities, or architectural patterns, update `.agents/rules/` and the matching `.cursor/rules/moonlit-*.mdc` files. When editing the AI context layer (rules, skills, agents), read `.agents/skills/moonlit-ai-context/SKILL.md` or invoke `/moonlit-context-curator` for drift and token-efficiency audits.
+
+## Specialized Rules
+
+| Topic | Cursor rule |
+| :--- | :--- |
+| Architecture | `moonlit-architecture.mdc` |
+| UI & Styling | `moonlit-ui-styling.mdc` |
+| Realm Database | `moonlit-database.mdc` |
+| Headers | `moonlit-headers.mdc` |
+| Reanimated & Worklets | `moonlit-reanimated.mdc` |
+| Testing & Quality | `moonlit-testing-quality.mdc` |
+| Project Structure | `moonlit-project-structure.mdc` |

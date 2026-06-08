@@ -19,7 +19,7 @@ const handleAnimate = useCallback((fromIndex, toIndex) => {
 
 <BottomSheet onAnimate={handleAnimate}>
   <ExpensiveContent isExpanded={isExpanded} />
-</BottomSheet>
+</BottomSheet>;
 ```
 
 **Correct (stays on UI thread — zero re-renders):**
@@ -85,7 +85,7 @@ const handleAnimate = useCallback((fromIndex, toIndex) => {
   <View style={{ shadowOpacity }}>
     <HeavyContent />
   </View>
-</BottomSheet>
+</BottomSheet>;
 ```
 
 **After:**
@@ -101,7 +101,7 @@ const shadowStyle = useAnimatedStyle(() => ({
   <Animated.View style={shadowStyle}>
     <HeavyContent />
   </Animated.View>
-</BottomSheet>
+</BottomSheet>;
 ```
 
 ### 2. Drive Sheet-Index Visibility via `useAnimatedReaction`
@@ -114,7 +114,9 @@ Toggling content based on sheet index via `{showFooter && <Footer/>}` causes mou
 const [showFooter, setShowFooter] = useState(false);
 
 // re-mounts footer on every toggle
-{showFooter && <Footer />}
+{
+  showFooter && <Footer />;
+}
 ```
 
 **After:**
@@ -132,7 +134,7 @@ const SheetVisibilityWrapper = ({ animatedIndex, threshold = 1, children }) => {
     () => animatedIndex.value >= threshold,
     (visible, prev) => {
       if (visible !== prev) runOnJS(setIsInteractive)(visible);
-    }
+    },
   );
 
   return (
@@ -150,7 +152,7 @@ const SheetVisibilityWrapper = ({ animatedIndex, threshold = 1, children }) => {
 // Usage:
 <SheetVisibilityWrapper animatedIndex={animatedIndex}>
   <Footer />
-</SheetVisibilityWrapper>
+</SheetVisibilityWrapper>;
 ```
 
 ### 3. Keep Scroll-Driven Logic off the JS Thread
@@ -164,7 +166,7 @@ const scrollHandler = useAnimatedScrollHandler((event) => {
 
 <BottomSheetScrollView onScroll={scrollHandler}>
   <Content />
-</BottomSheetScrollView>
+</BottomSheetScrollView>;
 ```
 
 ### 4. Use Library-Provided Components and Props
@@ -192,35 +194,28 @@ const BottomSheetFlashListScrollComponent = useBottomSheetScrollableCreator();
     renderItem={renderItem}
     renderScrollComponent={BottomSheetFlashListScrollComponent}
   />
-</BottomSheet>
+</BottomSheet>;
 ```
 
 **Key props:**
 
-| Prop | Purpose |
-|------|---------|
-| `containerHeight` | Provide to skip extra measurement re-render on mount |
-| `enableDynamicSizing={false}` | Use when you want fixed snap-point indexing and do not want a dynamic content-height snap point inserted |
-| `animatedIndex` | SharedValue for continuous index tracking on UI thread |
-| `animatedPosition` | SharedValue for continuous position tracking on UI thread |
-| `onChange` | Fires on snap **completion** only (discrete) — use for analytics/side effects |
-| `onAnimate` | Fires before each animation start/retarget — use sparingly, because it can run repeatedly during interaction |
+| Prop                          | Purpose                                                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `containerHeight`             | Provide to skip extra measurement re-render on mount                                                         |
+| `enableDynamicSizing={false}` | Use when you want fixed snap-point indexing and do not want a dynamic content-height snap point inserted     |
+| `animatedIndex`               | SharedValue for continuous index tracking on UI thread                                                       |
+| `animatedPosition`            | SharedValue for continuous position tracking on UI thread                                                    |
+| `onChange`                    | Fires on snap **completion** only (discrete) — use for analytics/side effects                                |
+| `onAnimate`                   | Fires before each animation start/retarget — use sparingly, because it can run repeatedly during interaction |
 
 ### 5. BottomSheetModal Setup
 
 ```jsx
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const App = () => (
   <BottomSheetModalProvider>
-    <BottomSheetModal
-      ref={modalRef}
-      snapPoints={snapPoints}
-      enableDismissOnClose={true}
-    >
+    <BottomSheetModal ref={modalRef} snapPoints={snapPoints} enableDismissOnClose={true}>
       <Content />
     </BottomSheetModal>
   </BottomSheetModalProvider>
@@ -243,22 +238,19 @@ import { FullWindowOverlay } from 'react-native-screens';
 <BottomSheet
   snapPoints={snapPoints}
   enableDynamicSizing={false}
-  keyboardBehavior="interactive"    // 'extend' | 'fillParent' | 'interactive'
-  keyboardBlurBehavior="restore"    // reset sheet position when keyboard dismisses
+  keyboardBehavior='interactive' // 'extend' | 'fillParent' | 'interactive'
+  keyboardBlurBehavior='restore' // reset sheet position when keyboard dismisses
   enableBlurKeyboardOnGesture={true} // dismiss keyboard on drag
 >
-  <BottomSheetTextInput
-    placeholder="Type here..."
-    style={styles.input}
-  />
+  <BottomSheetTextInput placeholder='Type here...' style={styles.input} />
 </BottomSheet>
 ```
 
-| `keyboardBehavior` | Effect |
-|--------------------|--------|
-| `extend` | Sheet grows to accommodate keyboard |
-| `fillParent` | Sheet fills parent when keyboard appears |
-| `interactive` | Sheet follows keyboard position interactively |
+| `keyboardBehavior` | Effect                                        |
+| ------------------ | --------------------------------------------- |
+| `extend`           | Sheet grows to accommodate keyboard           |
+| `fillParent`       | Sheet fills parent when keyboard appears      |
+| `interactive`      | Sheet follows keyboard position interactively |
 
 > Prefer `BottomSheetTextInput` inside a bottom sheet. If you need a custom input, copy the focus/blur handlers from the library's `BottomSheetTextInput` implementation so keyboard handling still works correctly.
 
@@ -288,12 +280,12 @@ const backdropStyle = useAnimatedStyle(() => ({
 
 If your app already runs on **New Architecture (Fabric)**, consider `@lodev09/react-native-true-sheet` — a fully native bottom sheet that sidesteps JS re-render problems entirely.
 
-| Scenario | Recommendation |
-|----------|---------------|
-| Need deep JS customization (custom gestures, animated derived UI) | `@gorhom/bottom-sheet` |
-| Standard sheet with native feel + accessibility | `react-native-true-sheet` |
-| Legacy Architecture (no Fabric) | `@gorhom/bottom-sheet` (true-sheet v3+ requires Fabric) |
-| Web support needed | Either (true-sheet uses `@gorhom/bottom-sheet` on web internally) |
+| Scenario                                                          | Recommendation                                                    |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Need deep JS customization (custom gestures, animated derived UI) | `@gorhom/bottom-sheet`                                            |
+| Standard sheet with native feel + accessibility                   | `react-native-true-sheet`                                         |
+| Legacy Architecture (no Fabric)                                   | `@gorhom/bottom-sheet` (true-sheet v3+ requires Fabric)           |
+| Web support needed                                                | Either (true-sheet uses `@gorhom/bottom-sheet` on web internally) |
 
 **Advantages**: zero JS overhead (sheet lives in native land — no SharedValue plumbing needed), built-in keyboard handling, native screen reader support, side sheet on tablets, iOS 26+ Liquid Glass support, React Navigation sheet navigator integration.
 

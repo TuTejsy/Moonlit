@@ -4,7 +4,7 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 
 import { PREVIEW_HEIGHT, PREVIEW_WIDTH } from './StoryPreview.constants';
 
-export const makeStyles = ({ colors, fonts, zIndex }: MakeStylesProps) =>
+export const makeStyles = ({ colors, fonts }: MakeStylesProps) =>
   StyleSheet.create({
     descriptionText: {
       ...fonts.size_14,

@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.agents/hooks/quality-check.sh"
+          },
+          {
+            "type": "command",
+            "command": "./.agents/hooks/pod-sync.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "replace_file_content|multi_replace_file_content|write_to_file|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./.agents/hooks/pod-sync.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

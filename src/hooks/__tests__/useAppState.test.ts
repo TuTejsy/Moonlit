@@ -26,7 +26,7 @@ describe('useAppState', () => {
 
   beforeEach(() => {
     callbacks = {};
-    removeChangeMock = jest.Mock;
+    removeChangeMock = jest.fn();
     (AppState.addEventListener as jest.Mock).mockClear();
 
     (AppState.addEventListener as jest.Mock).mockImplementation((event: string, cb: any) => {

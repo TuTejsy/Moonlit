@@ -1,0 +1,13 @@
+---
+description: Testing, linting, formatting, and automated quality gate requirements for Moonlit.
+alwaysApply: true
+---
+
+# Testing, Linting & Formatting
+
+- **Testing**: Jest + RNTL; global mocks in `setupJest.ts`; use `react-native-testing` skill for test authoring.
+- 🚨 **CONTINUOUS TESTING**: Update or add tests for every logic/UI change.
+- **Linting**: Fix all ESLint errors in changed files.
+- **Formatting**: Keep Prettier-formatted; hooks run `yarn format` automatically.
+- **Quality gate**: Stop hooks run `yarn lint`, `yarn format`, `yarn test`, `yarn tsc` when workspace has changes.
+- **Context drift**: After quality passes, drift check may suggest `/moonlit-context-curator` (user approval required).

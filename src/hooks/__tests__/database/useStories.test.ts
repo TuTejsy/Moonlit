@@ -28,7 +28,7 @@ describe('useStories', () => {
     mockSortedResult = {
       addListener: addListenerMock,
       removeListener: removeListenerMock,
-      slice: jest.fn((start, end) => ['sliced-story-1']),
+      slice: jest.fn(() => ['sliced-story-1']),
     };
 
     mockFilteredResult = {

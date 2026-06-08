@@ -1,0 +1,14 @@
+---
+description: Styling guidelines using useMakeStyles, theme variables, custom primitives (TextView, PressableView), and localization requirements.
+globs: src/**/*.{tsx,styles.ts}
+alwaysApply: false
+---
+
+# UI, Styling & Primitive System
+
+- DO NOT use plain `StyleSheet.create` in components — use `makeStyles` in `${componentName}.styles.ts`.
+- ALWAYS use `MakeStylesProps` from `@/hooks/theme/useMakeStyles`; destructure `theme` param; no hardcoded colors, padding, or font sizes.
+- ALWAYS use `fonts` from theme params; add missing sizes to `src/styles/fonts.ts`.
+- ALWAYS use `TextView` and `PressableView` primitives — never `Text`, `Button`, `TouchableOpacity`.
+- NEVER hardcode text — use `localize` from `useAppLocalization`; add keys to relevant `src/localization/locals/` domain file.
+- No external UI libraries.

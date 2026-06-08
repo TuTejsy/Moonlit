@@ -11,7 +11,7 @@ interface Context extends StoryPlayerScreenLayout {
 
 export const makeStyles = (
   { colors, windowHeight, windowWidth, zIndex }: MakeStylesProps,
-  { gradientColor, storyContainerMinHeight, storyContainerMinWidth, storyCoverMinHeight }: Context,
+  _context: Context,
 ) =>
   StyleSheet.create({
     header: {

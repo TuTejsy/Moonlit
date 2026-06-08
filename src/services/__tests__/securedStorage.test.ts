@@ -9,7 +9,7 @@ describe('SecuredStorage', () => {
 
   describe('setItem', () => {
     it('should call Keychain.setGenericPassword with correct parameters', async () => {
-      const mockKey = SecuredStorageKey.s3AccessToken;
+      const mockKey = SecuredStorageKey.awsAccessToken;
       const mockValue = 'test-token';
 
       await SecuredStorage.setItem(mockKey, mockValue);
@@ -21,7 +21,7 @@ describe('SecuredStorage', () => {
     });
 
     it('should throw an error if Keychain.setGenericPassword fails', async () => {
-      const mockKey = SecuredStorageKey.s3AccessToken;
+      const mockKey = SecuredStorageKey.awsAccessToken;
       const mockValue = 'test-token';
       const mockError = new Error('Keychain set failed');
 
@@ -42,7 +42,7 @@ describe('SecuredStorage', () => {
 
   describe('getItem', () => {
     it('should call Keychain.getGenericPassword with correct parameters and return password when successful', async () => {
-      const mockKey = SecuredStorageKey.s3AccessToken;
+      const mockKey = SecuredStorageKey.awsAccessToken;
       const mockToken = 'test-token';
       const mockResult = {
         password: mockToken,
@@ -63,7 +63,7 @@ describe('SecuredStorage', () => {
     });
 
     it('should return null if Keychain.getGenericPassword returns false (not found)', async () => {
-      const mockKey = SecuredStorageKey.s3AccessToken;
+      const mockKey = SecuredStorageKey.awsAccessToken;
 
       jest.spyOn(Keychain, 'getGenericPassword').mockResolvedValueOnce(false);
 
@@ -73,7 +73,7 @@ describe('SecuredStorage', () => {
     });
 
     it('should return null and log error if Keychain.getGenericPassword fails', async () => {
-      const mockKey = SecuredStorageKey.s3AccessToken;
+      const mockKey = SecuredStorageKey.awsAccessToken;
       const mockError = new Error('Keychain get failed');
 
       jest.spyOn(Keychain, 'getGenericPassword').mockRejectedValueOnce(mockError);
@@ -93,7 +93,7 @@ describe('SecuredStorage', () => {
 
   describe('removeItem', () => {
     it('should call Keychain.resetGenericPassword with correct parameters', async () => {
-      const mockKey = SecuredStorageKey.s3AccessToken;
+      const mockKey = SecuredStorageKey.awsAccessToken;
 
       await SecuredStorage.removeItem(mockKey);
 
@@ -104,7 +104,7 @@ describe('SecuredStorage', () => {
     });
 
     it('should throw an error if Keychain.resetGenericPassword fails', async () => {
-      const mockKey = SecuredStorageKey.s3AccessToken;
+      const mockKey = SecuredStorageKey.awsAccessToken;
       const mockError = new Error('Keychain reset failed');
 
       jest.spyOn(Keychain, 'resetGenericPassword').mockRejectedValueOnce(mockError);

@@ -1,0 +1,8 @@
+node_modules
+vendor
+ios/Pods
+ios/build
+android/build
+android/.gradle
+coverage
+*.lock

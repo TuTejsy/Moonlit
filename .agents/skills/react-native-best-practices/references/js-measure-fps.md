@@ -38,12 +38,14 @@ flashlight measure
 ### Method 1: React Perf Monitor (Quick Check)
 
 1. Open Dev Menu:
+
    - iOS Simulator: `Ctrl + Cmd + Z` or Device > Shake
    - Android Emulator: `Cmd + M` (Mac) / `Ctrl + M` (Windows)
 
 2. Select **"Perf Monitor"**
 
 3. Observe the overlay showing:
+
    - **UI (Main) thread FPS** - Native rendering
    - **JS thread FPS** - JavaScript execution
    - **RAM usage**
@@ -51,6 +53,7 @@ flashlight measure
 4. Hide with "Hide Perf Monitor" from Dev Menu
 
 **Interpretation:**
+
 - **60 FPS** = Smooth (16.6ms per frame)
 - **< 60 FPS** = Dropping frames
 - **120 FPS** target for high refresh rate devices (8.3ms per frame)
@@ -62,6 +65,7 @@ flashlight measure
 ![Flashlight FlatList vs FlashList Comparison](images/flashlight-flatlist-vs-flashlist.png)
 
 Flashlight shows comparative performance data:
+
 - **Score** (0-100): Overall performance rating (higher is better)
 - **Average FPS**: Target 60 FPS for smooth scrolling
 - **FPS Graph**: Real-time frame rate over test duration
@@ -81,6 +85,7 @@ flashlight measure
 ```
 
 **Features:**
+
 - Real-time FPS graph
 - Average FPS calculation
 - CPU and RAM metrics
@@ -92,10 +97,12 @@ flashlight measure
 **Always disable development mode for accurate measurements:**
 
 **Android:**
+
 1. Open Dev Menu
 2. Settings > JS Dev Mode → **OFF**
 
 **iOS (React Native CLI):**
+
 ```bash
 # Run Metro in production mode
 npx react-native start --reset-cache
@@ -103,6 +110,7 @@ npx react-native start --reset-cache
 ```
 
 **Expo:**
+
 ```bash
 # Start Metro without dev mode
 npx expo start --no-dev --minify
@@ -114,16 +122,19 @@ npx expo start --no-dev --minify
 ### Identify FPS Drop Source
 
 If **UI FPS drops but JS FPS is fine:**
+
 - Native rendering issue
 - Too many views/complex layouts
 - Heavy native animations
 
 If **JS FPS drops but UI FPS is fine:**
+
 - JavaScript computation blocking
 - Expensive React re-renders
 - Look for `longRunningFunction` patterns
 
 If **Both drop:**
+
 - Mixed issue, start with JS profiling
 
 ### Target Frame Budgets
@@ -132,13 +143,14 @@ If **Both drop:**
 // 60 FPS = 16.6ms per frame
 const FRAME_BUDGET_60 = 16.6;
 
-// 120 FPS = 8.3ms per frame  
+// 120 FPS = 8.3ms per frame
 const FRAME_BUDGET_120 = 8.3;
 
 // If your function takes longer, it will drop frames
 const longRunningFunction = () => {
   let i = 0;
-  while (i < 1000000000) { // This blocks for seconds!
+  while (i < 1000000000) {
+    // This blocks for seconds!
     i++;
   }
 };
@@ -146,12 +158,12 @@ const longRunningFunction = () => {
 
 ## Interpreting Results
 
-| FPS Range | User Perception | Action |
-|-----------|-----------------|--------|
-| 55-60 | Smooth | Acceptable |
-| 45-55 | Slight stutter | Investigate |
-| 30-45 | Noticeable jank | Optimize required |
-| < 30 | Very choppy | Critical fix needed |
+| FPS Range | User Perception | Action              |
+| --------- | --------------- | ------------------- |
+| 55-60     | Smooth          | Acceptable          |
+| 45-55     | Slight stutter  | Investigate         |
+| 30-45     | Noticeable jank | Optimize required   |
+| < 30      | Very choppy     | Critical fix needed |
 
 ## Flashlight CI Integration
 

@@ -97,7 +97,7 @@ export class RealmDB<ObjectType> {
 
   object = (id: number) => {
     if (id) {
-      return this.instance.objectForPrimaryKey<ObjectType>(this.objectName, id);
+      return this.instance.objectForPrimaryKey<ObjectType>(this.objectName, id as never);
     }
     return null;
   };
@@ -105,7 +105,7 @@ export class RealmDB<ObjectType> {
   // eslint-disable-next-line arrow-parens
   subObject = <SubObjectType>(subObjectName: string, id: number) => {
     if (id) {
-      return this.instance.objectForPrimaryKey<SubObjectType>(subObjectName, id);
+      return this.instance.objectForPrimaryKey<SubObjectType>(subObjectName, id as never);
     }
     return null;
   };
@@ -116,7 +116,7 @@ export class RealmDB<ObjectType> {
   objects = () => this.instance.objects<ObjectType>(this.objectName);
 
   upsert = (input: Array<ObjectType> | ObjectType) =>
-    new Promise<[Array<ObjectType>, Array<{ err: Error; object: ObjectType }>]>((res, rej) => {
+    new Promise<[Array<ObjectType>, Array<{ err: Error; object: ObjectType }>]>((res) => {
       const upserted: Array<ObjectType> = [];
       const notUpserted: Array<{ err: Error; object: ObjectType }> = [];
 

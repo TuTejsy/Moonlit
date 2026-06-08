@@ -12,9 +12,12 @@ describe('useMutableValue', () => {
   });
 
   it('updates the ref when the value changes', () => {
-    const { rerender, result } = renderHook(({ value }) => useMutableValue(value), {
-      initialProps: { value: 'first' },
-    });
+    const { rerender, result } = renderHook(
+      ({ value }: { value: string }) => useMutableValue(value),
+      {
+        initialProps: { value: 'first' },
+      },
+    );
 
     expect(result.current.current).toBe('first');
 

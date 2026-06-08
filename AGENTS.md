@@ -1,89 +1,88 @@
 # Project Context: Moonlit (AI-Voice Client)
 
-This document provides essential context about the Moonlit React Native mobile application. It is designed to help AI assistants (like Antigravity) understand the project's architecture, dependencies, and structure to provide context-aware and high-quality assistance.
+This document provides the core rules and entry points for the Moonlit React Native application.
 
 > 🚨 **META RULE: CONTINUOUS CONTEXT MAINTENANCE** 🚨
-> As an AI agent you **MUST ALWAYS** update this `GEMINI.md` file whenever you introduce or modify new core services, global utilities, meaningful architectural patterns, or standard practices in the project. You must proactively document these additions to ensure this file remains the highly-accurate, single source of truth and memory for future sessions. Failure to do so will result in lost coding context.
+> As an AI agent you **MUST ALWAYS** update these rule files (or create new ones in `.agents/rules/`) whenever you introduce or modify new core services, global utilities, or architectural patterns. Failure to do so will result in lost coding context. After agent sessions with architectural changes, the stop hook may suggest **`/moonlit-context-curator`** to audit drift and token efficiency in rules, skills, and agents.
 
 ## Product Context
 
-Moonlit is a React Native mobile application featuring fairytales for children.
-**Key Feature:** The app allows users to choose a pre-defined voice to read a tale or to record their own voice, which is then used to synthesize and voice the tale.
+Moonlit is a React Native mobile application featuring fairytales for children. Users choose a pre-defined voice to read a tale or record their own voice, which is then used to synthesize and voice the tale.
 
-### Technology Stack & Constraints
+## Core Technology Stack
 
-- **Package Manager**: ALWAYS use `yarn`. ALWAYS run `yarn restart` after adding or removing dependencies in `package.json`.
-- **Framework**: Bare React Native (Do NOT use Expo).
-- **Language**: TypeScript. Use strict typing for all components, functions, props, and state. NEVER use force unwrapping (`!`) or casting to `any` (`as any`).
-- **Navigation**: Use `react-navigation`.
-- **Testing**: `jest` for unit tests, `@testing-library/react-native` for integration tests. ALWAYS add global jest mocks to the created `setupJest.ts` file. ALWAYS use the `react-native-testing` skill when writing unit or integration tests. Ignore this skill in other scenarios.
-  - 🚨 **META RULE: CONTINUOUS TESTING** 🚨 As an AI agent, you **MUST ALWAYS** update existing tests or implement new unit/integration tests whenever you modify or add any components, hooks, utilities, or services. You must verify that `yarn test` passes completely before concluding any task involving logic or UI changes. Code changes without corresponding test updates are strictly prohibited.
-- **Linting**: ALWAYS run `yarn lint` after file changes.
-  - 🚨 **META RULE: CONTINUOUS LINTING** 🚨 As an AI agent, you **MUST ALWAYS** run `yarn lint` and fix any linting errors that arise whenever you modify or add any files. You must verify that `yarn lint` passes completely before concluding any task. Code changes with unresolved lint errors are strictly prohibited.
+- **Package Manager**: ALWAYS use `yarn`. Run `yarn restart` after dependency changes.
+- **Framework**: Bare React Native (No Expo).
+- **Language**: Strict TypeScript. NEVER use `any` or `!`.
+- **Navigation**: `react-navigation` with JS stack and bottom tabs.
 
-### UI & Styling System (`useMakeStyles`)
+---
 
-- **Strict Rule**: DO NOT use plain `StyleSheet.create` directly in components, create `makeStyles` functions in the (${componentName}.styles.ts) file in the same directory.
-- **Strict Rule**: ALWAYS use the `MakeStylesProps` prop type imported from `'@/hooks/theme/useMakeStyles'` for `makeStyles` function params.
-- **Strict Rule**: ALWAYS remove unused styles from the `makeStyles` function in the `${componentName}.styles.ts` file when refactoring or updating components.
-- **Strict Rule**: ALWAYS use destructuring of the `theme` param in `makeStyle` functions. NEVER access theme constants directly via `theme.[value]` (always use the values obtained from the destructured theme param instead).
-- **Strict Rule**: DO NOT use literal constants (e.g., hardcoded colors, padding numbers, border radii) in styles. ALWAYS use the theme's values provided via the `makeStyles` function's parameters.
-- **Strict Rule**: ALWAYS use font styles from the `fonts` object passed to the `makeStyles` parameters. NEVER use hardcoded `fontSize`, `lineHeight`, or `fontFamily` in component styles. If a required `fontSize` or `lineHeight` does not exist in `src/styles/fonts.ts`, you MUST add a new font definition there instead of hardcoding it.
-- **Implementation**: Every style object MUST be created using a custom `useMakeStyles` hook.
-- **Capabilities**: The `useMakeStyles` hook must provide:
-  - Reactively-updated theme values (colors, typography, padding, and size constants).
-  - Safe area values (e.g., integrating with `react-native-safe-area-context`).
-  - The ability to pass custom variables to generate conditional styles dynamically.
-- **No External UI Libraries**: Do not use component libraries (like NativeBase, UI Kitten, etc.). Rely solely on the customized `useMakeStyles` architecture.
-- **Strict Rule**: ALWAYS use `TextView` component from `src/components/Primitives/TextView/TextView.tsx` instead of `Text` from `react-native`.
-- **Strict Rule**: ALWAYS use `PressableView` component from `src/components/Primitives/PressableView/PressableView.tsx` for all clickable elements instead of React Native's `Button`, `TouchableOpacity`, `TouchableFeedback` and other clickable components.
-- **Strict Rule**: NEVER use hardcoded text. ALWAYS use the `localize` function from the `useAppLocalization` (`src/localization/useAppLocalization.ts`) hook. Before adding any text, check if it exists in `src/localization/locals` and use its key if it exists, or add a new one to the relevant file.
+## Workspace Rules Index
 
-### Architectural Principles
+To ensure rules efficiency and reduce context clutter, detailed rules are split into specialized modules. **You MUST proactively read the relevant rule file before performing a task.**
 
-1. **Separation of Concerns**: Keep screen components lean. Move business logic, sorting, filtering, and data transformations into custom hooks.
-2. **Component File Splitting**: ALWAYS split UI, styles, types, and constants of a component into separate files. Follow this strict naming convention:
-   - UI: `ComponentName.tsx`
-   - Styles: `ComponentName.styles.ts`
-   - Types: `ComponentName.types.ts`
-   - Constants: `ComponentName.constants.ts`
-3. **Theming Layer as Single Source of Truth**: The `styles/themes/` directory holds all design tokens. The `useMakeStyles` hook acts as the sole bridge between these tokens and the components, ensuring centralized control over the app's aesthetics.
-4. **Test Directory Organization**: ALWAYS place test files inside a `__tests__` folder at the top level of the module (e.g., `src/components/__tests__`, `src/utils/__tests__`, `src/screens/__tests__`). NEVER place test files adjacent to the source files (e.g., avoid `src/components/MyComponent/MyComponent.test.tsx`). This centralized module-level test directory structure must be strictly enforced.
-5. **Navigation Hooks**: ALWAYS use the custom `useAppRoute` (from `src/navigation/hooks/useAppRoute.ts`) and `useAppNavigation` (from `src/navigation/hooks/useAppNavigation.ts`) hooks for navigation. NEVER use the `useRoute` and `useNavigation` hooks directly from `@react-navigation/native`.
-6. **Security & Secrets**: ALWAYS store secrets and sensitive keys in the `src/constants/auth.ts` file. NEVER use `.env` files for secrets, because `.env` files might be extracted from unarchived builds (`.ipa`/`.apk`), whereas `auth.ts` is ignored by Git and injected only during the build process, making it safer.
-7. **Interface Segregation**: ALWAYS follow the Interface Segregation principle from SOLID during React component creation. A component should ALWAYS receive only the specific data fields it needs via props, NEVER a whole, large object.
-8. **Secure Storage**: ALWAYS use the `SecuredStorage` service (`src/services/securedStorage/securedStorage.ts`) to store, read, or delete sensitive user data (like tokens or credentials). NEVER use `AsyncStorage`, `react-native-mmkv`, or direct `react-native-keychain` access for sensitive information across the app. The `SecuredStorage` service abstracts the underlying secure storage implementation, ensuring that the actual persistence mechanism can be easily swapped in the future without affecting the consuming codebase.
-9. **Global App Logic & Operations**: ALWAYS use the `AppLogicProvider` (`src/components/Providers/AppLogicProvider/AppLogicProvider.tsx`) as the central orchestrator for global app-level side effects, background fetchings, and initialization logic. This component is the designated place to invoke global custom hooks (e.g., tracking app launches, downloading previews, updating content) to keep individual screens clean and focused purely on UI presentation. DO NOT add global background logic to navigation routers or root components directly; place it inside `AppLogicProvider` instead.
+| Rule Set              | Description                                                                     | Path                                                                 |
+| :-------------------- | :------------------------------------------------------------------------------ | :------------------------------------------------------------------- |
+| **Architecture**      | Principles, navigation, service boundaries, Realm, Redux, paywall, story player | [.agents/rules/architecture.md](.agents/rules/architecture.md)       |
+| **UI & Styling**      | `useMakeStyles`, primitives, localization                                       | [.agents/rules/ui-styling.md](.agents/rules/ui-styling.md)           |
+| **Realm Database**    | `useStory`, `useStories`, `useAudioRecording`, action hooks                     | [.agents/rules/database.md](.agents/rules/database.md)               |
+| **Headers**           | `ScreenHeader`, `ModalHeader`, `SearchHeader`                                   | [.agents/rules/headers.md](.agents/rules/headers.md)                 |
+| **Reanimated**        | Reanimated 4 / worklets (`scheduleOnRN`, not `runOnJS`)                         | [.agents/rules/reanimated.md](.agents/rules/reanimated.md)           |
+| **Testing & Quality** | Jest, linting, formatting, quality hooks                                        | [.agents/rules/testing-linting.md](.agents/rules/testing-linting.md) |
+| **Project Context**   | Directory structure, hierarchy, scripts                                         | [.agents/rules/project-context.md](.agents/rules/project-context.md) |
 
-## Project Structure
+---
 
-The application source code is located within the `src/` directory. The architecture follows a standard React Native module-based structure:
+## Agent Skills (`.agents/skills/`)
 
-- `src/api/`: Network requests and API endpoints (likely interacting with a backend for voice synthesis).
-- `src/assets/`: Static resources like fonts, images, and possibly placeholder audio files.
-- `src/components/`: Reusable, generic UI components (buttons, cards, modals).
-- `src/constants/`: Application-wide constants, configuration values, and theme tokens.
-- `src/database/`: Realm database initialization, schema definitions, and migration logic.
-- `src/hooks/`: Custom React hooks containing reusable business or UI logic (e.g., `useSimilarAssets`).
-- `src/localization/`: Multi-language support configuration and string translations.
-- `src/native_modules/`: Bridges and custom native modules (contains `mnt-audioplayer`).
-- `src/navigation/`: React Navigation stack definitions, tab configurations, and routing logic.
-- `src/screens/`: High-level feature screens where components are composed (e.g., `HomeScreen`, `StoryPlayerScreens`, `StoriesListScreen`, `PaywallModal`, `GetStartedScreen`). Feature-specific domains are generally isolated here.
-- `src/services/`: Integrations with external SDKs (`analytics`, `networkClient`, `remoteConfig`, `storage`).
-- `src/store/`: Redux configuration (`store.ts`, `rootReducer.ts`), and feature slices (`player/`, `user/`, `subscription/`).
-- `src/styles/`: Global stylesheets or styling themes.
-- `src/types/`: Global TypeScript type definitions and interfaces.
-- `src/utils/`: Pure helper functions and utilities.
+Read the relevant skill before specialized work. Skills document architecture and file placement; subagents execute step-by-step tasks.
 
-## Available Scripts (`package.json`)
+| Skill                           | When to read                                                             |
+| :------------------------------ | :----------------------------------------------------------------------- |
+| **react-native-best-practices** | Performance, FPS, bundle size, native modules, profiling                 |
+| **react-native-testing**        | Writing or fixing Jest / RNTL tests                                      |
+| **moonlit-ai-context**          | Rules/skills/agents maintenance, token efficiency, context-curator       |
+| **moonlit-paywall-screen**      | `PaywallModal` shell, variants, `useShowPaywallModal`, Adapty placements |
+| **moonlit-story-player**        | `StoryPlayerScreen`, `VoiceSettingsModal`, `mnt-audioplayer`, gestures   |
 
-Here are the key commands available via `yarn <script>` or `npm run <script>`:
+---
 
-| Script    | Description                                                                      |
-| --------- | -------------------------------------------------------------------------------- |
-| `start`   | Starts the Metro bundler.                                                        |
-| `android` | Builds and runs the application on an Android emulator or connected device.      |
-| `ios`     | Builds and runs the application on an iOS simulator or connected device.         |
-| `test`    | Runs test suites using Jest.                                                     |
-| `lint`    | Runs ESLint across the codebase.                                                 |
-| `restart` | Cleans the yarn cache, reinstalls packages, and starts Metro with a reset cache. |
+## Custom Subagents (`.cursor/agents/`)
+
+Specialized agents for Moonlit workflows. Invoke by name (e.g. `/moonlit-screen-scaffolder`) or natural language.
+
+| Agent                                 | Invoke                                   | Role                                  |
+| :------------------------------------ | :--------------------------------------- | :------------------------------------ |
+| moonlit-code-reviewer                 | `/moonlit-code-reviewer`                 | Full compliance + RN perf (read-only) |
+| moonlit-screen-scaffolder             | `/moonlit-screen-scaffolder`             | New screen folder + skeleton tests    |
+| moonlit-ui-implementer                | `/moonlit-ui-implementer`                | Patterns → React Native UI            |
+| moonlit-service-boundary-guard        | `/moonlit-service-boundary-guard`        | SDK import boundaries (read-only)     |
+| moonlit-test-author                   | `/moonlit-test-author`                   | Jest tests for changed code           |
+| moonlit-paywall-flow                  | `/moonlit-paywall-flow`                  | Adapty placements, variants, gating   |
+| moonlit-navigation-wiring             | `/moonlit-navigation-wiring`             | Navigator registration                |
+| moonlit-reanimated-auditor            | `/moonlit-reanimated-auditor`            | `scheduleOnRN` / worklets (read-only) |
+| moonlit-native-turbomodule-scaffolder | `/moonlit-native-turbomodule-scaffolder` | Codegen TurboModule spec              |
+| moonlit-localization-sweep            | `/moonlit-localization-sweep`            | Hardcoded string audit                |
+| moonlit-localization-parity           | `/moonlit-localization-parity`           | Locale domain file parity             |
+| moonlit-rules-sync                    | `/moonlit-rules-sync`                    | `.agents` ↔ `.cursor` rules sync      |
+| moonlit-context-curator               | `/moonlit-context-curator`               | AI context drift audit + token trims  |
+| moonlit-dependency-native-impact      | `/moonlit-dependency-native-impact`      | Dependency native/Jest impact         |
+
+**Suggested orchestration**
+
+| Task                  | Agent sequence                                                                                                                     |
+| :-------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
+| New screen            | screen-scaffolder → navigation-wiring → ui-implementer → localization-sweep → test-author → service-boundary-guard → code-reviewer |
+| Paywall UI / variant  | read **moonlit-paywall-screen** skill → paywall-flow → test-author → code-reviewer                                                 |
+| Story player / voice  | read **moonlit-story-player** skill → ui-implementer → reanimated-auditor → test-author → code-reviewer                            |
+| Realm / data change   | implement → update database rule if needed → test-author → code-reviewer                                                           |
+| New npm package       | dependency-native-impact → implement → test-author                                                                                 |
+| New global pattern    | implement → context-curator (or rules-sync for mirror-only) → code-reviewer                                                        |
+| AI context layer edit | context-curator (user-approved) → code-reviewer (docs-only)                                                                        |
+
+---
+
+## Universal Mandatory Rules
+
+1. **Strict Styling**: ALWAYS use the theme-aware `useMakeStyles` system and primitive components (`TextView`, `PressableView`).

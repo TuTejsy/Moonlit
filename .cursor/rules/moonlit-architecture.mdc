@@ -1,0 +1,18 @@
+---
+description: Architectural principles, navigation, service boundaries, and Moonlit domain patterns.
+globs: src/**/*
+alwaysApply: false
+---
+
+# Architecture & Navigation
+
+See `.agents/rules/architecture.md` for full detail. Key points:
+
+- Lean screens; logic in hooks; file splitting only when files have content.
+- `useAppRoute` / `useAppNavigation` only — never raw `@react-navigation/native` hooks in screens.
+- `AppLogicProvider` for global side effects; `SecuredStorage` for sensitive data; `auth.ts` for secrets.
+- Realm via `src/hooks/database/` hooks; Redux via `useAppDispatch` / `useAppSelector`.
+- Native modules in `src/native_modules/` (reference: `mnt-audioplayer`).
+- Paywall: `PaywallModal` + `useShowPaywallModal` — see `moonlit-paywall-screen` skill.
+- Story player: `StoryPlayerScreen` + `VoiceSettingsModal` — see `moonlit-story-player` skill.
+- Service sole-owners: analytics, remoteConfig, storage, securedStorage, networkClient; Adapty runtime only in paywall/subscription hooks listed in architecture.md.

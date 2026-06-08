@@ -32,7 +32,7 @@ export const PromotionBanner = memo(() => {
             {localize('common', 'subscription')}
           </TextView>
           <TextView style={styles.subtitle}>
-            {localize('stories', 'freeDays', { count: freeOfferDays })}
+            {localize('promotion', 'freeDays', { count: freeOfferDays })}
           </TextView>
         </View>
 

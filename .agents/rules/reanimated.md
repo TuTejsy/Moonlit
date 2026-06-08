@@ -1,0 +1,48 @@
+---
+trigger: model_decision
+description: Reanimated 4 and react-native-worklets threading APIs for Moonlit.
+globs: 'src/**/*.ts, src/**/*.tsx'
+---
+
+# Reanimated & Worklets
+
+Moonlit uses **Reanimated 4** with **`react-native-worklets`**. The Babel plugin is `react-native-worklets/plugin` (see `babel.config.js`).
+
+## Call JS from worklets / gesture handlers
+
+When a Reanimated worklet or Gesture Handler callback must invoke React state, props, or other JS-thread code, use **`scheduleOnRN`** from `react-native-worklets`.
+
+- **Do**: `import { scheduleOnRN } from 'react-native-worklets';`
+- **Do**: `scheduleOnRN(myCallback, arg1, arg2)` — pass the function and its arguments in one call.
+- **Don't**: `runOnJS` from `react-native-reanimated` — deprecated in Reanimated 4.
+
+### Migration pattern
+
+```typescript
+// Deprecated (Reanimated 3)
+import { runOnJS } from 'react-native-reanimated';
+runOnJS(onValueChange)(next, true);
+
+// Required (Reanimated 4)
+import { scheduleOnRN } from 'react-native-worklets';
+scheduleOnRN(onValueChange, next, true);
+```
+
+## Baseline files using `scheduleOnRN`
+
+- `src/screens/StoryPlayerScreens/StoryPlayerScreen/hooks/useStoryCoverGestureHandler.ts`
+- `src/screens/StoryPlayerScreens/StoryPlayerScreen/components/StoryPlayer/components/ProgressBar/hooks/useProgressBarGestureHandler.ts`
+- `src/screens/StoryPlayerScreens/StoryPlayerScreen/StoryPlayerScreen.tsx`
+- `src/screens/SplashViewModal/SplashViewModal.tsx`
+
+## Related threading APIs
+
+| Deprecated (Reanimated 3)             | Use instead                 |
+| :------------------------------------ | :-------------------------- |
+| `runOnJS(fn)(...args)`                | `scheduleOnRN(fn, ...args)` |
+| `runOnUI(fn)(...args)`                | `scheduleOnUI(fn, ...args)` |
+| `executeOnUIRuntimeSync(fn)(...args)` | `runOnUISync(fn, ...args)`  |
+
+## Tests
+
+Jest mocks `scheduleOnRN` in `setupJest.ts` so gesture/worklet code can call JS callbacks synchronously in unit tests.

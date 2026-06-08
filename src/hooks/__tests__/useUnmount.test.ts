@@ -20,9 +20,12 @@ describe('useUnmount', () => {
     const callback1 = jest.fn();
     const callback2 = jest.fn();
 
-    const { rerender, unmount } = renderHook(({ callback }) => useUnmount(callback), {
-      initialProps: { callback: callback1 },
-    });
+    const { rerender, unmount } = renderHook(
+      ({ callback }: { callback: () => void }) => useUnmount(callback),
+      {
+        initialProps: { callback: callback1 },
+      },
+    );
 
     rerender({ callback: callback2 });
 

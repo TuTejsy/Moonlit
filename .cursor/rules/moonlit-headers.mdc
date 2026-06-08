@@ -1,0 +1,12 @@
+---
+description: Constraints and guidelines for screen and modal headers, scroll integration, and hitSlops in Moonlit.
+globs: src/components/Headers/**/*,src/screens/**/*.tsx,src/components/**/*.tsx
+alwaysApply: false
+---
+
+# Header Components (`src/components/Headers/`)
+
+- **`ScreenHeader`**: Primary header; supports back nav, custom left/right, titles, subtitles. Pass `scrollPositionSharedValue` for large-title collapse on scroll.
+- **`ModalHeader`**: Modal variant; forces `renderLeft={null}`, standard close button on right. Props: `onClosePress`, `hideClose`, `disableClose`.
+- **`SearchHeader`**: Search trigger header for home search navigation.
+- **`EXTRA_TOUCH_AREA`**: Always use for `hitSlop` on header buttons (from `Headers.constants.ts`).

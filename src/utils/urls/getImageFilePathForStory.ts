@@ -6,7 +6,10 @@ import { getStoryCachedNameFieldForCoverType } from './getStoryCachedNameFieldFo
 
 const STORY_TYPES_RANGE: StoryCoverType[] = ['small', 'medium', 'full'];
 
-export const getImageFilePathForStory = (story: StorySchema, upToType: StoryCoverType) => {
+export const getImageFilePathForStory = (
+  story: StorySchema,
+  upToType: StoryCoverType,
+): string | undefined => {
   const upToTypeIndex = STORY_TYPES_RANGE.findIndex((value) => value === upToType);
 
   const availableTypeRange: StoryCoverType[] = STORY_TYPES_RANGE.slice(0, upToTypeIndex + 1);
@@ -22,4 +25,6 @@ export const getImageFilePathForStory = (story: StorySchema, upToType: StoryCove
       return fullPath;
     }
   }
+
+  return undefined;
 };
