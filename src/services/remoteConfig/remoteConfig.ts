@@ -48,13 +48,6 @@ class RemoteConfigService {
     );
   }
 
-  get placementId() {
-    return (
-      this.config.getValue(REMOTE_CONFIG_FIELDS.PLACEMENT_ID).asString() ||
-      remoteConfigDefaultValues[REMOTE_CONFIG_FIELDS.PLACEMENT_ID]
-    );
-  }
-
   get buyButtonTextTrial() {
     return (
       this.config.getValue(REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_TRIAL).asString() ||

@@ -4,14 +4,13 @@ import { StatusBar } from 'react-native';
 
 import * as amplitude from '@amplitude/analytics-react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { adapty } from 'react-native-adapty';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { AppLogicProvider } from '@/components/Providers/AppLogicProvider/AppLogicProvider';
-import { ADAPTY_API_KEY, AMPLITUDE_API_KEY } from '@/constants/auth';
+import { AMPLITUDE_API_KEY } from '@/constants/auth';
 import { AudioRecordingsDB, StoriesDB } from '@/database';
 import { useInitTheme } from '@/hooks/theme/useInitTheme';
 import { ThemeContext } from '@/hooks/theme/useTheme';
@@ -35,11 +34,6 @@ StoriesDB.open();
 AudioRecordingsDB.open();
 // StoriesDB.open().then(() => StoriesDB.dropDatabase());
 // AudioRecordingsDB.open().then(() => AudioRecordingsDB.dropDatabase());
-adapty.isActivated().then((isActivated) => {
-  if (!isActivated) {
-    adapty.activate(ADAPTY_API_KEY);
-  }
-});
 
 amplitude.init(AMPLITUDE_API_KEY, undefined, {
   disableCookies: true,

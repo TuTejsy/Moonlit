@@ -4,7 +4,9 @@ import { AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
 
-export const usePaywallProducts = (products: AdaptyPaywallProduct[]) => {
+import { PAYWALL_NAMES } from '../paywallVariantRegistry';
+
+export const usePaywallProducts = (products: AdaptyPaywallProduct[], paywallName: string) => {
   const trialProduct = useMemo(
     () => products.find((product) => !!product.subscription?.offer),
     [products],
@@ -33,8 +35,15 @@ export const usePaywallProducts = (products: AdaptyPaywallProduct[]) => {
 
   const isTrialEligible = !!trialProduct;
 
+  const defaultSelectedProduct = useMemo(() => {
+    const shouldDefaultToTrial =
+      paywallName === PAYWALL_NAMES.toggle && remoteConfigService.toggleState && isTrialEligible;
+
+    return shouldDefaultToTrial ? trialProduct : yearlyProduct;
+  }, [isTrialEligible, paywallName, trialProduct, yearlyProduct]);
+
   const [selectedProduct, setSelectedProduct] = useState<AdaptyPaywallProduct | undefined>(
-    remoteConfigService.toggleState && isTrialEligible ? trialProduct : yearlyProduct,
+    defaultSelectedProduct,
   );
 
   const isFreeTrialEnabled = selectedProduct === trialProduct;

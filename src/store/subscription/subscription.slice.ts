@@ -4,6 +4,8 @@ import { AdaptyPaywallProduct } from 'react-native-adapty';
 import { SubscriptionState } from './subscription.types';
 
 export const initialState: SubscriptionState = {
+  bootstrapStatus: 'pending',
+  paywallName: null,
   products: null,
 };
 
@@ -11,10 +13,21 @@ export const subscriptionSlice = createSlice({
   initialState,
   name: 'subscription',
   reducers: {
+    setPaywallBootstrapFailed: (state) => {
+      state.bootstrapStatus = 'failed';
+    },
+    setPaywallData: (
+      state,
+      { payload }: PayloadAction<{ paywallName: string; products: AdaptyPaywallProduct[] }>,
+    ) => {
+      state.bootstrapStatus = 'ready';
+      state.paywallName = payload.paywallName;
+      state.products = payload.products;
+    },
     setProducts: (state, { payload }: PayloadAction<AdaptyPaywallProduct[]>) => {
       state.products = payload;
     },
   },
 });
 
-export const { setProducts } = subscriptionSlice.actions;
+export const { setPaywallBootstrapFailed, setPaywallData, setProducts } = subscriptionSlice.actions;

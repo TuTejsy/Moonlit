@@ -9,12 +9,14 @@ import {
 
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { AnalyticsService } from '@/services/analytics/analytics';
-import { PAYWALL_TYPE } from '@/services/analytics/analytics.constants';
 import { unlockFullVersion } from '@/store/user/user.slice';
+
+import { resolvePaywallAnalyticsType } from '../paywallVariantRegistry';
 
 interface UsePaywallActionsProps {
   isFreeTrialEnabled: boolean;
   navigation: any;
+  paywallName: string;
   source: any;
   tab: any;
   contentName?: string;
@@ -28,12 +30,14 @@ export const usePaywallActions = ({
   isFreeTrialEnabled,
   navigation,
   onClose,
+  paywallName,
   selectedProduct,
   source,
   tab,
 }: UsePaywallActionsProps) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const paywallAnalyticsType = resolvePaywallAnalyticsType(paywallName);
 
   const onPurchaseRestore = useCallback(
     (profile: AdaptyProfile) => {
@@ -68,7 +72,7 @@ export const usePaywallActions = ({
             productId: product.vendorProductId,
             source,
             tab,
-            type: PAYWALL_TYPE.WITH_SWITCHER,
+            type: paywallAnalyticsType,
           });
         }
 
@@ -79,7 +83,16 @@ export const usePaywallActions = ({
         }
       }
     },
-    [contentName, dispatch, isFreeTrialEnabled, navigation, onClose, source, tab],
+    [
+      contentName,
+      dispatch,
+      isFreeTrialEnabled,
+      navigation,
+      onClose,
+      paywallAnalyticsType,
+      source,
+      tab,
+    ],
   );
 
   const handleSkipPress = useCallback(() => {
@@ -93,9 +106,9 @@ export const usePaywallActions = ({
       contentName,
       source,
       tab,
-      type: PAYWALL_TYPE.WITH_SWITCHER,
+      type: paywallAnalyticsType,
     });
-  }, [contentName, navigation, onClose, source, tab]);
+  }, [contentName, navigation, onClose, paywallAnalyticsType, source, tab]);
 
   const handleUnlockPress = useCallback(() => {
     if (selectedProduct) {

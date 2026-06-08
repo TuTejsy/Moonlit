@@ -4,20 +4,16 @@ import { render, screen, fireEvent } from '@testing-library/react-native';
 
 import { useAppRoute } from '@/navigation/hooks/useAppRoute';
 import { AnalyticsService } from '@/services/analytics/analytics';
+import { PAYWALL_TYPE } from '@/services/analytics/analytics.constants';
 
 import { PaywallModal } from '../PaywallModal/PaywallModal';
-
-jest.mock('@/constants/common', () => ({
-  SCROLLABLE_PLACEMENT_ID: 'scrollable',
-  SELECTION_PLACEMENT_ID: 'selection',
-  SWITCH_PLACEMENT_ID: 'switch',
-}));
+import { PAYWALL_NAMES } from '../PaywallModal/paywallVariantRegistry';
 
 describe('PaywallModal', () => {
   const defaultRouteParams = {
     contentName: 'Test Content',
     onClose: undefined,
-    placementId: 'switch',
+    paywallName: PAYWALL_NAMES.toggle,
     products: [],
     source: 'home',
     tab: 'Home',
@@ -47,6 +43,35 @@ describe('PaywallModal', () => {
       expect.objectContaining({
         contentName: 'Test Content',
         source: 'home',
+        type: PAYWALL_TYPE.WITH_SWITCHER,
+      }),
+    );
+  });
+
+  it('logs selection analytics type for SELECTION paywall', async () => {
+    (useAppRoute as jest.Mock).mockReturnValue({
+      params: { ...defaultRouteParams, paywallName: PAYWALL_NAMES.selection },
+    });
+
+    await render(<PaywallModal />);
+
+    expect(AnalyticsService.logPaywallViewedEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: PAYWALL_TYPE.WITH_SELECTION,
+      }),
+    );
+  });
+
+  it('logs scrollable analytics type for SCROLLABLE paywall', async () => {
+    (useAppRoute as jest.Mock).mockReturnValue({
+      params: { ...defaultRouteParams, paywallName: PAYWALL_NAMES.scrollable },
+    });
+
+    await render(<PaywallModal />);
+
+    expect(AnalyticsService.logPaywallViewedEvent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: PAYWALL_TYPE.WITH_SCROLLABLE,
       }),
     );
   });
@@ -70,15 +95,15 @@ describe('PaywallModal', () => {
     expect(mockHandleSkipPress).toHaveBeenCalled();
   });
 
-  it('renders SwitcherPaywallContent when placementId is switch', async () => {
+  it('renders SwitcherPaywallContent when paywallName is TOGGLE', async () => {
     await render(<PaywallModal />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders SelectionPaywallContent when placementId is selection', async () => {
+  it('renders SelectionPaywallContent when paywallName is SELECTION', async () => {
     (useAppRoute as jest.Mock).mockReturnValue({
-      params: { ...defaultRouteParams, placementId: 'selection' },
+      params: { ...defaultRouteParams, paywallName: PAYWALL_NAMES.selection },
     });
 
     await render(<PaywallModal />);
@@ -86,9 +111,9 @@ describe('PaywallModal', () => {
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders ScrollablePaywallContent when placementId is scrollable', async () => {
+  it('renders ScrollablePaywallContent when paywallName is SCROLLABLE', async () => {
     (useAppRoute as jest.Mock).mockReturnValue({
-      params: { ...defaultRouteParams, placementId: 'scrollable' },
+      params: { ...defaultRouteParams, paywallName: PAYWALL_NAMES.scrollable },
     });
 
     await render(<PaywallModal />);

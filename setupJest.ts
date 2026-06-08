@@ -416,8 +416,10 @@ jest.mock('@/navigation/hooks/useAppRoute', () => ({
 // Mock useShowPaywallModal
 jest.mock('@/hooks/navigation/useShowPaywallModal', () => ({
   useShowPaywallModal: jest.fn().mockReturnValue({
-    areProductsLoaded: false,
     isFullVerion: false,
+    isPaywallBootstrapFailed: false,
+    isPaywallBootstrapSettled: false,
+    isPaywallReady: false,
     isSubscriptionAvailable: true,
     showPaywallModal: jest.fn(),
   }),
@@ -596,7 +598,6 @@ jest.mock('@/services/remoteConfig/remoteConfig', () => ({
     disableLiveUpdate: jest.fn(),
     enableLiveUpdate: jest.fn(),
     isLiveUpdateEnabled: false,
-    placementId: 'test_placement',
     segment: 'test_segment',
     toggleState: false,
   },
@@ -882,7 +883,7 @@ jest.mock(
 jest.mock('react-native-adapty', () => ({
   adapty: {
     activate: jest.fn().mockResolvedValue(undefined),
-    getPaywall: jest.fn().mockResolvedValue({}),
+    getPaywall: jest.fn().mockResolvedValue({ name: 'TOGGLE' }),
     getPaywallProducts: jest.fn().mockResolvedValue([]),
     getProfile: jest.fn().mockResolvedValue({ accessLevels: {} }),
     isActivated: jest.fn().mockResolvedValue(true),

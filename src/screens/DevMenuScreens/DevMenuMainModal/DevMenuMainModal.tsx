@@ -14,6 +14,7 @@ import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
 import { REMOTE_CONFIG_FIELDS } from '@/services/remoteConfig/remoteConfig.constants';
 import { getStorageData, storage } from '@/services/storage/storage';
 import { StorageKeys } from '@/services/storage/storage.constants';
+import { selectPaywallName } from '@/store/subscription/subscription.selector';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { lockFullVersion, unlockFullVersion } from '@/store/user/user.slice';
 
@@ -29,6 +30,7 @@ export const DevMenuMainModal = () => {
   const navigation = useAppNavigation<DevMenuRoutes.MAIN>();
 
   const isFullAccess = useAppSelector(selectIsFullVersion);
+  const paywallName = useAppSelector(selectPaywallName);
   const dispatch = useAppDispatch();
 
   const [isAnalyticsEnabled, setIsAnalyticsEnabled] = useState(
@@ -106,10 +108,7 @@ export const DevMenuMainModal = () => {
           title={REMOTE_CONFIG_FIELDS.SEGMENT}
           value={remoteConfigService.segment}
         />
-        <DebugMenuValueCell
-          title={REMOTE_CONFIG_FIELDS.PLACEMENT_ID}
-          value={remoteConfigService.placementId}
-        />
+        <DebugMenuValueCell title='Paywall name (Adapty)' value={paywallName ?? 'not loaded'} />
         <DebugMenuValueCell
           title={REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_NO_TRIAL}
           value={remoteConfigService.buyButtonTextNoTrial}

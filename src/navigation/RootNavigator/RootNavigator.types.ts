@@ -17,7 +17,7 @@ export interface RootStackParams extends Record<string, object | undefined> {
   };
 
   [RootRoutes.PAYWALL_MODAL]: {
-    placementId: string;
+    paywallName: string;
     products: AdaptyPaywallProduct[];
     source: SOURCE;
     contentName?: string;
@@ -26,7 +26,7 @@ export interface RootStackParams extends Record<string, object | undefined> {
   };
 
   [RootRoutes.PAYWALL_SCREEN]: {
-    placementId: string;
+    paywallName: string;
     products: AdaptyPaywallProduct[];
     source: SOURCE;
     contentName?: string;
