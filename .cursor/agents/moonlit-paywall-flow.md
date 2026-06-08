@@ -40,6 +40,7 @@ Implement or extend the custom paywall system. Screens must not call `adapty.*` 
 4. Configure matching paywall name in Adapty dashboard for `LOCKED_CONTENT` placement.
 5. Localization: `src/localization/locals/paywall.ts`.
 6. Shared hooks stay in `PaywallModal/hooks/` when used by multiple variants.
+7. Price copy: import from `utils/paywallProduct.utils.ts` — see skill § Product resolution and pricing; add unit tests under `utils/__tests__/`.
 
 ## Mode C — Stack vs modal presentation
 

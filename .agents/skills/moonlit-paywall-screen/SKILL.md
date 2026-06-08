@@ -70,6 +70,7 @@ Everything lives under `src/screens/PaywallModal/`.
 | `PaywallModal.tsx`, `PaywallModal.styles.ts`                     | Shell: variant registry, shared hooks, loading state       |
 | `paywallVariantRegistry.ts`                                      | Maps `paywall.name` → variant component + analytics type   |
 | `hooks/usePaywallProducts.ts`, `hooks/usePaywallActions.ts`      | Shared product selection and purchase/restore/skip actions |
+| `utils/paywallProduct.utils.ts`                                  | Product resolution + StoreKit-safe price/period formatting |
 | `components/PaywallBackground/`                                  | Shared background asset                                    |
 | `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/` | Variant-specific UI, styles, product hooks                 |
 | `contentVariants/components/TrialSwitch/`                        | Shared trial toggle across variants                        |
@@ -83,6 +84,26 @@ Bootstrap hooks live outside the screen folder:
 | `usePaywallBootstrap` | `src/hooks/usePaywallBootstrap.ts` | Fetches paywall + products into Redux             |
 
 All three run in `AppLogicProvider`. `SplashViewModal` gates on `selectIsPaywallBootstrapSettled` (`ready` or `failed`) before subscription check. Cold start skips paywall when bootstrap failed.
+
+## Product resolution and pricing
+
+Adapty products from App Store / TestFlight must not be classified by raw `price.amount` comparisons — that leaves `yearlyProduct` undefined and UI shows literal `"undefined"`.
+
+**Single source:** `src/screens/PaywallModal/utils/paywallProduct.utils.ts`
+
+| Export                                                   | Use                                                                                                                         |
+| :------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------- |
+| `resolvePaywallProducts(products)`                       | Maps catalog → `{ trialProduct, weeklyProduct, yearlyProduct }` by subscription period (`week` / `year`) and offer presence |
+| `formatProductLocalizedPrice(product)`                   | Display price — prefers Adapty `price.localizedString`, then currency fallbacks                                             |
+| `formatPriceValue(amount, product)`                      | Derived amounts (e.g. yearly ÷ 52 weeks) — never template-literal `currencySymbol` alone                                    |
+| `getFreeTrialOfferDays(product)`                         | Trial length from `subscription.offer.phases` (not main `subscriptionPeriod`)                                               |
+| `getLocalizedSubscriptionPeriodLabel(product, localize)` | Period label for copy (`week` / `year` keys or Adapty localized period)                                                     |
+
+**Contracts:**
+
+- `usePaywallProducts` calls `resolvePaywallProducts` — variant hooks receive resolved products; do not re-implement matching logic.
+- Variant hooks (`useSwitcherPaywallProducts`, `useScrollablePaywallProducts`, `useSelectionPaywallProducts`) import formatters from utils — do not build prices from optional `currencySymbol` / `currencyCode` fields directly.
+- Trial product = first subscription with `subscription.offer`. Yearly = `unit === 'year'` (may equal trial SKU when offer is on annual).
 
 ## Navigation & dismiss contract
 
@@ -103,5 +124,6 @@ Paywall strings in `src/localization/locals/paywall.ts`.
 - `src/hooks/__tests__/usePaywallBootstrap.test.ts`
 - `src/hooks/__tests__/useHandleCheckSubscription.test.ts`
 - `src/screens/PaywallModal/__tests__/paywallVariantRegistry.test.ts`
+- `src/screens/PaywallModal/utils/__tests__/paywallProduct.utils.test.ts`
 - `src/screens/__tests__/SplashViewModal.test.tsx`
 - Mock `adapty` in tests — not live SDK calls.

@@ -3,6 +3,11 @@ import { useCallback, useMemo } from 'react';
 import { AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { useAppLocalization } from '@/localization/useAppLocalization';
+import {
+  formatProductLocalizedPrice,
+  getFreeTrialOfferDays,
+  getLocalizedSubscriptionPeriodLabel,
+} from '@/screens/PaywallModal/utils/paywallProduct.utils';
 
 interface UseSwitcherPaywallProductsProps {
   isFreeTrialEnabled: boolean;
@@ -23,32 +28,20 @@ export const useSwitcherPaywallProducts = ({
 
   const productText = useMemo(() => {
     if (isFreeTrialEnabled) {
-      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
+      const offerDays = getFreeTrialOfferDays(trialProduct);
+      const price = formatProductLocalizedPrice(trialProduct);
 
-      const price = trialProduct?.price?.amount;
-      const currencyCode = trialProduct?.price?.currencyCode;
-
-      return `${offerDays} ${localize(
+      return `${offerDays ?? ''} ${localize('paywall', 'daysFreeThen')} ${price}/${localize(
         'paywall',
-        'daysFreeThen',
-      )} ${price} ${currencyCode}/${localize('paywall', 'week')}`;
+        'week',
+      )}`;
     }
-    const price = yearlyProduct?.price?.amount;
-    const currencyCode = yearlyProduct?.price?.currencyCode;
 
-    const subscriptionPeriod = yearlyProduct?.subscription?.subscriptionPeriod.unit;
+    const price = formatProductLocalizedPrice(yearlyProduct);
+    const subscriptionPeriod = getLocalizedSubscriptionPeriodLabel(yearlyProduct, localize);
 
-    return `${localize('paywall', 'tryItNotJust')} ${price} ${currencyCode}/${subscriptionPeriod}`;
-  }, [
-    isFreeTrialEnabled,
-    yearlyProduct?.price?.amount,
-    yearlyProduct?.price?.currencyCode,
-    yearlyProduct?.subscription?.subscriptionPeriod.unit,
-    localize,
-    trialProduct?.subscription?.subscriptionPeriod.numberOfUnits,
-    trialProduct?.price?.amount,
-    trialProduct?.price?.currencyCode,
-  ]);
+    return `${localize('paywall', 'tryItNotJust')} ${price}/${subscriptionPeriod}`;
+  }, [isFreeTrialEnabled, localize, trialProduct, yearlyProduct]);
 
   const handleTrialEnabledChanged = useCallback(
     (isEnabled: boolean) => {

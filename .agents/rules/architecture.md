@@ -68,6 +68,7 @@ Screens and hooks must not import SDK packages directly except where noted.
 - **Navigation hook**: `useShowPaywallModal` (`src/hooks/navigation/useShowPaywallModal.ts`) — opens `PAYWALL_SCREEN` or `PAYWALL_MODAL`.
 - **Subscription check**: `useHandleCheckSubscription` — Adapty profile + Redux `user` slice.
 - **Placement**: single `LOCKED_CONTENT_PLACEMENT_ID` in `src/constants/common.ts`; variant from Adapty paywall name (`TOGGLE`, `SELECTION`, `SCROLLABLE`).
+- **Product utils**: `utils/paywallProduct.utils.ts` — `resolvePaywallProducts`, `formatProductLocalizedPrice`; see skill § Product resolution and pricing.
 - Full architecture: `.agents/skills/moonlit-paywall-screen/SKILL.md`.
 
 ## Localization (`src/localization/`)

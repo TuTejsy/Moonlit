@@ -3,6 +3,12 @@ import { useCallback, useMemo, useState } from 'react';
 import { AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { useAppLocalization } from '@/localization/useAppLocalization';
+import {
+  formatPriceValue,
+  formatProductLocalizedPrice,
+  getFreeTrialOfferDays,
+  getLocalizedSubscriptionPeriodLabel,
+} from '@/screens/PaywallModal/utils/paywallProduct.utils';
 
 import { WEEKS_IN_YEAR } from '../ScrollablePaywallContent.constants';
 
@@ -27,43 +33,39 @@ export const useScrollablePaywallProducts = ({
   const { localize } = useAppLocalization();
 
   const yearlyPricePerWeek = useMemo(
-    () => (yearlyProduct?.price?.amount || 0) / WEEKS_IN_YEAR,
+    () => (yearlyProduct?.price?.amount ?? 0) / WEEKS_IN_YEAR,
     [yearlyProduct?.price?.amount],
   );
 
   const selectedProductPriceText = useMemo(() => {
-    const period = selectedProduct?.subscription?.localizedSubscriptionPeriod?.replace('1 ', '');
+    const price = formatProductLocalizedPrice(selectedProduct);
+    const period = getLocalizedSubscriptionPeriodLabel(selectedProduct, localize);
 
-    return `${selectedProduct?.price?.currencySymbol}${
-      selectedProduct?.price?.amount || 0
-    } /${period}`;
-  }, [
-    selectedProduct?.price?.amount,
-    selectedProduct?.price?.currencySymbol,
-    selectedProduct?.subscription?.localizedSubscriptionPeriod,
-  ]);
+    return `${price} /${period}`;
+  }, [localize, selectedProduct]);
 
   const secondProductText = useMemo(() => {
     if (isFreeTrialToggle) {
-      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
+      const offerDays = getFreeTrialOfferDays(trialProduct);
 
-      return `${offerDays}-${localize('paywall', 'DAY_FREE_TRIAL')}`;
+      return `${offerDays ?? ''}-${localize('paywall', 'DAY_FREE_TRIAL')}`;
     }
 
     return localize('paywall', 'WEEKLY');
-  }, [isFreeTrialToggle, localize, trialProduct?.subscription?.subscriptionPeriod.numberOfUnits]);
+  }, [isFreeTrialToggle, localize, trialProduct]);
 
   const yearlyPricePerWeekText = useMemo(
     () =>
-      `${yearlyProduct?.price?.currencySymbol}${yearlyPricePerWeek.toFixed(2)} / ${localize(
-        'paywall',
-        'week',
-      )}`,
-    [localize, yearlyPricePerWeek, yearlyProduct?.price?.currencySymbol],
+      `${formatPriceValue(yearlyPricePerWeek, yearlyProduct, 3)} / ${localize('paywall', 'week')}`,
+    [localize, yearlyPricePerWeek, yearlyProduct],
   );
 
   const pricesDiffInPercentsText = useMemo(() => {
-    const trialPricePerWeek = trialProduct?.price?.amount || 0;
+    const trialPricePerWeek = trialProduct?.price?.amount ?? 0;
+
+    if (trialPricePerWeek === 0) {
+      return '0%';
+    }
 
     const pricesDiffInPercents = Math.round(
       ((trialPricePerWeek - yearlyPricePerWeek) / trialPricePerWeek) * 100,
@@ -72,34 +74,21 @@ export const useScrollablePaywallProducts = ({
     return `${pricesDiffInPercents}%`;
   }, [yearlyPricePerWeek, trialProduct?.price?.amount]);
 
-  const secondProduct = isFreeTrialToggle ? trialProduct : weeklyProduct || trialProduct;
+  const secondProduct = isFreeTrialToggle ? trialProduct : weeklyProduct ?? trialProduct;
 
   const weeklyPricePerWeekText = useMemo(() => {
     if (isFreeTrialToggle) {
-      const offerDays = trialProduct?.subscription?.subscriptionPeriod.numberOfUnits;
+      const offerDays = getFreeTrialOfferDays(trialProduct);
+      const price = formatProductLocalizedPrice(trialProduct);
 
-      const price = trialProduct?.price?.amount;
-      const currencySymbol = trialProduct?.price?.currencySymbol;
-
-      return `${offerDays} ${localize(
+      return `${offerDays ?? ''} ${localize('paywall', 'daysFreeThen')} ${price}/${localize(
         'paywall',
-        'daysFreeThen',
-      )} ${currencySymbol}${price}/${localize('paywall', 'week')}`;
+        'week',
+      )}`;
     }
 
-    return `${secondProduct?.price?.currencySymbol}${secondProduct?.price?.amount || 0} /${localize(
-      'paywall',
-      'week',
-    )}`;
-  }, [
-    isFreeTrialToggle,
-    secondProduct?.price?.currencySymbol,
-    secondProduct?.price?.amount,
-    localize,
-    trialProduct?.subscription?.subscriptionPeriod.numberOfUnits,
-    trialProduct?.price?.amount,
-    trialProduct?.price?.currencySymbol,
-  ]);
+    return `${formatProductLocalizedPrice(secondProduct)} /${localize('paywall', 'week')}`;
+  }, [isFreeTrialToggle, localize, secondProduct, trialProduct]);
 
   const handleTrialEnabledChanged = useCallback(
     (isEnabled: boolean) => {
