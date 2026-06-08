@@ -56,7 +56,7 @@ export const useSelectionPaywallProducts = ({
   );
 
   const yearlyPricePerWeekText = useMemo(
-    () => formatPriceValue(yearlyPricePerWeek, yearlyProduct, 3),
+    () => formatPriceValue(yearlyPricePerWeek, yearlyProduct, 2),
     [yearlyPricePerWeek, yearlyProduct],
   );
 

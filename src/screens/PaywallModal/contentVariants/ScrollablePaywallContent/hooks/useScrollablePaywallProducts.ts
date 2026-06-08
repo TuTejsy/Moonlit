@@ -56,7 +56,7 @@ export const useScrollablePaywallProducts = ({
 
   const yearlyPricePerWeekText = useMemo(
     () =>
-      `${formatPriceValue(yearlyPricePerWeek, yearlyProduct, 3)} / ${localize('paywall', 'week')}`,
+      `${formatPriceValue(yearlyPricePerWeek, yearlyProduct, 2)} / ${localize('paywall', 'week')}`,
     [localize, yearlyPricePerWeek, yearlyProduct],
   );
 

@@ -126,7 +126,7 @@ describe('formatProductLocalizedPrice', () => {
 
     expect(formatProductLocalizedPrice(product)).toBe('39.99 USD');
     expect(formatPriceValue(1.92, product)).toBe('1.92 USD');
-    expect(formatPriceValue(1.923456, product, 3)).toBe('1.923 USD');
+    expect(formatPriceValue(1.923456, product, 2)).toBe('1.92 USD');
   });
 });
 
