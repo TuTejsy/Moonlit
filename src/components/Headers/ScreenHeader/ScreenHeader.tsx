@@ -139,7 +139,7 @@ export const ScreenHeader = ({
         <TextView
           animated
           numberOfLines={titleNumberOfLines}
-          style={[styles.largeTitle, largeTitleAnimatedStyle]}
+          style={[styles.largeTitle, largeTitleAnimatedStyle as StyleProp<TextStyle>]}
           type='bold'
         >
           {title}

@@ -17,6 +17,8 @@ Implement or refine production React Native UI for a screen. Specs from `Moonlit
 
 **Paywall screens:** Read [`.agents/skills/moonlit-paywall-screen/SKILL.md`](../../.agents/skills/moonlit-paywall-screen/SKILL.md) first; implement under `variants/{Name}/`, not screen-level `components/`. Analytics (`paywall_viewed`) stays in `hooks/usePaywallModalAnalytics.ts` — do not add variant-level tracking.
 
+**Story player gestures:** Read [`.agents/skills/moonlit-story-player/SKILL.md`](../../.agents/skills/moonlit-story-player/SKILL.md) § Gestures — use RNGH 3 hooks (`usePanGesture`, `useTapGesture`, `useCompetingGestures`), not `Gesture.Pan()` builder; keep handlers in dedicated hooks with `scheduleOnRN` for JS callbacks.
+
 ## Mandatory reads
 
 | Source           | Path                                                                          |
@@ -24,6 +26,7 @@ Implement or refine production React Native UI for a screen. Specs from `Moonlit
 | Product spec     | `Moonlit design tokens and existing screens` (feature section for the screen) |
 | UI rules         | `.agents/rules/ui-styling.md`, `.cursor/rules/moonlit-ui-styling.mdc`         |
 | Paywall skill    | `.agents/skills/moonlit-paywall-screen/SKILL.md` (when paywall)               |
+| Story player     | `.agents/skills/moonlit-story-player/SKILL.md` (when cover/progress gestures) |
 | Themes           | `src/styles/themes/lightTheme.ts`, `theme.types.ts`                           |
 | Reference screen | Closest existing screen under `src/screens/`                                  |
 

@@ -43,8 +43,8 @@ describe('useStories', () => {
     (StoriesDB.objects as jest.Mock).mockReturnValue(mockObjectsResult);
   });
 
-  it('returns stories with default sort config when no filter or sortConfigs provided', () => {
-    const { result } = renderHook(() => useStories());
+  it('returns stories with default sort config when no filter or sortConfigs provided', async () => {
+    const { result } = await renderHook(() => useStories());
 
     expect(StoriesDB.objects).toHaveBeenCalled();
     expect(mockObjectsResult.filtered).not.toHaveBeenCalled();
@@ -59,53 +59,53 @@ describe('useStories', () => {
     expect(result.current[1]).toBe(0);
   });
 
-  it('applies provided filter correctly', () => {
-    renderHook(() => useStories('is_free = true'));
+  it('applies provided filter correctly', async () => {
+    await renderHook(() => useStories('is_free = true'));
 
     expect(mockObjectsResult.filtered).toHaveBeenCalledWith('is_free = true');
     expect(mockFilteredResult.sorted).toHaveBeenCalled();
   });
 
-  it('applies provided sort configs correctly', () => {
+  it('applies provided sort configs correctly', async () => {
     const customSortConfig = [{ reverse: true, sortDescriptor: 'id' as any }];
 
-    renderHook(() => useStories(undefined, customSortConfig));
+    await renderHook(() => useStories(undefined, customSortConfig));
 
     expect(mockObjectsResult.sorted).toHaveBeenCalledWith([['id', true]]);
   });
 
-  it('returns sliced results when maxNum is provided', () => {
-    const { result } = renderHook(() => useStories(undefined, undefined, 5));
+  it('returns sliced results when maxNum is provided', async () => {
+    const { result } = await renderHook(() => useStories(undefined, undefined, 5));
 
     expect(mockSortedResult.slice).toHaveBeenCalledWith(0, 5);
     // Since mock result `.slice` returns ['sliced-story-1']
     expect(result.current[0]).toEqual(['sliced-story-1']);
   });
 
-  it('sets up a Realm listener and updates stories version on collection change', () => {
-    const { result } = renderHook(() => useStories());
+  it('sets up a Realm listener and updates stories version on collection change', async () => {
+    const { result } = await renderHook(() => useStories());
 
     expect(addListenerMock).toHaveBeenCalledWith(expect.any(Function));
 
     const listener = addListenerMock.mock.calls[0][0];
 
-    act(() => {
+    await act(() => {
       listener('nextCollection');
     });
 
     expect(result.current[1]).toBe(1);
 
-    act(() => {
+    await act(() => {
       listener('anotherCollection');
     });
 
     expect(result.current[1]).toBe(2);
   });
 
-  it('removes listener on unmount', () => {
-    const { unmount } = renderHook(() => useStories());
+  it('removes listener on unmount', async () => {
+    const { unmount } = await renderHook(() => useStories());
 
-    unmount();
+    await unmount();
 
     const listener = addListenerMock.mock.calls[0][0];
     expect(removeListenerMock).toHaveBeenCalledWith(listener);

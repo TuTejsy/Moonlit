@@ -91,7 +91,7 @@ describe('useStoriesUpdate', () => {
       { id: 3, is_favorite: false, revision: 1 }, // Story 3 not in API, will be deleted
     ]);
 
-    const { result } = renderHook(() => useStoriesUpdate(false));
+    const { result } = await renderHook(() => useStoriesUpdate(false));
 
     let error: any;
 
@@ -116,8 +116,8 @@ describe('useStoriesUpdate', () => {
     expect(StoriesDB.delete).toHaveBeenCalledWith([3]);
   });
 
-  it('skips initial load when loadInitially is false', () => {
-    renderHook(() => useStoriesUpdate(false));
+  it('skips initial load when loadInitially is false', async () => {
+    await renderHook(() => useStoriesUpdate(false));
 
     expect(StoriesRepository.getStories).not.toHaveBeenCalled();
   });
@@ -127,7 +127,7 @@ describe('useStoriesUpdate', () => {
     (StoriesDB.upsert as jest.Mock).mockResolvedValue([null, []]);
     (StoriesDB.objects as jest.Mock).mockReturnValue([]);
 
-    renderHook(() => useStoriesUpdate(true));
+    await renderHook(() => useStoriesUpdate(true));
 
     await act(async () => {
       await new Promise(setImmediate);
@@ -145,7 +145,7 @@ describe('useStoriesUpdate', () => {
     (StoriesDB.upsert as jest.Mock).mockResolvedValue([null, []]);
     (StoriesDB.objects as jest.Mock).mockReturnValue([]);
 
-    renderHook(() => useStoriesUpdate(true));
+    await renderHook(() => useStoriesUpdate(true));
 
     // Wait for internal retry promise chain to settle
     await act(async () => {

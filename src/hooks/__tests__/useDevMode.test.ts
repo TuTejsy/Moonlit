@@ -29,11 +29,11 @@ describe('useDevMode', () => {
     (storage.set as jest.Mock).mockClear();
   });
 
-  it('shows password dialog after pressing DEV_MODE_PRESS_COUNT times', () => {
-    const { result } = renderHook(() => useDevMode());
+  it('shows password dialog after pressing DEV_MODE_PRESS_COUNT times', async () => {
+    const { result } = await renderHook(() => useDevMode());
 
     // Press one less than required
-    act(() => {
+    await act(() => {
       for (let i = 0; i < DEV_MODE_PRESS_COUNT - 1; i++) {
         result.current.onDevModePress();
       }
@@ -44,7 +44,7 @@ describe('useDevMode', () => {
     // but the actual state is captured by showPasswordDialog in the render function.
     // For now we just test that pressing works without errors.
 
-    act(() => {
+    await act(() => {
       result.current.onDevModePress();
     });
 
@@ -52,12 +52,12 @@ describe('useDevMode', () => {
     expect(typeof result.current.renderDevModeDialog).toBe('function');
   });
 
-  it('does nothing if already in dev mode', () => {
+  it('does nothing if already in dev mode', async () => {
     (isDevMode as jest.Mock).mockReturnValue(true);
 
-    const { result } = renderHook(() => useDevMode());
+    const { result } = await renderHook(() => useDevMode());
 
-    act(() => {
+    await act(() => {
       for (let i = 0; i < DEV_MODE_PRESS_COUNT; i++) {
         result.current.onDevModePress();
       }

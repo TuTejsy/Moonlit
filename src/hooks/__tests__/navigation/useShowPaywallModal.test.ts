@@ -57,7 +57,7 @@ describe('useShowPaywallModal', () => {
   });
 
   it('loads products on mount', async () => {
-    renderHook(() => useShowPaywallModal());
+    await renderHook(() => useShowPaywallModal());
 
     await act(async () => {
       // wait for fetchAndActivate and loadProducts
@@ -70,7 +70,7 @@ describe('useShowPaywallModal', () => {
     expect(dispatchMock).toHaveBeenCalledWith(expect.any(Object)); // setProducts
   });
 
-  it('shows paywall modal using navigate if not full version', () => {
+  it('shows paywall modal using navigate if not full version', async () => {
     (useAppSelector as jest.Mock).mockImplementation((selector) => {
       if (selector === selectProducts) {
         return [{ id: 'prod_1' }];
@@ -78,9 +78,9 @@ describe('useShowPaywallModal', () => {
       return false; // Not full version
     });
 
-    const { result } = renderHook(() => useShowPaywallModal());
+    const { result } = await renderHook(() => useShowPaywallModal());
 
-    act(() => {
+    await act(() => {
       result.current.showPaywallModal({ source: SOURCE.TALE_PREVIEW, tab: 'All tales' });
     });
 
@@ -95,7 +95,7 @@ describe('useShowPaywallModal', () => {
     );
   });
 
-  it('shows paywall screen using push/replace if configured', () => {
+  it('shows paywall screen using push/replace if configured', async () => {
     (useAppSelector as jest.Mock).mockImplementation((selector) => {
       if (selector === selectProducts) {
         return [{ id: 'prod_1' }];
@@ -103,18 +103,18 @@ describe('useShowPaywallModal', () => {
       return false; // Not full version
     });
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useShowPaywallModal({ animationType: 'push', shouldReplace: true }),
     );
 
-    act(() => {
+    await act(() => {
       result.current.showPaywallModal({ source: SOURCE.TALE_PREVIEW, tab: 'All tales' });
     });
 
     expect(replaceMock).toHaveBeenCalledWith(RootRoutes.PAYWALL_SCREEN, expect.any(Object));
   });
 
-  it('calls onClose and does not open paywall if user has full version', () => {
+  it('calls onClose and does not open paywall if user has full version', async () => {
     (useAppSelector as jest.Mock).mockImplementation((selector) => {
       if (selector === selectProducts) {
         return [{ id: 'prod_1' }];
@@ -123,11 +123,11 @@ describe('useShowPaywallModal', () => {
     });
 
     const onCloseMock = jest.fn();
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useShowPaywallModal({ animationType: 'modal', onClose: onCloseMock, shouldReplace: false }),
     );
 
-    act(() => {
+    await act(() => {
       result.current.showPaywallModal({ source: SOURCE.TALE_PREVIEW, tab: 'All tales' });
     });
 

@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
 import { ImageStyle, View, StyleProp } from 'react-native';
 
-import { GestureDetector, Gesture } from 'react-native-gesture-handler';
+import { GestureDetector } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { SharedValue, StyleProps, AnimatedStyle } from 'react-native-reanimated';
 
 import { AudioRecordingSchema } from '@/database/schema/audioRecordings/types';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
+import { StoryCoverGesture } from '@/screens/StoryPlayerScreens/StoryPlayerScreen/hooks/useStoryCoverGestureHandler';
 import { useStoryPlayerScreenLayout } from '@/screens/StoryPlayerScreens/StoryPlayerScreen/hooks/useStoryPlayerScreenLayout';
 import { TabEventType } from '@/services/analytics/analytics.types';
 
@@ -22,7 +23,7 @@ interface StoryCoverProps {
   bottomGradientColors2: (string | number)[];
   coverAnimatedStyles: AnimatedStyle<StyleProp<ImageStyle>>;
   coverURL: string;
-  gesture: ReturnType<typeof Gesture.Pan>;
+  gesture: StoryCoverGesture;
   gradientColor: string;
   startStoryPlaying: () => void;
   storyContainerAnimatedStyles: StyleProps;

@@ -5,14 +5,14 @@ import { useMutableValue } from '../useMutableValue';
 jest.unmock('@/hooks/useMutableValue');
 
 describe('useMutableValue', () => {
-  it('returns a ref with the initial value', () => {
-    const { result } = renderHook(() => useMutableValue(42));
+  it('returns a ref with the initial value', async () => {
+    const { result } = await renderHook(() => useMutableValue(42));
 
     expect(result.current.current).toBe(42);
   });
 
-  it('updates the ref when the value changes', () => {
-    const { rerender, result } = renderHook(
+  it('updates the ref when the value changes', async () => {
+    const { rerender, result } = await renderHook(
       ({ value }: { value: string }) => useMutableValue(value),
       {
         initialProps: { value: 'first' },
@@ -21,20 +21,20 @@ describe('useMutableValue', () => {
 
     expect(result.current.current).toBe('first');
 
-    rerender({ value: 'second' });
+    await rerender({ value: 'second' });
 
     expect(result.current.current).toBe('second');
   });
 
-  it('works with object values', () => {
+  it('works with object values', async () => {
     const obj = { count: 0 };
-    const { result } = renderHook(() => useMutableValue(obj));
+    const { result } = await renderHook(() => useMutableValue(obj));
 
     expect(result.current.current).toBe(obj);
   });
 
-  it('works with null values', () => {
-    const { result } = renderHook(() => useMutableValue(null));
+  it('works with null values', async () => {
+    const { result } = await renderHook(() => useMutableValue(null));
 
     expect(result.current.current).toBeNull();
   });

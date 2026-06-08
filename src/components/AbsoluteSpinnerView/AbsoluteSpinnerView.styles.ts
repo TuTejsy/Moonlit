@@ -8,7 +8,7 @@ export const makeStyles = ({ colors, zIndex }: MakeStylesProps) =>
       backgroundColor: colors.opacityBlack(0.5),
     },
     spinnerContainer: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       alignItems: 'center',
       flex: 1,
       justifyContent: 'center',

@@ -5,7 +5,7 @@ import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
 export const makeStyles = (_props: MakeStylesProps) =>
   StyleSheet.create({
     homeScreen: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
     },
     screen: {
       flex: 1,

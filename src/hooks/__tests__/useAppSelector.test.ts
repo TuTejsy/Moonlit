@@ -15,22 +15,22 @@ jest.mock('@/store/store', () => ({
 }));
 
 describe('useAppSelector', () => {
-  it('calls useSelector with the provided selector', () => {
+  it('calls useSelector with the provided selector', async () => {
     const mockState = { user: { isFullVersion: true } };
     (useSelector as unknown as jest.Mock).mockImplementation(
       (selector: (s: typeof mockState) => unknown) => selector(mockState),
     );
 
     const selector = (state: typeof mockState) => state.user.isFullVersion;
-    const { result } = renderHook(() => useAppSelector(selector));
+    const { result } = await renderHook(() => useAppSelector(selector));
 
     expect(result.current).toBe(true);
   });
 
-  it('returns the selected value from the store', () => {
+  it('returns the selected value from the store', async () => {
     (useSelector as unknown as jest.Mock).mockReturnValue('test-value');
 
-    const { result } = renderHook(() => useAppSelector(() => 'test-value'));
+    const { result } = await renderHook(() => useAppSelector(() => 'test-value'));
 
     expect(result.current).toBe('test-value');
   });

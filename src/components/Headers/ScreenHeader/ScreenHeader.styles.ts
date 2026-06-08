@@ -48,7 +48,7 @@ export const makeStyles = (
       textAlign: 'center',
     },
     title: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       alignItems: 'center',
       flex: 1,
       justifyContent: 'center',

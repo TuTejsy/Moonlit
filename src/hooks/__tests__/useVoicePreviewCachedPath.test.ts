@@ -19,8 +19,8 @@ describe('useVoicePreviewCachedPath', () => {
     (RNFS.downloadFile as jest.Mock).mockClear();
   });
 
-  it('runs without errors for undefined cover url', () => {
-    const { result } = renderHook(() => useVoicePreviewCachedPath(undefined));
+  it('runs without errors for undefined cover url', async () => {
+    const { result } = await renderHook(() => useVoicePreviewCachedPath(undefined));
 
     expect(result.current).toBe('file://undefined');
     expect(RNFS.exists).not.toHaveBeenCalled();
@@ -30,7 +30,7 @@ describe('useVoicePreviewCachedPath', () => {
   it('returns cached URL directly if file is already downloaded (or initial state)', async () => {
     (RNFS.exists as jest.Mock).mockResolvedValue(true);
 
-    const { result } = renderHook(() => useVoicePreviewCachedPath('test.png'));
+    const { result } = await renderHook(() => useVoicePreviewCachedPath('test.png'));
 
     // Initially isFileDownloaded is true, so it returns file://cached_test.png
     expect(result.current).toBe('file://cached_test.png');
@@ -59,7 +59,7 @@ describe('useVoicePreviewCachedPath', () => {
       promise: downloadPromise,
     });
 
-    const { result } = renderHook(() => useVoicePreviewCachedPath('test.png'));
+    const { result } = await renderHook(() => useVoicePreviewCachedPath('test.png'));
 
     // Initial state returns cached URL, but effect quickly changes it
     await act(async () => {
@@ -90,7 +90,7 @@ describe('useVoicePreviewCachedPath', () => {
       promise: Promise.resolve({ statusCode: 404 }), // not 200
     });
 
-    const { result } = renderHook(() => useVoicePreviewCachedPath('test.png'));
+    const { result } = await renderHook(() => useVoicePreviewCachedPath('test.png'));
 
     await act(async () => {
       await new Promise(setImmediate);

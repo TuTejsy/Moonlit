@@ -10,5 +10,6 @@ Moonlit uses **Reanimated 4** + **`react-native-worklets`** (`babel.config.js` p
 
 - Use **`scheduleOnRN`** from `react-native-worklets` to call JS from worklets/gestures.
 - **Don't** use `runOnJS` from `react-native-reanimated` (deprecated in Reanimated 4).
+- Story player: RNGH 3 hook API (`usePanGesture`, etc.) — see `moonlit-story-player` skill § Gestures.
 - Baseline: StoryPlayer gestures, ProgressBar, SplashViewModal.
-- Jest: `scheduleOnRN` mocked in `setupJest.ts`.
+- Jest: `scheduleOnRN` and RNGH hooks mocked in `setupJest.ts`.

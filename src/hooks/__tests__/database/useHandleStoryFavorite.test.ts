@@ -29,10 +29,10 @@ describe('useHandleStoryFavorite', () => {
     jest.clearAllMocks();
   });
 
-  it('does nothing if story is not found', () => {
+  it('does nothing if story is not found', async () => {
     (useStory as jest.Mock).mockReturnValue([null, 0]);
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useHandleStoryFavorite({
         source: SOURCE.TALE_PREVIEW,
         storyId: 1,
@@ -41,7 +41,7 @@ describe('useHandleStoryFavorite', () => {
       }),
     );
 
-    act(() => {
+    await act(() => {
       result.current.handleStoryFavoritePress();
     });
 
@@ -50,11 +50,11 @@ describe('useHandleStoryFavorite', () => {
     expect(result.current.isFavorite).toBe(false);
   });
 
-  it('toggles favorite to true and logs analytics when initially false', () => {
+  it('toggles favorite to true and logs analytics when initially false', async () => {
     const mockStory = { is_favorite: false, saved_at_timestamp: 0 };
     (useStory as jest.Mock).mockReturnValue([mockStory, 1]);
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useHandleStoryFavorite({
         source: SOURCE.TALE_PREVIEW,
         storyId: 1,
@@ -65,7 +65,7 @@ describe('useHandleStoryFavorite', () => {
 
     expect(result.current.isFavorite).toBe(false);
 
-    act(() => {
+    await act(() => {
       result.current.handleStoryFavoritePress();
     });
 
@@ -80,11 +80,11 @@ describe('useHandleStoryFavorite', () => {
     expect(mockStory.saved_at_timestamp).toBeGreaterThan(0);
   });
 
-  it('toggles favorite to false and does not log analytics when initially true', () => {
+  it('toggles favorite to false and does not log analytics when initially true', async () => {
     const mockStory = { is_favorite: true, saved_at_timestamp: 0 };
     (useStory as jest.Mock).mockReturnValue([mockStory, 1]);
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useHandleStoryFavorite({
         source: SOURCE.TALE_PREVIEW,
         storyId: 1,
@@ -95,7 +95,7 @@ describe('useHandleStoryFavorite', () => {
 
     expect(result.current.isFavorite).toBe(true);
 
-    act(() => {
+    await act(() => {
       result.current.handleStoryFavoritePress();
     });
 

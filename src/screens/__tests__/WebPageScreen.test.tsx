@@ -22,21 +22,21 @@ describe('WebPageScreen', () => {
     });
   });
 
-  it('renders without crashing', () => {
-    render(<WebPageScreen />);
+  it('renders without crashing', async () => {
+    await render(<WebPageScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders the WebView component', () => {
-    render(<WebPageScreen />);
+  it('renders the WebView component', async () => {
+    await render(<WebPageScreen />);
 
     const tree = screen.toJSON();
     expect(tree).toBeTruthy();
   });
 
-  it('renders with the URL from route params', () => {
-    render(<WebPageScreen />);
+  it('renders with the URL from route params', async () => {
+    await render(<WebPageScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });

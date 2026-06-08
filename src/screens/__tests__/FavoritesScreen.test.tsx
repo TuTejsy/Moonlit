@@ -12,27 +12,27 @@ describe('FavoritesScreen', () => {
     jest.clearAllMocks();
   });
 
-  it('renders without crashing', () => {
-    render(<FavoritesScreen />);
+  it('renders without crashing', async () => {
+    await render(<FavoritesScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders tab labels for Saved and Recently Played', () => {
-    render(<FavoritesScreen />);
+  it('renders tab labels for Saved and Recently Played', async () => {
+    await render(<FavoritesScreen />);
 
     expect(screen.getByText('common.saved')).toBeOnTheScreen();
     expect(screen.getByText('stories.recentPlayed')).toBeOnTheScreen();
   });
 
-  it('calls useFavoritesData hook', () => {
-    render(<FavoritesScreen />);
+  it('calls useFavoritesData hook', async () => {
+    await render(<FavoritesScreen />);
 
     expect(useFavoritesData).toHaveBeenCalled();
   });
 
-  it('calls useTabBarScrollSync hook with correct params', () => {
-    render(<FavoritesScreen />);
+  it('calls useTabBarScrollSync hook with correct params', async () => {
+    await render(<FavoritesScreen />);
 
     expect(useTabBarScrollSync).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -42,13 +42,13 @@ describe('FavoritesScreen', () => {
     );
   });
 
-  it('shows empty state text when no saved stories', () => {
-    render(<FavoritesScreen />);
+  it('shows empty state text when no saved stories', async () => {
+    await render(<FavoritesScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('shows saved stories header when stories exist', () => {
+  it('shows saved stories header when stories exist', async () => {
     (useFavoritesData as jest.Mock).mockReturnValue({
       recentlyPlayedStories: [],
       recentlyPlayedStoriesVersion: 0,
@@ -56,7 +56,7 @@ describe('FavoritesScreen', () => {
       savedStoriesVersion: 1,
     });
 
-    render(<FavoritesScreen />);
+    await render(<FavoritesScreen />);
 
     expect(screen.getByText('stories.yourSavedTales')).toBeOnTheScreen();
   });

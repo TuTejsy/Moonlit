@@ -9,20 +9,20 @@ describe('SplashViewModal', () => {
     jest.clearAllMocks();
   });
 
-  it('renders without crashing', () => {
-    render(<SplashViewModal />);
+  it('renders without crashing', async () => {
+    await render(<SplashViewModal />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders the moon logo', () => {
-    render(<SplashViewModal />);
+  it('renders the moon logo', async () => {
+    await render(<SplashViewModal />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders animated images (stars and launch logo)', () => {
-    render(<SplashViewModal />);
+  it('renders animated images (stars and launch logo)', async () => {
+    await render(<SplashViewModal />);
 
     const tree = screen.toJSON();
     expect(tree).toBeTruthy();

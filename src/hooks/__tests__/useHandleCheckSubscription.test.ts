@@ -43,7 +43,7 @@ describe('useHandleCheckSubscription', () => {
     (useAppDispatch as jest.Mock).mockReturnValue(dispatchMock);
   });
 
-  it('calls onSuccess immediately with isFullAccess when in dev mode', () => {
+  it('calls onSuccess immediately with isFullAccess when in dev mode', async () => {
     (isDevMode as jest.Mock).mockReturnValue(true);
     (useAppSelector as jest.Mock).mockImplementation((selector) => {
       if (selector === selectIsFullVersion) {
@@ -52,9 +52,9 @@ describe('useHandleCheckSubscription', () => {
       return false;
     });
 
-    const { result } = renderHook(() => useHandleCheckSubscription(onSuccessMock));
+    const { result } = await renderHook(() => useHandleCheckSubscription(onSuccessMock));
 
-    act(() => {
+    await act(() => {
       result.current();
     });
 
@@ -72,7 +72,7 @@ describe('useHandleCheckSubscription', () => {
       },
     });
 
-    const { result } = renderHook(() => useHandleCheckSubscription(onSuccessMock));
+    const { result } = await renderHook(() => useHandleCheckSubscription(onSuccessMock));
 
     await act(async () => {
       result.current();
@@ -95,7 +95,7 @@ describe('useHandleCheckSubscription', () => {
       },
     });
 
-    const { result } = renderHook(() => useHandleCheckSubscription(onSuccessMock));
+    const { result } = await renderHook(() => useHandleCheckSubscription(onSuccessMock));
 
     await act(async () => {
       result.current();

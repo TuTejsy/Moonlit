@@ -28,20 +28,20 @@ describe('PaywallModal', () => {
     (useAppRoute as jest.Mock).mockReturnValue({ params: defaultRouteParams });
   });
 
-  it('renders without crashing', () => {
-    render(<PaywallModal />);
+  it('renders without crashing', async () => {
+    await render(<PaywallModal />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders skip button text', () => {
-    render(<PaywallModal />);
+  it('renders skip button text', async () => {
+    await render(<PaywallModal />);
 
     expect(screen.getByText('common.skip')).toBeOnTheScreen();
   });
 
-  it('logs paywall viewed analytics event on mount', () => {
-    render(<PaywallModal />);
+  it('logs paywall viewed analytics event on mount', async () => {
+    await render(<PaywallModal />);
 
     expect(AnalyticsService.logPaywallViewedEvent).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -51,7 +51,7 @@ describe('PaywallModal', () => {
     );
   });
 
-  it('calls handleSkipPress when skip text is pressed', () => {
+  it('calls handleSkipPress when skip text is pressed', async () => {
     const { usePaywallActions } = jest.requireMock(
       '@/screens/PaywallModal/hooks/usePaywallActions',
     );
@@ -63,35 +63,35 @@ describe('PaywallModal', () => {
       isLoading: false,
     });
 
-    render(<PaywallModal />);
+    await render(<PaywallModal />);
 
     fireEvent.press(screen.getByText('common.skip'));
 
     expect(mockHandleSkipPress).toHaveBeenCalled();
   });
 
-  it('renders SwitcherPaywallContent when placementId is switch', () => {
-    render(<PaywallModal />);
+  it('renders SwitcherPaywallContent when placementId is switch', async () => {
+    await render(<PaywallModal />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders SelectionPaywallContent when placementId is selection', () => {
+  it('renders SelectionPaywallContent when placementId is selection', async () => {
     (useAppRoute as jest.Mock).mockReturnValue({
       params: { ...defaultRouteParams, placementId: 'selection' },
     });
 
-    render(<PaywallModal />);
+    await render(<PaywallModal />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders ScrollablePaywallContent when placementId is scrollable', () => {
+  it('renders ScrollablePaywallContent when placementId is scrollable', async () => {
     (useAppRoute as jest.Mock).mockReturnValue({
       params: { ...defaultRouteParams, placementId: 'scrollable' },
     });
 
-    render(<PaywallModal />);
+    await render(<PaywallModal />);
 
     expect(screen.toJSON()).toBeTruthy();
   });

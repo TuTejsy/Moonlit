@@ -82,8 +82,8 @@ describe('useStoryPlayer', () => {
     });
   });
 
-  it('initializes correctly', () => {
-    const { result } = renderHook(() =>
+  it('initializes correctly', async () => {
+    const { result } = await renderHook(() =>
       useStoryPlayer({
         audioRecordingId: 10,
         coverPath: 'cover.jpg',
@@ -97,10 +97,10 @@ describe('useStoryPlayer', () => {
     expect(result.current.isCurrentStoryPlaying).toBe(false);
   });
 
-  it('stops story playing correctly', () => {
+  it('stops story playing correctly', async () => {
     (audioPlayer.getCurrentState as jest.Mock).mockReturnValue({ isPlaying: true });
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useStoryPlayer({
         audioRecordingId: 10,
         coverPath: 'cover.jpg',
@@ -109,7 +109,7 @@ describe('useStoryPlayer', () => {
       }),
     );
 
-    act(() => {
+    await act(() => {
       result.current.stopStoryPlaying();
     });
 
@@ -117,11 +117,11 @@ describe('useStoryPlayer', () => {
     expect(mockDispatch).toHaveBeenCalledWith(stopPlaying());
   });
 
-  it('pauses story playing correctly', () => {
+  it('pauses story playing correctly', async () => {
     (audioPlayer.getCurrentState as jest.Mock).mockReturnValue({ isPlaying: true });
     (audioPlayer.pausePlaying as jest.Mock).mockReturnValue({ playingTime: 45 });
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useStoryPlayer({
         audioRecordingId: 10,
         coverPath: 'cover.jpg',
@@ -130,7 +130,7 @@ describe('useStoryPlayer', () => {
       }),
     );
 
-    act(() => {
+    await act(() => {
       result.current.pauseStoryPlaying();
     });
 
@@ -139,8 +139,8 @@ describe('useStoryPlayer', () => {
     expect(result.current.playedTime).toBe(45);
   });
 
-  it('moves story playing to exact time', () => {
-    const { result } = renderHook(() =>
+  it('moves story playing to exact time', async () => {
+    const { result } = await renderHook(() =>
       useStoryPlayer({
         audioRecordingId: 10,
         coverPath: 'cover.jpg',
@@ -149,7 +149,7 @@ describe('useStoryPlayer', () => {
       }),
     );
 
-    act(() => {
+    await act(() => {
       result.current.moveStoryPlayingToTime({ exactTime: 50 });
     });
 
@@ -158,7 +158,7 @@ describe('useStoryPlayer', () => {
     expect(result.current.playedTime).toBe(50);
   });
 
-  it('moves story playing with a gap', () => {
+  it('moves story playing with a gap', async () => {
     (audioPlayer.getCurrentState as jest.Mock).mockReturnValue({
       isPlaying: true,
       playingTime: 20,
@@ -176,7 +176,7 @@ describe('useStoryPlayer', () => {
 
     (AudioRecordingsDB.object as jest.Mock).mockReturnValue({ story_id: 1 });
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useStoryPlayer({
         audioRecordingId: 10,
         coverPath: 'cover.jpg',
@@ -186,7 +186,7 @@ describe('useStoryPlayer', () => {
     );
 
     // Initial played time 0, but isPlaying is true, so gap is added to playingTime (20) + gap (10) = 30
-    act(() => {
+    await act(() => {
       result.current.moveStoryPlayingToTime({ moveGap: 10 });
     });
 

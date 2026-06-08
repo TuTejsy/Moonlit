@@ -5,31 +5,31 @@ import { useUnmount } from '../useUnmount';
 jest.unmock('@/hooks/useUnmount');
 
 describe('useUnmount', () => {
-  it('calls the callback on unmount', () => {
+  it('calls the callback on unmount', async () => {
     const callback = jest.fn();
-    const { unmount } = renderHook(() => useUnmount(callback));
+    const { unmount } = await renderHook(() => useUnmount(callback));
 
     expect(callback).not.toHaveBeenCalled();
 
-    unmount();
+    await unmount();
 
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it('calls the latest callback version on unmount', () => {
+  it('calls the latest callback version on unmount', async () => {
     const callback1 = jest.fn();
     const callback2 = jest.fn();
 
-    const { rerender, unmount } = renderHook(
+    const { rerender, unmount } = await renderHook(
       ({ callback }: { callback: () => void }) => useUnmount(callback),
       {
         initialProps: { callback: callback1 },
       },
     );
 
-    rerender({ callback: callback2 });
+    await rerender({ callback: callback2 });
 
-    unmount();
+    await unmount();
 
     expect(callback1).not.toHaveBeenCalled();
     expect(callback2).toHaveBeenCalledTimes(1);

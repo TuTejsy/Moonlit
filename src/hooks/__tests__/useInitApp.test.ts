@@ -12,10 +12,10 @@ jest.mock('@/services/storage/storage', () => ({
 }));
 
 describe('useInitApp', () => {
-  it('returns TAB route when user is onboarded', () => {
+  it('returns TAB route when user is onboarded', async () => {
     (getStorageData as jest.Mock).mockReturnValue({ isOnboarded: true });
 
-    const { result } = renderHook(() => useInitApp());
+    const { result } = await renderHook(() => useInitApp());
 
     expect(result.current.initialRouteName).toBe(RootRoutes.TAB);
     expect(result.current.initialNavigationState).toEqual({
@@ -24,10 +24,10 @@ describe('useInitApp', () => {
     });
   });
 
-  it('returns GET_STARTED_SCREEN route when user is not onboarded', () => {
+  it('returns GET_STARTED_SCREEN route when user is not onboarded', async () => {
     (getStorageData as jest.Mock).mockReturnValue({ isOnboarded: false });
 
-    const { result } = renderHook(() => useInitApp());
+    const { result } = await renderHook(() => useInitApp());
 
     expect(result.current.initialRouteName).toBe(RootRoutes.GET_STARTED_SCREEN);
     expect(result.current.initialNavigationState).toEqual({

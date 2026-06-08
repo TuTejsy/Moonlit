@@ -37,9 +37,9 @@ describe('useBackHandler', () => {
     jest.restoreAllMocks();
   });
 
-  it('registers back handler on focus', () => {
+  it('registers back handler on focus', async () => {
     const handler = jest.fn();
-    renderHook(() => useBackHandler(handler));
+    await renderHook(() => useBackHandler(handler));
 
     expect(BackHandler.addEventListener).toHaveBeenCalledWith(
       'hardwareBackPress',
@@ -47,8 +47,8 @@ describe('useBackHandler', () => {
     );
   });
 
-  it('returns true if handler is null', () => {
-    renderHook(() => useBackHandler(null));
+  it('returns true if handler is null', async () => {
+    await renderHook(() => useBackHandler(null));
 
     const mockCallback = addEventListenerMock.mock.calls[0][1];
 
@@ -56,9 +56,9 @@ describe('useBackHandler', () => {
     expect(mockCallback()).toBe(true);
   });
 
-  it('returns boolean based on handler return value', () => {
+  it('returns boolean based on handler return value', async () => {
     const handler = jest.fn().mockReturnValue(true);
-    renderHook(() => useBackHandler(handler));
+    await renderHook(() => useBackHandler(handler));
 
     const mockCallback = addEventListenerMock.mock.calls[0][1];
 
@@ -66,9 +66,9 @@ describe('useBackHandler', () => {
     expect(handler).toHaveBeenCalled();
   });
 
-  it('returns false if handler returns false', () => {
+  it('returns false if handler returns false', async () => {
     const handler = jest.fn().mockReturnValue(false);
-    renderHook(() => useBackHandler(handler));
+    await renderHook(() => useBackHandler(handler));
 
     const mockCallback = addEventListenerMock.mock.calls[0][1];
 

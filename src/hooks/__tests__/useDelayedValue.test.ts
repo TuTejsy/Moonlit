@@ -11,42 +11,42 @@ describe('useDelayedValue', () => {
     jest.clearAllTimers();
   });
 
-  it('returns the initial value immediately when delay is 0 or negative', () => {
-    const { result } = renderHook(() => useDelayedValue('hello', 0));
+  it('returns the initial value immediately when delay is 0 or negative', async () => {
+    const { result } = await renderHook(() => useDelayedValue('hello', 0));
 
     expect(result.current).toBe('hello');
   });
 
-  it('returns the defaultValue initially when provided with a positive delay', () => {
-    const { result } = renderHook(() => useDelayedValue('hello', 500, 'default'));
+  it('returns the defaultValue initially when provided with a positive delay', async () => {
+    const { result } = await renderHook(() => useDelayedValue('hello', 500, 'default'));
 
     expect(result.current).toBe('default');
   });
 
-  it('returns the value after the delay has passed', () => {
-    const { result } = renderHook(() => useDelayedValue('hello', 500, 'default'));
+  it('returns the value after the delay has passed', async () => {
+    const { result } = await renderHook(() => useDelayedValue('hello', 500, 'default'));
 
-    act(() => {
+    await act(() => {
       jest.advanceTimersByTime(500);
     });
 
     expect(result.current).toBe('hello');
   });
 
-  it('returns the value directly when delay is 0', () => {
-    const { result } = renderHook(() => useDelayedValue('immediate', 0));
+  it('returns the value directly when delay is 0', async () => {
+    const { result } = await renderHook(() => useDelayedValue('immediate', 0));
 
     expect(result.current).toBe('immediate');
   });
 
-  it('returns the value directly when delay is negative', () => {
-    const { result } = renderHook(() => useDelayedValue('negative-delay', -100));
+  it('returns the value directly when delay is negative', async () => {
+    const { result } = await renderHook(() => useDelayedValue('negative-delay', -100));
 
     expect(result.current).toBe('negative-delay');
   });
 
-  it('uses the value as defaultValue when no defaultValue is provided', () => {
-    const { result } = renderHook(() => useDelayedValue('hello', 500));
+  it('uses the value as defaultValue when no defaultValue is provided', async () => {
+    const { result } = await renderHook(() => useDelayedValue('hello', 500));
 
     expect(result.current).toBe('hello');
   });

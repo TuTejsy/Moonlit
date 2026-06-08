@@ -245,17 +245,13 @@ jest.mock('react-native-screens', () => ({
 
 // Mock react-native-gesture-handler
 jest.mock('react-native-gesture-handler', () => ({
-  Gesture: {
-    Pan: jest.fn().mockReturnValue({
-      onEnd: jest.fn().mockReturnThis(),
-      onStart: jest.fn().mockReturnThis(),
-      onUpdate: jest.fn().mockReturnThis(),
-    }),
-  },
   GestureDetector: 'GestureDetector',
   GestureHandlerRootView: 'GestureHandlerRootView',
   PanGestureHandler: 'PanGestureHandler',
   State: {},
+  useCompetingGestures: jest.fn((...gestures: unknown[]) => gestures[0]),
+  usePanGesture: jest.fn(() => ({})),
+  useTapGesture: jest.fn(() => ({})),
 }));
 
 // Mock useMakeStyles - returns the makeStyles function result with empty style objects
@@ -885,9 +881,11 @@ jest.mock(
 // Mock react-native-adapty (extend with purchase methods)
 jest.mock('react-native-adapty', () => ({
   adapty: {
+    activate: jest.fn().mockResolvedValue(undefined),
     getPaywall: jest.fn().mockResolvedValue({}),
     getPaywallProducts: jest.fn().mockResolvedValue([]),
     getProfile: jest.fn().mockResolvedValue({ accessLevels: {} }),
+    isActivated: jest.fn().mockResolvedValue(true),
     makePurchase: jest.fn().mockResolvedValue({ type: 'success' }),
     restorePurchases: jest.fn().mockResolvedValue({ accessLevels: {} }),
   },

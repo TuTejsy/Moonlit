@@ -2,15 +2,17 @@
 import React, { useMemo } from 'react';
 import { StyleProp, Text, TextProps, TextStyle } from 'react-native';
 
-import Animated from 'react-native-reanimated';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 
 import { makeStyles } from './TextView.styles';
 
-export interface TextViewProps extends TextProps {
+type AnimatedTextStyle = ReturnType<typeof useAnimatedStyle>;
+
+export interface TextViewProps extends Omit<TextProps, 'style'> {
   animated?: boolean;
-  style?: StyleProp<TextStyle> | StyleProp<TextStyle>[];
+  style?: AnimatedTextStyle | StyleProp<TextStyle> | StyleProp<TextStyle>[];
   type?: 'bold' | 'regular' | 'medium' | 'light';
 }
 
