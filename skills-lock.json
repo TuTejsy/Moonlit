@@ -12,6 +12,12 @@
       "sourceType": "github",
       "computedHash": "7ffa231b9f3e4caefca0cc45de10871a0455968f9466c46d1f49ff95527cba28"
     },
+    "upgrading-react-native": {
+      "source": "callstackincubator/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/upgrading-react-native/SKILL.md",
+      "computedHash": "a8a0b9ce54dceb45233c3244dfe9aafc43f3cb9f4dad8c466f4091fe4065cdc9"
+    },
     "vercel-composition-patterns": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
