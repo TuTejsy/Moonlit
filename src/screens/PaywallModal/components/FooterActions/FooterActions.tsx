@@ -1,6 +1,7 @@
 import React from 'react';
-import { TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { TextStyle, View, ViewStyle } from 'react-native';
 
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useWebPagesNavigation } from '@/hooks/navigation/useWebPagesNavigation';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -11,11 +12,12 @@ import { makeStyles } from './FooterActions.styles';
 interface FooterActionsProps {
   onRestorePress: () => void;
   actionStyle?: TextStyle;
+  onSkipPress?: () => void;
   style?: ViewStyle;
 }
 
 export const FooterActions = React.memo(
-  ({ actionStyle, onRestorePress, style }: FooterActionsProps) => {
+  ({ actionStyle, onRestorePress, onSkipPress, style }: FooterActionsProps) => {
     const styles = useMakeStyles(makeStyles);
     const { localize } = useAppLocalization();
 
@@ -23,17 +25,23 @@ export const FooterActions = React.memo(
 
     return (
       <View style={[styles.actions, style]}>
-        <TouchableOpacity onPress={openTermsOfService}>
+        {onSkipPress ? (
+          <PressableView onPress={onSkipPress}>
+            <TextView style={[styles.action, actionStyle]}>{localize('common', 'skip')}</TextView>
+          </PressableView>
+        ) : null}
+
+        <PressableView onPress={openTermsOfService}>
           <TextView style={[styles.action, actionStyle]}>{localize('common', 'terms')}</TextView>
-        </TouchableOpacity>
+        </PressableView>
 
-        <TouchableOpacity onPress={openPrivacyPolicy}>
+        <PressableView onPress={openPrivacyPolicy}>
           <TextView style={[styles.action, actionStyle]}>{localize('common', 'privacy')}</TextView>
-        </TouchableOpacity>
+        </PressableView>
 
-        <TouchableOpacity onPress={onRestorePress}>
+        <PressableView onPress={onRestorePress}>
           <TextView style={[styles.action, actionStyle]}>{localize('common', 'restore')}</TextView>
-        </TouchableOpacity>
+        </PressableView>
       </View>
     );
   },

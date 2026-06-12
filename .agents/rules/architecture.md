@@ -64,7 +64,7 @@ Screens and hooks must not import SDK packages directly except where noted.
 
 - **Entry**: `PaywallModal.tsx` shell with `paywallVariantRegistry` (`resolvePaywallVariantName` — prefix match on Adapty `paywall.name`).
 - **Variants**: `contentVariants/{Scrollable,Selection,Switcher,StaticDefaultProd}PaywallContent/`.
-- **Bootstrap**: `useRemoteConfigInit` + `useAdaptyInit` + `usePaywallBootstrap` in `AppLogicProvider`; `SplashViewModal` gates on `selectIsPaywallBootstrapSettled` (ready or failed).
+- **Bootstrap**: `useRemoteConfigInit` + `useAdaptyInit` + `usePaywallBootstrap` in `AppLogicProvider`; `SplashViewModal` gates on `selectIsPaywallBootstrapSettled` (ready or failed). Adapty paywall `remoteConfig.data` is stored in Redux as `paywallRemoteConfig` (separate from Firebase remote config).
 - **Navigation hook**: `useShowPaywallModal` (`src/hooks/navigation/useShowPaywallModal.ts`) — opens `PAYWALL_SCREEN` or `PAYWALL_MODAL`.
 - **Subscription check**: `useHandleCheckSubscription` — Adapty profile + Redux `user` slice.
 - **Placement**: single `LOCKED_CONTENT_PLACEMENT_ID` in `src/constants/common.ts`; variant from Adapty paywall name prefix (`TOGGLE`, `SELECTION`, `SCROLLABLE`, `STATIC_DEFAULT_PROD` base names; postfix A/B names allowed).

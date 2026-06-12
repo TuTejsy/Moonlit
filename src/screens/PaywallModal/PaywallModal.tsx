@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 
 import { AbsoluteSpinnerView } from '@/components/AbsoluteSpinnerView/AbsoluteSpinnerView';
+import { PressableView } from '@/components/Primitives/PressableView/PressableView';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppLocalization } from '@/localization/useAppLocalization';
@@ -20,6 +21,7 @@ import {
   resolvePaywallVariant,
   resolvePaywallVariantName,
 } from './paywallVariantRegistry';
+import { parsePaywallRemoteConfig } from './utils/paywallRemoteConfig.utils';
 
 export const PaywallModal = () => {
   const navigation = useAppNavigation<RootRoutes.PAYWALL_MODAL>();
@@ -27,7 +29,17 @@ export const PaywallModal = () => {
 
   const { localize } = useAppLocalization();
 
-  const { contentName, onClose, paywallName, products, source, tab } = params;
+  const {
+    contentName,
+    onClose,
+    paywallName,
+    products,
+    remoteConfig: rawRemoteConfig,
+    source,
+    tab,
+  } = params;
+
+  const remoteConfig = useMemo(() => parsePaywallRemoteConfig(rawRemoteConfig), [rawRemoteConfig]);
 
   const resolvedPaywallVariantName = useMemo(
     () => resolvePaywallVariantName(paywallName),
@@ -72,7 +84,9 @@ export const PaywallModal = () => {
       isTrialEligible,
       onRestorePress: handleRestorePress,
       onSelectProduct: setSelectedProduct,
+      onSkipPress: handleSkipPress,
       onUnlockPress: handleUnlockPress,
+      remoteConfig,
       selectedProduct,
       trialProduct,
       unlockButtonText,
@@ -81,9 +95,11 @@ export const PaywallModal = () => {
     }),
     [
       handleRestorePress,
+      handleSkipPress,
       handleUnlockPress,
       isFreeTrialEnabled,
       isTrialEligible,
+      remoteConfig,
       selectedProduct,
       setSelectedProduct,
       trialProduct,
@@ -114,9 +130,15 @@ export const PaywallModal = () => {
 
         {renderPaywallContent()}
 
-        <TextView style={styles.skipText} type='regular' onPress={handleSkipPress}>
-          {localize('common', 'skip')}
-        </TextView>
+        {!remoteConfig.showBottomSkipButton ? (
+          <PressableView
+            style={styles.skipText}
+            testID='paywall-top-skip'
+            onPress={handleSkipPress}
+          >
+            <TextView type='regular'>{localize('common', 'skip')}</TextView>
+          </PressableView>
+        ) : null}
       </View>
 
       <AbsoluteSpinnerView show={isLoading} />

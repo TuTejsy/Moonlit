@@ -18,7 +18,7 @@ export const makeStyles = ({ colors, dh, dw, fonts }: MakeStylesProps) =>
       marginBottom: dh(6),
       overflow: 'hidden',
       paddingHorizontal: dw(15),
-      paddingVertical: dh(10),
+      paddingVertical: dh(9),
     },
     divider: {
       backgroundColor: colors.opacityWhite(0.2),

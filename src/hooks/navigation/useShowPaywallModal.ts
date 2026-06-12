@@ -12,6 +12,7 @@ import {
   selectIsPaywallBootstrapSettled,
   selectIsPaywallReady,
   selectPaywallName,
+  selectPaywallRemoteConfig,
   selectProducts,
 } from '@/store/subscription/subscription.selector';
 import { selectIsFullVersion } from '@/store/user/user.selector';
@@ -45,6 +46,7 @@ export const useShowPaywallModal = (
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectProducts);
   const paywallName = useAppSelector(selectPaywallName);
+  const paywallRemoteConfig = useAppSelector(selectPaywallRemoteConfig);
   const isPaywallReady = useAppSelector(selectIsPaywallReady);
   const isPaywallBootstrapSettled = useAppSelector(selectIsPaywallBootstrapSettled);
   const isPaywallBootstrapFailed = useAppSelector(selectIsPaywallBootstrapFailed);
@@ -55,6 +57,7 @@ export const useShowPaywallModal = (
     (
       loadedProducts: AdaptyPaywallProduct[],
       loadedPaywallName: string,
+      loadedRemoteConfig: Record<string, unknown> | null,
       request: ShowPaywallRequest,
     ) => {
       const { contentName, source, tab } = request;
@@ -66,6 +69,7 @@ export const useShowPaywallModal = (
           onClose,
           paywallName: loadedPaywallName,
           products: loadedProducts,
+          remoteConfig: loadedRemoteConfig ?? undefined,
           source,
           tab,
         },
@@ -97,7 +101,7 @@ export const useShowPaywallModal = (
 
       if (isPaywallReady && products && paywallName) {
         pendingRequestRef.current = null;
-        openPaywall(products, paywallName, request);
+        openPaywall(products, paywallName, paywallRemoteConfig, request);
         return;
       }
 
@@ -116,6 +120,7 @@ export const useShowPaywallModal = (
       onClose,
       openPaywall,
       paywallName,
+      paywallRemoteConfig,
       products,
     ],
   );
@@ -129,7 +134,7 @@ export const useShowPaywallModal = (
 
     if (isPaywallReady && products && paywallName) {
       pendingRequestRef.current = null;
-      openPaywall(products, paywallName, pendingRequest);
+      openPaywall(products, paywallName, paywallRemoteConfig, pendingRequest);
       return;
     }
 
@@ -142,6 +147,7 @@ export const useShowPaywallModal = (
     isPaywallReady,
     openPaywall,
     paywallName,
+    paywallRemoteConfig,
     products,
   ]);
 

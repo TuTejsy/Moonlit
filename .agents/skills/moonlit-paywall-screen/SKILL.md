@@ -67,7 +67,18 @@ Bootstrap stores the **full** Adapty `paywall.name` in Redux (e.g. `SELECTION_TR
 
 Unknown names fall back to `SwitcherPaywallContent` / `WITH_SWITCHER`. Do not compare raw `paywallName` to `PAYWALL_NAMES.*` — use `resolvePaywallVariantName`. Configure A/B postfix names in the Adapty dashboard — not via remote config placement.
 
-`remoteConfigService.fetchAndActivate()` runs once at launch via `useRemoteConfigInit` in `AppLogicProvider`. Paywall copy (`toggle_state`, buy button texts) and analytics `segment` read from the activated config in `usePaywallProducts` and `analytics.ts`.
+`remoteConfigService.fetchAndActivate()` runs once at launch via `useRemoteConfigInit` in `AppLogicProvider`. Paywall copy (`toggle_state`, buy button texts) and analytics `segment` read from the activated **Firebase** config in `usePaywallProducts` and `analytics.ts`.
+
+**Adapty paywall remote config** (`AdaptyPaywall.remoteConfig.data`) is separate from Firebase. `usePaywallBootstrap` stores it in Redux as `paywallRemoteConfig`; `useShowPaywallModal` passes it as nav param `remoteConfig`; `PaywallModal` parses it via `parsePaywallRemoteConfig` in `utils/paywallRemoteConfig.utils.ts` and forwards typed `remoteConfig` to variants.
+
+| Adapty key (`remoteConfig.data`) | Parsed field           | Consumer                                                                                                                  |
+| :------------------------------- | :--------------------- | :------------------------------------------------------------------------------------------------------------------------ |
+| `show_bottom_skip_button`        | `showBottomSkipButton` | `PaywallModal` hides top-left skip when `true`; all variants show footer skip via `FooterActions`                         |
+| `buy_button_text`                | `buyButtonText?`       | `StaticDefaultProdPaywallContent` CTA — overrides trial-aware `ctaLabel` when set (fallback: `staticDefaultProdCtaLabel`) |
+| `subtitle_text`                  | `subtitleText?`        | `StaticDefaultProdPaywallContent` subtitle                                                                                |
+| `title_text`                     | `titleText?`           | `StaticDefaultProdPaywallContent` title                                                                                   |
+
+Empty / whitespace / non-string values fall back to localized defaults. `show_bottom_skip_button` must be JSON boolean `true` (string `"true"` is treated as false).
 
 ## File placement
 
@@ -79,6 +90,7 @@ Everything lives under `src/screens/PaywallModal/`.
 | `paywallVariantRegistry.ts`                                      | Prefix-resolves `paywall.name` → variant component + analytics type |
 | `hooks/usePaywallProducts.ts`, `hooks/usePaywallActions.ts`      | Shared product selection and purchase/restore/skip actions          |
 | `utils/paywallProduct.utils.ts`                                  | Product resolution + StoreKit-safe price/period formatting          |
+| `utils/paywallRemoteConfig.utils.ts`                             | Parses Adapty `remoteConfig.data` → typed `PaywallRemoteConfig`     |
 | `components/PaywallBackground/`                                  | Shared background asset                                             |
 | `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/` | Variant-specific UI, styles, product hooks                          |
 | `contentVariants/StaticDefaultProdPaywallContent/`               | Static prod variant — see § STATIC_DEFAULT_PROD below               |
@@ -116,7 +128,7 @@ Adapty products from App Store / TestFlight must not be classified by raw `price
 
 ## Navigation & dismiss contract
 
-- **Opener**: `useShowPaywallModal` (`src/hooks/navigation/useShowPaywallModal.ts`) — passes `products`, `paywallName`, `source`, `onClose`, `contentName`, `tab`. Queues requests while bootstrap is pending; calls `onClose` when bootstrap failed.
+- **Opener**: `useShowPaywallModal` (`src/hooks/navigation/useShowPaywallModal.ts`) — passes `products`, `paywallName`, `remoteConfig`, `source`, `onClose`, `contentName`, `tab`. Queues requests while bootstrap is pending; calls `onClose` when bootstrap failed.
 - **Routes**: `RootRoutes.PAYWALL_SCREEN` (push) or `RootRoutes.PAYWALL_MODAL` (modal group).
 - **Dismiss**: `onClose` callback from opener; `handleSkipPress` in `usePaywallActions` calls `onClose` after skip analytics.
 - **Subscription gate**: `useHandleCheckSubscription` checks Adapty profile and updates Redux `user` slice.
@@ -129,13 +141,13 @@ Paywall strings in `src/localization/locals/paywall.ts`.
 
 Root: `contentVariants/StaticDefaultProdPaywallContent/`
 
-| File / folder                                  | Role                                                                                                                                   |
-| :--------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
-| `StaticDefaultProdPaywallContent.tsx`          | Root component — renders hero image, `ProdTrialCard`, two `ProdPlanRow`s, `ProdCtaButton`, `FooterActions`                             |
-| `hooks/useStaticDefaultProdPaywallProducts.ts` | Derives `weeklyIsSelected`, `yearlyIsSelected`, per-week price (`yearlyPrice / 52`), `ctaLabel`, `dueTodayText` from resolved products |
-| `components/ProdTrialCard/`                    | Collapsible trial toggle card; expand/collapse driven by `useProdTrialCardAnimation`                                                   |
-| `components/ProdPlanRow/`                      | Selectable plan row with `LinearGradient` border and optional badge label                                                              |
-| `components/ProdCtaButton/`                    | Primary CTA with sun-bleed sweep + chevron shake; driven by `useProdCtaAnimation`                                                      |
+| File / folder                                  | Role                                                                                                                                                      |
+| :--------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `StaticDefaultProdPaywallContent.tsx`          | Root component — hero, `ProdTrialCard`, plan rows, `ProdCtaButton`, `FooterActions`; consumes Adapty `remoteConfig` for title/subtitle/CTA/skip placement |
+| `hooks/useStaticDefaultProdPaywallProducts.ts` | Derives `weeklyIsSelected`, `yearlyIsSelected`, per-week price (`yearlyPrice / 52`), `ctaLabel`, `dueTodayText` from resolved products                    |
+| `components/ProdTrialCard/`                    | Collapsible trial toggle card; expand/collapse driven by `useProdTrialCardAnimation`                                                                      |
+| `components/ProdPlanRow/`                      | Selectable plan row with `LinearGradient` border and optional badge label                                                                                 |
+| `components/ProdCtaButton/`                    | Primary CTA with sun-bleed sweep + chevron shake; driven by `useProdCtaAnimation`                                                                         |
 
 **Selection logic** — `weeklyIsSelected` is true when `selectedProduct === trialProduct` (if `isFreeTrialEnabled`) or `=== weeklyProduct`; `yearlyIsSelected` when `=== yearlyProduct`. Tapping "weekly" row selects `trialProduct` when trial is enabled, else `weeklyProduct`.
 
@@ -157,6 +169,8 @@ Root: `contentVariants/StaticDefaultProdPaywallContent/`
 - `src/hooks/__tests__/useRemoteConfigInit.test.ts`
 - `src/hooks/__tests__/useAdaptyInit.test.ts`
 - `src/hooks/__tests__/usePaywallBootstrap.test.ts`
+- `src/screens/PaywallModal/utils/__tests__/paywallRemoteConfig.utils.test.ts`
+- `src/screens/PaywallModal/contentVariants/StaticDefaultProdPaywallContent/__tests__/StaticDefaultProdPaywallContent.test.tsx`
 - `src/hooks/__tests__/useHandleCheckSubscription.test.ts`
 - `src/screens/PaywallModal/__tests__/paywallVariantRegistry.test.ts`
 - `src/screens/PaywallModal/utils/__tests__/paywallProduct.utils.test.ts`

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 
-import type { AdaptyPaywallProduct } from 'react-native-adapty';
-
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useLayout } from '@/hooks/theme/useLayout';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -13,6 +11,7 @@ import { FooterActions } from '../../components/FooterActions/FooterActions';
 import voicesImage from '../../images/voices/voices.png';
 // eslint-disable-next-line import/no-unresolved
 import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.png';
+import type { PaywallVariantProps } from '../../paywallVariantRegistry.types';
 
 import { ProdCtaButton } from './components/ProdCtaButton/ProdCtaButton';
 import { ProdPlanRow } from './components/ProdPlanRow/ProdPlanRow';
@@ -20,29 +19,19 @@ import { ProdTrialCard } from './components/ProdTrialCard/ProdTrialCard';
 import { useStaticDefaultProdPaywallProducts } from './hooks/useStaticDefaultProdPaywallProducts';
 import { makeStyles } from './StaticDefaultProdPaywallContent.styles';
 
-interface StaticDefaultProdPaywallContentProps {
-  isFreeTrialEnabled: boolean;
-  isTrialEligible: boolean;
-  onRestorePress: () => void;
-  onSelectProduct: (product: AdaptyPaywallProduct | undefined) => void;
-  onUnlockPress: () => void;
-  selectedProduct: AdaptyPaywallProduct | undefined;
-  trialProduct: AdaptyPaywallProduct | undefined;
-  weeklyProduct: AdaptyPaywallProduct | undefined;
-  yearlyProduct: AdaptyPaywallProduct | undefined;
-}
-
 export const StaticDefaultProdPaywallContent = ({
   isFreeTrialEnabled,
   isTrialEligible,
   onRestorePress,
   onSelectProduct,
+  onSkipPress,
   onUnlockPress,
+  remoteConfig,
   selectedProduct,
   trialProduct,
   weeklyProduct,
   yearlyProduct,
-}: StaticDefaultProdPaywallContentProps) => {
+}: PaywallVariantProps) => {
   const styles = useMakeStyles(makeStyles);
   const { isLandscape, isSquareScreen } = useLayout();
   const { localize } = useAppLocalization();
@@ -72,6 +61,13 @@ export const StaticDefaultProdPaywallContent = ({
   const mostPopularLabel = localize('paywall', 'staticDefaultProdMostPopular');
   const bestValueLabel = localize('paywall', 'staticDefaultProdBestValue');
 
+  const titleText = remoteConfig.titleText ?? localize('paywall', 'getAccessToAllTales');
+  const subtitleText =
+    remoteConfig.subtitleText ??
+    localize('paywall', 'discoverUniqueVoicesAndListenToClassicFairyTales');
+  // Adapty buy_button_text intentionally overrides trial-aware ctaLabel when set.
+  const buyButtonLabel = remoteConfig.buyButtonText ?? ctaLabel;
+
   return (
     <>
       {isSquareScreen ? (
@@ -79,23 +75,23 @@ export const StaticDefaultProdPaywallContent = ({
       ) : null}
 
       <View style={styles.content}>
-        {!isSquareScreen ? (
-          <View style={styles.visualBlock}>
-            <TextView style={styles.title} type='bold'>
-              {localize('paywall', 'getAccessToAllTales')}
-            </TextView>
+        <View style={styles.visualBlock}>
+          <TextView style={styles.title} type='bold'>
+            {titleText}
+          </TextView>
 
-            <TextView style={styles.subtitle} type='regular'>
-              {localize('paywall', 'discoverUniqueVoicesAndListenToClassicFairyTales')}
-            </TextView>
+          <TextView style={styles.subtitle} type='regular'>
+            {subtitleText}
+          </TextView>
 
+          {!isSquareScreen ? (
             <Image
               resizeMode='cover'
               source={isLandscape ? voicesLandscapeImage : voicesImage}
               style={isLandscape ? styles.voicesFullImage : styles.voicesImage}
             />
-          </View>
-        ) : null}
+          ) : null}
+        </View>
 
         <View style={styles.productBlock}>
           {isTrialEligible ? (
@@ -134,9 +130,17 @@ export const StaticDefaultProdPaywallContent = ({
           </View>
 
           <View style={styles.bottomBlock}>
-            <ProdCtaButton label={ctaLabel} style={styles.ctaButton} onPress={onUnlockPress} />
+            <ProdCtaButton
+              label={buyButtonLabel}
+              style={styles.ctaButton}
+              onPress={onUnlockPress}
+            />
 
-            <FooterActions style={styles.footer} onRestorePress={onRestorePress} />
+            <FooterActions
+              style={styles.footer}
+              onRestorePress={onRestorePress}
+              onSkipPress={remoteConfig.showBottomSkipButton ? onSkipPress : undefined}
+            />
           </View>
         </View>
       </View>

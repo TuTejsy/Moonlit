@@ -11,6 +11,7 @@ import {
   selectIsPaywallBootstrapSettled,
   selectIsPaywallReady,
   selectPaywallName,
+  selectPaywallRemoteConfig,
   selectProducts,
 } from '@/store/subscription/subscription.selector';
 
@@ -33,6 +34,7 @@ jest.mock('@/store/subscription/subscription.selector', () => ({
   selectIsPaywallBootstrapSettled: jest.fn(),
   selectIsPaywallReady: jest.fn(),
   selectPaywallName: jest.fn(),
+  selectPaywallRemoteConfig: jest.fn(),
   selectProducts: jest.fn(),
 }));
 
@@ -59,6 +61,7 @@ describe('useShowPaywallModal', () => {
     isPaywallBootstrapSettled = true,
     isPaywallReady = true,
     paywallName = 'TOGGLE',
+    paywallRemoteConfig = null,
     products = [{ id: 'prod_1' }],
     isFullVersion = false,
   }: {
@@ -67,6 +70,7 @@ describe('useShowPaywallModal', () => {
     isPaywallBootstrapSettled?: boolean;
     isPaywallReady?: boolean;
     paywallName?: string | null;
+    paywallRemoteConfig?: Record<string, unknown> | null;
     products?: { id: string }[] | null;
   } = {}) => {
     (useAppSelector as jest.Mock).mockImplementation((selector) => {
@@ -75,6 +79,9 @@ describe('useShowPaywallModal', () => {
       }
       if (selector === selectPaywallName) {
         return paywallName;
+      }
+      if (selector === selectPaywallRemoteConfig) {
+        return paywallRemoteConfig;
       }
       if (selector === selectIsPaywallReady) {
         return isPaywallReady;
@@ -111,8 +118,34 @@ describe('useShowPaywallModal', () => {
       expect.objectContaining({
         paywallName: 'TOGGLE',
         products: [{ id: 'prod_1' }],
+        remoteConfig: undefined,
         source: SOURCE.TALE_PREVIEW,
         tab: 'All tales',
+      }),
+    );
+  });
+
+  it('passes paywall remoteConfig to navigation params', async () => {
+    mockPaywallReadyState({
+      paywallRemoteConfig: {
+        show_bottom_skip_button: true,
+        title_text: 'Custom title',
+      },
+    });
+
+    const { result } = await renderHook(() => useShowPaywallModal());
+
+    await act(() => {
+      result.current.showPaywallModal({ source: SOURCE.TALE_PREVIEW, tab: 'All tales' });
+    });
+
+    expect(navigateMock).toHaveBeenCalledWith(
+      RootRoutes.PAYWALL_MODAL,
+      expect.objectContaining({
+        remoteConfig: {
+          show_bottom_skip_button: true,
+          title_text: 'Custom title',
+        },
       }),
     );
   });
@@ -184,6 +217,10 @@ describe('useShowPaywallModal', () => {
       isPaywallBootstrapSettled: true,
       isPaywallReady: true,
       paywallName: 'TOGGLE',
+      paywallRemoteConfig: {
+        show_bottom_skip_button: true,
+        title_text: 'Deferred title',
+      },
       products: [{ id: 'prod_1' }],
     });
 
@@ -194,6 +231,10 @@ describe('useShowPaywallModal', () => {
         RootRoutes.PAYWALL_MODAL,
         expect.objectContaining({
           paywallName: 'TOGGLE',
+          remoteConfig: {
+            show_bottom_skip_button: true,
+            title_text: 'Deferred title',
+          },
           source: SOURCE.TALE_PREVIEW,
         }),
       );

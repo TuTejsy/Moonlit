@@ -48,6 +48,41 @@ describe('usePaywallBootstrap', () => {
     expect(dispatchMock).toHaveBeenCalledWith(
       setPaywallData({
         paywallName: 'TOGGLE',
+        paywallRemoteConfig: null,
+        products: [{ vendorProductId: 'weekly' }] as never,
+      }),
+    );
+  });
+
+  it('forwards paywall remoteConfig data when present', async () => {
+    (adapty.getPaywall as jest.Mock).mockResolvedValue({
+      name: 'STATIC_DEFAULT_PROD',
+      remoteConfig: {
+        data: {
+          buy_button_text: 'Custom CTA',
+          show_bottom_skip_button: true,
+          subtitle_text: 'Custom subtitle',
+          title_text: 'Custom title',
+        },
+      },
+    });
+
+    await renderHook(() => usePaywallBootstrap());
+
+    await act(async () => {
+      await new Promise(setImmediate);
+      await new Promise(setImmediate);
+    });
+
+    expect(dispatchMock).toHaveBeenCalledWith(
+      setPaywallData({
+        paywallName: 'STATIC_DEFAULT_PROD',
+        paywallRemoteConfig: {
+          buy_button_text: 'Custom CTA',
+          show_bottom_skip_button: true,
+          subtitle_text: 'Custom subtitle',
+          title_text: 'Custom title',
+        },
         products: [{ vendorProductId: 'weekly' }] as never,
       }),
     );
@@ -67,6 +102,7 @@ describe('usePaywallBootstrap', () => {
     expect(dispatchMock).not.toHaveBeenCalledWith(
       setPaywallData({
         paywallName: 'TOGGLE',
+        paywallRemoteConfig: null,
         products: [{ vendorProductId: 'weekly' }] as never,
       }),
     );
@@ -86,6 +122,7 @@ describe('usePaywallBootstrap', () => {
     expect(dispatchMock).not.toHaveBeenCalledWith(
       setPaywallData({
         paywallName: 'TOGGLE',
+        paywallRemoteConfig: null,
         products: [],
       }),
     );

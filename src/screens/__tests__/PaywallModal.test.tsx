@@ -30,6 +30,53 @@ describe('PaywallModal', () => {
     expect(screen.toJSON()).toBeTruthy();
   });
 
+  it('renders top skip button by default', async () => {
+    await render(<PaywallModal />);
+
+    expect(screen.getByTestId('paywall-top-skip')).toBeOnTheScreen();
+    expect(screen.getByText('common.skip')).toBeOnTheScreen();
+  });
+
+  it('hides top skip when show_bottom_skip_button is true', async () => {
+    (useAppRoute as jest.Mock).mockReturnValue({
+      params: {
+        ...defaultRouteParams,
+        remoteConfig: { show_bottom_skip_button: true },
+      },
+    });
+
+    await render(<PaywallModal />);
+
+    expect(screen.queryByTestId('paywall-top-skip')).toBeNull();
+    expect(screen.getByText('common.skip')).toBeOnTheScreen();
+  });
+
+  it('calls handleSkipPress from footer skip when show_bottom_skip_button is true', async () => {
+    const { usePaywallActions } = jest.requireMock(
+      '@/screens/PaywallModal/hooks/usePaywallActions',
+    );
+    const mockHandleSkipPress = jest.fn();
+    usePaywallActions.mockReturnValue({
+      handleRestorePress: jest.fn(),
+      handleSkipPress: mockHandleSkipPress,
+      handleUnlockPress: jest.fn(),
+      isLoading: false,
+    });
+
+    (useAppRoute as jest.Mock).mockReturnValue({
+      params: {
+        ...defaultRouteParams,
+        remoteConfig: { show_bottom_skip_button: true },
+      },
+    });
+
+    await render(<PaywallModal />);
+
+    fireEvent.press(screen.getByText('common.skip'));
+
+    expect(mockHandleSkipPress).toHaveBeenCalledTimes(1);
+  });
+
   it('renders skip button text', async () => {
     await render(<PaywallModal />);
 
@@ -76,7 +123,7 @@ describe('PaywallModal', () => {
     );
   });
 
-  it('calls handleSkipPress when skip text is pressed', async () => {
+  it('calls handleSkipPress when top skip is pressed', async () => {
     const { usePaywallActions } = jest.requireMock(
       '@/screens/PaywallModal/hooks/usePaywallActions',
     );
@@ -90,9 +137,54 @@ describe('PaywallModal', () => {
 
     await render(<PaywallModal />);
 
-    fireEvent.press(screen.getByText('common.skip'));
+    fireEvent.press(screen.getByTestId('paywall-top-skip'));
 
     expect(mockHandleSkipPress).toHaveBeenCalled();
+  });
+
+  it('renders footer skip for SELECTION when show_bottom_skip_button is true', async () => {
+    (useAppRoute as jest.Mock).mockReturnValue({
+      params: {
+        ...defaultRouteParams,
+        paywallName: PAYWALL_NAMES.selection,
+        remoteConfig: { show_bottom_skip_button: true },
+      },
+    });
+
+    await render(<PaywallModal />);
+
+    expect(screen.queryByTestId('paywall-top-skip')).toBeNull();
+    expect(screen.getByText('common.skip')).toBeOnTheScreen();
+  });
+
+  it('renders footer skip for SCROLLABLE when show_bottom_skip_button is true', async () => {
+    (useAppRoute as jest.Mock).mockReturnValue({
+      params: {
+        ...defaultRouteParams,
+        paywallName: PAYWALL_NAMES.scrollable,
+        remoteConfig: { show_bottom_skip_button: true },
+      },
+    });
+
+    await render(<PaywallModal />);
+
+    expect(screen.queryByTestId('paywall-top-skip')).toBeNull();
+    expect(screen.getByText('common.skip')).toBeOnTheScreen();
+  });
+
+  it('renders StaticDefaultProd with footer skip when show_bottom_skip_button is true', async () => {
+    (useAppRoute as jest.Mock).mockReturnValue({
+      params: {
+        ...defaultRouteParams,
+        paywallName: PAYWALL_NAMES.staticDefaultProd,
+        remoteConfig: { show_bottom_skip_button: true },
+      },
+    });
+
+    await render(<PaywallModal />);
+
+    expect(screen.queryByTestId('paywall-top-skip')).toBeNull();
+    expect(screen.getByText('common.skip')).toBeOnTheScreen();
   });
 
   it('renders SwitcherPaywallContent when paywallName is TOGGLE', async () => {

@@ -43,6 +43,7 @@ export const usePaywallBootstrap = (): void => {
         dispatch(
           setPaywallData({
             paywallName: normalizeAdaptyPaywallName(paywall),
+            paywallRemoteConfig: paywall.remoteConfig?.data ?? null,
             products,
           }),
         );

@@ -1,7 +1,5 @@
 import { View, Image } from 'react-native';
 
-import { AdaptyPaywallProduct } from 'react-native-adapty';
-
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useLayout } from '@/hooks/theme/useLayout';
@@ -12,6 +10,7 @@ import { FooterActions } from '../../components/FooterActions/FooterActions';
 // eslint-disable-next-line import/no-unresolved
 import voicesImage from '../../images/voices/voices.png';
 import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.png';
+import type { PaywallVariantProps } from '../../paywallVariantRegistry.types';
 import { TrialSwitch } from '../components/TrialSwitch/TrialSwitch';
 
 import { WeeklyProductCard } from './components/WeeklyProductCard/WeeklyProductCard';
@@ -19,31 +18,20 @@ import { YearlyProductCard } from './components/YearlyProductCard/YearlyProductC
 import { useSelectionPaywallProducts } from './hooks/useSelectionPaywallProducts';
 import { makeStyles } from './SelectionPaywallContent.styles';
 
-interface SelectionPaywallContentProps {
-  isFreeTrialEnabled: boolean;
-  isTrialEligible: boolean;
-  onRestorePress: () => void;
-  onSelectProduct: (product: AdaptyPaywallProduct | undefined) => void;
-  onUnlockPress: () => void;
-  selectedProduct: AdaptyPaywallProduct | undefined;
-  trialProduct: AdaptyPaywallProduct | undefined;
-  unlockButtonText: string;
-  weeklyProduct: AdaptyPaywallProduct | undefined;
-  yearlyProduct: AdaptyPaywallProduct | undefined;
-}
-
 export const SelectionPaywallContent = ({
   isFreeTrialEnabled,
   isTrialEligible,
   onRestorePress,
   onSelectProduct,
+  onSkipPress,
   onUnlockPress,
+  remoteConfig,
   selectedProduct,
   trialProduct,
   unlockButtonText,
   weeklyProduct,
   yearlyProduct,
-}: SelectionPaywallContentProps) => {
+}: PaywallVariantProps) => {
   const styles = useMakeStyles(makeStyles);
   const { isLandscape, isSquareScreen } = useLayout();
   const { localize } = useAppLocalization();
@@ -128,7 +116,10 @@ export const SelectionPaywallContent = ({
             {unlockButtonText}
           </GradientButton>
 
-          <FooterActions onRestorePress={onRestorePress} />
+          <FooterActions
+            onRestorePress={onRestorePress}
+            onSkipPress={remoteConfig.showBottomSkipButton ? onSkipPress : undefined}
+          />
         </View>
       </View>
     </>

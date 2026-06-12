@@ -8,6 +8,11 @@ export const selectProducts = pipe(subscriptionSelector, (state) => state.produc
 
 export const selectPaywallName = pipe(subscriptionSelector, (state) => state.paywallName);
 
+export const selectPaywallRemoteConfig = pipe(
+  subscriptionSelector,
+  (state) => state.paywallRemoteConfig,
+);
+
 export const selectPaywallBootstrapStatus = pipe(
   subscriptionSelector,
   (state) => state.bootstrapStatus,

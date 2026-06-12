@@ -22,6 +22,7 @@ export interface RootStackParams extends Record<string, object | undefined> {
     source: SOURCE;
     contentName?: string;
     onClose?: () => void;
+    remoteConfig?: Record<string, unknown>;
     tab?: TabEventType;
   };
 
@@ -31,6 +32,7 @@ export interface RootStackParams extends Record<string, object | undefined> {
     source: SOURCE;
     contentName?: string;
     onClose?: () => void;
+    remoteConfig?: Record<string, unknown>;
     tab?: TabEventType;
   };
 
