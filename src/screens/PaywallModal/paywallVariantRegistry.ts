@@ -23,9 +23,9 @@ const PAYWALL_VARIANT_BY_NAME: Record<PaywallVariantName, PaywallVariantComponen
   [PAYWALL_NAMES.scrollable]: ScrollablePaywallContent,
 };
 
-function isPaywallVariantName(paywallName: string): paywallName is PaywallVariantName {
-  return paywallName in PAYWALL_VARIANT_BY_NAME;
-}
+const PAYWALL_VARIANT_NAMES = Object.values(PAYWALL_NAMES).sort(
+  (left, right) => right.length - left.length,
+);
 
 function normalizePaywallName(paywallName: string | null | undefined): string | null {
   if (paywallName === null || paywallName === undefined) {
@@ -35,26 +35,41 @@ function normalizePaywallName(paywallName: string | null | undefined): string | 
   return paywallName.trim().toUpperCase();
 }
 
+export function resolvePaywallVariantName(
+  paywallName: string | null | undefined,
+): PaywallVariantName | null {
+  const normalizedPaywallName = normalizePaywallName(paywallName);
+
+  if (normalizedPaywallName === null) {
+    return null;
+  }
+
+  return (
+    PAYWALL_VARIANT_NAMES.find((variantName) => normalizedPaywallName.startsWith(variantName)) ??
+    null
+  );
+}
+
 export function resolvePaywallVariant(
   paywallName: string | null | undefined,
 ): PaywallVariantComponent {
-  const normalizedPaywallName = normalizePaywallName(paywallName);
+  const variantName = resolvePaywallVariantName(paywallName);
 
-  if (normalizedPaywallName !== null && isPaywallVariantName(normalizedPaywallName)) {
-    return PAYWALL_VARIANT_BY_NAME[normalizedPaywallName];
+  if (variantName !== null) {
+    return PAYWALL_VARIANT_BY_NAME[variantName];
   }
 
   return SwitcherPaywallContent;
 }
 
 export function resolvePaywallAnalyticsType(paywallName: string | null | undefined): PAYWALL_TYPE {
-  const normalizedPaywallName = normalizePaywallName(paywallName);
+  const variantName = resolvePaywallVariantName(paywallName);
 
-  if (normalizedPaywallName === PAYWALL_NAMES.selection) {
+  if (variantName === PAYWALL_NAMES.selection) {
     return PAYWALL_TYPE.WITH_SELECTION;
   }
 
-  if (normalizedPaywallName === PAYWALL_NAMES.scrollable) {
+  if (variantName === PAYWALL_NAMES.scrollable) {
     return PAYWALL_TYPE.WITH_SCROLLABLE;
   }
 

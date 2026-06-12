@@ -16,8 +16,9 @@ import { usePaywallProducts } from './hooks/usePaywallProducts';
 import { makeStyles } from './PaywallModal.styles';
 import {
   PAYWALL_NAMES,
-  resolvePaywallVariant,
   resolvePaywallAnalyticsType,
+  resolvePaywallVariant,
+  resolvePaywallVariantName,
 } from './paywallVariantRegistry';
 
 export const PaywallModal = () => {
@@ -28,11 +29,16 @@ export const PaywallModal = () => {
 
   const { contentName, onClose, paywallName, products, source, tab } = params;
 
+  const resolvedPaywallVariantName = useMemo(
+    () => resolvePaywallVariantName(paywallName),
+    [paywallName],
+  );
+
   const stylesContext = useMemo(
     () => ({
-      isScrollable: paywallName === PAYWALL_NAMES.scrollable,
+      isScrollable: resolvedPaywallVariantName === PAYWALL_NAMES.scrollable,
     }),
-    [paywallName],
+    [resolvedPaywallVariantName],
   );
   const styles = useMakeStyles(makeStyles, stylesContext);
 
@@ -104,7 +110,7 @@ export const PaywallModal = () => {
   return (
     <View style={styles.screen}>
       <View style={styles.content}>
-        <PaywallBackground isScrollable={paywallName === PAYWALL_NAMES.scrollable} />
+        <PaywallBackground isScrollable={resolvedPaywallVariantName === PAYWALL_NAMES.scrollable} />
 
         {renderPaywallContent()}
 

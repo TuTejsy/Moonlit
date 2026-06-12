@@ -19,7 +19,7 @@ Implement or extend the custom paywall system. Screens must not call `adapty.*` 
 ## Inputs
 
 - **mode**: `A` (call site) | `B` (new content variant) | `C` (presentation)
-- **paywallName** — one of `TOGGLE`, `SELECTION`, `SCROLLABLE` (configured in Adapty dashboard)
+- **paywallName** — Adapty dashboard name; must **start with** a base `PAYWALL_NAMES` value (`TOGGLE`, `SELECTION`, `SCROLLABLE`). Postfix A/B names OK (e.g. `SELECTION_TRIAL`, `SELECTION_WEEK_9_99`).
 - **callSite** — where to invoke `useShowPaywallModal`
 
 ## Mode A — New call site
@@ -36,8 +36,8 @@ Implement or extend the custom paywall system. Screens must not call `adapty.*` 
 
 1. Create `src/screens/PaywallModal/contentVariants/{VariantName}PaywallContent/`.
 2. Add variant-specific hooks, components, styles under the variant folder.
-3. Register in `paywallVariantRegistry.ts` with a new `PAYWALL_NAMES` entry.
-4. Configure matching paywall name in Adapty dashboard for `LOCKED_CONTENT` placement.
+3. Register in `paywallVariantRegistry.ts` with a new base `PAYWALL_NAMES` entry (resolved via `resolvePaywallVariantName` prefix match).
+4. Configure Adapty paywall name for `LOCKED_CONTENT` placement — base name or postfix variation (e.g. `NEWVARIANT_TRIAL`).
 5. Localization: `src/localization/locals/paywall.ts`.
 6. Shared hooks stay in `PaywallModal/hooks/` when used by multiple variants.
 7. Price copy: import from `utils/paywallProduct.utils.ts` — see skill § Product resolution and pricing; add unit tests under `utils/__tests__/`.

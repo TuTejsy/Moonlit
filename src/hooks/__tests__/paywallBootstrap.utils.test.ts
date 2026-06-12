@@ -18,6 +18,7 @@ describe('paywallBootstrap.utils', () => {
     expect(isKnownPaywallVariantName(PAYWALL_NAMES.toggle)).toBe(true);
     expect(isKnownPaywallVariantName(PAYWALL_NAMES.selection)).toBe(true);
     expect(isKnownPaywallVariantName(PAYWALL_NAMES.scrollable)).toBe(true);
+    expect(isKnownPaywallVariantName('SELECTION_TRIAL')).toBe(true);
     expect(isKnownPaywallVariantName('UNKNOWN')).toBe(false);
   });
 });

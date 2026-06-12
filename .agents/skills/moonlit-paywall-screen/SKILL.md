@@ -49,15 +49,21 @@ Single Adapty placement in `src/constants/common.ts`:
 | :---------------------------- | :--------------- |
 | `LOCKED_CONTENT_PLACEMENT_ID` | `LOCKED_CONTENT` |
 
-UI variant is resolved from Adapty `paywall.name` via `paywallVariantRegistry.ts`:
+Bootstrap stores the **full** Adapty `paywall.name` in Redux (e.g. `SELECTION_TRIAL`). UI variant is resolved at lookup time in `paywallVariantRegistry.ts` via **`resolvePaywallVariantName`** — prefix match against base `PAYWALL_NAMES` after `trim().toUpperCase()` (longest base name first). Postfix A/B names share one content variant:
 
-| Adapty paywall name | Component                  |
-| :------------------ | :------------------------- |
-| `TOGGLE`            | `SwitcherPaywallContent`   |
-| `SELECTION`         | `SelectionPaywallContent`  |
-| `SCROLLABLE`        | `ScrollablePaywallContent` |
+| Base name (`PAYWALL_NAMES`) | Example Adapty names               | Component                  |
+| :-------------------------- | :--------------------------------- | :------------------------- |
+| `TOGGLE`                    | `TOGGLE`, `TOGGLE_TRIAL`           | `SwitcherPaywallContent`   |
+| `SELECTION`                 | `SELECTION`, `SELECTION_WEEK_9_99` | `SelectionPaywallContent`  |
+| `SCROLLABLE`                | `SCROLLABLE`, `SCROLLABLE_EXTRA`   | `ScrollablePaywallContent` |
 
-Unknown names fall back to `SwitcherPaywallContent`. Configure A/B variants in the Adapty dashboard by paywall name — not via remote config placement.
+| Export                        | Use                                                                                   |
+| :---------------------------- | :------------------------------------------------------------------------------------ |
+| `resolvePaywallVariantName`   | Base variant for scrollable layout, toggle default-trial, `isKnownPaywallVariantName` |
+| `resolvePaywallVariant`       | Shell content component                                                               |
+| `resolvePaywallAnalyticsType` | `PAYWALL_TYPE` for analytics                                                          |
+
+Unknown names fall back to `SwitcherPaywallContent` / `WITH_SWITCHER`. Do not compare raw `paywallName` to `PAYWALL_NAMES.*` — use `resolvePaywallVariantName`. Configure A/B postfix names in the Adapty dashboard — not via remote config placement.
 
 `remoteConfigService.fetchAndActivate()` runs once at launch via `useRemoteConfigInit` in `AppLogicProvider`. Paywall copy (`toggle_state`, buy button texts) and analytics `segment` read from the activated config in `usePaywallProducts` and `analytics.ts`.
 
@@ -65,15 +71,15 @@ Unknown names fall back to `SwitcherPaywallContent`. Configure A/B variants in t
 
 Everything lives under `src/screens/PaywallModal/`.
 
-| Location                                                         | Belongs here                                               |
-| :--------------------------------------------------------------- | :--------------------------------------------------------- |
-| `PaywallModal.tsx`, `PaywallModal.styles.ts`                     | Shell: variant registry, shared hooks, loading state       |
-| `paywallVariantRegistry.ts`                                      | Maps `paywall.name` → variant component + analytics type   |
-| `hooks/usePaywallProducts.ts`, `hooks/usePaywallActions.ts`      | Shared product selection and purchase/restore/skip actions |
-| `utils/paywallProduct.utils.ts`                                  | Product resolution + StoreKit-safe price/period formatting |
-| `components/PaywallBackground/`                                  | Shared background asset                                    |
-| `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/` | Variant-specific UI, styles, product hooks                 |
-| `contentVariants/components/TrialSwitch/`                        | Shared trial toggle across variants                        |
+| Location                                                         | Belongs here                                                        |
+| :--------------------------------------------------------------- | :------------------------------------------------------------------ |
+| `PaywallModal.tsx`, `PaywallModal.styles.ts`                     | Shell: variant registry, shared hooks, loading state                |
+| `paywallVariantRegistry.ts`                                      | Prefix-resolves `paywall.name` → variant component + analytics type |
+| `hooks/usePaywallProducts.ts`, `hooks/usePaywallActions.ts`      | Shared product selection and purchase/restore/skip actions          |
+| `utils/paywallProduct.utils.ts`                                  | Product resolution + StoreKit-safe price/period formatting          |
+| `components/PaywallBackground/`                                  | Shared background asset                                             |
+| `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/` | Variant-specific UI, styles, product hooks                          |
+| `contentVariants/components/TrialSwitch/`                        | Shared trial toggle across variants                                 |
 
 Bootstrap hooks live outside the screen folder:
 

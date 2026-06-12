@@ -15,7 +15,7 @@ is_background: false
 
 Implement or refine production React Native UI for a screen. Specs from `Moonlit design tokens and existing screens`, existing screens, and project rules — not external prototype bundles.
 
-**Paywall screens:** Read [`.agents/skills/moonlit-paywall-screen/SKILL.md`](../../.agents/skills/moonlit-paywall-screen/SKILL.md) first; implement under `contentVariants/{Name}PaywallContent/`, not screen-level `components/`. Analytics for paywall viewed runs in `PaywallModal.tsx` via `AnalyticsService.logPaywallViewedEvent` — do not duplicate in variant hooks.
+**Paywall screens:** Read [`.agents/skills/moonlit-paywall-screen/SKILL.md`](../../.agents/skills/moonlit-paywall-screen/SKILL.md) first; implement under `contentVariants/{Name}PaywallContent/`, not screen-level `components/`. Variant-specific shell logic (scrollable layout, toggle defaults) must use `resolvePaywallVariantName(paywallName)`, not raw `paywallName === PAYWALL_NAMES.*`. Analytics for paywall viewed runs in `PaywallModal.tsx` via `AnalyticsService.logPaywallViewedEvent` — do not duplicate in variant hooks.
 
 **Story player gestures:** Read [`.agents/skills/moonlit-story-player/SKILL.md`](../../.agents/skills/moonlit-story-player/SKILL.md) § Gestures — use RNGH 3 hooks (`usePanGesture`, `useTapGesture`, `useCompetingGestures`), not `Gesture.Pan()` builder; keep handlers in dedicated hooks with `scheduleOnRN` for JS callbacks.
 

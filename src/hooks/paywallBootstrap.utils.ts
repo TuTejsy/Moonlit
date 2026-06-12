@@ -1,8 +1,8 @@
 import type { AdaptyPaywall } from 'react-native-adapty';
 
 import {
-  PAYWALL_NAMES,
   type PaywallVariantName,
+  resolvePaywallVariantName,
 } from '@/screens/PaywallModal/paywallVariantRegistry';
 
 export const LOCKED_CONTENT_PAYWALL_FETCH_PARAMS = {
@@ -14,9 +14,5 @@ export function normalizeAdaptyPaywallName(paywall: AdaptyPaywall): PaywallVaria
 }
 
 export function isKnownPaywallVariantName(paywallName: string): paywallName is PaywallVariantName {
-  return (
-    paywallName === PAYWALL_NAMES.toggle ||
-    paywallName === PAYWALL_NAMES.selection ||
-    paywallName === PAYWALL_NAMES.scrollable
-  );
+  return resolvePaywallVariantName(paywallName) !== null;
 }
