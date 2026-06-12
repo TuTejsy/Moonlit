@@ -2,6 +2,7 @@ import { PAYWALL_TYPE } from '@/services/analytics/analytics.constants';
 
 import { ScrollablePaywallContent } from '../contentVariants/ScrollablePaywallContent/ScrollablePaywallContent';
 import { SelectionPaywallContent } from '../contentVariants/SelectionPaywallContent/SelectionPaywallContent';
+import { StaticDefaultProdPaywallContent } from '../contentVariants/StaticDefaultProdPaywallContent/StaticDefaultProdPaywallContent';
 import { SwitcherPaywallContent } from '../contentVariants/SwitcherPaywallContent/SwitcherPaywallContent';
 import {
   PAYWALL_NAMES,
@@ -23,6 +24,12 @@ describe('paywallVariantRegistry', () => {
     expect(resolvePaywallVariant(PAYWALL_NAMES.scrollable)).toBe(ScrollablePaywallContent);
   });
 
+  it('resolves STATIC_DEFAULT_PROD to StaticDefaultProdPaywallContent', () => {
+    expect(resolvePaywallVariant(PAYWALL_NAMES.staticDefaultProd)).toBe(
+      StaticDefaultProdPaywallContent,
+    );
+  });
+
   it('falls back to SwitcherPaywallContent for unknown names', () => {
     expect(resolvePaywallVariant('UNKNOWN')).toBe(SwitcherPaywallContent);
     expect(resolvePaywallVariant(null)).toBe(SwitcherPaywallContent);
@@ -41,6 +48,10 @@ describe('paywallVariantRegistry', () => {
     expect(resolvePaywallVariant('SELECTION_WEEK_9_99')).toBe(SelectionPaywallContent);
     expect(resolvePaywallVariant('SCROLLABLE_EXTRA')).toBe(ScrollablePaywallContent);
     expect(resolvePaywallVariant('TOGGLE_TRIAL')).toBe(SwitcherPaywallContent);
+    expect(resolvePaywallVariant('STATIC_DEFAULT_PROD_A')).toBe(StaticDefaultProdPaywallContent);
+    expect(resolvePaywallVariant('STATIC_DEFAULT_PROD_WEEK_9_99')).toBe(
+      StaticDefaultProdPaywallContent,
+    );
   });
 
   it('resolves analytics type for postfix paywall names', () => {
@@ -48,6 +59,9 @@ describe('paywallVariantRegistry', () => {
     expect(resolvePaywallAnalyticsType('SELECTION_WEEK_9_99')).toBe(PAYWALL_TYPE.WITH_SELECTION);
     expect(resolvePaywallAnalyticsType('SCROLLABLE_EXTRA')).toBe(PAYWALL_TYPE.WITH_SCROLLABLE);
     expect(resolvePaywallAnalyticsType('TOGGLE_TRIAL')).toBe(PAYWALL_TYPE.WITH_SWITCHER);
+    expect(resolvePaywallAnalyticsType('STATIC_DEFAULT_PROD_A')).toBe(
+      PAYWALL_TYPE.WITH_STATIC_DEFAULT_PROD,
+    );
   });
 
   it('resolves analytics type from paywall name', () => {
@@ -55,6 +69,9 @@ describe('paywallVariantRegistry', () => {
     expect(resolvePaywallAnalyticsType(PAYWALL_NAMES.selection)).toBe(PAYWALL_TYPE.WITH_SELECTION);
     expect(resolvePaywallAnalyticsType(PAYWALL_NAMES.scrollable)).toBe(
       PAYWALL_TYPE.WITH_SCROLLABLE,
+    );
+    expect(resolvePaywallAnalyticsType(PAYWALL_NAMES.staticDefaultProd)).toBe(
+      PAYWALL_TYPE.WITH_STATIC_DEFAULT_PROD,
     );
     expect(resolvePaywallAnalyticsType('UNKNOWN')).toBe(PAYWALL_TYPE.WITH_SWITCHER);
   });

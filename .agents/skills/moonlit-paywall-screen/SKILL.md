@@ -39,6 +39,7 @@ flowchart TD
   Registry --> Scrollable[ScrollablePaywallContent]
   Registry --> Selection[SelectionPaywallContent]
   Registry --> Switcher[SwitcherPaywallContent]
+  Registry --> StaticProd[StaticDefaultProdPaywallContent]
 ```
 
 ## Placement and variant names
@@ -51,11 +52,12 @@ Single Adapty placement in `src/constants/common.ts`:
 
 Bootstrap stores the **full** Adapty `paywall.name` in Redux (e.g. `SELECTION_TRIAL`). UI variant is resolved at lookup time in `paywallVariantRegistry.ts` via **`resolvePaywallVariantName`** — prefix match against base `PAYWALL_NAMES` after `trim().toUpperCase()` (longest base name first). Postfix A/B names share one content variant:
 
-| Base name (`PAYWALL_NAMES`) | Example Adapty names               | Component                  |
-| :-------------------------- | :--------------------------------- | :------------------------- |
-| `TOGGLE`                    | `TOGGLE`, `TOGGLE_TRIAL`           | `SwitcherPaywallContent`   |
-| `SELECTION`                 | `SELECTION`, `SELECTION_WEEK_9_99` | `SelectionPaywallContent`  |
-| `SCROLLABLE`                | `SCROLLABLE`, `SCROLLABLE_EXTRA`   | `ScrollablePaywallContent` |
+| Base name (`PAYWALL_NAMES`) | Example Adapty names               | Component                         |
+| :-------------------------- | :--------------------------------- | :-------------------------------- |
+| `TOGGLE`                    | `TOGGLE`, `TOGGLE_TRIAL`           | `SwitcherPaywallContent`          |
+| `SELECTION`                 | `SELECTION`, `SELECTION_WEEK_9_99` | `SelectionPaywallContent`         |
+| `SCROLLABLE`                | `SCROLLABLE`, `SCROLLABLE_EXTRA`   | `ScrollablePaywallContent`        |
+| `STATIC_DEFAULT_PROD`       | `STATIC_DEFAULT_PROD`              | `StaticDefaultProdPaywallContent` |
 
 | Export                        | Use                                                                                   |
 | :---------------------------- | :------------------------------------------------------------------------------------ |
@@ -79,6 +81,7 @@ Everything lives under `src/screens/PaywallModal/`.
 | `utils/paywallProduct.utils.ts`                                  | Product resolution + StoreKit-safe price/period formatting          |
 | `components/PaywallBackground/`                                  | Shared background asset                                             |
 | `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/` | Variant-specific UI, styles, product hooks                          |
+| `contentVariants/StaticDefaultProdPaywallContent/`               | Static prod variant — see § STATIC_DEFAULT_PROD below               |
 | `contentVariants/components/TrialSwitch/`                        | Shared trial toggle across variants                                 |
 
 Bootstrap hooks live outside the screen folder:
@@ -121,6 +124,32 @@ Adapty products from App Store / TestFlight must not be classified by raw `price
 ## Localization
 
 Paywall strings in `src/localization/locals/paywall.ts`.
+
+## STATIC_DEFAULT_PROD variant
+
+Root: `contentVariants/StaticDefaultProdPaywallContent/`
+
+| File / folder                                  | Role                                                                                                                                   |
+| :--------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
+| `StaticDefaultProdPaywallContent.tsx`          | Root component — renders hero image, `ProdTrialCard`, two `ProdPlanRow`s, `ProdCtaButton`, `FooterActions`                             |
+| `hooks/useStaticDefaultProdPaywallProducts.ts` | Derives `weeklyIsSelected`, `yearlyIsSelected`, per-week price (`yearlyPrice / 52`), `ctaLabel`, `dueTodayText` from resolved products |
+| `components/ProdTrialCard/`                    | Collapsible trial toggle card; expand/collapse driven by `useProdTrialCardAnimation`                                                   |
+| `components/ProdPlanRow/`                      | Selectable plan row with `LinearGradient` border and optional badge label                                                              |
+| `components/ProdCtaButton/`                    | Primary CTA with sun-bleed sweep + chevron shake; driven by `useProdCtaAnimation`                                                      |
+
+**Selection logic** — `weeklyIsSelected` is true when `selectedProduct === trialProduct` (if `isFreeTrialEnabled`) or `=== weeklyProduct`; `yearlyIsSelected` when `=== yearlyProduct`. Tapping "weekly" row selects `trialProduct` when trial is enabled, else `weeklyProduct`.
+
+**Animation constants:**
+
+| Hook                        | Effect                                                                          | Duration / timing                                                                                                                 |
+| :-------------------------- | :------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------- |
+| `useProdTrialCardAnimation` | Expand/collapse + `interpolateColor` (surface, border, indicator)               | 240 ms, cubic-bezier(0.65, 0, 0.35, 1); respects `ReduceMotion.System`                                                            |
+| `useProdCtaAnimation`       | Sun-bleed sweep across button width (`BLEED_WIDTH_RATIO = 0.19`, `-30deg` tilt) | 2 000 ms sweep, 3 000 ms pause, eased bezier(0.22, 1, 0.36, 1)                                                                    |
+| `useProdCtaAnimation`       | Chevron horizontal shake (±2 px, 6-keyframe interpolation)                      | 2 000 ms, 200 ms post-pause; `AccessibilityInfo.isReduceMotionEnabled()` + `reduceMotionChanged` listener cancels both animations |
+
+**Analytics**: registered as `PAYWALL_TYPE.WITH_STATIC_DEFAULT_PROD` in `analytics.constants.ts`.
+
+**Localization keys** (all in `paywall.ts` `staticDefaultProd*` namespace): `staticDefaultProdCtaLabel`, `staticDefaultProdDueTodayTemplate`, `staticDefaultProdPlanYearlyDetail`, `staticDefaultProdPlanWeeklyDetail`, `staticDefaultProdPerWeek`, `staticDefaultProdMostPopular`, `staticDefaultProdBestValue`, plus shared `YEARLY` / `WEEKLY` keys.
 
 ## Tests
 

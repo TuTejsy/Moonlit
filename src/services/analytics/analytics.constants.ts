@@ -18,5 +18,6 @@ export enum SOURCE {
 export enum PAYWALL_TYPE {
   WITH_SCROLLABLE = 'with_scrollable',
   WITH_SELECTION = 'with_selection',
+  WITH_STATIC_DEFAULT_PROD = 'with_static_default_prod',
   WITH_SWITCHER = 'with_switcher',
 }
