@@ -1,4 +1,11 @@
-import remoteConfig from '@react-native-firebase/remote-config';
+import {
+  ensureInitialized,
+  fetchAndActivate,
+  getBoolean,
+  getRemoteConfig,
+  getString,
+  onConfigUpdate,
+} from '@react-native-firebase/remote-config';
 
 import { remoteConfigService } from '../remoteConfig/remoteConfig';
 import {
@@ -8,51 +15,60 @@ import {
 
 jest.unmock('@/services/remoteConfig/remoteConfig');
 
-jest.mock('@react-native-firebase/remote-config', () => {
-  const mockGetValue = jest.fn().mockReturnValue({
-    asBoolean: jest.fn().mockReturnValue(false),
-    asString: jest.fn().mockReturnValue(''),
-  });
+type MockRemoteConfig = {
+  defaultConfig: Record<string, string | number | boolean>;
+  setConfigSettings: jest.Mock;
+  setDefaults: jest.Mock;
+};
 
+jest.mock('@react-native-firebase/remote-config', () => {
   const mockConfig = {
-    activate: jest.fn().mockResolvedValue(true),
-    fetchAndActivate: jest.fn().mockResolvedValue(true),
-    getValue: mockGetValue,
-    onConfigUpdated: jest.fn().mockReturnValue(jest.fn()),
-    setDefaults: jest.fn(),
+    defaultConfig: {},
+    setConfigSettings: jest.fn().mockResolvedValue(undefined),
+    setDefaults: jest.fn().mockResolvedValue(null),
   };
 
   return {
-    __esModule: true,
-    default: jest.fn(() => mockConfig),
+    activate: jest.fn().mockResolvedValue(true),
+    ensureInitialized: jest.fn().mockResolvedValue(undefined),
+    fetchAndActivate: jest.fn().mockResolvedValue(true),
+    getBoolean: jest.fn().mockReturnValue(false),
+    getRemoteConfig: jest.fn(() => mockConfig),
+    getString: jest.fn().mockReturnValue(''),
+    onConfigUpdate: jest.fn().mockReturnValue(jest.fn()),
   };
 });
 
 describe('RemoteConfigService', () => {
-  const mockConfigInstance = remoteConfig();
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('sets defaults on construction', () => {
-    // setDefaults is called in the constructor at module load time,
-    // so we verify getValue is accessible (constructor ran without error)
-    expect(mockConfigInstance.getValue).toBeDefined();
-    expect(mockConfigInstance.setDefaults).toBeDefined();
+    const mockConfigInstance = getRemoteConfig();
+
+    expect(mockConfigInstance.defaultConfig).toEqual(remoteConfigDefaultValues);
   });
 
-  it('fetchAndActivate delegates to the firebase config', async () => {
+  it('waits for native settings, defaults, and ensureInitialized before fetch', async () => {
     await remoteConfigService.fetchAndActivate();
 
-    expect(mockConfigInstance.fetchAndActivate).toHaveBeenCalled();
+    const mockConfigInstance = getRemoteConfig() as unknown as MockRemoteConfig;
+
+    expect(mockConfigInstance.setConfigSettings).toHaveBeenCalledWith({
+      fetchTimeoutMillis: 180_000,
+      minimumFetchIntervalMillis: 0,
+    });
+    expect(mockConfigInstance.setDefaults).toHaveBeenCalledWith(remoteConfigDefaultValues);
+    expect(ensureInitialized).toHaveBeenCalledWith(mockConfigInstance);
+    expect(fetchAndActivate).toHaveBeenCalledWith(mockConfigInstance);
   });
 
   describe('enableLiveUpdate', () => {
     it('subscribes to config updates', () => {
       remoteConfigService.enableLiveUpdate();
 
-      expect(mockConfigInstance.onConfigUpdated).toHaveBeenCalled();
+      expect(onConfigUpdate).toHaveBeenCalled();
     });
 
     it('sets isLiveUpdateEnabled to true after enabling', () => {
@@ -65,7 +81,7 @@ describe('RemoteConfigService', () => {
   describe('disableLiveUpdate', () => {
     it('calls the unsubscriber when disabling live update', () => {
       const unsubscriber = jest.fn();
-      (mockConfigInstance.onConfigUpdated as jest.Mock).mockReturnValue(unsubscriber);
+      (onConfigUpdate as jest.Mock).mockReturnValue(unsubscriber);
 
       remoteConfigService.enableLiveUpdate();
       remoteConfigService.disableLiveUpdate();
@@ -78,12 +94,17 @@ describe('RemoteConfigService', () => {
     it('returns toggleState from remote config or default', () => {
       const result = remoteConfigService.toggleState;
 
+      expect(getBoolean).toHaveBeenCalledWith(getRemoteConfig(), REMOTE_CONFIG_FIELDS.TOGGLE_STATE);
       expect(result).toBe(remoteConfigDefaultValues[REMOTE_CONFIG_FIELDS.TOGGLE_STATE]);
     });
 
     it('returns buyButtonTextTrial from remote config or default', () => {
       const result = remoteConfigService.buyButtonTextTrial;
 
+      expect(getString).toHaveBeenCalledWith(
+        getRemoteConfig(),
+        REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_TRIAL,
+      );
       expect(result).toBe(remoteConfigDefaultValues[REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_TRIAL]);
     });
 

@@ -1,11 +1,11 @@
 buildscript {
     ext {
-        buildToolsVersion = "36.0.0"
+        buildToolsVersion = "37.0.0"
         minSdkVersion = 24
-        compileSdkVersion = 36
+        compileSdkVersion = 37
         targetSdkVersion = 36
         ndkVersion = "27.1.12297006"
-        kotlinVersion = "2.1.20"
+        kotlinVersion = "2.2.0"
     }
     repositories {
         google()
@@ -23,10 +23,25 @@ buildscript {
                 android {
                     compileSdkVersion rootProject.ext.compileSdkVersion
                     buildToolsVersion rootProject.ext.buildToolsVersion
+                    ndkVersion rootProject.ext.ndkVersion
+                    // AGP 9 dropped the global buildconfig gradle.properties flag.
+                    buildFeatures {
+                        buildConfig true
+                    }
                 }
             }
         }
+    }
 }
+
+subprojects { subproject ->
+    def configureAndroidModule = {
+        subproject.android.ndkVersion = rootProject.ext.ndkVersion
+        // AGP 9 dropped android.defaults.buildfeatures.buildconfig; enable on every module.
+        subproject.android.buildFeatures.buildConfig = true
+    }
+    subproject.pluginManager.withPlugin('com.android.library', configureAndroidModule)
+    subproject.pluginManager.withPlugin('com.android.application', configureAndroidModule)
 }
 
 apply plugin: "com.facebook.react.rootproject"

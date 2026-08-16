@@ -1,6 +1,7 @@
 import {
   isKnownPaywallVariantName,
   normalizeAdaptyPaywallName,
+  pickFlowRemoteConfigData,
 } from '@/hooks/paywallBootstrap.utils';
 import { PAYWALL_NAMES } from '@/screens/PaywallModal/paywallVariantRegistry';
 
@@ -12,6 +13,30 @@ describe('paywallBootstrap.utils', () => {
     expect(normalizeAdaptyPaywallName({ name: '  scrollable  ' } as never)).toBe(
       PAYWALL_NAMES.scrollable,
     );
+  });
+
+  it('picks the English remote config data when multiple locales exist', () => {
+    expect(
+      pickFlowRemoteConfigData({
+        remoteConfigs: [
+          { data: { title_text: 'Titre' }, lang: 'fr' },
+          { data: { title_text: 'Title' }, lang: 'en' },
+        ],
+      } as never),
+    ).toEqual({ title_text: 'Title' });
+  });
+
+  it('falls back to the first remote config when English is missing', () => {
+    expect(
+      pickFlowRemoteConfigData({
+        remoteConfigs: [{ data: { title_text: 'Titre' }, lang: 'fr' }],
+      } as never),
+    ).toEqual({ title_text: 'Titre' });
+  });
+
+  it('returns null when remote configs are missing', () => {
+    expect(pickFlowRemoteConfigData({ name: 'TOGGLE' } as never)).toBeNull();
+    expect(pickFlowRemoteConfigData({ remoteConfigs: [] } as never)).toBeNull();
   });
 
   it('identifies known paywall variant names', () => {

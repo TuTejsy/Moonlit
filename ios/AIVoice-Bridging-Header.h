@@ -8,9 +8,6 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTViewManager.h>
 #import <React/RCTEventEmitter.h>
-#import <React/RCTBaseTextInputView.h>
-#import <React/RCTBackedTextInputViewProtocol.h>
-#import <React/RCTBackedTextInputDelegate.h>
 
 #import "ZRKKeepAwake.h"
 #import "NSString+Helper.h"

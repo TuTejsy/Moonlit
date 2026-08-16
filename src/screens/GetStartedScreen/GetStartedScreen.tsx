@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, type ImageStyle } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Animated from 'react-native-reanimated';
@@ -57,7 +57,12 @@ export const GetStartedScreen = () => {
               <Image
                 resizeMode='contain'
                 source={image}
-                style={[styles.image, styles[`image${step + 1}` as 'image1' | 'image2' | 'image3']]}
+                style={
+                  [
+                    styles.image,
+                    styles[`image${step + 1}` as 'image1' | 'image2' | 'image3'],
+                  ] as ImageStyle[]
+                }
               />
             </View>
           ))}

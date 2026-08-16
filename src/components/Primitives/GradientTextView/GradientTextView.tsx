@@ -1,6 +1,7 @@
+import React, { ComponentType, ReactElement, ReactNode } from 'react';
 import { TextStyle } from 'react-native';
 
-import MaskedView from '@react-native-masked-view/masked-view';
+import MaskedViewBase from '@react-native-masked-view/masked-view';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
 
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -9,9 +10,15 @@ import { TextView, TextViewProps } from '../TextView/TextView';
 
 import { makeStyles } from './GradientTextView.styles';
 
-interface GradientTextViewProps extends TextViewProps, LinearGradientProps {
-  style?: TextStyle;
-}
+const MaskedView = MaskedViewBase as unknown as ComponentType<{
+  maskElement: ReactElement;
+  children?: ReactNode;
+}>;
+
+type GradientTextViewProps = TextViewProps &
+  Pick<LinearGradientProps, 'angle' | 'colors' | 'end' | 'locations' | 'start' | 'useAngle'> & {
+    style?: TextStyle;
+  };
 
 export const GradientTextView = ({
   angle,

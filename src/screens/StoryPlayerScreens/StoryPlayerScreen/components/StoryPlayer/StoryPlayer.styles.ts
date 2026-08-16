@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { IS_ANDROID } from '@/constants/common';
 import { DEFAULT_HEADER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+import { flattenStyle } from '@/utils/styles/flattenStyle';
 
 export const makeStyles = ({
   colors,
@@ -17,7 +18,7 @@ export const makeStyles = ({
       height: windowHeight + insets.top,
       width: windowWidth + insets.bottom,
     },
-    blurViewContainer: StyleSheet.flatten([
+    blurViewContainer: flattenStyle([
       {
         height: windowHeight,
         left: 0,
@@ -25,9 +26,11 @@ export const makeStyles = ({
         top: -insets.top,
         width: windowWidth,
       },
-      IS_ANDROID && {
-        backgroundColor: colors.opacityBlack(0.7),
-      },
+      IS_ANDROID
+        ? {
+            backgroundColor: colors.opacityBlack(0.7),
+          }
+        : undefined,
     ]),
     playerActionsContainer: {
       alignItems: 'center',

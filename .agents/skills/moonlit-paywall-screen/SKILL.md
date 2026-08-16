@@ -27,7 +27,7 @@ flowchart TD
   AppLaunch[App launch] --> RemoteInit[useRemoteConfigInit]
   AppLaunch --> AdaptyInit[useAdaptyInit]
   AdaptyInit --> Bootstrap[usePaywallBootstrap]
-  Bootstrap --> AdaptyFetch["adapty.getPaywall('LOCKED_CONTENT')"]
+  Bootstrap --> AdaptyFetch["adapty.getFlow('LOCKED_CONTENT')"]
   AdaptyFetch --> Redux[Redux products + paywallName + bootstrapStatus]
   Splash[SplashViewModal] -->|waits selectIsPaywallBootstrapSettled| Gate[subscription check / dismiss]
   Feature[Feature screen] --> ShowModal[useShowPaywallModal]
@@ -50,7 +50,7 @@ Single Adapty placement in `src/constants/common.ts`:
 | :---------------------------- | :--------------- |
 | `LOCKED_CONTENT_PLACEMENT_ID` | `LOCKED_CONTENT` |
 
-Bootstrap stores the **full** Adapty `paywall.name` in Redux (e.g. `SELECTION_TRIAL`). UI variant is resolved at lookup time in `paywallVariantRegistry.ts` via **`resolvePaywallVariantName`** — prefix match against base `PAYWALL_NAMES` after `trim().toUpperCase()` (longest base name first). Postfix A/B names share one content variant:
+Bootstrap stores the **full** Adapty `AdaptyFlow.name` in Redux (e.g. `SELECTION_TRIAL`). UI variant is resolved at lookup time in `paywallVariantRegistry.ts` via **`resolvePaywallVariantName`** — prefix match against base `PAYWALL_NAMES` after `trim().toUpperCase()` (longest base name first). Postfix A/B names share one content variant:
 
 | Base name (`PAYWALL_NAMES`) | Example Adapty names               | Component                         |
 | :-------------------------- | :--------------------------------- | :-------------------------------- |
@@ -69,14 +69,14 @@ Unknown names fall back to `SwitcherPaywallContent` / `WITH_SWITCHER`. Do not co
 
 `remoteConfigService.fetchAndActivate()` runs once at launch via `useRemoteConfigInit` in `AppLogicProvider`. Paywall copy (`toggle_state`, buy button texts) and analytics `segment` read from the activated **Firebase** config in `usePaywallProducts` and `analytics.ts`.
 
-**Adapty paywall remote config** (`AdaptyPaywall.remoteConfig.data`) is separate from Firebase. `usePaywallBootstrap` stores it in Redux as `paywallRemoteConfig`; `useShowPaywallModal` passes it as nav param `remoteConfig`; `PaywallModal` parses it via `parsePaywallRemoteConfig` in `utils/paywallRemoteConfig.utils.ts` and forwards typed `remoteConfig` to variants.
+**Adapty paywall remote config** (`AdaptyFlow.remoteConfigs`, one entry per locale) is separate from Firebase. `usePaywallBootstrap` picks English (or the first locale) via `pickFlowRemoteConfigData` and stores `data` in Redux as `paywallRemoteConfig`; `useShowPaywallModal` passes it as nav param `remoteConfig`; `PaywallModal` parses it via `parsePaywallRemoteConfig` in `utils/paywallRemoteConfig.utils.ts` and forwards typed `remoteConfig` to variants.
 
-| Adapty key (`remoteConfig.data`) | Parsed field           | Consumer                                                                                                                  |
-| :------------------------------- | :--------------------- | :------------------------------------------------------------------------------------------------------------------------ |
-| `show_bottom_skip_button`        | `showBottomSkipButton` | `PaywallModal` hides top-left skip when `true`; all variants show footer skip via `FooterActions`                         |
-| `buy_button_text`                | `buyButtonText?`       | `StaticDefaultProdPaywallContent` CTA — overrides trial-aware `ctaLabel` when set (fallback: `staticDefaultProdCtaLabel`) |
-| `subtitle_text`                  | `subtitleText?`        | `StaticDefaultProdPaywallContent` subtitle                                                                                |
-| `title_text`                     | `titleText?`           | `StaticDefaultProdPaywallContent` title                                                                                   |
+| Adapty key (`remoteConfigs[].data`) | Parsed field           | Consumer                                                                                                                  |
+| :---------------------------------- | :--------------------- | :------------------------------------------------------------------------------------------------------------------------ |
+| `show_bottom_skip_button`           | `showBottomSkipButton` | `PaywallModal` hides top-left skip when `true`; all variants show footer skip via `FooterActions`                         |
+| `buy_button_text`                   | `buyButtonText?`       | `StaticDefaultProdPaywallContent` CTA — overrides trial-aware `ctaLabel` when set (fallback: `staticDefaultProdCtaLabel`) |
+| `subtitle_text`                     | `subtitleText?`        | `StaticDefaultProdPaywallContent` subtitle                                                                                |
+| `title_text`                        | `titleText?`           | `StaticDefaultProdPaywallContent` title                                                                                   |
 
 Empty / whitespace / non-string values fall back to localized defaults. `show_bottom_skip_button` must be JSON boolean `true` (string `"true"` is treated as false).
 
@@ -84,17 +84,17 @@ Empty / whitespace / non-string values fall back to localized defaults. `show_bo
 
 Everything lives under `src/screens/PaywallModal/`.
 
-| Location                                                         | Belongs here                                                        |
-| :--------------------------------------------------------------- | :------------------------------------------------------------------ |
-| `PaywallModal.tsx`, `PaywallModal.styles.ts`                     | Shell: variant registry, shared hooks, loading state                |
-| `paywallVariantRegistry.ts`                                      | Prefix-resolves `paywall.name` → variant component + analytics type |
-| `hooks/usePaywallProducts.ts`, `hooks/usePaywallActions.ts`      | Shared product selection and purchase/restore/skip actions          |
-| `utils/paywallProduct.utils.ts`                                  | Product resolution + StoreKit-safe price/period formatting          |
-| `utils/paywallRemoteConfig.utils.ts`                             | Parses Adapty `remoteConfig.data` → typed `PaywallRemoteConfig`     |
-| `components/PaywallBackground/`                                  | Shared background asset                                             |
-| `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/` | Variant-specific UI, styles, product hooks                          |
-| `contentVariants/StaticDefaultProdPaywallContent/`               | Static prod variant — see § STATIC_DEFAULT_PROD below               |
-| `contentVariants/components/TrialSwitch/`                        | Shared trial toggle across variants                                 |
+| Location                                                         | Belongs here                                                           |
+| :--------------------------------------------------------------- | :--------------------------------------------------------------------- |
+| `PaywallModal.tsx`, `PaywallModal.styles.ts`                     | Shell: variant registry, shared hooks, loading state                   |
+| `paywallVariantRegistry.ts`                                      | Prefix-resolves `AdaptyFlow.name` → variant component + analytics type |
+| `hooks/usePaywallProducts.ts`, `hooks/usePaywallActions.ts`      | Shared product selection and purchase/restore/skip actions             |
+| `utils/paywallProduct.utils.ts`                                  | Product resolution + StoreKit-safe price/period formatting             |
+| `utils/paywallRemoteConfig.utils.ts`                             | Parses Adapty `remoteConfig.data` → typed `PaywallRemoteConfig`        |
+| `components/PaywallBackground/`                                  | Shared background asset                                                |
+| `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/` | Variant-specific UI, styles, product hooks                             |
+| `contentVariants/StaticDefaultProdPaywallContent/`               | Static prod variant — see § STATIC_DEFAULT_PROD below                  |
+| `contentVariants/components/TrialSwitch/`                        | Shared trial toggle across variants                                    |
 
 Bootstrap hooks live outside the screen folder:
 

@@ -11,4 +11,5 @@ alwaysApply: false
 - ALWAYS use `fonts` from theme params; add missing sizes to `src/styles/fonts.ts`.
 - ALWAYS use `TextView` and `PressableView` primitives — never `Text`, `Button`, `TouchableOpacity`.
 - NEVER hardcode text — use `localize` from `useAppLocalization`; add keys to relevant `src/localization/locals/` domain file.
+- NEVER pass `cond && style` to `StyleSheet.flatten` — use `flattenStyle` from `src/utils/styles/flattenStyle.ts`.
 - No external UI libraries.

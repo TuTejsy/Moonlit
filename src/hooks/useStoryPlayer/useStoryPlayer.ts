@@ -5,11 +5,12 @@ import { useFocusEffect } from '@react-navigation/native';
 import RNFS from 'react-native-fs';
 import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
-import { IS_ANDROID, IS_IOS, SANDBOX } from '@/constants/common';
+import { SANDBOX } from '@/constants/common';
 import { AudioRecordingsDB } from '@/database';
 import {
   AUDIO_PLAYER_EMITTER_EVENT,
   audioPlayer,
+  type AudioPlayerNativeEvent,
 } from '@/native_modules/MNTAudioPlayer/ts/NativeMNTAudioPlayerManager';
 import { selectIsPlaying, selectSelectedAudioRecoringId } from '@/store/player/player.selector';
 import { startPlaying, stopPlaying } from '@/store/player/player.slice';
@@ -31,7 +32,7 @@ export function useStoryPlayer({
   storyId,
   title,
 }: useStoryPlayerProps) {
-  const eventEmmiterRef = useRef(IS_IOS ? new NativeEventEmitter(audioPlayer) : undefined);
+  const eventEmmiterRef = useRef(new NativeEventEmitter(audioPlayer));
   const isStoryPlayNotifiedRef = useRef(false);
   const currentPlayCallPromise = useRef<Promise<void> | null>(null);
 
@@ -349,10 +350,6 @@ export function useStoryPlayer({
   );
 
   useEffect(() => {
-    if (IS_ANDROID) {
-      return;
-    }
-
     const audioPlayerDidFinishPlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_FINISH,
       () => {
@@ -363,7 +360,8 @@ export function useStoryPlayer({
 
     const audioPlayerDidInterruptPlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_INTERRUPT,
-      ({ playingTime }) => {
+      (event) => {
+        const { playingTime } = event as AudioPlayerNativeEvent;
         reduxDispatch(stopPlaying());
         setPlayedTime(playingTime);
       },
@@ -371,7 +369,8 @@ export function useStoryPlayer({
 
     const audioPlayerDidPausePlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_PAUSE,
-      ({ playingTime }) => {
+      (event) => {
+        const { playingTime } = event as AudioPlayerNativeEvent;
         reduxDispatch(stopPlaying());
         setPlayedTime(playingTime);
       },
@@ -379,7 +378,8 @@ export function useStoryPlayer({
 
     const audioPlayerDidStartPlayingSubscriptionRef = eventEmmiterRef.current?.addListener(
       AUDIO_PLAYER_EMITTER_EVENT.PLAYING_DID_START,
-      ({ playingTime }) => {
+      (event) => {
+        const { playingTime } = event as AudioPlayerNativeEvent;
         if (selectedAudioRecordingIdMutableValue.current) {
           reduxDispatch(startPlaying(selectedAudioRecordingIdMutableValue.current));
           setPlayedTime(playingTime);

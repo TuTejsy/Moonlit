@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+import { flattenStyle } from '@/utils/styles/flattenStyle';
 
 export const makeStyles = ({
   colors,
@@ -21,10 +22,12 @@ export const makeStyles = ({
       ...fonts.size_16,
       color: colors.opacityWhite(0.5),
     },
-    continueButton: StyleSheet.flatten([
-      IS_ANDROID && {
-        width: dw(205, windowMaxWidth),
-      },
+    continueButton: flattenStyle([
+      IS_ANDROID
+        ? {
+            width: dw(205, windowMaxWidth),
+          }
+        : undefined,
     ]),
     continueText: {
       ...fonts.size_16,

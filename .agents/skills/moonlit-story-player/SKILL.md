@@ -50,6 +50,8 @@ Under `src/screens/StoryPlayerScreens/`:
 
 - Package: `mnt-audioplayer` (`src/native_modules/MNTAudioPlayer`)
 - Consumed via native module bridge — do not duplicate playback logic in JS.
+- Spec export: `TurboModuleRegistry.getEnforcing<Spec>('MNTAudioPlayerManager')` — never `get(...) as Spec`.
+- Android Kotlin implements codegen `addListener` / `removeListeners` and emits `PLAYING_DID_*` via `RCTDeviceEventEmitter` (Media3 `Player.Listener`: start, pause, audio-focus interrupt, track end). iOS `RCTEventEmitter` sends the same event names. `useStoryPlayer` subscribes on both platforms.
 - New native APIs: use `moonlit-native-turbomodule-scaffolder` agent.
 
 ## Realm integration

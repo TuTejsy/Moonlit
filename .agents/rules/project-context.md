@@ -35,16 +35,17 @@ SafeAreaProvider → ThemeProvider → LocalizationProvider → Redux Provider �
 
 ## Available Scripts (`package.json`)
 
-| Script            | Description                                                            |
-| :---------------- | :--------------------------------------------------------------------- |
-| `start`           | Starts the Metro bundler.                                              |
-| `android`         | Builds and runs on Android emulator or device.                         |
-| `ios`             | Builds and runs on iOS simulator or device.                            |
-| `test`            | Runs Jest test suites.                                                 |
-| `lint`            | Runs ESLint across the codebase.                                       |
-| `format`          | Runs Prettier to fix formatting.                                       |
-| `tsc`             | TypeScript type check (`tsc --noEmit`).                                |
-| `restart`         | Cleans yarn cache, reinstalls packages, starts Metro with reset cache. |
-| `reinstall`       | Full clean reinstall (node_modules, pods).                             |
-| `pod-reinstall`   | Reinstalls iOS CocoaPods dependencies.                                 |
-| `codegen-android` | Generates Android Codegen artifacts.                                   |
+| Script               | Description                                                            |
+| :------------------- | :--------------------------------------------------------------------- |
+| `start`              | Starts the Metro bundler.                                              |
+| `android`            | Builds and runs on Android emulator or device.                         |
+| `ios`                | Builds and runs on iOS simulator or device.                            |
+| `test`               | Runs Jest test suites.                                                 |
+| `lint`               | Runs ESLint across the codebase.                                       |
+| `format`             | Runs Prettier to fix formatting.                                       |
+| `tsc`                | TypeScript type check (`tsc --noEmit`).                                |
+| `restart`            | Cleans yarn cache, reinstalls packages, starts Metro with reset cache. |
+| `reinstall`          | Full clean reinstall (node_modules, pods).                             |
+| `pod-reinstall`      | Reinstalls iOS CocoaPods dependencies.                                 |
+| `codegen-android`    | Generates Android Codegen artifacts.                                   |
+| `android:check-16kb` | Verifies the release APK is 16 KB page-aligned (`zipalign -P 16`).     |

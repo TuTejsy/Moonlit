@@ -21,3 +21,16 @@
     boolean isLimitAdTrackingEnabled();
 }
 -keep public class com.android.installreferrer.** { *; }
+
+# Hermes / React Native
+-keep class com.facebook.hermes.unicode.** { *; }
+-keep class com.facebook.react.** { *; }
+
+# Firebase (RN Firebase native)
+-keep class io.invertase.firebase.** { *; }
+-dontwarn io.invertase.firebase.**
+
+# Realm, MMKV, Adapty
+-keep class io.realm.** { *; }
+-keep class com.tencent.mmkv.** { *; }
+-keep class com.adapty.** { *; }

@@ -15,15 +15,15 @@ Before applying performance optimizations, ensure:
 - **Expo CLI** or **React Native CLI** is installed
   - Verify with: `npx expo --version` and `npx react-native --version`
 - Metro bundler is running (**apply only for** bundle analysis)
-- React Native DevTools is available (**apply only for** profiling)
-  - Press 'j' in Metro terminal or shake device → "Open DevTools"
+- React Native DevTools profiling is available through `agent-device react-devtools` (**apply only for** React render profiling/debugging)
+  - Run `agent-device react-devtools status`, then `agent-device react-devtools wait --connected`
 
 ## Security Guardrails
 
 - Review shell commands before running them and prefer version-pinned tooling from trusted sources.
 - Do not pipe remote install scripts directly into a shell.
 - Treat third-party packages as normal supply-chain dependencies that require provenance and version review.
-- If using Re.Pack code splitting, only load first-party chunks from trusted HTTPS origins tied to the current release.
+- If using remote chunk loading, prefer app-bundled chunks or signed CI release manifests; hosted chunks must be first-party artifacts tied to the current release.
 
 # When to Load Reference Files
 
@@ -88,9 +88,20 @@ Use this quick lookup when debugging specific issues:
 ### FPS & Re-renders
 
 ```bash
-# Open React Native DevTools
-# Press 'j' in Metro, or shake device → "Open DevTools"
+agent-device react-devtools status
+agent-device react-devtools wait --connected
+agent-device react-devtools profile start
+agent-device react-devtools profile stop
+agent-device react-devtools profile slow --limit 5
+agent-device react-devtools profile rerenders --limit 5
+agent-device react-devtools profile timeline --limit 20
 ```
+
+Drive the target interaction with normal `agent-device` commands between `profile start` and `profile stop`.
+
+Manual fallback when `agent-device` is unavailable: open React Native DevTools from Metro (`j`) or the Dev Menu, use the Profiler tab, and record the same interaction.
+
+For release-build React component profiling, connect [`@callstack/inspector`](https://github.com/callstackincubator/inspector#inspector) first so React DevTools can attach to the release app, then run the `agent-device react-devtools` flow above.
 
 Baseline runtime metrics should come from the target interaction itself:
 
@@ -100,8 +111,8 @@ Baseline runtime metrics should come from the target interaction itself:
 **Common fixes:**
 
 - Replace ScrollView with FlatList/FlashList for lists
-- Use React Compiler for automatic memoization
-- Use atomic state (Jotai/Zustand) to reduce re-renders
+- After profiling shows cascading re-renders, use React Compiler for automatic memoization
+- After profiling shows broad store/context updates, use atomic state (Jotai/Zustand) to reduce re-renders
 - Use `useDeferredValue` for expensive computations
 
 **Review guardrails:**
@@ -127,7 +138,7 @@ npx source-map-explorer output.js --no-border-checks
 
 - Avoid barrel imports (import directly from source)
 - Remove unnecessary Intl polyfills only after checking Hermes API and method coverage
-- Enable tree shaking (Expo SDK 52+ or Re.Pack)
+- Evaluate tree shaking (Expo SDK 52+ experimental unused import/export removal, or Re.Pack only if already configured)
 - Enable R8 for Android native code shrinking
 
 ### Measure TTI
@@ -137,7 +148,7 @@ npx source-map-explorer output.js --no-border-checks
 
 **Common fixes:**
 
-- Disable JS bundle compression on Android (enables Hermes mmap)
+- For React Native 0.78 and earlier, disable Android JS bundle compression to enable Hermes mmap
 - Use native navigation (react-native-screens)
 - Preload commonly-used expensive screens before navigating to them
 

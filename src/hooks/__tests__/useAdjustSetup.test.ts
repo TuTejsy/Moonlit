@@ -26,14 +26,14 @@ describe('useAdjustSetup', () => {
     }));
   });
 
-  const originalDev = (global as any).__DEV__;
+  const originalDev = (globalThis as { __DEV__?: boolean }).__DEV__;
 
   afterEach(() => {
-    (global as any).__DEV__ = originalDev;
+    (globalThis as { __DEV__?: boolean }).__DEV__ = originalDev;
   });
 
   it('initializes Adjust with correct config in DEV mode', async () => {
-    (global as any).__DEV__ = true;
+    (globalThis as { __DEV__?: boolean }).__DEV__ = true;
 
     const { unmount } = await renderHook(() => useAdjustSetup());
 
@@ -46,7 +46,7 @@ describe('useAdjustSetup', () => {
   });
 
   it('initializes Adjust with correct config in PROD mode', async () => {
-    (global as any).__DEV__ = false;
+    (globalThis as { __DEV__?: boolean }).__DEV__ = false;
 
     const { unmount } = await renderHook(() => useAdjustSetup());
 

@@ -8,6 +8,8 @@ globs: 'src/**/*.ts, src/**/*.tsx'
 
 Moonlit uses **Reanimated 4** with **`react-native-worklets`**. The Babel plugin is `react-native-worklets/plugin` (see `babel.config.js`).
 
+RN 0.87 needs Reanimated **4.6.x** (4.5.x fails `pod install`). 4.6 stable is not on npm yet (latest stable is 4.5.3). Until it is, pin matching nightlies: `react-native-reanimated@4.6.0-nightly-20260815-4e0d15867` and `react-native-worklets@0.13.0-nightly-20260815-4e0d15867`. Do not mix Reanimated/worklets SHAs. Swap both to stable 4.6.x together as soon as `pod install` succeeds.
+
 ## Call JS from worklets / gesture handlers
 
 When a Reanimated worklet or Gesture Handler callback must invoke React state, props, or other JS-thread code, use **`scheduleOnRN`** from `react-native-worklets`.

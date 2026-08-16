@@ -22,7 +22,7 @@ describe('usePaywallBootstrap', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useAppDispatch as jest.Mock).mockReturnValue(dispatchMock);
-    (adapty.getPaywall as jest.Mock).mockResolvedValue({ name: 'TOGGLE' });
+    (adapty.getFlow as jest.Mock).mockResolvedValue({ name: 'TOGGLE' });
     (adapty.getPaywallProducts as jest.Mock).mockResolvedValue([
       { vendorProductId: 'weekly' },
     ] as never);
@@ -37,9 +37,8 @@ describe('usePaywallBootstrap', () => {
     });
 
     expect(ensureAdaptyActivated).toHaveBeenCalled();
-    expect(adapty.getPaywall).toHaveBeenCalledWith(
+    expect(adapty.getFlow).toHaveBeenCalledWith(
       LOCKED_CONTENT_PLACEMENT_ID,
-      'en',
       expect.objectContaining({
         fetchPolicy: 'reload_revalidating_cache_data',
       }),
@@ -55,16 +54,19 @@ describe('usePaywallBootstrap', () => {
   });
 
   it('forwards paywall remoteConfig data when present', async () => {
-    (adapty.getPaywall as jest.Mock).mockResolvedValue({
+    (adapty.getFlow as jest.Mock).mockResolvedValue({
       name: 'STATIC_DEFAULT_PROD',
-      remoteConfig: {
-        data: {
-          buy_button_text: 'Custom CTA',
-          show_bottom_skip_button: true,
-          subtitle_text: 'Custom subtitle',
-          title_text: 'Custom title',
+      remoteConfigs: [
+        {
+          data: {
+            buy_button_text: 'Custom CTA',
+            show_bottom_skip_button: true,
+            subtitle_text: 'Custom subtitle',
+            title_text: 'Custom title',
+          },
+          lang: 'en',
         },
-      },
+      ],
     });
 
     await renderHook(() => usePaywallBootstrap());
@@ -89,7 +91,7 @@ describe('usePaywallBootstrap', () => {
   });
 
   it('dispatches bootstrap failed when paywall fetch fails', async () => {
-    (adapty.getPaywall as jest.Mock).mockRejectedValue(new Error('fetch failed'));
+    (adapty.getFlow as jest.Mock).mockRejectedValue(new Error('fetch failed'));
 
     await renderHook(() => usePaywallBootstrap());
 

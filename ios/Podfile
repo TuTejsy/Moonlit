@@ -8,27 +8,38 @@ require Pod::Executable.execute_command('node', ['-p',
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
-linkage = ENV['USE_FRAMEWORKS']
-if linkage != nil
-  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
-end
+# Adapty SDK 4 pulls native iOS SDKs via Swift Package Manager, which requires
+# dynamic frameworks. RN Firebase 26 also expects dynamic linkage on RN 0.75+.
+# RealmJS only auto-detects a bare `use_frameworks!` line; set this so it links
+# the React framework and JSI symbols under `:linkage => :dynamic`.
+ENV['REALM_USE_FRAMEWORKS'] = 'true'
+use_frameworks! :linkage => :dynamic
 
 target 'AIVoice' do
   config = use_native_modules!
-  
+
   use_react_native!(
     :path => config[:reactNativePath],
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  pod 'Firebase', :modular_headers => true
-  pod 'FirebaseCoreInternal', :modular_headers => true
-  pod 'GoogleUtilities', :modular_headers => true
-  pod 'FirebaseCore', :modular_headers => true
-  pod 'FirebaseRemoteConfig', :modular_headers => true
-  pod 'FirebaseABTesting', :modular_headers => true
-  pod 'FirebaseInstallations', :modular_headers => true
+  # Keep Adapty/Firebase as dynamic frameworks. These pods must be static:
+  # - RealmJS 12 cannot resolve facebook::jsi::* as a dynamic framework against
+  #   RN 0.87 prebuilt React.xcframework.
+  # - react-native-config's +load / NSClassFromString("RNCConfigModule") never
+  #   runs when the class lives in an unloaded dynamic framework, which crashes
+  #   JS with "Unable to find module for RNCConfig".
+  static_pod_names = ['RealmJS', 'react-native-config'].freeze
+  pre_install do |installer|
+    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+    installer.pod_targets.each do |pod|
+      next unless static_pod_names.any? { |name| pod.name == name || pod.name.start_with?("#{name}/") }
+
+      def pod.build_type
+        Pod::BuildType.static_library
+      end
+    end
+  end
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
@@ -39,5 +50,12 @@ target 'AIVoice' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+    installer.pods_project.targets.each do |target|
+      next unless static_pod_names.include?(target.name)
+
+      target.build_configurations.each do |config|
+        config.build_settings['MACH_O_TYPE'] = 'staticlib'
+      end
+    end
   end
 end

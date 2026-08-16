@@ -56,7 +56,7 @@ export async function downloadPreviews(
           const storyColors = await getColorFromURL(colorURL);
           colors.push(storyColors);
         }
-      } catch (err) {
+      } catch {
         if (!colors[i]) {
           colors[i] = null;
         }

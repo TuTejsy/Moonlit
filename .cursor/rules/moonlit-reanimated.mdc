@@ -8,6 +8,8 @@ alwaysApply: false
 
 Moonlit uses **Reanimated 4** + **`react-native-worklets`** (`babel.config.js` plugin).
 
+RN 0.87 requires Reanimated **4.6.x**; 4.6 stable is not on npm yet, so pin matching nightlies until it is (`package.json`). Do not mix Reanimated/worklets SHAs.
+
 - Use **`scheduleOnRN`** from `react-native-worklets` to call JS from worklets/gestures.
 - **Don't** use `runOnJS` from `react-native-reanimated` (deprecated in Reanimated 4).
 - Story player: RNGH 3 hook API (`usePanGesture`, etc.) — see `moonlit-story-player` skill § Gestures.

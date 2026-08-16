@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+import { flattenStyle } from '@/utils/styles/flattenStyle';
 
 export const makeStyles = ({
   colors,
@@ -14,18 +15,22 @@ export const makeStyles = ({
   windowWidth,
 }: MakeStylesProps) =>
   StyleSheet.create({
-    block: StyleSheet.flatten([
+    block: flattenStyle([
       {
         alignItems: 'center',
       },
-      isSquareScreen && {
-        flex: 1,
-        marginTop: dh(62),
-      },
-      isLandscape && {
-        flex: 1,
-        marginTop: windowHeight / 6,
-      },
+      isSquareScreen
+        ? {
+            flex: 1,
+            marginTop: dh(62),
+          }
+        : undefined,
+      isLandscape
+        ? {
+            flex: 1,
+            marginTop: windowHeight / 6,
+          }
+        : undefined,
     ]),
     button: {
       marginTop: dh(16),
@@ -33,7 +38,7 @@ export const makeStyles = ({
     content: {
       flexDirection: isSquareScreen || isLandscape ? 'row' : 'column',
     },
-    productBlock: StyleSheet.flatten([{ justifyContent: 'flex-end' }, { marginBottom: dh(22) }]),
+    productBlock: flattenStyle([{ justifyContent: 'flex-end' }, { marginBottom: dh(22) }]),
     promotionText: {
       ...fonts.size_14,
       color: colors.white,
@@ -51,16 +56,20 @@ export const makeStyles = ({
       color: colors.white,
       textAlign: 'center',
     },
-    voicesFullImage: StyleSheet.flatten([
-      isSquareScreen && {
-        height: ((windowWidth - horizontalPadding * 4) / 512) * 152,
-        marginTop: dh(22),
-        width: windowWidth - horizontalPadding * 4,
-      },
-      isLandscape && {
-        marginTop: dh(40),
-        maxWidth: windowWidth / 2 - horizontalPadding * 4,
-      },
+    voicesFullImage: flattenStyle([
+      isSquareScreen
+        ? {
+            height: ((windowWidth - horizontalPadding * 4) / 512) * 152,
+            marginTop: dh(22),
+            width: windowWidth - horizontalPadding * 4,
+          }
+        : undefined,
+      isLandscape
+        ? {
+            marginTop: dh(40),
+            maxWidth: windowWidth / 2 - horizontalPadding * 4,
+          }
+        : undefined,
     ]),
     voicesImage: {
       height: dw(140),

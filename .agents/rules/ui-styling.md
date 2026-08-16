@@ -17,6 +17,7 @@ This rule enforces constraints on styling layouts, using the custom stylesheet s
 - **Strict Rule**: DO NOT use literal constants (e.g., hardcoded colors, padding numbers, border radii) in styles. ALWAYS use the theme's values provided via the `makeStyles` function's parameters.
 - **Strict Rule**: ALWAYS use font styles from the `fonts` object passed to the `makeStyles` parameters. NEVER use hardcoded `fontSize`, `lineHeight`, or `fontFamily` in component styles. If a required `fontSize` or `lineHeight` does not exist in `src/styles/fonts.ts`, you MUST add a new font definition there instead of hardcoding it.
 - **Implementation**: Every style object MUST be created using a custom `useMakeStyles` hook.
+- **Conditional styles**: NEVER pass a falsy expression to `StyleSheet.flatten` (`StyleSheet.flatten(cond && style)` is invalid under RN 0.87 types). Use `flattenStyle` from `src/utils/styles/flattenStyle.ts`, which drops `undefined` / `false` / `null` and merges the rest.
 - **Capabilities**: The `useMakeStyles` hook provides reactively-updated theme values, safe area values, and custom variables for conditional styles.
 - **No External UI Libraries**: Do not use component libraries (like NativeBase, UI Kitten, etc.). Rely solely on the customized `useMakeStyles` architecture.
 

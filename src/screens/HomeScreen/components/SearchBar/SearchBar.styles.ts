@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+import { flattenStyle } from '@/utils/styles/flattenStyle';
 
 interface Context {
   isInputFocused: boolean;
@@ -66,15 +67,17 @@ export const makeStyles = (
       marginLeft: 12,
       marginRight: 3,
     },
-    textInput: StyleSheet.flatten([
+    textInput: flattenStyle([
       {
         ...fonts.fontFamilyRegular,
         ...fonts.size_16,
         color: colors.white,
         flex: 1,
       },
-      IS_ANDROID && {
-        lineHeight: undefined,
-      },
+      IS_ANDROID
+        ? {
+            lineHeight: undefined,
+          }
+        : undefined,
     ]),
   });

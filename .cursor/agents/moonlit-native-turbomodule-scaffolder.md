@@ -44,7 +44,7 @@ Scaffold New Architecture TurboModules per `.agents/rules/architecture.md` §11.
 
 ## Workflow
 
-1. Read turbo-modules skill and RN 0.85 Codegen conventions.
+1. Read turbo-modules skill and RN 0.87 Codegen conventions.
 2. Create `src/native_modules/Native{FeatureName}.ts` — TypeScript spec compatible with Codegen (use existing RN docs / skill examples).
 3. Document in output (and optionally `README` stub in `src/native_modules/`):
    - iOS implementation path under `ios/`
@@ -100,5 +100,6 @@ Do **not** scaffold TurboModule for capabilities already covered by approved thi
 ## Constraints
 
 - Strict TypeScript in spec; no `any` or `!`.
+- EventEmitter specs: Android Kotlin must implement codegen `addListener` / `removeListeners` (RN 0.87 abstracts them). iOS `RCTEventEmitter` already provides them.
 - Do not add legacy `NativeModules` Objective-Java bridges without TurboModule/Codegen.
 - After new **npm** native dependency, parent should run `moonlit-dependency-native-impact`.
