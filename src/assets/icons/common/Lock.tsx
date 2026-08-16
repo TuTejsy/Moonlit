@@ -8,6 +8,7 @@ import Svg, { SvgProps, G, Rect, Path } from 'react-native-svg';
 import { IS_ANDROID, IS_IOS } from '@/constants/common';
 import { MakeStylesProps, useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useTheme } from '@/hooks/theme/useTheme';
+import { flattenStyle } from '@/utils/styles/flattenStyle';
 
 const makeStyles = ({ colors }: MakeStylesProps) =>
   StyleSheet.create({
@@ -18,7 +19,7 @@ const makeStyles = ({ colors }: MakeStylesProps) =>
       top: 0,
       width: 24,
     },
-    container: StyleSheet.flatten([
+    container: flattenStyle([
       {
         alignItems: 'center',
         borderRadius: 12,
@@ -28,9 +29,11 @@ const makeStyles = ({ colors }: MakeStylesProps) =>
         position: 'relative',
         width: 24,
       },
-      IS_ANDROID && {
-        backgroundColor: colors.opacityWhite(0.3),
-      },
+      IS_ANDROID
+        ? {
+            backgroundColor: colors.opacityWhite(0.3),
+          }
+        : undefined,
     ]),
   });
 

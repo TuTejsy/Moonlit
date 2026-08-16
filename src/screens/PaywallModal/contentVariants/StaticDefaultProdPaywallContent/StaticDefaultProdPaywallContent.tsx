@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image, type ImageStyle, View } from 'react-native';
 
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useLayout } from '@/hooks/theme/useLayout';
@@ -71,7 +71,7 @@ export const StaticDefaultProdPaywallContent = ({
   return (
     <>
       {isSquareScreen ? (
-        <Image source={voicesLandscapeImage} style={styles.voicesFullImage} />
+        <Image source={voicesLandscapeImage} style={styles.voicesFullImage as ImageStyle} />
       ) : null}
 
       <View style={styles.content}>
@@ -88,7 +88,7 @@ export const StaticDefaultProdPaywallContent = ({
             <Image
               resizeMode='cover'
               source={isLandscape ? voicesLandscapeImage : voicesImage}
-              style={isLandscape ? styles.voicesFullImage : styles.voicesImage}
+              style={(isLandscape ? styles.voicesFullImage : styles.voicesImage) as ImageStyle}
             />
           ) : null}
         </View>

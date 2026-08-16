@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react';
 
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
 
 let fetchPromise: Promise<boolean> | null = null;
 
 async function fetchRemoteConfig(): Promise<boolean> {
+  AnalyticsService.warmUpNativeSdk();
   return remoteConfigService.fetchAndActivate();
 }
 

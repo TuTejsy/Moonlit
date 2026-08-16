@@ -1,3 +1,5 @@
+import { DeviceEventEmitter } from 'react-native';
+
 import { act, renderHook } from '@testing-library/react-native';
 
 import { AudioRecordingsDB } from '@/database';
@@ -42,8 +44,10 @@ jest.mock('@/native_modules/MNTAudioPlayer/ts/NativeMNTAudioPlayerManager', () =
     PLAYING_DID_START: 'PLAYING_DID_START',
   },
   audioPlayer: {
+    addListener: jest.fn(),
     getCurrentState: jest.fn(),
     pausePlaying: jest.fn(),
+    removeListeners: jest.fn(),
     rewindPlayingToTime: jest.fn(),
     setToPlayFile: jest.fn(),
     startPlayingFromTime: jest.fn(),
@@ -193,5 +197,45 @@ describe('useStoryPlayer', () => {
     expect(audioPlayer.startPlayingFromTime).toHaveBeenCalledWith(30);
     expect(mockDispatch).toHaveBeenCalledWith(startPlaying(10));
     expect(result.current.playedTime).toBe(30);
+  });
+
+  it('stops playing when the native player finishes', async () => {
+    const { result } = await renderHook(() =>
+      useStoryPlayer({
+        audioRecordingId: 10,
+        coverPath: 'cover.jpg',
+        storyId: 1,
+        title: 'Story Title',
+      }),
+    );
+
+    await act(() => {
+      result.current.setPlayedTime(40);
+    });
+
+    await act(() => {
+      DeviceEventEmitter.emit('PLAYING_DID_FINISH');
+    });
+
+    expect(mockDispatch).toHaveBeenCalledWith(stopPlaying());
+    expect(result.current.playedTime).toBe(0);
+  });
+
+  it('pauses playing when the native player interrupts', async () => {
+    const { result } = await renderHook(() =>
+      useStoryPlayer({
+        audioRecordingId: 10,
+        coverPath: 'cover.jpg',
+        storyId: 1,
+        title: 'Story Title',
+      }),
+    );
+
+    await act(() => {
+      DeviceEventEmitter.emit('PLAYING_DID_INTERRUPT', { playingTime: 12 });
+    });
+
+    expect(mockDispatch).toHaveBeenCalledWith(stopPlaying());
+    expect(result.current.playedTime).toBe(12);
   });
 });

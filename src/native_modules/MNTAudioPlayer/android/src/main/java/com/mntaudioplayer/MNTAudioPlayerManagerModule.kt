@@ -4,6 +4,7 @@ import android.content.ComponentName
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.facebook.react.bridge.Arguments
@@ -11,6 +12,7 @@ import com.facebook.react.bridge.LifecycleEventListener
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.bridge.WritableMap
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.google.common.util.concurrent.MoreExecutors
 import java.lang.Exception
 
@@ -25,19 +27,51 @@ class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : Nativ
 
   private var filePath: String? = null
 
+  private val playerListener = object : Player.Listener {
+    override fun onIsPlayingChanged(isPlaying: Boolean) {
+      if (isPlaying) {
+        emitPlayerEvent(EVENT_PLAYING_DID_START)
+      }
+    }
+
+    override fun onPlaybackStateChanged(playbackState: Int) {
+      if (playbackState == Player.STATE_ENDED) {
+        emitPlayerEvent(EVENT_PLAYING_DID_FINISH, includePlayingTime = false)
+      }
+    }
+
+    override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+      if (playWhenReady) {
+        return
+      }
+
+      if (mediaPlayerController?.playbackState == Player.STATE_ENDED) {
+        return
+      }
+
+      val eventName = when (reason) {
+        Player.PLAY_WHEN_READY_CHANGE_REASON_AUDIO_FOCUS_LOSS,
+        Player.PLAY_WHEN_READY_CHANGE_REASON_AUDIO_BECOMING_NOISY -> EVENT_PLAYING_DID_INTERRUPT
+        else -> EVENT_PLAYING_DID_PAUSE
+      }
+
+      emitPlayerEvent(eventName)
+    }
+  }
+
   init {
     super.initialize()
     reactContext.addLifecycleEventListener(this)
 
     mediaPlayerControllerFactory?.addListener(
       {
-        // MediaController is available here with controllerFuture.get()
         mediaPlayerController = mediaPlayerControllerFactory?.let {
           if (it.isDone)
             it.get()
           else
             null
         }
+        mediaPlayerController?.addListener(playerListener)
       },
       MoreExecutors.directExecutor()
     )
@@ -137,8 +171,20 @@ class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : Nativ
     return !hasError
   }
 
+  override fun addListener(eventName: String) {
+    // Required by NativeEventEmitter / RN 0.87 codegen. Events are emitted via RCTDeviceEventEmitter.
+  }
+
+  override fun removeListeners(count: Double) {
+    // Required by NativeEventEmitter / RN 0.87 codegen.
+  }
+
   companion object {
     const val NAME = "MNTAudioPlayerManager"
+    const val EVENT_PLAYING_DID_FINISH = "PLAYING_DID_FINISH"
+    const val EVENT_PLAYING_DID_INTERRUPT = "PLAYING_DID_INTERRUPT"
+    const val EVENT_PLAYING_DID_PAUSE = "PLAYING_DID_PAUSE"
+    const val EVENT_PLAYING_DID_START = "PLAYING_DID_START"
   }
 
   override fun onHostResume() {
@@ -148,11 +194,28 @@ class MNTAudioPlayerManagerModule(reactContext: ReactApplicationContext) : Nativ
   }
 
   override fun onHostDestroy() {
+    mediaPlayerController?.removeListener(playerListener)
     mediaPlayerControllerFactory?.let {
       MediaController.releaseFuture(it)
 
     }
     mediaPlayerController?.release()
     mediaPlayerController = null
+  }
+
+  private fun emitPlayerEvent(eventName: String, includePlayingTime: Boolean = true) {
+    if (!reactApplicationContext.hasActiveReactInstance()) {
+      return
+    }
+
+    val params = Arguments.createMap()
+    if (includePlayingTime) {
+      val playingTime = (mediaPlayerController?.currentPosition ?: 0).toDouble() / 1000
+      params.putDouble("playingTime", playingTime)
+    }
+
+    reactApplicationContext
+      .getJSModule(RCTDeviceEventEmitter::class.java)
+      .emit(eventName, params)
   }
 }

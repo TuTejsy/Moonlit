@@ -49,7 +49,7 @@ export const DefaultList = React.memo(
     popularStories,
     popularStoriesVersion,
   }: DefaultListPropTypes) => {
-    const scrollRef = useRef<ScrollView>(null);
+    const scrollRef = useRef<React.ComponentRef<typeof ScrollView>>(null);
 
     const isFullVersion = useAppSelector(selectIsFullVersion);
 

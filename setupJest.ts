@@ -205,30 +205,25 @@ jest.mock('react-native-email-link', () => ({
 
 // Mock @react-native-firebase/analytics
 jest.mock('@react-native-firebase/analytics', () => ({
-  __esModule: true,
-  default: jest.fn(() => ({
-    logEvent: jest.fn(),
-    setUserProperties: jest.fn(),
-  })),
+  getAnalytics: jest.fn(() => ({})),
+  logEvent: jest.fn(),
+  setUserProperties: jest.fn(),
 }));
 
 // Mock @react-native-firebase/remote-config
-jest.mock('@react-native-firebase/remote-config', () => {
-  const mockConfig = {
-    activate: jest.fn().mockResolvedValue(true),
-    fetchAndActivate: jest.fn().mockResolvedValue(true),
-    getValue: jest.fn().mockReturnValue({
-      asBoolean: jest.fn().mockReturnValue(false),
-      asString: jest.fn().mockReturnValue(''),
-    }),
-    onConfigUpdated: jest.fn().mockReturnValue(jest.fn()),
-    setDefaults: jest.fn(),
-  };
-  return {
-    __esModule: true,
-    default: jest.fn(() => mockConfig),
-  };
-});
+jest.mock('@react-native-firebase/remote-config', () => ({
+  activate: jest.fn().mockResolvedValue(true),
+  ensureInitialized: jest.fn().mockResolvedValue(undefined),
+  fetchAndActivate: jest.fn().mockResolvedValue(true),
+  getBoolean: jest.fn().mockReturnValue(false),
+  getRemoteConfig: jest.fn(() => ({
+    defaultConfig: {},
+    setConfigSettings: jest.fn().mockResolvedValue(undefined),
+    setDefaults: jest.fn().mockResolvedValue(null),
+  })),
+  getString: jest.fn().mockReturnValue(''),
+  onConfigUpdate: jest.fn().mockReturnValue(jest.fn()),
+}));
 
 // Mock @amplitude/analytics-react-native
 jest.mock('@amplitude/analytics-react-native', () => ({
@@ -606,6 +601,7 @@ jest.mock('@/services/analytics/analytics', () => ({
     logVoiceChangeEvent: jest.fn(),
     logVoiceViewEvent: jest.fn(),
     setIsUserPaid: jest.fn(),
+    warmUpNativeSdk: jest.fn(),
   },
 }));
 
@@ -914,7 +910,7 @@ jest.mock(
 jest.mock('react-native-adapty', () => ({
   adapty: {
     activate: jest.fn().mockResolvedValue(undefined),
-    getPaywall: jest.fn().mockResolvedValue({ name: 'TOGGLE' }),
+    getFlow: jest.fn().mockResolvedValue({ name: 'TOGGLE' }),
     getPaywallProducts: jest.fn().mockResolvedValue([]),
     getProfile: jest.fn().mockResolvedValue({ accessLevels: {} }),
     isActivated: jest.fn().mockResolvedValue(true),

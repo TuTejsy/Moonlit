@@ -1,5 +1,6 @@
 import { act, renderHook } from '@testing-library/react-native';
 
+import { AnalyticsService } from '@/services/analytics/analytics';
 import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
 
 import {
@@ -27,6 +28,7 @@ describe('useRemoteConfigInit', () => {
       await Promise.resolve();
     });
 
+    expect(AnalyticsService.warmUpNativeSdk).toHaveBeenCalledTimes(1);
     expect(remoteConfigService.fetchAndActivate).toHaveBeenCalledTimes(1);
   });
 

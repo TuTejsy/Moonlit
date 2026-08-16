@@ -12,7 +12,10 @@ See `.agents/rules/architecture.md` for full detail. Key points:
 - `useAppRoute` / `useAppNavigation` only — never raw `@react-navigation/native` hooks in screens.
 - `AppLogicProvider` for global side effects; `SecuredStorage` for sensitive data; `auth.ts` for secrets.
 - Realm via `src/hooks/database/` hooks; Redux via `useAppDispatch` / `useAppSelector`.
-- Native modules in `src/native_modules/` (reference: `mnt-audioplayer`).
+- Native modules in `src/native_modules/` (reference: `mnt-audioplayer`). Required TurboModules use `getEnforcing`.
 - Paywall: `PaywallModal` + `useShowPaywallModal` — see `moonlit-paywall-screen` skill.
 - Story player: `StoryPlayerScreen` + `VoiceSettingsModal` — see `moonlit-story-player` skill.
 - Service sole-owners: analytics, remoteConfig, storage, securedStorage, networkClient; Adapty runtime only in paywall/subscription hooks listed in architecture.md.
+- Android AGP 9: pin NDK `27.1.12297006` and `buildConfig true` on all modules via `pluginManager.withPlugin`. 16 KB: uncompressed JNI + `yarn android:check-16kb`. R8 on for release. Edge-to-edge: RN 0.87 `StatusBar` is barStyle-only; use safe-area insets — see architecture.md.
+- iOS: Adapty/Firebase stay dynamic SPM frameworks; force static `RealmJS` and `react-native-config` in the Podfile so JSI links and `RNCConfigModule` is discoverable. Patch `@sbaiahmed1/react-native-blur` so Fabric views use the inherited `_props` (RN 0.87).
+- Firebase Remote Config: await native `setDefaults` / `setConfigSettings` + `ensureInitialized` before `fetchAndActivate`; warm Analytics first. See architecture.md.

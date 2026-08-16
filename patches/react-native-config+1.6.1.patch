@@ -1,0 +1,26 @@
+diff --git a/node_modules/react-native-config/ios/ReactNativeConfig/RNCConfigModule.mm b/node_modules/react-native-config/ios/ReactNativeConfig/RNCConfigModule.mm
+index 4064680..6d3e77c 100644
+--- a/node_modules/react-native-config/ios/ReactNativeConfig/RNCConfigModule.mm
++++ b/node_modules/react-native-config/ios/ReactNativeConfig/RNCConfigModule.mm
+@@ -3,7 +3,7 @@
+ 
+ @implementation RNCConfigModule
+ 
+-RCT_EXPORT_MODULE()
++RCT_EXPORT_MODULE(RNCConfigModule)
+ RCT_EXTERN__BLOCKING_SYNCHRONOUS_METHOD(getConfig)
+ 
+ + (BOOL)requiresMainQueueSetup
+diff --git a/node_modules/react-native-config/package.json b/node_modules/react-native-config/package.json
+index aa67735..f7bfc3b 100644
+--- a/node_modules/react-native-config/package.json
++++ b/node_modules/react-native-config/package.json
+@@ -62,7 +62,7 @@
+     },
+     "ios": {
+       "modules": {
+-        "RNCConfig": {
++        "RNCConfigModule": {
+           "className": "RNCConfigModule",
+           "unstableRequiresMainQueueSetup": true
+         }

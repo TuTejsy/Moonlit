@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useMemo } from 'react';
-import { Image, View } from 'react-native';
+import { Image, type ImageStyle, View } from 'react-native';
 
 import { BlurView } from '@sbaiahmed1/react-native-blur';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -121,7 +121,7 @@ export const TabBarStoryPlayer = memo(({ storyId }: TabBarStoryPlayerProps) => {
       )}
       <Image
         resizeMode='cover'
-        style={styles.image}
+        style={styles.image as ImageStyle}
         source={{
           uri: `file://${SANDBOX.DOCUMENTS.SMALL_PREVIEW}/${story.small_cover_cached_name}`,
         }}

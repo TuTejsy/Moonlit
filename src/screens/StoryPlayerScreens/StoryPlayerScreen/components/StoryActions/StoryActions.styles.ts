@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { IS_ANDROID } from '@/constants/common';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+import { flattenStyle } from '@/utils/styles/flattenStyle';
 
 import { StoryPlayerScreenLayout } from '../../hooks/useStoryPlayerScreenLayout';
 
@@ -22,7 +23,7 @@ export const makeStyles = (
       width: storyContainerMinWidth,
       zIndex: 10,
     },
-    button: StyleSheet.flatten([
+    button: flattenStyle([
       {
         alignItems: 'center',
         borderRadius: 24,
@@ -31,9 +32,11 @@ export const makeStyles = (
         overflow: 'hidden',
         width: 48,
       },
-      IS_ANDROID && {
-        backgroundColor: colors.opacityWhite(0.3),
-      },
+      IS_ANDROID
+        ? {
+            backgroundColor: colors.opacityWhite(0.3),
+          }
+        : undefined,
     ]),
     buttonBlurView: {
       height: 48,

@@ -45,17 +45,29 @@ export const TextView = ({
     }
   }, [styles.bold, styles.light, styles.medium, styles.regular, type]);
 
-  const TextComponent = animated ? Animated.Text : Text;
+  if (animated) {
+    return (
+      <Animated.Text
+        suppressHighlighting
+        allowFontScaling={false}
+        style={[styles.text, textStyle, style]}
+        textBreakStrategy='balanced'
+        {...props}
+      >
+        {children}
+      </Animated.Text>
+    );
+  }
 
   return (
-    <TextComponent
+    <Text
       suppressHighlighting
       allowFontScaling={false}
-      style={[styles.text, textStyle, style]}
+      style={[styles.text, textStyle, style as StyleProp<TextStyle>]}
       textBreakStrategy='balanced'
       {...props}
     >
       {children}
-    </TextComponent>
+    </Text>
   );
 };

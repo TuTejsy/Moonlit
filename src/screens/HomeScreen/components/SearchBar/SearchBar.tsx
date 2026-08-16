@@ -44,7 +44,7 @@ export const SearchBar = React.memo(
     const styles = useMakeStyles(makeStyles, stylesContext);
     const { colors } = useTheme();
 
-    const inputRef = useRef<TextInput | null>(null);
+    const inputRef = useRef<React.ComponentRef<typeof TextInput>>(null);
     const isInputFocusedSharedValue = useSharedValue(0);
 
     const searchBarBluredWidth = useMemo(

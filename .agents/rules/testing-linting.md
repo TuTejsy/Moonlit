@@ -28,6 +28,7 @@ When quality checks pass, `.agents/hooks/context-drift-check.sh` may suggest **`
 ## Linting
 
 - Fix all ESLint errors introduced by your changes.
+- TypeScript 6 requires `@typescript-eslint/parser` and `@typescript-eslint/eslint-plugin` **8.58+** (v5 cannot parse TS 6). Keep `eslint` on 8.57+ (AirBnB/react-app still target ESLint 8). Pin both packages in `package.json` `resolutions` so `eslint-config-react-app` does not load a second nested `@typescript-eslint` plugin (ESLint "couldn't determine the plugin uniquely"). Keep `patches/@typescript-eslint+eslint-plugin+8.67.0.patch` — upstream `no-unused-vars` crashes on TS 6 enums (`parent` is undefined; https://github.com/typescript-eslint/typescript-eslint/issues/12185). v8 `recommended` successors stay off to match prior config: `no-empty-object-type` (was `no-empty-interface`), `no-require-imports` (Jest `require()` mocks), and base `no-empty-function` (parameter-property constructors).
 
 ## Formatting
 

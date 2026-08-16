@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { IS_ANDROID } from '@/constants/common';
 import { TAB_BAR_STORY_PLAYER_HEIGHT } from '@/constants/sizes';
 import { MakeStylesProps } from '@/hooks/theme/useMakeStyles';
+import { flattenStyle } from '@/utils/styles/flattenStyle';
 
 interface Context {
   storyColor: string;
@@ -20,7 +21,7 @@ export const makeStyles = (
       top: 0,
       width: windowWidth - 14,
     },
-    container: StyleSheet.flatten([
+    container: flattenStyle([
       {
         alignItems: 'center',
         borderRadius: 16,
@@ -34,9 +35,11 @@ export const makeStyles = (
         position: 'absolute',
         width: windowWidth - 14,
       },
-      IS_ANDROID && {
-        backgroundColor: storyColor || colors.imagePurple,
-      },
+      IS_ANDROID
+        ? {
+            backgroundColor: storyColor || colors.imagePurple,
+          }
+        : undefined,
     ]),
     image: {
       borderRadius: 16,

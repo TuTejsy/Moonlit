@@ -68,7 +68,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -100,6 +100,19 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
 
     namespace "com.moonlit"
+
+    // AGP 9 removed android.defaults.buildfeatures.buildconfig; enable per module.
+    buildFeatures {
+        buildConfig true
+    }
+
+    // Uncompressed JNI libs are 16 KB-aligned by AGP 8.5.1+. Legacy packaging re-compresses and can break Play.
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
+
     defaultConfig {
         applicationId "com.moonlit.tales"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -135,7 +148,8 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            shrinkResources enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
 
@@ -161,6 +175,9 @@ allprojects {
         maven {
             url "https://maven.google.com"
         }
+        maven {
+            url = uri(project(":react-native-async-storage_async-storage").file("local_repo"))
+        }
     }
 }
 
@@ -183,3 +200,22 @@ dependencies {
 }
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
+tasks.register("check16KbPageAlignment") {
+    group = "verification"
+    description = "Verify the release APK's uncompressed 64-bit native libraries are 16 KB aligned."
+    doLast {
+        def apk = file("${project.buildDir}/outputs/apk/release/app-release.apk")
+        if (!apk.exists()) {
+            throw new GradleException("Missing ${apk}. Run ./gradlew assembleRelease first.")
+        }
+        def zipalign = "${android.sdkDirectory}/build-tools/${rootProject.ext.buildToolsVersion}/zipalign"
+        exec {
+            commandLine zipalign, "-c", "-P", "16", "-v", "4", apk.absolutePath
+        }
+    }
+}
+
+tasks.named("assembleRelease").configure {
+    finalizedBy("check16KbPageAlignment")
+}

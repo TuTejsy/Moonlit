@@ -1,5 +1,5 @@
 import * as amplitude from '@amplitude/analytics-react-native';
-import firebaseAnalytics from '@react-native-firebase/analytics';
+import { getAnalytics, logEvent, setUserProperties } from '@react-native-firebase/analytics';
 
 import { remoteConfigService } from '../remoteConfig/remoteConfig';
 import { getStorageData } from '../storage/storage';
@@ -30,17 +30,21 @@ export class AnalyticsService {
 
   private static voiceViewLogCount = 0;
 
+  static warmUpNativeSdk(): void {
+    getAnalytics();
+  }
+
   private static logCommongEvent(eventName: string, params: object) {
     if (getStorageData().isAnaltyicsEnabled) {
       const injectedParams = { ...params, segment: remoteConfigService.segment };
 
-      firebaseAnalytics().logEvent(eventName, injectedParams);
+      logEvent(getAnalytics(), eventName, injectedParams);
       amplitude.track(eventName, injectedParams);
     }
   }
 
   static setIsUserPaid(paid: boolean) {
-    firebaseAnalytics().setUserProperties({ paid: paid ? 'paid' : 'free' });
+    setUserProperties(getAnalytics(), { paid: paid ? 'paid' : 'free' });
 
     const indentity = new amplitude.Identify();
     indentity.set('paid', paid ? 'paid' : 'free');

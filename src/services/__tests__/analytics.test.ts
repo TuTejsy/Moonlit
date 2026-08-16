@@ -1,19 +1,15 @@
 import * as amplitude from '@amplitude/analytics-react-native';
+import { getAnalytics, logEvent, setUserProperties } from '@react-native-firebase/analytics';
 
 import { AnalyticsService } from '../analytics/analytics';
 import { SOURCE, PAYWALL_TYPE } from '../analytics/analytics.constants';
 
 jest.unmock('@/services/analytics/analytics');
 
-const mockLogEvent = jest.fn();
-const mockSetUserProperties = jest.fn();
-
 jest.mock('@react-native-firebase/analytics', () => ({
-  __esModule: true,
-  default: jest.fn(() => ({
-    logEvent: mockLogEvent,
-    setUserProperties: mockSetUserProperties,
-  })),
+  getAnalytics: jest.fn(() => ({})),
+  logEvent: jest.fn(),
+  setUserProperties: jest.fn(),
 }));
 
 jest.mock('@amplitude/analytics-react-native', () => ({
@@ -42,18 +38,26 @@ describe('AnalyticsService', () => {
     jest.clearAllMocks();
   });
 
+  describe('warmUpNativeSdk', () => {
+    it('loads the native analytics module', () => {
+      AnalyticsService.warmUpNativeSdk();
+
+      expect(getAnalytics).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('setIsUserPaid', () => {
     it('sets user properties to "paid" when true', () => {
       AnalyticsService.setIsUserPaid(true);
 
-      expect(mockSetUserProperties).toHaveBeenCalledWith({ paid: 'paid' });
+      expect(setUserProperties).toHaveBeenCalledWith(expect.anything(), { paid: 'paid' });
       expect(amplitude.identify).toHaveBeenCalled();
     });
 
     it('sets user properties to "free" when false', () => {
       AnalyticsService.setIsUserPaid(false);
 
-      expect(mockSetUserProperties).toHaveBeenCalledWith({ paid: 'free' });
+      expect(setUserProperties).toHaveBeenCalledWith(expect.anything(), { paid: 'free' });
     });
   });
 
@@ -61,7 +65,8 @@ describe('AnalyticsService', () => {
     it('logs launch_app event with source and first_launch', () => {
       AnalyticsService.logLaunchAppEvent({ source: SOURCE.COLD_START });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'launch_app',
         expect.objectContaining({
           first_launch: false,
@@ -82,7 +87,8 @@ describe('AnalyticsService', () => {
     it('logs onboarding event with screen number', () => {
       AnalyticsService.logOnboardingEvent({ screen: 2 });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'onboarding',
         expect.objectContaining({ screen: 2, segment: 'test-segment' }),
       );
@@ -96,7 +102,8 @@ describe('AnalyticsService', () => {
         type: PAYWALL_TYPE.WITH_SWITCHER,
       });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'ss_view',
         expect.objectContaining({
           source: SOURCE.HOME_VIEW,
@@ -113,7 +120,8 @@ describe('AnalyticsService', () => {
         type: PAYWALL_TYPE.WITH_SWITCHER,
       });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'ss_close',
         expect.objectContaining({
           source: SOURCE.SETTINGS,
@@ -131,7 +139,8 @@ describe('AnalyticsService', () => {
         type: PAYWALL_TYPE.WITH_SWITCHER,
       });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'start_subscription',
         expect.objectContaining({
           hasTrial: true,
@@ -145,7 +154,8 @@ describe('AnalyticsService', () => {
     it('logs page_view event with settings screen and increments count', () => {
       AnalyticsService.logSettingsViewEvent();
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'page_view',
         expect.objectContaining({
           count: expect.any(Number),
@@ -159,7 +169,8 @@ describe('AnalyticsService', () => {
     it('logs page_view event with home screen', () => {
       AnalyticsService.logHomeViewEvent();
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'page_view',
         expect.objectContaining({
           screen: 'home',
@@ -172,7 +183,8 @@ describe('AnalyticsService', () => {
     it('logs tale_open event', () => {
       AnalyticsService.logTaleOpenEvent({ name: 'Cinderella', tab: 'All tales' });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'tale_open',
         expect.objectContaining({
           name: 'Cinderella',
@@ -186,7 +198,8 @@ describe('AnalyticsService', () => {
     it('logs tale_play event', () => {
       AnalyticsService.logTalePlayEvent({ name: 'Cinderella', tab: 'All tales' });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'tale_play',
         expect.objectContaining({ name: 'Cinderella' }),
       );
@@ -197,7 +210,8 @@ describe('AnalyticsService', () => {
     it('logs tale_pause event', () => {
       AnalyticsService.logTalePauseEvent({ name: 'Cinderella', tab: 'All tales' });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'tale_pause',
         expect.objectContaining({ name: 'Cinderella' }),
       );
@@ -212,7 +226,8 @@ describe('AnalyticsService', () => {
         value: '30s',
       });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'tale_rewind',
         expect.objectContaining({ name: 'Cinderella', value: '30s' }),
       );
@@ -227,7 +242,8 @@ describe('AnalyticsService', () => {
         tab: 'All tales',
       });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'tale_liked',
         expect.objectContaining({
           count: expect.any(Number),
@@ -245,7 +261,8 @@ describe('AnalyticsService', () => {
         tab: 'All tales',
       });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'voice_view',
         expect.objectContaining({
           count: expect.any(Number),
@@ -265,7 +282,8 @@ describe('AnalyticsService', () => {
         to: 'Advanced',
       });
 
-      expect(mockLogEvent).toHaveBeenCalledWith(
+      expect(logEvent).toHaveBeenCalledWith(
+        expect.anything(),
         'voice_change',
         expect.objectContaining({
           from: 'Standard',

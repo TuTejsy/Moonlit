@@ -1,4 +1,4 @@
-import { View, Image } from 'react-native';
+import { View, Image, type ImageStyle } from 'react-native';
 
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
@@ -42,7 +42,9 @@ export const SwitcherPaywallContent = ({
 
   return (
     <>
-      {isSquareScreen && <Image source={voicesLandscapeImage} style={styles.voicesFullImage} />}
+      {isSquareScreen && (
+        <Image source={voicesLandscapeImage} style={styles.voicesFullImage as ImageStyle} />
+      )}
 
       <View style={styles.content}>
         <View style={styles.block}>
@@ -57,7 +59,7 @@ export const SwitcherPaywallContent = ({
           {!isSquareScreen && (
             <Image
               source={isLandscape ? voicesLandscapeImage : voicesImage}
-              style={isLandscape ? styles.voicesFullImage : styles.voicesImage}
+              style={(isLandscape ? styles.voicesFullImage : styles.voicesImage) as ImageStyle}
             />
           )}
         </View>

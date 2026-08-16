@@ -1,0 +1,106 @@
+diff --git a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeBlurView.mm b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeBlurView.mm
+index c419ec3..d1e2b4a 100644
+--- a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeBlurView.mm
++++ b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeBlurView.mm
+@@ -20,7 +20,6 @@ @interface ReactNativeBlurView () <RCTReactNativeBlurViewViewProtocol>
+ 
+ @implementation ReactNativeBlurView {
+   AdvancedBlurView *_advancedBlurView;
+-  Props::Shared _props;
+ }
+ 
+ + (UIColor *)colorFromString:(NSString *)colorString {
+@@ -208,9 +207,6 @@ - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)
+     [ReactNativeBlurViewHelper updateBlurView:_advancedBlurView withIgnoringSafeArea:newViewProps.ignoreSafeArea];
+   }
+ 
+-  // Store the new props
+-  _props = props;
+-
+   [super updateProps:props oldProps:oldProps];
+ }
+ 
+diff --git a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeLiquidGlassContainer.mm b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeLiquidGlassContainer.mm
+index 32d79a8..a7c11e0 100644
+--- a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeLiquidGlassContainer.mm
++++ b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeLiquidGlassContainer.mm
+@@ -20,7 +20,6 @@ @interface ReactNativeLiquidGlassContainer () <RCTReactNativeLiquidGlassContaine
+ 
+ @implementation ReactNativeLiquidGlassContainer {
+   LiquidGlassContainer *_containerView;
+-  Props::Shared _props;
+   LayoutMetrics _layoutMetrics;
+ }
+ 
+@@ -56,9 +55,6 @@ - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)
+     [ReactNativeLiquidGlassContainerHelper updateLiquidGlassContainer:_containerView withSpacing:newViewProps.spacing];
+   }
+ 
+-  // Store the new props
+-  _props = props;
+-
+   [super updateProps:props oldProps:oldProps];
+ }
+ 
+diff --git a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeLiquidGlassView.mm b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeLiquidGlassView.mm
+index 3054152..9c8e1f0 100644
+--- a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeLiquidGlassView.mm
++++ b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeLiquidGlassView.mm
+@@ -20,7 +20,6 @@ @interface ReactNativeLiquidGlassView () <RCTReactNativeLiquidGlassViewViewProto
+ 
+ @implementation ReactNativeLiquidGlassView {
+   LiquidGlassContainerView *_liquidGlassView;
+-  Props::Shared _props;
+   LayoutMetrics _layoutMetrics;
+ }
+ 
+@@ -243,9 +242,6 @@ - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)
+   // Apply all of the above in one effect rebuild.
+   [_liquidGlassView endBatchUpdate];
+ 
+-  // Store the new props
+-  _props = props;
+-
+   [super updateProps:props oldProps:oldProps];
+ }
+ 
+diff --git a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeProgressiveBlurView.mm b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeProgressiveBlurView.mm
+index 5bf1adf..b4c2d90 100644
+--- a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeProgressiveBlurView.mm
++++ b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeProgressiveBlurView.mm
+@@ -20,7 +20,6 @@ @interface ReactNativeProgressiveBlurView () <RCTReactNativeProgressiveBlurViewV
+ 
+ @implementation ReactNativeProgressiveBlurView {
+   ProgressiveBlurView *_progressiveBlurView;
+-  Props::Shared _props;
+ }
+ 
+ + (UIColor *)colorFromString:(NSString *)colorString {
+@@ -207,7 +206,6 @@ - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)
+     [ReactNativeProgressiveBlurViewHelper updateProgressiveBlurView:_progressiveBlurView withReducedTransparencyFallbackColor:fallbackColor];
+   }
+ 
+-  _props = props;
+   [super updateProps:props oldProps:oldProps];
+ }
+ 
+diff --git a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeVibrancyView.mm b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeVibrancyView.mm
+index 48b31ee..e3a9c10 100644
+--- a/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeVibrancyView.mm
++++ b/node_modules/@sbaiahmed1/react-native-blur/ios/ReactNativeVibrancyView.mm
+@@ -20,7 +20,6 @@ @interface ReactNativeVibrancyView () <RCTReactNativeVibrancyViewViewProtocol>
+ 
+ @implementation ReactNativeVibrancyView {
+   VibrancyEffectView *_vibrancyView;
+-  Props::Shared _props;
+ }
+ 
+ + (ComponentDescriptorProvider)componentDescriptorProvider
+@@ -62,7 +61,6 @@ - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)
+       [ReactNativeVibrancyViewHelper updateVibrancyView:_vibrancyView withBlurAmount:newViewProps.blurAmount];
+   }
+ 
+-  _props = props;
+   [super updateProps:props oldProps:oldProps];
+ }
+ 

@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 
-import { CollectionChangeCallback } from 'realm';
-// eslint-disable-next-line import/no-unresolved
-import { RealmObject } from 'realm/dist/public-types/Object';
+import Realm, { CollectionChangeCallback } from 'realm';
 
 import { StoriesDB } from '@/database';
 import { StorySchema } from '@/database/schema/stories/types';
 import { getStoryCachedNameFieldForCoverType } from '@/utils/urls/getStoryCachedNameFieldForCoverType';
 
 import { processStoriesWithoutPreviews } from './utils/processStoriesWithoutPreviews';
+
+type StoryRealmObject = Realm.Object<StorySchema, never> & StorySchema;
 
 export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
   useEffect(() => {
@@ -29,8 +29,8 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
     );
 
     const previewsListener: CollectionChangeCallback<
-      RealmObject<StorySchema, never> & StorySchema,
-      [number, RealmObject<StorySchema, never> & StorySchema]
+      StoryRealmObject,
+      [number, StoryRealmObject]
     > = (collection, changes) => {
       const { insertions } = changes;
       const stortedCollection = insertions

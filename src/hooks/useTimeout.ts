@@ -6,7 +6,7 @@ export const useTimeout = (): [
   setTimeout: (handler: () => void, timer: number) => void,
   clearTimeout: () => void,
 ] => {
-  const timeout = useRef<NodeJS.Timeout | null>(null);
+  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clear = useCallback(() => {
     if (timeout.current) {

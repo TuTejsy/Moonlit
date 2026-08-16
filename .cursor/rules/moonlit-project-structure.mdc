@@ -8,4 +8,4 @@ alwaysApply: false
 
 - Source in `src/` — see `.agents/rules/project-context.md` for full directory map.
 - Provider hierarchy: `SafeAreaProvider → ThemeProvider → LocalizationProvider → Redux → AppLogicProvider → Navigation`.
-- Key scripts: `yarn start`, `yarn ios`, `yarn android`, `yarn test`, `yarn lint`, `yarn format`, `yarn tsc`, `yarn restart`, `yarn pod-reinstall`.
+- Key scripts: `yarn start`, `yarn ios`, `yarn android`, `yarn test`, `yarn lint`, `yarn format`, `yarn tsc`, `yarn restart`, `yarn pod-reinstall`, `yarn android:check-16kb`.

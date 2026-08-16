@@ -1,0 +1,28 @@
+diff --git a/node_modules/@typescript-eslint/eslint-plugin/dist/rules/no-unused-vars.js b/node_modules/@typescript-eslint/eslint-plugin/dist/rules/no-unused-vars.js
+index 1194200..691cd97 100644
+--- a/node_modules/@typescript-eslint/eslint-plugin/dist/rules/no-unused-vars.js
++++ b/node_modules/@typescript-eslint/eslint-plugin/dist/rules/no-unused-vars.js
+@@ -627,8 +627,9 @@ exports.default = (0, util_1.createRule)({
+              * @returns True if the node is a sibling of the rest property, otherwise false.
+              */
+             function hasRestSibling(node) {
+-                return (node.type === utils_1.AST_NODE_TYPES.Property &&
+-                    node.parent.type === utils_1.AST_NODE_TYPES.ObjectPattern &&
++                return (node != null &&
++                    node.type === utils_1.AST_NODE_TYPES.Property &&
++                    node.parent?.type === utils_1.AST_NODE_TYPES.ObjectPattern &&
+                     node.parent.properties[node.parent.properties.length - 1].type ===
+                         utils_1.AST_NODE_TYPES.RestElement);
+             }
+@@ -683,9 +684,9 @@ exports.default = (0, util_1.createRule)({
+                     // skip variables in the global scope if configured to
+                     continue;
+                 }
+-                const refUsedInArrayPatterns = variable.references.some(ref => ref.identifier.parent.type === utils_1.AST_NODE_TYPES.ArrayPattern);
++                const refUsedInArrayPatterns = variable.references.some(ref => ref.identifier.parent?.type === utils_1.AST_NODE_TYPES.ArrayPattern);
+                 // skip elements of array destructuring patterns
+-                if ((def.name.parent.type === utils_1.AST_NODE_TYPES.ArrayPattern ||
++                if ((def.name.parent?.type === utils_1.AST_NODE_TYPES.ArrayPattern ||
+                     refUsedInArrayPatterns) &&
+                     def.name.type === utils_1.AST_NODE_TYPES.Identifier &&
+                     options.destructuredArrayIgnorePattern?.test(def.name.name)) {

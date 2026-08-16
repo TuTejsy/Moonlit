@@ -6,6 +6,7 @@ import { LOCKED_CONTENT_PLACEMENT_ID } from '@/constants/common';
 import {
   LOCKED_CONTENT_PAYWALL_FETCH_PARAMS,
   normalizeAdaptyPaywallName,
+  pickFlowRemoteConfigData,
 } from '@/hooks/paywallBootstrap.utils';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { setPaywallBootstrapFailed, setPaywallData } from '@/store/subscription/subscription.slice';
@@ -27,13 +28,12 @@ export const usePaywallBootstrap = (): void => {
       try {
         await ensureAdaptyActivated();
 
-        const paywall = await adapty.getPaywall(
+        const flow = await adapty.getFlow(
           LOCKED_CONTENT_PLACEMENT_ID,
-          'en',
           LOCKED_CONTENT_PAYWALL_FETCH_PARAMS,
         );
 
-        const products = await adapty.getPaywallProducts(paywall);
+        const products = await adapty.getPaywallProducts(flow);
 
         if (products.length === 0) {
           dispatch(setPaywallBootstrapFailed());
@@ -42,8 +42,8 @@ export const usePaywallBootstrap = (): void => {
 
         dispatch(
           setPaywallData({
-            paywallName: normalizeAdaptyPaywallName(paywall),
-            paywallRemoteConfig: paywall.remoteConfig?.data ?? null,
+            paywallName: normalizeAdaptyPaywallName(flow),
+            paywallRemoteConfig: pickFlowRemoteConfigData(flow),
             products,
           }),
         );
