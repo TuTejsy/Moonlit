@@ -216,6 +216,7 @@ tasks.register("check16KbPageAlignment") {
     }
 }
 
-tasks.named("assembleRelease").configure {
+// AGP 9 registers variant assemble tasks after this script evaluates; named() fails at config time.
+tasks.matching { it.name == "assembleRelease" }.configureEach {
     finalizedBy("check16KbPageAlignment")
 }

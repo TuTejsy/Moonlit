@@ -23,7 +23,7 @@ export const makeStyles = ({
         height: windowHeight,
         left: 0,
         position: 'absolute',
-        top: -insets.top,
+        top: IS_ANDROID ? 0 : -insets.top,
         width: windowWidth,
       },
       IS_ANDROID
