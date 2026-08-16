@@ -19,10 +19,10 @@ describe('useWebPagesNavigation', () => {
     (useAppNavigation as jest.Mock).mockReturnValue({ navigate: navigateMock });
   });
 
-  it('navigates to terms of service url', () => {
-    const { result } = renderHook(() => useWebPagesNavigation());
+  it('navigates to terms of service url', async () => {
+    const { result } = await renderHook(() => useWebPagesNavigation());
 
-    act(() => {
+    await act(() => {
       result.current.openTermsOfService();
     });
 
@@ -31,10 +31,10 @@ describe('useWebPagesNavigation', () => {
     });
   });
 
-  it('navigates to privacy policy url', () => {
-    const { result } = renderHook(() => useWebPagesNavigation());
+  it('navigates to privacy policy url', async () => {
+    const { result } = await renderHook(() => useWebPagesNavigation());
 
-    act(() => {
+    await act(() => {
       result.current.openPrivacyPolicy();
     });
 

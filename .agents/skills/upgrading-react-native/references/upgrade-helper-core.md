@@ -72,18 +72,23 @@ grep -n "^diff --git" /tmp/rn-diff-<current_version>..<target_version>.diff
    - Skip template-only UI (`App.tsx`) unless explicitly requested.
    - Skip template-only dependencies (`@react-native/new-app-screen`) unless they exist in the app.
 10. Apply diff safely.
-   - Treat `RnDiffApp` as placeholder; remap app/package names.
-   - Merge, do not overwrite project-specific customizations.
+
+- Treat `RnDiffApp` as placeholder; remap app/package names.
+- Merge, do not overwrite project-specific customizations.
+
 11. Sync native deps.
-   - Run iOS pods in `APP_DIR/ios`.
+
+- Run iOS pods in `APP_DIR/ios`.
+
 12. Validate and gate completion.
-   - iOS build passes.
-   - Android build passes.
-   - tests/typecheck/lint pass or failures are documented with next actions.
-   - If `react` was upgraded, run [react.md](react.md).
-   - If `target_version >= 0.81` and tests fail due to missing modules, add proper mocks.
-     - Example (`BackHandler` mock removal): https://github.com/facebook/react-native/issues/52667#issuecomment-3094788618
-   - Run [upgrade-verification.md](upgrade-verification.md) before closing the upgrade.
+
+- iOS build passes.
+- Android build passes.
+- tests/typecheck/lint pass or failures are documented with next actions.
+- If `react` was upgraded, run [react.md](react.md).
+- If `target_version >= 0.81` and tests fail due to missing modules, add proper mocks.
+  - Example (`BackHandler` mock removal): https://github.com/facebook/react-native/issues/52667#issuecomment-3094788618
+- Run [upgrade-verification.md](upgrade-verification.md) before closing the upgrade.
 
 ## Stop Conditions
 

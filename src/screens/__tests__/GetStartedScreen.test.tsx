@@ -15,26 +15,26 @@ describe('GetStartedScreen', () => {
     jest.clearAllMocks();
   });
 
-  it('renders without crashing', () => {
-    render(<GetStartedScreen />);
+  it('renders without crashing', async () => {
+    await render(<GetStartedScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders continue button', () => {
-    render(<GetStartedScreen />);
+  it('renders continue button', async () => {
+    await render(<GetStartedScreen />);
 
     expect(screen.getByText('common.continue')).toBeOnTheScreen();
   });
 
-  it('logs onboarding analytics event on mount', () => {
-    render(<GetStartedScreen />);
+  it('logs onboarding analytics event on mount', async () => {
+    await render(<GetStartedScreen />);
 
     expect(AnalyticsService.setIsUserPaid).toHaveBeenCalledWith(false);
     expect(AnalyticsService.logOnboardingEvent).toHaveBeenCalledWith({ screen: 1 });
   });
 
-  it('calls handleContinuePress when continue button is pressed', () => {
+  it('calls handleContinuePress when continue button is pressed', async () => {
     const { useOnboardingSteps } = jest.requireMock(
       '@/screens/GetStartedScreen/hooks/useOnboardingSteps',
     );
@@ -45,15 +45,15 @@ describe('GetStartedScreen', () => {
       handleContinuePress: mockHandleContinuePress,
     });
 
-    render(<GetStartedScreen />);
+    await render(<GetStartedScreen />);
 
     fireEvent.press(screen.getByText('common.continue'));
 
     expect(mockHandleContinuePress).toHaveBeenCalled();
   });
 
-  it('renders step content from STEPS constant', () => {
-    render(<GetStartedScreen />);
+  it('renders step content from STEPS constant', async () => {
+    await render(<GetStartedScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });

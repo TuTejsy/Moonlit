@@ -7,8 +7,8 @@ import { useAnimatedScrollHandlerValue } from '../useAnimatedScrollHandlerValue'
 jest.unmock('@/hooks/useAnimatedScrollHandlerValue');
 
 describe('useAnimatedScrollHandlerValue', () => {
-  it('updates scrollPositionSharedValue for vertical scroll', () => {
-    const { result } = renderHook(() => useAnimatedScrollHandlerValue());
+  it('updates scrollPositionSharedValue for vertical scroll', async () => {
+    const { result } = await renderHook(() => useAnimatedScrollHandlerValue());
 
     expect(result.current.scrollPositionSharedValue.value).toBe(0);
 
@@ -20,15 +20,15 @@ describe('useAnimatedScrollHandlerValue', () => {
       },
     } as NativeSyntheticEvent<NativeScrollEvent>;
 
-    act(() => {
+    await act(() => {
       result.current.handleAnimatedScroll(mockEvent);
     });
 
     expect(result.current.scrollPositionSharedValue.value).toBe(150);
   });
 
-  it('updates scrollPositionSharedValue for horizontal scroll', () => {
-    const { result } = renderHook(() => useAnimatedScrollHandlerValue({ horizontal: true }));
+  it('updates scrollPositionSharedValue for horizontal scroll', async () => {
+    const { result } = await renderHook(() => useAnimatedScrollHandlerValue({ horizontal: true }));
 
     const mockEvent = {
       nativeEvent: {
@@ -38,15 +38,15 @@ describe('useAnimatedScrollHandlerValue', () => {
       },
     } as NativeSyntheticEvent<NativeScrollEvent>;
 
-    act(() => {
+    await act(() => {
       result.current.handleAnimatedScroll(mockEvent);
     });
 
     expect(result.current.scrollPositionSharedValue.value).toBe(200);
   });
 
-  it('respects maxOffset for vertical scroll', () => {
-    const { result } = renderHook(() => useAnimatedScrollHandlerValue({ maxOffset: 50 }));
+  it('respects maxOffset for vertical scroll', async () => {
+    const { result } = await renderHook(() => useAnimatedScrollHandlerValue({ maxOffset: 50 }));
 
     // This event signifies that we are close to the end (within 40px)
     // contentSize (140) - layout (100) = 40 (which is NOT > maxOffset 50)
@@ -58,7 +58,7 @@ describe('useAnimatedScrollHandlerValue', () => {
       },
     } as NativeSyntheticEvent<NativeScrollEvent>;
 
-    act(() => {
+    await act(() => {
       result.current.handleAnimatedScroll(mockEventEnd);
     });
 
@@ -73,7 +73,7 @@ describe('useAnimatedScrollHandlerValue', () => {
       },
     } as NativeSyntheticEvent<NativeScrollEvent>;
 
-    act(() => {
+    await act(() => {
       result.current.handleAnimatedScroll(mockEventMiddle);
     });
 

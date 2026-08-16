@@ -12,29 +12,29 @@ describe('HomeScreen', () => {
     jest.clearAllMocks();
   });
 
-  it('renders without crashing', () => {
-    render(<HomeScreen />);
+  it('renders without crashing', async () => {
+    await render(<HomeScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders SearchBar with placeholder text', () => {
-    render(<HomeScreen />);
+  it('renders SearchBar with placeholder text', async () => {
+    await render(<HomeScreen />);
 
     expect(screen.getByPlaceholderText('Look for stories')).toBeOnTheScreen();
   });
 
-  it('shows DefaultList by default when no search and input not focused', () => {
+  it('shows DefaultList by default when no search and input not focused', async () => {
     const mockStories = [{ name: 'Story 1' }, { name: 'Story 2' }];
     (useStories as jest.Mock).mockReturnValueOnce([mockStories, 1]).mockReturnValueOnce([[], 0]);
 
-    render(<HomeScreen />);
+    await render(<HomeScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('shows search results when search text is entered', () => {
-    render(<HomeScreen />);
+  it('shows search results when search text is entered', async () => {
+    await render(<HomeScreen />);
 
     const searchInput = screen.getByPlaceholderText('Look for stories');
     fireEvent.changeText(searchInput, 'cinderella');
@@ -42,8 +42,8 @@ describe('HomeScreen', () => {
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('shows PopularSearch when input is focused and no search text', () => {
-    render(<HomeScreen />);
+  it('shows PopularSearch when input is focused and no search text', async () => {
+    await render(<HomeScreen />);
 
     const searchInput = screen.getByPlaceholderText('Look for stories');
     fireEvent(searchInput, 'focus');
@@ -51,8 +51,8 @@ describe('HomeScreen', () => {
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('calls useScrollOpacity hook', () => {
-    render(<HomeScreen />);
+  it('calls useScrollOpacity hook', async () => {
+    await render(<HomeScreen />);
 
     expect(useScrollOpacity).toHaveBeenCalled();
   });

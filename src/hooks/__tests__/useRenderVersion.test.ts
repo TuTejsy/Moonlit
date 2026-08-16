@@ -18,38 +18,38 @@ describe('useRenderVersion', () => {
     (useAppSelector as jest.Mock).mockReturnValue(false);
   });
 
-  it('returns initial render version of 1 when mounted', () => {
-    const { result } = renderHook(() => useRenderVersion());
+  it('returns initial render version of 1 when mounted', async () => {
+    const { result } = await renderHook(() => useRenderVersion());
 
     expect(result.current.renderVersion).toBe(1);
   });
 
-  it('incorporates the provided version offset', () => {
-    const { result } = renderHook(() => useRenderVersion(5));
+  it('incorporates the provided version offset', async () => {
+    const { result } = await renderHook(() => useRenderVersion(5));
 
     expect(result.current.renderVersion).toBe(6);
   });
 
-  it('increments renderVersion when increaseRenderVersion is called', () => {
-    const { result } = renderHook(() => useRenderVersion());
+  it('increments renderVersion when increaseRenderVersion is called', async () => {
+    const { result } = await renderHook(() => useRenderVersion());
 
     expect(result.current.renderVersion).toBe(1);
 
     // eslint-disable-next-line testing-library/no-unnecessary-act
-    act(() => {
+    await act(() => {
       result.current.increaseRenderVersion();
     });
 
     expect(result.current.renderVersion).toBe(2);
   });
 
-  it('increments renderVersion when selectIsFullVersion changes', () => {
-    const { rerender, result } = renderHook(() => useRenderVersion());
+  it('increments renderVersion when selectIsFullVersion changes', async () => {
+    const { rerender, result } = await renderHook(() => useRenderVersion());
 
     expect(result.current.renderVersion).toBe(1);
 
     (useAppSelector as jest.Mock).mockReturnValue(true);
-    rerender({});
+    await rerender({});
 
     expect(result.current.renderVersion).toBe(2);
   });

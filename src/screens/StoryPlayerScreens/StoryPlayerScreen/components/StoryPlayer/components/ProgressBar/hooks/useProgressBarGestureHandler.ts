@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 
-import { ComposedGesture, Gesture } from 'react-native-gesture-handler';
+import { useCompetingGestures, usePanGesture, useTapGesture } from 'react-native-gesture-handler';
 import { Extrapolation, SharedValue, interpolate } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 
@@ -10,7 +10,7 @@ export function useProgressBarGestureHandler(
   progressSharedValue: SharedValue<number>,
   onUpdatePlayPercent: (playPercent: number) => void,
   setPlayedTimeText: (playPercent: number) => void,
-): [ComposedGesture, React.MutableRefObject<boolean>] {
+) {
   const isTapActiveRef = useRef(false);
   const isPanActiveRef = useRef(false);
   const isGestureActiveRef = useRef(false);
@@ -37,47 +37,52 @@ export function useProgressBarGestureHandler(
     }
   }, []);
 
-  const tapGesture = Gesture.Tap()
-    .numberOfTaps(1)
-    .onTouchesDown((e) => {
+  const tapGesture = useTapGesture({
+    numberOfTaps: 1,
+    onDeactivate: () => {
+      scheduleOnRN(setIsTapActiveRef, false);
+      scheduleOnRN(onUpdatePlayPercent, progressSharedValue.get());
+    },
+    onFinalize: () => {
+      scheduleOnRN(setIsTapActiveRef, false);
+    },
+    onTouchesDown: (e) => {
       scheduleOnRN(setIsTapActiveRef, true);
 
-      progressSharedValue.value = interpolate(
-        e.allTouches[0].absoluteX,
-        [horizontalPadding, windowWidth - horizontalPadding],
-        [0, 100],
-        Extrapolation.CLAMP,
+      progressSharedValue.set(
+        interpolate(
+          e.allTouches[0].absoluteX,
+          [horizontalPadding, windowWidth - horizontalPadding],
+          [0, 100],
+          Extrapolation.CLAMP,
+        ),
       );
-    })
-    .onFinalize(() => {
-      scheduleOnRN(setIsTapActiveRef, false);
-    })
-    .onEnd(() => {
-      scheduleOnRN(setIsTapActiveRef, false);
-      scheduleOnRN(onUpdatePlayPercent, progressSharedValue.value);
-    });
+    },
+  });
 
-  const panGesture = Gesture.Pan()
-    .onStart(() => {
+  const panGesture = usePanGesture({
+    onActivate: () => {
       scheduleOnRN(setIsPanActiveRef, true);
-    })
-    .onUpdate((e) => {
-      progressSharedValue.value = interpolate(
-        e.absoluteX,
-        [horizontalPadding, windowWidth - horizontalPadding],
-        [0, 100],
-        Extrapolation.CLAMP,
+    },
+    onDeactivate: () => {
+      scheduleOnRN(setIsPanActiveRef, false);
+      scheduleOnRN(onUpdatePlayPercent, progressSharedValue.get());
+    },
+    onUpdate: (e) => {
+      progressSharedValue.set(
+        interpolate(
+          e.absoluteX,
+          [horizontalPadding, windowWidth - horizontalPadding],
+          [0, 100],
+          Extrapolation.CLAMP,
+        ),
       );
 
-      scheduleOnRN(setPlayedTimeText, progressSharedValue.value);
-    })
-    .onEnd(() => {
-      scheduleOnRN(setIsPanActiveRef, false);
+      scheduleOnRN(setPlayedTimeText, progressSharedValue.get());
+    },
+  });
 
-      scheduleOnRN(onUpdatePlayPercent, progressSharedValue.value);
-    });
+  const composedGesture = useCompetingGestures(panGesture, tapGesture);
 
-  const composedGesture = Gesture.Race(panGesture, tapGesture);
-
-  return [composedGesture, isGestureActiveRef];
+  return [composedGesture, isGestureActiveRef] as const;
 }

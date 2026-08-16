@@ -28,6 +28,10 @@ import { scheduleOnRN } from 'react-native-worklets';
 scheduleOnRN(onValueChange, next, true);
 ```
 
+## Gesture Handler 3
+
+Story player uses RNGH 3 **hook API** (`usePanGesture`, `useTapGesture`, `useCompetingGestures`) — not `Gesture.Pan()` builder. File placement and patterns: [`moonlit-story-player`](../skills/moonlit-story-player/SKILL.md) § Gestures.
+
 ## Baseline files using `scheduleOnRN`
 
 - `src/screens/StoryPlayerScreens/StoryPlayerScreen/hooks/useStoryCoverGestureHandler.ts`

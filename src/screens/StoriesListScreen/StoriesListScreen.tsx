@@ -83,7 +83,6 @@ export const StoriesListScreen = () => {
           <StoriesWithPromotion
             source={SOURCE.CONTENT}
             stories={headerStories}
-            storiesVersion={storiesVersion}
             tab={(title ?? localize('stories', 'allTales')) as TabEventType}
           />
         }

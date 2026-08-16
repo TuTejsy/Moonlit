@@ -1,4 +1,4 @@
-import { Gesture } from 'react-native-gesture-handler';
+import { usePanGesture } from 'react-native-gesture-handler';
 import {
   Extrapolation,
   SharedValue,
@@ -14,34 +14,32 @@ export function useStoryCoverGestureHandler(
 ) {
   const isGestureEnabled = useSharedValue(false);
 
-  const gesture = Gesture.Pan()
-    .onBegin(() => {
-      if (storyPlayingSharedValue.value === 1) {
-        isGestureEnabled.value = true;
+  return usePanGesture({
+    onActivate: () => {
+      if (storyPlayingSharedValue.get() === 1) {
+        isGestureEnabled.set(true);
       }
-    })
-    .onUpdate((e) => {
-      if (isGestureEnabled.value) {
-        storyPlayingSharedValue.value = interpolate(
-          e.translationY,
-          [-10, -110],
-          [1, 0],
-          Extrapolation.CLAMP,
-        );
-      }
-    })
-    .onEnd((e) => {
-      if (isGestureEnabled.value) {
-        isGestureEnabled.value = false;
+    },
+    onDeactivate: (e) => {
+      if (isGestureEnabled.get()) {
+        isGestureEnabled.set(false);
 
         if (e.translationY < -40) {
-          storyPlayingSharedValue.value = withTiming(0);
+          storyPlayingSharedValue.set(withTiming(0));
           scheduleOnRN(onCoverCollapsed);
         } else {
-          storyPlayingSharedValue.value = withTiming(1);
+          storyPlayingSharedValue.set(withTiming(1));
         }
       }
-    });
-
-  return gesture;
+    },
+    onUpdate: (e) => {
+      if (isGestureEnabled.get()) {
+        storyPlayingSharedValue.set(
+          interpolate(e.translationY, [-10, -110], [1, 0], Extrapolation.CLAMP),
+        );
+      }
+    },
+  });
 }
+
+export type StoryCoverGesture = ReturnType<typeof useStoryCoverGestureHandler>;

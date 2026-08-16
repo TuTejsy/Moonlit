@@ -28,10 +28,6 @@ jest.mock('@react-native-firebase/remote-config', () => {
   };
 });
 
-jest.mock('@/constants/common', () => ({
-  SWITCH_PLACEMENT_ID: 'FULL_ACCESS',
-}));
-
 describe('RemoteConfigService', () => {
   const mockConfigInstance = remoteConfig();
 
@@ -83,12 +79,6 @@ describe('RemoteConfigService', () => {
       const result = remoteConfigService.toggleState;
 
       expect(result).toBe(remoteConfigDefaultValues[REMOTE_CONFIG_FIELDS.TOGGLE_STATE]);
-    });
-
-    it('returns placementId from remote config or default', () => {
-      const result = remoteConfigService.placementId;
-
-      expect(result).toBe(remoteConfigDefaultValues[REMOTE_CONFIG_FIELDS.PLACEMENT_ID]);
     });
 
     it('returns buyButtonTextTrial from remote config or default', () => {

@@ -37,33 +37,33 @@ describe('useAudioRecording', () => {
     (AudioRecordingsDB.object as jest.Mock).mockReturnValue(mockRecordingNode);
   });
 
-  it('initializes with the cloned audio recording object and version 1 if recording exists', () => {
-    const { result } = renderHook(() => useAudioRecording(1));
+  it('initializes with the cloned audio recording object and version 1 if recording exists', async () => {
+    const { result } = await renderHook(() => useAudioRecording(1));
 
     expect(AudioRecordingsDB.object).toHaveBeenCalledWith(1);
     expect(result.current[0]).toEqual({ ...mockRecordingNode, cloned: true });
     expect(result.current[1]).toBe(1);
   });
 
-  it('returns null if audio recording id is undefined', () => {
-    const { result } = renderHook(() => useAudioRecording(undefined));
+  it('returns null if audio recording id is undefined', async () => {
+    const { result } = await renderHook(() => useAudioRecording(undefined));
 
     expect(result.current[0]).toBeNull();
     // Default initial version
     expect(result.current[1]).toBe(0);
   });
 
-  it('returns null if audio recording does not exist', () => {
+  it('returns null if audio recording does not exist', async () => {
     (AudioRecordingsDB.object as jest.Mock).mockReturnValue(null);
 
-    const { result } = renderHook(() => useAudioRecording(1));
+    const { result } = await renderHook(() => useAudioRecording(1));
 
     expect(result.current[0]).toBeNull();
     expect(result.current[1]).toBe(0);
   });
 
-  it('sets up a listener and updates state when properties change', () => {
-    const { result } = renderHook(() => useAudioRecording(1, ['name']));
+  it('sets up a listener and updates state when properties change', async () => {
+    const { result } = await renderHook(() => useAudioRecording(1, ['name']));
 
     expect(addListenerMock).toHaveBeenCalledWith(expect.any(Function), ['name']);
 
@@ -71,7 +71,7 @@ describe('useAudioRecording', () => {
 
     const updatedRecording = { ...mockRecordingNode, name: 'Updated name' };
 
-    act(() => {
+    await act(() => {
       listener(updatedRecording, { changedProperties: ['name'], deleted: false });
     });
 
@@ -79,12 +79,12 @@ describe('useAudioRecording', () => {
     expect(result.current[1]).toBe(2);
   });
 
-  it('sets state to null when deleted property is true', () => {
-    const { result } = renderHook(() => useAudioRecording(1));
+  it('sets state to null when deleted property is true', async () => {
+    const { result } = await renderHook(() => useAudioRecording(1));
 
     const listener = addListenerMock.mock.calls[0][0];
 
-    act(() => {
+    await act(() => {
       listener(mockRecordingNode, { changedProperties: [], deleted: true });
     });
 
@@ -94,10 +94,10 @@ describe('useAudioRecording', () => {
     expect(result.current[1]).toBe(2);
   });
 
-  it('removes listener on unmount', () => {
-    const { unmount } = renderHook(() => useAudioRecording(1));
+  it('removes listener on unmount', async () => {
+    const { unmount } = await renderHook(() => useAudioRecording(1));
 
-    unmount();
+    await unmount();
 
     const listener = addListenerMock.mock.calls[0][0];
     expect(removeListenerMock).toHaveBeenCalledWith(listener);

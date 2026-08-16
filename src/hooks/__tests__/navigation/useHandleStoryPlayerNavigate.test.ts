@@ -36,7 +36,7 @@ describe('useHandleStoryPlayerNavigate', () => {
     (useShowPaywallModal as jest.Mock).mockReturnValue({ showPaywallModal: showPaywallModalMock });
   });
 
-  it('navigates to story player if user is full version', () => {
+  it('navigates to story player if user is full version', async () => {
     (useAppSelector as jest.Mock).mockImplementation((selector) => {
       if (selector === selectIsFullVersion) {
         return true;
@@ -44,7 +44,7 @@ describe('useHandleStoryPlayerNavigate', () => {
       return false;
     });
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useHandleStoryPlayerNavigate({
         isFree: false,
         source: SOURCE.TALE_PREVIEW,
@@ -53,7 +53,7 @@ describe('useHandleStoryPlayerNavigate', () => {
       }),
     );
 
-    act(() => {
+    await act(() => {
       result.current();
     });
 
@@ -64,7 +64,7 @@ describe('useHandleStoryPlayerNavigate', () => {
     expect(showPaywallModalMock).not.toHaveBeenCalled();
   });
 
-  it('navigates to story player if tale is free, even if not full version', () => {
+  it('navigates to story player if tale is free, even if not full version', async () => {
     (useAppSelector as jest.Mock).mockImplementation((selector) => {
       if (selector === selectIsFullVersion) {
         return false;
@@ -72,7 +72,7 @@ describe('useHandleStoryPlayerNavigate', () => {
       return false;
     });
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useHandleStoryPlayerNavigate({
         isFree: true,
         source: SOURCE.TALE_PREVIEW,
@@ -81,7 +81,7 @@ describe('useHandleStoryPlayerNavigate', () => {
       }),
     );
 
-    act(() => {
+    await act(() => {
       result.current();
     });
 
@@ -92,7 +92,7 @@ describe('useHandleStoryPlayerNavigate', () => {
     expect(showPaywallModalMock).not.toHaveBeenCalled();
   });
 
-  it('shows paywall modal if not full version and tale is not free', () => {
+  it('shows paywall modal if not full version and tale is not free', async () => {
     (useAppSelector as jest.Mock).mockImplementation((selector) => {
       if (selector === selectIsFullVersion) {
         return false;
@@ -100,7 +100,7 @@ describe('useHandleStoryPlayerNavigate', () => {
       return false;
     });
 
-    const { result } = renderHook(() =>
+    const { result } = await renderHook(() =>
       useHandleStoryPlayerNavigate({
         contentName: 'Premium Tale',
         isFree: false,
@@ -110,7 +110,7 @@ describe('useHandleStoryPlayerNavigate', () => {
       }),
     );
 
-    act(() => {
+    await act(() => {
       result.current();
     });
 

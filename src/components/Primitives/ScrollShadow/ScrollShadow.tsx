@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
-import Animated from 'react-native-reanimated';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 
 import { TrippleGradient } from '@/components/TrippleGradient/TrippleGradient';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
@@ -9,8 +9,10 @@ import { useTheme } from '@/hooks/theme/useTheme';
 
 import { makeStyles } from './ScrollShadow.styles';
 
+type AnimatedViewStyle = ReturnType<typeof useAnimatedStyle>;
+
 interface Props {
-  opacityAnimStyle: StyleProp<ViewStyle>;
+  opacityAnimStyle: AnimatedViewStyle | StyleProp<ViewStyle>;
   gradientStyle?: ViewStyle;
 }
 

@@ -1,15 +1,20 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-import { adapty, AdaptyPaywallProduct } from 'react-native-adapty';
+import { AdaptyPaywallProduct } from 'react-native-adapty';
 
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
 import { SharedRoutes } from '@/navigation/SharedNavigator/SharedNavigator.routes';
 import { SOURCE } from '@/services/analytics/analytics.constants';
 import { TabEventType } from '@/services/analytics/analytics.types';
-import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
-import { selectProducts } from '@/store/subscription/subscription.selector';
-import { setProducts } from '@/store/subscription/subscription.slice';
+import {
+  selectIsPaywallBootstrapFailed,
+  selectIsPaywallBootstrapSettled,
+  selectIsPaywallReady,
+  selectPaywallName,
+  selectPaywallRemoteConfig,
+  selectProducts,
+} from '@/store/subscription/subscription.selector';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { setFreeOfferDays } from '@/store/user/user.slice';
 
@@ -20,6 +25,13 @@ interface ShowPaywallModalProps {
   animationType: 'push' | 'modal';
   shouldReplace: boolean;
   onClose?: () => void;
+}
+
+interface ShowPaywallRequest {
+  source: SOURCE;
+  contentName?: string;
+  isSubscriptionExpired?: boolean;
+  tab?: TabEventType;
 }
 
 export const useShowPaywallModal = (
@@ -33,98 +45,128 @@ export const useShowPaywallModal = (
 
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectProducts);
+  const paywallName = useAppSelector(selectPaywallName);
+  const paywallRemoteConfig = useAppSelector(selectPaywallRemoteConfig);
+  const isPaywallReady = useAppSelector(selectIsPaywallReady);
+  const isPaywallBootstrapSettled = useAppSelector(selectIsPaywallBootstrapSettled);
+  const isPaywallBootstrapFailed = useAppSelector(selectIsPaywallBootstrapFailed);
 
-  const palcementIdRef = useRef(remoteConfigService.placementId);
+  const pendingRequestRef = useRef<ShowPaywallRequest | null>(null);
 
-  const loadProducts = useCallback(async () => {
-    try {
-      palcementIdRef.current = remoteConfigService.placementId;
+  const openPaywall = useCallback(
+    (
+      loadedProducts: AdaptyPaywallProduct[],
+      loadedPaywallName: string,
+      loadedRemoteConfig: Record<string, unknown> | null,
+      request: ShowPaywallRequest,
+    ) => {
+      const { contentName, source, tab } = request;
 
-      const paywall = await adapty.getPaywall(palcementIdRef.current, 'en', {
-        fetchPolicy: 'return_cache_data_if_not_expired_else_load',
-        maxAgeSeconds: 60 * 60 * 24, // 24 hours
-      });
+      (shouldReplace ? navigation.replace : navigation.navigate)(
+        animationType === 'push' ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
+        {
+          contentName,
+          onClose,
+          paywallName: loadedPaywallName,
+          products: loadedProducts,
+          remoteConfig: loadedRemoteConfig ?? undefined,
+          source,
+          tab,
+        },
+      );
 
-      const products = await adapty.getPaywallProducts(paywall);
+      const offerDays = loadedProducts.find((product) => !!product.subscription?.offer)
+        ?.subscription?.offer?.phases?.[0]?.subscriptionPeriod?.numberOfUnits;
 
-      dispatch(setProducts(products));
-
-      return products;
-    } catch (err) {
-      console.log(err);
-    }
-
-    return null;
-  }, [dispatch]);
-
-  const showPaywallModal = useCallback(
-    ({
-      contentName,
-      isSubscriptionExpired = false,
-      source,
-      tab,
-    }: {
-      source: SOURCE;
-      contentName?: string;
-      isSubscriptionExpired?: boolean;
-      tab?: TabEventType;
-    }) => {
-      const openPaywall = (products: AdaptyPaywallProduct[]) => {
-        (shouldReplace ? navigation.replace : navigation.navigate)(
-          animationType === 'push' ? RootRoutes.PAYWALL_SCREEN : RootRoutes.PAYWALL_MODAL,
-          {
-            contentName,
-            onClose,
-            placementId: palcementIdRef.current,
-            products,
-            source,
-            tab,
-          },
-        );
-
-        const offerDays = products.find((product) => !!product.subscription?.offer)?.subscription
-          ?.offer?.phases?.[0]?.subscriptionPeriod?.numberOfUnits;
-
-        if (offerDays) {
-          dispatch(setFreeOfferDays(offerDays));
-        }
-      };
-
-      try {
-        if (!isFullVerion || isSubscriptionExpired) {
-          if (products) {
-            openPaywall(products);
-          } else {
-            remoteConfigService.fetchAndActivate().then(loadProducts);
-          }
-        } else {
-          onClose?.();
-        }
-      } catch (err) {
-        console.error(err);
+      if (offerDays) {
+        dispatch(setFreeOfferDays(offerDays));
       }
     },
+    [animationType, dispatch, navigation.navigate, navigation.replace, onClose, shouldReplace],
+  );
+
+  const handleFailedPaywallRequest = useCallback(() => {
+    pendingRequestRef.current = null;
+    onClose?.();
+  }, [onClose]);
+
+  const tryShowPaywall = useCallback(
+    (request: ShowPaywallRequest) => {
+      const { isSubscriptionExpired = false } = request;
+
+      if (isFullVerion && !isSubscriptionExpired) {
+        onClose?.();
+        return;
+      }
+
+      if (isPaywallReady && products && paywallName) {
+        pendingRequestRef.current = null;
+        openPaywall(products, paywallName, paywallRemoteConfig, request);
+        return;
+      }
+
+      if (isPaywallBootstrapFailed) {
+        handleFailedPaywallRequest();
+        return;
+      }
+
+      pendingRequestRef.current = request;
+    },
     [
-      shouldReplace,
-      navigation.replace,
-      navigation.navigate,
-      animationType,
-      onClose,
-      dispatch,
+      handleFailedPaywallRequest,
       isFullVerion,
+      isPaywallBootstrapFailed,
+      isPaywallReady,
+      onClose,
+      openPaywall,
+      paywallName,
+      paywallRemoteConfig,
       products,
-      loadProducts,
     ],
   );
 
   useEffect(() => {
-    remoteConfigService.fetchAndActivate().then(loadProducts);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const pendingRequest = pendingRequestRef.current;
+
+    if (!pendingRequest) {
+      return;
+    }
+
+    if (isPaywallReady && products && paywallName) {
+      pendingRequestRef.current = null;
+      openPaywall(products, paywallName, paywallRemoteConfig, pendingRequest);
+      return;
+    }
+
+    if (isPaywallBootstrapFailed) {
+      handleFailedPaywallRequest();
+    }
+  }, [
+    handleFailedPaywallRequest,
+    isPaywallBootstrapFailed,
+    isPaywallReady,
+    openPaywall,
+    paywallName,
+    paywallRemoteConfig,
+    products,
+  ]);
+
+  const showPaywallModal = useCallback(
+    (request: ShowPaywallRequest) => {
+      try {
+        tryShowPaywall(request);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [tryShowPaywall],
+  );
 
   return {
-    areProductsLoaded: !!products,
     isFullVerion,
+    isPaywallBootstrapFailed,
+    isPaywallBootstrapSettled,
+    isPaywallReady,
     isSubscriptionAvailable: !isFullVerion,
     showPaywallModal,
   };

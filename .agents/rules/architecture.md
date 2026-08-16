@@ -49,24 +49,26 @@ The app uses **React Navigation v7** with JS stack and bottom tabs:
 
 Screens and hooks must not import SDK packages directly except where noted.
 
-| Package                                                                 | Allowed import paths                                                                                                                            |
-| :---------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@amplitude/analytics-react-native`, `@react-native-firebase/analytics` | `src/services/analytics/analytics.ts`                                                                                                           |
-| `@react-native-firebase/remote-config`                                  | `src/services/remoteConfig/remoteConfig.ts`                                                                                                     |
-| `@react-native-async-storage/async-storage`                             | `src/services/storage/storage.ts`                                                                                                               |
-| `react-native-keychain` (via abstraction)                               | `src/services/securedStorage/securedStorage.ts`                                                                                                 |
-| `axios` / network                                                       | `src/services/networkClient/networkClient.ts`                                                                                                   |
-| `react-native-adapty` runtime (`adapty.*`)                              | `src/hooks/navigation/useShowPaywallModal.ts`, `src/hooks/useHandleCheckSubscription.ts`, `src/screens/PaywallModal/hooks/usePaywallActions.ts` |
-| `react-native-adapty` types only                                        | Paywall screens/hooks, `src/store/subscription/`, `RootNavigator.types.ts`                                                                      |
-| `useRoute`, `useNavigation` from `@react-navigation/native`             | `src/navigation/hooks/useAppRoute.ts`, `useAppNavigation.ts` only                                                                               |
+| Package                                                                 | Allowed import paths                                                                                                                                               |
+| :---------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@amplitude/analytics-react-native`, `@react-native-firebase/analytics` | `src/services/analytics/analytics.ts`                                                                                                                              |
+| `@react-native-firebase/remote-config`                                  | `src/services/remoteConfig/remoteConfig.ts`                                                                                                                        |
+| `@react-native-async-storage/async-storage`                             | `src/services/storage/storage.ts`                                                                                                                                  |
+| `react-native-keychain` (via abstraction)                               | `src/services/securedStorage/securedStorage.ts`                                                                                                                    |
+| `axios` / network                                                       | `src/services/networkClient/networkClient.ts`                                                                                                                      |
+| `react-native-adapty` runtime (`adapty.*`)                              | `src/hooks/useAdaptyInit.ts`, `src/hooks/usePaywallBootstrap.ts`, `src/hooks/useHandleCheckSubscription.ts`, `src/screens/PaywallModal/hooks/usePaywallActions.ts` |
+| `react-native-adapty` types only                                        | Paywall screens/hooks, `src/store/subscription/`, `RootNavigator.types.ts`                                                                                         |
+| `useRoute`, `useNavigation` from `@react-navigation/native`             | `src/navigation/hooks/useAppRoute.ts`, `useAppNavigation.ts` only                                                                                                  |
 
 ## Paywall (`src/screens/PaywallModal/`)
 
-- **Entry**: `PaywallModal.tsx` shell with placement-based variant routing.
-- **Variants**: `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/`.
+- **Entry**: `PaywallModal.tsx` shell with `paywallVariantRegistry` (`resolvePaywallVariantName` — prefix match on Adapty `paywall.name`).
+- **Variants**: `contentVariants/{Scrollable,Selection,Switcher,StaticDefaultProd}PaywallContent/`.
+- **Bootstrap**: `useRemoteConfigInit` + `useAdaptyInit` + `usePaywallBootstrap` in `AppLogicProvider`; `SplashViewModal` gates on `selectIsPaywallBootstrapSettled` (ready or failed). Adapty paywall `remoteConfig.data` is stored in Redux as `paywallRemoteConfig` (separate from Firebase remote config).
 - **Navigation hook**: `useShowPaywallModal` (`src/hooks/navigation/useShowPaywallModal.ts`) — opens `PAYWALL_SCREEN` or `PAYWALL_MODAL`.
 - **Subscription check**: `useHandleCheckSubscription` — Adapty profile + Redux `user` slice.
-- **Placement IDs**: `src/constants/common.ts` + `remoteConfigService`.
+- **Placement**: single `LOCKED_CONTENT_PLACEMENT_ID` in `src/constants/common.ts`; variant from Adapty paywall name prefix (`TOGGLE`, `SELECTION`, `SCROLLABLE`, `STATIC_DEFAULT_PROD` base names; postfix A/B names allowed).
+- **Product utils**: `utils/paywallProduct.utils.ts` — `resolvePaywallProducts`, `formatProductLocalizedPrice`; see skill § Product resolution and pricing.
 - Full architecture: `.agents/skills/moonlit-paywall-screen/SKILL.md`.
 
 ## Localization (`src/localization/`)

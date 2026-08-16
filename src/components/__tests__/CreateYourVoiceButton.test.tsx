@@ -9,15 +9,15 @@ import {
 } from '../Buttons/CreateYourVoiceButton/CreateYourVoiceButton.constants';
 
 describe('CreateYourVoiceButton', () => {
-  it('renders correctly', () => {
-    render(<CreateYourVoiceButton onPress={jest.fn()} />);
+  it('renders correctly', async () => {
+    await render(<CreateYourVoiceButton onPress={jest.fn()} />);
 
     expect(screen.getByTestId(TEST_ID_CREATE_YOUR_VOICE_BUTTON)).toBeTruthy();
   });
 
-  it('triggers onPress when the button is pressed', () => {
+  it('triggers onPress when the button is pressed', async () => {
     const onPressMock = jest.fn();
-    render(<CreateYourVoiceButton onPress={onPressMock} />);
+    await render(<CreateYourVoiceButton onPress={onPressMock} />);
 
     const pressable = screen.getByTestId(TEST_ID_CREATE_YOUR_VOICE_PRESSABLE);
     fireEvent.press(pressable);

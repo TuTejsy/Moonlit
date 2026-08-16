@@ -35,6 +35,7 @@ jest.mock('react-native-reanimated', () => {
       quad: jest.fn(),
       sin: jest.fn(),
     },
+    ReduceMotion: { Never: 'Never', System: 'System' },
     cancelAnimation: jest.fn(),
     default: {
       Image: AnimatedImage,
@@ -46,11 +47,18 @@ jest.mock('react-native-reanimated', () => {
       createAnimatedComponent: (component: unknown) => component,
     },
     interpolate: jest.fn(),
+    interpolateColor: jest.fn(),
     useAnimatedScrollHandler: jest.fn((cb) => cb?.onScroll ?? cb),
     useAnimatedStyle: jest.fn().mockReturnValue({}),
-    useDerivedValue: jest.fn((cb) => ({ value: cb() })),
-    useSharedValue: jest.fn((initial: unknown) => ({ value: initial })),
+    useDerivedValue: jest.fn((cb) => ({ get: jest.fn(() => cb()), value: cb() })),
+    useSharedValue: jest.fn((initial: unknown) => ({
+      get: jest.fn(() => initial),
+      set: jest.fn(),
+      value: initial,
+    })),
+    withDelay: jest.fn(),
     withRepeat: jest.fn(),
+    withSequence: jest.fn(),
     withTiming: jest.fn(),
   };
 });
@@ -114,6 +122,7 @@ jest.mock('react-native-linear-gradient', () => 'LinearGradient');
 
 // Mock react-native-svg
 jest.mock('react-native-svg', () => ({
+  __esModule: true,
   Circle: 'Circle',
   Defs: 'Defs',
   G: 'G',
@@ -245,17 +254,13 @@ jest.mock('react-native-screens', () => ({
 
 // Mock react-native-gesture-handler
 jest.mock('react-native-gesture-handler', () => ({
-  Gesture: {
-    Pan: jest.fn().mockReturnValue({
-      onEnd: jest.fn().mockReturnThis(),
-      onStart: jest.fn().mockReturnThis(),
-      onUpdate: jest.fn().mockReturnThis(),
-    }),
-  },
   GestureDetector: 'GestureDetector',
   GestureHandlerRootView: 'GestureHandlerRootView',
   PanGestureHandler: 'PanGestureHandler',
   State: {},
+  useCompetingGestures: jest.fn((...gestures: unknown[]) => gestures[0]),
+  usePanGesture: jest.fn(() => ({})),
+  useTapGesture: jest.fn(() => ({})),
 }));
 
 // Mock useMakeStyles - returns the makeStyles function result with empty style objects
@@ -287,6 +292,7 @@ jest.mock('@/hooks/theme/useMakeStyles', () => ({
           opacityLightGradientPurple: (f: number) => `rgba(26, 0, 67, ${f})`,
           opacityLightPurple: (f: number) => `rgba(31, 6, 71, ${f})`,
           opacityOrange: (f: number) => `rgba(236, 119, 72, ${f})`,
+          opacityPink: (f: number) => `rgba(212, 75, 237, ${f})`,
           opacityPurple: (f: number) => `rgba(23, 6, 52, ${f})`,
           opacitySkin: (f: number) => `rgba(202, 166, 144, ${f})`,
           opacityWhite: (f: number) => `rgba(255, 255, 255, ${f})`,
@@ -303,12 +309,23 @@ jest.mock('@/hooks/theme/useMakeStyles', () => ({
         },
         dh: (s: number) => s,
         dw: (s: number) => s,
+        fonts: {} as Record<string, unknown>,
         horizontalPadding: 16,
         insets: { bottom: 0, left: 0, right: 0, top: 0 },
         isLandscape: false,
         isPortrait: true,
         windowHeight: 844,
         windowWidth: 390,
+        zIndex: {
+          backgroundLoader: 100010,
+          icon: 100,
+          main: 1,
+          max: Number.MAX_SAFE_INTEGER,
+          overMain: 2,
+          shadow: 100000,
+          underMain: -1,
+          zero: 0,
+        },
       };
       return makeStylesFn(theme, {});
     } catch {
@@ -346,6 +363,7 @@ jest.mock('@/hooks/theme/useTheme', () => ({
       opacityLightGradientPurple: (f: number) => `rgba(26, 0, 67, ${f})`,
       opacityLightPurple: (f: number) => `rgba(31, 6, 71, ${f})`,
       opacityOrange: (f: number) => `rgba(236, 119, 72, ${f})`,
+      opacityPink: (f: number) => `rgba(212, 75, 237, ${f})`,
       opacityPurple: (f: number) => `rgba(23, 6, 52, ${f})`,
       opacitySkin: (f: number) => `rgba(202, 166, 144, ${f})`,
       opacityWhite: (f: number) => `rgba(255, 255, 255, ${f})`,
@@ -361,7 +379,16 @@ jest.mock('@/hooks/theme/useTheme', () => ({
       white_50: '#88868D',
     },
     indicatorStyle: 'black',
-    zIndex: { backgroundLoader: 100010, icon: 100, main: 1, max: Number.MAX_SAFE_INTEGER },
+    zIndex: {
+      backgroundLoader: 100010,
+      icon: 100,
+      main: 1,
+      max: Number.MAX_SAFE_INTEGER,
+      overMain: 2,
+      shadow: 100000,
+      underMain: -1,
+      zero: 0,
+    },
   }),
 }));
 
@@ -420,8 +447,10 @@ jest.mock('@/navigation/hooks/useAppRoute', () => ({
 // Mock useShowPaywallModal
 jest.mock('@/hooks/navigation/useShowPaywallModal', () => ({
   useShowPaywallModal: jest.fn().mockReturnValue({
-    areProductsLoaded: false,
     isFullVerion: false,
+    isPaywallBootstrapFailed: false,
+    isPaywallBootstrapSettled: false,
+    isPaywallReady: false,
     isSubscriptionAvailable: true,
     showPaywallModal: jest.fn(),
   }),
@@ -600,7 +629,6 @@ jest.mock('@/services/remoteConfig/remoteConfig', () => ({
     disableLiveUpdate: jest.fn(),
     enableLiveUpdate: jest.fn(),
     isLiveUpdateEnabled: false,
-    placementId: 'test_placement',
     segment: 'test_segment',
     toggleState: false,
   },
@@ -885,9 +913,11 @@ jest.mock(
 // Mock react-native-adapty (extend with purchase methods)
 jest.mock('react-native-adapty', () => ({
   adapty: {
-    getPaywall: jest.fn().mockResolvedValue({}),
+    activate: jest.fn().mockResolvedValue(undefined),
+    getPaywall: jest.fn().mockResolvedValue({ name: 'TOGGLE' }),
     getPaywallProducts: jest.fn().mockResolvedValue([]),
     getProfile: jest.fn().mockResolvedValue({ accessLevels: {} }),
+    isActivated: jest.fn().mockResolvedValue(true),
     makePurchase: jest.fn().mockResolvedValue({ type: 'success' }),
     restorePurchases: jest.fn().mockResolvedValue({ accessLevels: {} }),
   },

@@ -1,13 +1,12 @@
 import { ScrollView } from 'react-native';
 
-import { AdaptyPaywallProduct } from 'react-native-adapty';
-
 import { GradientButton } from '@/components/GradientButton/GradientButton';
 import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 
 import { FooterActions } from '../../components/FooterActions/FooterActions';
+import type { PaywallVariantProps } from '../../paywallVariantRegistry.types';
 import { FreeTrialToggle } from '../components/FreeTrialToggle/FreeTrialToggle';
 
 import { BenefitsList } from './components/BenefitsList/BenefitsList';
@@ -16,33 +15,20 @@ import { YearlyProductCard } from './components/YearlyProductCard/YearlyProductC
 import { useScrollablePaywallProducts } from './hooks/useScrollablePaywallProducts';
 import { makeStyles } from './ScrollablePaywallContent.styles';
 
-// eslint-disable-next-line import/no-unresolved
-
-interface ScrollablePaywallContentProps {
-  isFreeTrialEnabled: boolean;
-  isTrialEligible: boolean;
-  onRestorePress: () => void;
-  onSelectProduct: (product: AdaptyPaywallProduct | undefined) => void;
-  onUnlockPress: () => void;
-  selectedProduct: AdaptyPaywallProduct | undefined;
-  trialProduct: AdaptyPaywallProduct | undefined;
-  unlockButtonText: string;
-  weeklyProduct: AdaptyPaywallProduct | undefined;
-  yearlyProduct: AdaptyPaywallProduct | undefined;
-}
-
 export const ScrollablePaywallContent = ({
   isFreeTrialEnabled,
   isTrialEligible,
   onRestorePress,
   onSelectProduct,
+  onSkipPress,
   onUnlockPress,
+  remoteConfig,
   selectedProduct,
   trialProduct,
   unlockButtonText,
   weeklyProduct,
   yearlyProduct,
-}: ScrollablePaywallContentProps) => {
+}: PaywallVariantProps) => {
   const styles = useMakeStyles(makeStyles);
   const { localize } = useAppLocalization();
 
@@ -107,6 +93,7 @@ export const ScrollablePaywallContent = ({
         actionStyle={styles.footerAction}
         style={styles.footerActions}
         onRestorePress={onRestorePress}
+        onSkipPress={remoteConfig.showBottomSkipButton ? onSkipPress : undefined}
       />
 
       <TextView style={styles.subscriptionInfo}>{localize('paywall', 'cancelPolicy')}</TextView>

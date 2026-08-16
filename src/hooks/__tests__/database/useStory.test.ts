@@ -33,8 +33,8 @@ describe('useStory', () => {
     (StoriesDB.object as jest.Mock).mockReturnValue(mockStoryNode);
   });
 
-  it('initializes with the story object and version 1 string if story exists', () => {
-    const { result } = renderHook(() => useStory(1));
+  it('initializes with the story object and version 1 string if story exists', async () => {
+    const { result } = await renderHook(() => useStory(1));
 
     expect(StoriesDB.object).toHaveBeenCalledWith(1);
     expect(result.current[0]).toBe(mockStoryNode);
@@ -43,18 +43,18 @@ describe('useStory', () => {
     expect(result.current[1]).toBe(1);
   });
 
-  it('returns null if story does not exist', () => {
+  it('returns null if story does not exist', async () => {
     (StoriesDB.object as jest.Mock).mockReturnValue(null);
 
-    const { result } = renderHook(() => useStory(1));
+    const { result } = await renderHook(() => useStory(1));
 
     expect(result.current[0]).toBeNull();
     // effect won't run listener setup since story is null
     expect(result.current[1]).toBe(0);
   });
 
-  it('sets up a Realm listener and updates story version on change', () => {
-    const { result } = renderHook(() => useStory(1, ['name']));
+  it('sets up a Realm listener and updates story version on change', async () => {
+    const { result } = await renderHook(() => useStory(1, ['name']));
 
     expect(addListenerMock).toHaveBeenCalledWith(expect.any(Function), ['name']);
 
@@ -62,7 +62,7 @@ describe('useStory', () => {
 
     const updatedStoryNode = { ...mockStoryNode, name: 'Updated name' };
 
-    act(() => {
+    await act(() => {
       listener(updatedStoryNode, { changedProperties: ['name'] });
     });
 
@@ -70,12 +70,12 @@ describe('useStory', () => {
     expect(result.current[1]).toBe(2);
   });
 
-  it('ignores listener call if nothing changed', () => {
-    const { result } = renderHook(() => useStory(1));
+  it('ignores listener call if nothing changed', async () => {
+    const { result } = await renderHook(() => useStory(1));
 
     const listener = addListenerMock.mock.calls[0][0];
 
-    act(() => {
+    await act(() => {
       listener(mockStoryNode, { changedProperties: [] });
     });
 
@@ -83,10 +83,10 @@ describe('useStory', () => {
     expect(result.current[1]).toBe(1);
   });
 
-  it('removes listener on unmount', () => {
-    const { unmount } = renderHook(() => useStory(1));
+  it('removes listener on unmount', async () => {
+    const { unmount } = await renderHook(() => useStory(1));
 
-    unmount();
+    await unmount();
 
     const listener = addListenerMock.mock.calls[0][0];
     expect(removeListenerMock).toHaveBeenCalledWith(listener);

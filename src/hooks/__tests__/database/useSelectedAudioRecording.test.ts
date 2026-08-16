@@ -33,7 +33,7 @@ describe('useSelectedAudioRecording', () => {
     jest.clearAllMocks();
   });
 
-  it('returns the selected audio recording based on story selected_audio_recording_id', () => {
+  it('returns the selected audio recording based on story selected_audio_recording_id', async () => {
     const mockStory = { selected_audio_recording_id: 42 };
     (useStory as jest.Mock).mockReturnValue([mockStory, 1]);
     (useAudioRecordings as jest.Mock).mockReturnValue([[], 1]);
@@ -41,21 +41,21 @@ describe('useSelectedAudioRecording', () => {
     const mockRecordingFromDb = { id: 42, title: 'Selected' };
     (AudioRecordingsDB.object as jest.Mock).mockReturnValue(mockRecordingFromDb);
 
-    const { result } = renderHook(() => useSelectedAudioRecording(1));
+    const { result } = await renderHook(() => useSelectedAudioRecording(1));
 
     expect(AudioRecordingsDB.object).toHaveBeenCalledWith(42);
     expect(result.current.selectedAudioRecording).toEqual({ ...mockRecordingFromDb, cloned: true });
     expect(result.current.selectedAudioRecordingVersion).toBe(1);
   });
 
-  it('falls back to the first recording from the list if story has no selected_audio_recording_id', () => {
+  it('falls back to the first recording from the list if story has no selected_audio_recording_id', async () => {
     const mockStory = {}; // No selection
     (useStory as jest.Mock).mockReturnValue([mockStory, 1]);
 
     const mockRecordingsList = [{ id: 100, title: 'Fallback' }];
     (useAudioRecordings as jest.Mock).mockReturnValue([mockRecordingsList, 1]);
 
-    const { result } = renderHook(() => useSelectedAudioRecording(1));
+    const { result } = await renderHook(() => useSelectedAudioRecording(1));
 
     expect(AudioRecordingsDB.object).not.toHaveBeenCalled();
     expect(result.current.selectedAudioRecording).toEqual({
@@ -65,7 +65,7 @@ describe('useSelectedAudioRecording', () => {
     });
   });
 
-  it('falls back to the first recording if selected recording is not found in DB', () => {
+  it('falls back to the first recording if selected recording is not found in DB', async () => {
     const mockStory = { selected_audio_recording_id: 999 };
     (useStory as jest.Mock).mockReturnValue([mockStory, 1]);
 
@@ -74,7 +74,7 @@ describe('useSelectedAudioRecording', () => {
 
     (AudioRecordingsDB.object as jest.Mock).mockReturnValue(null);
 
-    const { result } = renderHook(() => useSelectedAudioRecording(1));
+    const { result } = await renderHook(() => useSelectedAudioRecording(1));
 
     expect(result.current.selectedAudioRecording).toEqual({
       cloned: true,
@@ -83,14 +83,14 @@ describe('useSelectedAudioRecording', () => {
     });
   });
 
-  it('setSelectedAudioRecording modifies the story selection', () => {
+  it('setSelectedAudioRecording modifies the story selection', async () => {
     const mockStory = { selected_audio_recording_id: 10 };
     (useStory as jest.Mock).mockReturnValue([mockStory, 1]);
     (useAudioRecordings as jest.Mock).mockReturnValue([[], 1]);
 
-    const { result } = renderHook(() => useSelectedAudioRecording(1));
+    const { result } = await renderHook(() => useSelectedAudioRecording(1));
 
-    act(() => {
+    await act(() => {
       result.current.setSelectedAudioRecording(20);
     });
 

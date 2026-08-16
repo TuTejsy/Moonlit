@@ -36,43 +36,43 @@ describe('useAppState', () => {
     });
   });
 
-  it('initializes with current AppState', () => {
-    const { result } = renderHook(() => useAppState({}));
+  it('initializes with current AppState', async () => {
+    const { result } = await renderHook(() => useAppState({}));
 
     expect(result.current).toBe('active');
   });
 
-  it('calls onActive when app state changes to active', () => {
+  it('calls onActive when app state changes to active', async () => {
     const onActive = jest.fn();
-    renderHook(() => useAppState({ onActive }));
+    await renderHook(() => useAppState({ onActive }));
 
     callbacks.change('active');
 
     expect(onActive).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onBackground when app state changes to background', () => {
+  it('calls onBackground when app state changes to background', async () => {
     const onBackground = jest.fn();
-    renderHook(() => useAppState({ onBackground }));
+    await renderHook(() => useAppState({ onBackground }));
 
     callbacks.change('background');
 
     expect(onBackground).toHaveBeenCalledTimes(1);
   });
 
-  it('calls onInactive when app state changes to inactive', () => {
+  it('calls onInactive when app state changes to inactive', async () => {
     const onInactive = jest.fn();
-    renderHook(() => useAppState({ onInactive }));
+    await renderHook(() => useAppState({ onInactive }));
 
     callbacks.change('inactive');
 
     expect(onInactive).toHaveBeenCalledTimes(1);
   });
 
-  it('removes change listener on unmount', () => {
-    const { unmount } = renderHook(() => useAppState({ onActive: jest.fn() }));
+  it('removes change listener on unmount', async () => {
+    const { unmount } = await renderHook(() => useAppState({ onActive: jest.fn() }));
 
-    unmount();
+    await unmount();
 
     expect(removeChangeMock).toHaveBeenCalled();
   });

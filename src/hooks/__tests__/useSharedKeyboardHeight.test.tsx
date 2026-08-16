@@ -35,42 +35,42 @@ describe('useSharedKeyboardHeight', () => {
     jest.restoreAllMocks();
   });
 
-  it('throws error if used outside of provider', () => {
+  it('throws error if used outside of provider', async () => {
     // Suppress console.error for expected thrown error
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    expect(() => renderHook(() => useSharedKeyboardHeight())).toThrow(
+    await expect(renderHook(() => useSharedKeyboardHeight())).rejects.toThrow(
       'useSharedKeyboardHeight can not be used outside SharedKeyboardHeightProvider',
     );
 
     spy.mockRestore();
   });
 
-  it('renders children and provides a shared value', () => {
+  it('renders children and provides a shared value', async () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <SharedKeyboardHeightProvider>{children}</SharedKeyboardHeightProvider>
     );
 
-    const { result } = renderHook(() => useSharedKeyboardHeight(), { wrapper });
+    const { result } = await renderHook(() => useSharedKeyboardHeight(), { wrapper });
 
     expect(result.current).toBeDefined();
     expect(result.current.value).toBe(0);
   });
 
-  it('updates shared value on keyboard show and hide', () => {
+  it('updates shared value on keyboard show and hide', async () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <SharedKeyboardHeightProvider>{children}</SharedKeyboardHeightProvider>
     );
 
-    const { result } = renderHook(() => useSharedKeyboardHeight(), { wrapper });
+    const { result } = await renderHook(() => useSharedKeyboardHeight(), { wrapper });
 
-    act(() => {
+    await act(() => {
       showCallbacks.forEach((cb) => cb({ endCoordinates: { height: 300 } }));
     });
 
     expect(result.current.value).toBe(300);
 
-    act(() => {
+    await act(() => {
       hideCallbacks.forEach((cb) => cb({}));
     });
 

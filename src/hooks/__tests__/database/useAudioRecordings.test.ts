@@ -42,8 +42,8 @@ describe('useAudioRecordings', () => {
     (AudioRecordingsDB.objects as jest.Mock).mockReturnValue(mockObjectsResult);
   });
 
-  it('returns recordings with default sort config when no filter or sortConfig provided', () => {
-    const { result } = renderHook(() => useAudioRecordings());
+  it('returns recordings with default sort config when no filter or sortConfig provided', async () => {
+    const { result } = await renderHook(() => useAudioRecordings());
 
     expect(AudioRecordingsDB.objects).toHaveBeenCalled();
     expect(mockObjectsResult.filtered).not.toHaveBeenCalled();
@@ -56,15 +56,17 @@ describe('useAudioRecordings', () => {
     expect(result.current[0]).toBe(mockSortedResult);
   });
 
-  it('applies provided filter correctly', () => {
-    renderHook(() => useAudioRecordings('story_id = 1'));
+  it('applies provided filter correctly', async () => {
+    await renderHook(() => useAudioRecordings('story_id = 1'));
 
     expect(mockObjectsResult.filtered).toHaveBeenCalledWith('story_id = 1');
     expect(mockFilteredResult.sorted).toHaveBeenCalled();
   });
 
-  it('applies provided sort config correctly', () => {
-    renderHook(() => useAudioRecordings(undefined, { reverse: false, sortDescriptor: 'duration' }));
+  it('applies provided sort config correctly', async () => {
+    await renderHook(() =>
+      useAudioRecordings(undefined, { reverse: false, sortDescriptor: 'duration' }),
+    );
 
     expect(mockObjectsResult.sorted).toHaveBeenCalledWith([
       ['duration', false],
@@ -72,24 +74,24 @@ describe('useAudioRecordings', () => {
     ]);
   });
 
-  it('sets up a listener and updates recordings version on collection change', () => {
-    const { result } = renderHook(() => useAudioRecordings());
+  it('sets up a listener and updates recordings version on collection change', async () => {
+    const { result } = await renderHook(() => useAudioRecordings());
 
     expect(addListenerMock).toHaveBeenCalledWith(expect.any(Function));
 
     const listener = addListenerMock.mock.calls[0][0];
 
-    act(() => {
+    await act(() => {
       listener('nextCollection');
     });
 
     expect(result.current[1]).toBe(1);
   });
 
-  it('removes listener on unmount', () => {
-    const { unmount } = renderHook(() => useAudioRecordings());
+  it('removes listener on unmount', async () => {
+    const { unmount } = await renderHook(() => useAudioRecordings());
 
-    unmount();
+    await unmount();
 
     const listener = addListenerMock.mock.calls[0][0];
     expect(removeListenerMock).toHaveBeenCalledWith(listener);

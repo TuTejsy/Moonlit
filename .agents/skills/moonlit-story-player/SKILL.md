@@ -59,15 +59,26 @@ Under `src/screens/StoryPlayerScreens/`:
 - **Recordings list**: `useAudioRecordings` in voice settings.
 - Never query Realm directly in screen components.
 
-## Reanimated gestures
+## Gestures (RNGH 3 hook API)
 
-All worklet → JS callbacks use `scheduleOnRN` from `react-native-worklets`:
+Moonlit uses **react-native-gesture-handler 3** hook gestures — not the legacy `Gesture.Pan()` builder.
 
-- `useStoryCoverGestureHandler` — cover collapse on swipe
-- `useProgressBarGestureHandler` — tap/pan scrubbing
-- `StoryPlayerScreen` — `scheduleOnRN(handlePauseStory)` on collapse
+| Hook / component                                           | File                                                | Role                                                         |
+| :--------------------------------------------------------- | :-------------------------------------------------- | :----------------------------------------------------------- |
+| `usePanGesture`                                            | `hooks/useStoryCoverGestureHandler.ts`              | Cover collapse swipe; returns gesture passed to `StoryCover` |
+| `useTapGesture` + `usePanGesture` + `useCompetingGestures` | `ProgressBar/hooks/useProgressBarGestureHandler.ts` | Tap seek + pan scrub; composed gesture to `ProgressBar`      |
+| `GestureDetector`                                          | `StoryCover.tsx`, `ProgressBar.tsx`                 | Wraps animated views; `gesture` prop from hook return value  |
 
-See `moonlit-reanimated.mdc` / `.agents/rules/reanimated.md`.
+**Patterns:**
+
+- Handlers live in dedicated hooks; screens pass `gesture: StoryCoverGesture` (exported type from cover hook).
+- Cover: `onActivate` gates on `storyPlayingSharedValue`; `onUpdate` interpolates translation; `onDeactivate` commits collapse/expand.
+- Progress bar: `onTouchesDown` (tap) and `onUpdate` (pan) update `progressSharedValue`; JS refs/callbacks via `scheduleOnRN`.
+- Use `.get()` / `.set()` on shared values in worklets (React Compiler compat).
+
+All worklet → JS callbacks use `scheduleOnRN` from `react-native-worklets` — see `.agents/rules/reanimated.md`.
+
+**Tests:** `setupJest.ts` mocks `usePanGesture`, `useTapGesture`, `useCompetingGestures`, and `GestureDetector`.
 
 ## Localization
 

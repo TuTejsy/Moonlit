@@ -39,7 +39,7 @@ export const SplashViewModal = () => {
 
   const navigation = useAppNavigation<RootRoutes.SPLASH_VIEW_MODAL>();
 
-  const { areProductsLoaded, showPaywallModal } = useShowPaywallModal({
+  const { isPaywallBootstrapSettled, isPaywallReady, showPaywallModal } = useShowPaywallModal({
     animationType: 'modal',
     shouldReplace: true,
   });
@@ -51,11 +51,13 @@ export const SplashViewModal = () => {
     (isSubscriptionActive: boolean) => {
       if (isSubscriptionActive) {
         navigation.goBack();
-      } else {
+      } else if (isPaywallReady) {
         showPaywallModal({ isSubscriptionExpired: true, source: SOURCE.COLD_START });
+      } else {
+        navigation.goBack();
       }
     },
-    [navigation, showPaywallModal],
+    [isPaywallReady, navigation, showPaywallModal],
   );
 
   const handleCheckSubscription = useHandleCheckSubscription(handleSubscriptionCheck);
@@ -104,7 +106,7 @@ export const SplashViewModal = () => {
   }));
 
   useEffect(() => {
-    if (areProductsLoaded && isConfigLoaded) {
+    if (isPaywallBootstrapSettled && isConfigLoaded) {
       animationProgress.value = withTiming(1, { duration: 1000 }, (finished?: boolean) => {
         'worklet';
 
@@ -118,7 +120,7 @@ export const SplashViewModal = () => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [areProductsLoaded, isConfigLoaded]);
+  }, [isPaywallBootstrapSettled, isConfigLoaded]);
 
   useEffect(() => {
     pulseAnimationProgress.value = withRepeat(

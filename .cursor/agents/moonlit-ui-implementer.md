@@ -15,7 +15,9 @@ is_background: false
 
 Implement or refine production React Native UI for a screen. Specs from `Moonlit design tokens and existing screens`, existing screens, and project rules — not external prototype bundles.
 
-**Paywall screens:** Read [`.agents/skills/moonlit-paywall-screen/SKILL.md`](../../.agents/skills/moonlit-paywall-screen/SKILL.md) first; implement under `variants/{Name}/`, not screen-level `components/`. Analytics (`paywall_viewed`) stays in `hooks/usePaywallModalAnalytics.ts` — do not add variant-level tracking.
+**Paywall screens:** Read [`.agents/skills/moonlit-paywall-screen/SKILL.md`](../../.agents/skills/moonlit-paywall-screen/SKILL.md) first; implement under `contentVariants/{Name}PaywallContent/`, not screen-level `components/`. Variant-specific shell logic (scrollable layout, toggle defaults) must use `resolvePaywallVariantName(paywallName)`, not raw `paywallName === PAYWALL_NAMES.*`. Analytics for paywall viewed runs in `PaywallModal.tsx` via `AnalyticsService.logPaywallViewedEvent` — do not duplicate in variant hooks.
+
+**Story player gestures:** Read [`.agents/skills/moonlit-story-player/SKILL.md`](../../.agents/skills/moonlit-story-player/SKILL.md) § Gestures — use RNGH 3 hooks (`usePanGesture`, `useTapGesture`, `useCompetingGestures`), not `Gesture.Pan()` builder; keep handlers in dedicated hooks with `scheduleOnRN` for JS callbacks.
 
 ## Mandatory reads
 
@@ -24,6 +26,7 @@ Implement or refine production React Native UI for a screen. Specs from `Moonlit
 | Product spec     | `Moonlit design tokens and existing screens` (feature section for the screen) |
 | UI rules         | `.agents/rules/ui-styling.md`, `.cursor/rules/moonlit-ui-styling.mdc`         |
 | Paywall skill    | `.agents/skills/moonlit-paywall-screen/SKILL.md` (when paywall)               |
+| Story player     | `.agents/skills/moonlit-story-player/SKILL.md` (when cover/progress gestures) |
 | Themes           | `src/styles/themes/lightTheme.ts`, `theme.types.ts`                           |
 | Reference screen | Closest existing screen under `src/screens/`                                  |
 
@@ -34,14 +37,14 @@ Implement or refine production React Native UI for a screen. Specs from `Moonlit
 
 ## Reuse inventory (check before creating UI)
 
-| Domain           | Reuse                                                                                                                                                                                     |
-| :--------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Paywall          | `variants/StaticDefaultPaywall/` — see paywall skill `reference.md`; prices via `utils/paywallProductUtils.ts` (`getLocalizedPrice`, `getIntroductoryPhasePrice`) — not `localizedString` |
-| Gallery Pro tags | `shouldShowProBadge(isPro, isSubscribed)` — pass `isSubscribed` into `TemplateCard`; `TemplatePreviewCard` uses `showProBadge`                                                            |
-| Legal links      | `openTermsOfUse()` / `openPrivacyPolicy()` from `src/utils/openLegalDocument.ts` — paywall footer + Settings; not `Linking.openURL`                                                       |
-| Headers          | `ScreenHeader`, `LabeledScreenHeader`                                                                                                                                                     |
-| Onboarding       | `OnboardingScreen/components/*Step` patterns                                                                                                                                              |
-| Global           | `src/components/` primitives and cards                                                                                                                                                    |
+| Domain           | Reuse                                                                                                                                                                                                                               |
+| :--------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Paywall          | `contentVariants/{Scrollable,Selection,Switcher}PaywallContent/` — prices via `utils/paywallProduct.utils.ts` (`formatProductLocalizedPrice`, `formatPriceValue`, `getFreeTrialOfferDays`) — see paywall skill § Product resolution |
+| Gallery Pro tags | `shouldShowProBadge(isPro, isSubscribed)` — pass `isSubscribed` into `TemplateCard`; `TemplatePreviewCard` uses `showProBadge`                                                                                                      |
+| Legal links      | `openTermsOfUse()` / `openPrivacyPolicy()` from `src/utils/openLegalDocument.ts` — paywall footer + Settings; not `Linking.openURL`                                                                                                 |
+| Headers          | `ScreenHeader`, `LabeledScreenHeader`                                                                                                                                                                                               |
+| Onboarding       | `OnboardingScreen/components/*Step` patterns                                                                                                                                                                                        |
+| Global           | `src/components/` primitives and cards                                                                                                                                                                                              |
 
 ## Implementation rules
 
@@ -51,7 +54,7 @@ Implement or refine production React Native UI for a screen. Specs from `Moonlit
 4. **TextView** / **PressableView** only — not RN `Text`, `TouchableOpacity`, etc. Multi-style inline copy that must wrap: nested `TextView` (paywall skill § Styling — `PaywallTrialCard` strip).
 5. **No hardcoded strings** — `localize()` + `en.ts` keys under feature prefix.
 6. **Missing tokens** — add to `lightTheme.ts` + `theme.types.ts`, not magic numbers.
-7. **Placement** — variant-only UI under `variants/{Name}/`; cross-variant shell in screen root per paywall skill.
+7. **Placement** — variant UI under `contentVariants/{Name}PaywallContent/`; shared shell in `PaywallModal.tsx` per paywall skill.
 8. **Subscriber Pro affordances** — never show Pro lock tags or subscription promos when `isSubscribed`; use `shouldShowProBadge` for gallery/detail cards. Settings: promo banner vs active plan card (see `SettingsScreen`). Lessons: locked rows stay pressable for paywall (free users); subscribers see no locks.
 9. **Legal links** — Terms/Privacy tap handlers call `openTermsOfUse()` / `openPrivacyPolicy()`; wire `PaywallFooterLinks` callbacks from variant hooks only — do not hardcode URLs or use `Linking.openURL` in components.
 

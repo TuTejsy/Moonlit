@@ -43,8 +43,6 @@ export const makeStyles = (
       flex: 1,
       height: STORY_PREVIEW_SIZE,
       justifyContent: 'flex-end',
-      maxHeight: STORY_PREVIEW_SIZE,
-      maxWidth: STORY_PREVIEW_SIZE,
       width: STORY_PREVIEW_SIZE,
     },
     previewContainer: {

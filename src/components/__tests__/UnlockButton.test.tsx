@@ -17,14 +17,14 @@ describe('UnlockButton', () => {
     });
   });
 
-  it('renders the button text', () => {
-    render(<UnlockButton source={SOURCE.HOME_VIEW}>Unlock All</UnlockButton>);
+  it('renders the button text', async () => {
+    await render(<UnlockButton source={SOURCE.HOME_VIEW}>Unlock All</UnlockButton>);
 
     expect(screen.getByText('Unlock All')).toBeOnTheScreen();
   });
 
-  it('calls showPaywallModal when pressed', () => {
-    render(<UnlockButton source={SOURCE.HOME_VIEW}>Unlock</UnlockButton>);
+  it('calls showPaywallModal when pressed', async () => {
+    await render(<UnlockButton source={SOURCE.HOME_VIEW}>Unlock</UnlockButton>);
 
     fireEvent.press(screen.getByText('Unlock'));
 

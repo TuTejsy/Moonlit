@@ -23,6 +23,7 @@ import { FavoritesTab } from './navigation/FavoritesTab';
 import { HomeTab } from './navigation/HomeTab';
 import { RoundClose } from './navigation/RoundClose';
 import { SettingsTab } from './navigation/SettingsTab';
+import { ChevronRight } from './paywall/ChevronRight';
 import { Crown } from './paywall/Crown';
 import { DownloadSmall } from './paywall/DownloadSmall';
 import { MicSmall } from './paywall/MicSmall';
@@ -37,6 +38,7 @@ import { PlaySmall } from './player/PlaySmall';
 export const Icons = {
   ArrowBack,
   Check,
+  ChevronRight,
   Clock,
   Close,
   Crown,

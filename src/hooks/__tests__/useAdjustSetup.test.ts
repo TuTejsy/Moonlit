@@ -32,29 +32,29 @@ describe('useAdjustSetup', () => {
     (global as any).__DEV__ = originalDev;
   });
 
-  it('initializes Adjust with correct config in DEV mode', () => {
+  it('initializes Adjust with correct config in DEV mode', async () => {
     (global as any).__DEV__ = true;
 
-    const { unmount } = renderHook(() => useAdjustSetup());
+    const { unmount } = await renderHook(() => useAdjustSetup());
 
     expect(AdjustConfig).toHaveBeenCalledWith('ios-token', AdjustConfig.EnvironmentSandbox);
     expect(mockSetLogLevel).toHaveBeenCalledWith(AdjustConfig.LogLevelVerbose);
     expect(Adjust.initSdk).toHaveBeenCalled();
 
-    unmount();
+    await unmount();
     expect(Adjust.componentWillUnmount).toHaveBeenCalled();
   });
 
-  it('initializes Adjust with correct config in PROD mode', () => {
+  it('initializes Adjust with correct config in PROD mode', async () => {
     (global as any).__DEV__ = false;
 
-    const { unmount } = renderHook(() => useAdjustSetup());
+    const { unmount } = await renderHook(() => useAdjustSetup());
 
     expect(AdjustConfig).toHaveBeenCalledWith('ios-token', AdjustConfig.EnvironmentProduction);
     expect(mockSetLogLevel).toHaveBeenCalledWith(AdjustConfig.LogLevelSuppress);
     expect(Adjust.initSdk).toHaveBeenCalled();
 
-    unmount();
+    await unmount();
     expect(Adjust.componentWillUnmount).toHaveBeenCalled();
   });
 });

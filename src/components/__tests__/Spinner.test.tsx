@@ -20,20 +20,20 @@ jest.mock('@/assets/icons/Icons', () => {
 });
 
 describe('Spinner', () => {
-  it('renders without crashing', () => {
-    render(<Spinner testID='spinner' />);
+  it('renders without crashing', async () => {
+    await render(<Spinner testID='spinner' />);
 
     expect(screen.getByTestId('spinner')).toBeOnTheScreen();
   });
 
-  it('renders the default loader icon', () => {
-    render(<Spinner />);
+  it('renders the default loader icon', async () => {
+    await render(<Spinner />);
 
     expect(screen.getByTestId('loader-icon')).toBeOnTheScreen();
   });
 
-  it('renders custom children instead of default icon', () => {
-    render(
+  it('renders custom children instead of default icon', async () => {
+    await render(
       <Spinner>
         <View testID='custom-child' />
       </Spinner>,

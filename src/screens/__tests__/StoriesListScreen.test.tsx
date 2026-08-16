@@ -18,30 +18,30 @@ describe('StoriesListScreen', () => {
     });
   });
 
-  it('renders without crashing', () => {
-    render(<StoriesListScreen />);
+  it('renders without crashing', async () => {
+    await render(<StoriesListScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders with route params title', () => {
-    render(<StoriesListScreen />);
+  it('renders with route params title', async () => {
+    await render(<StoriesListScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders with default title when params are empty', () => {
+  it('renders with default title when params are empty', async () => {
     (useAppRoute as jest.Mock).mockReturnValue({
       params: undefined,
     });
 
-    render(<StoriesListScreen />);
+    await render(<StoriesListScreen />);
 
     expect(screen.toJSON()).toBeTruthy();
   });
 
-  it('renders the screen structure with header and list', () => {
-    render(<StoriesListScreen />);
+  it('renders the screen structure with header and list', async () => {
+    await render(<StoriesListScreen />);
 
     const tree = screen.toJSON();
     expect(tree).toBeTruthy();

@@ -5,16 +5,16 @@ import { useScrollOpacity } from '../useScrollOpacity';
 jest.unmock('@/hooks/useScrollOpacity');
 
 describe('useScrollOpacity', () => {
-  it('returns handleOpacityScroll and opacityAnimStyle', () => {
-    const { result } = renderHook(() => useScrollOpacity());
+  it('returns handleOpacityScroll and opacityAnimStyle', async () => {
+    const { result } = await renderHook(() => useScrollOpacity());
 
     expect(result.current.handleOpacityScroll).toBeDefined();
     expect(typeof result.current.handleOpacityScroll).toBe('function');
     expect(result.current.opacityAnimStyle).toBeDefined();
   });
 
-  it('accepts custom active and inactive opacity values', () => {
-    const { result } = renderHook(() => useScrollOpacity(0.8, 0.2));
+  it('accepts custom active and inactive opacity values', async () => {
+    const { result } = await renderHook(() => useScrollOpacity(0.8, 0.2));
 
     expect(result.current.handleOpacityScroll).toBeDefined();
   });

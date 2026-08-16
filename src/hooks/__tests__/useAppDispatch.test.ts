@@ -13,8 +13,8 @@ jest.mock('@/store/store', () => ({
 }));
 
 describe('useAppDispatch', () => {
-  it('returns a dispatch function', () => {
-    const { result } = renderHook(() => useAppDispatch());
+  it('returns a dispatch function', async () => {
+    const { result } = await renderHook(() => useAppDispatch());
 
     expect(typeof result.current).toBe('function');
   });
