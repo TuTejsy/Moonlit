@@ -19,7 +19,6 @@
     "reinstall": "rm -rf node_modules && watchman watch-del-all && yarn && yarn postinstall && yarn pod-reinstall"
   },
   "dependencies": {
-    "@amplitude/analytics-react-native": "^1.6.9",
     "@aws-sdk/client-s3": "^3.1111.0",
     "@aws-sdk/s3-request-presigner": "^3.1111.0",
     "@react-native-async-storage/async-storage": "^3.1.1",
@@ -38,6 +37,7 @@
     "i18next": "^26.3.6",
     "intl-pluralrules": "^2.0.1",
     "lodash": "^4.18.1",
+    "mixpanel-react-native": "^3.8.1",
     "mnt-audioplayer": "./src/native_modules/MNTAudioPlayer",
     "qs": "^6.15.3",
     "react": "19.2.3",
@@ -119,6 +119,7 @@
   "resolutions": {
     "@react-native/codegen": "0.87.0",
     "@typescript-eslint/eslint-plugin": "8.67.0",
-    "@typescript-eslint/parser": "8.67.0"
+    "@typescript-eslint/parser": "8.67.0",
+    "react-native-get-random-values": "2.0.0"
   }
 }

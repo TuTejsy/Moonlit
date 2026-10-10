@@ -12,6 +12,10 @@ export type TabEventType =
   | 'Saved'
   | 'Recent played';
 
+export function toMixpanelTab(tab: TabEventType): string {
+  return tab.toLowerCase().replace(/ /g, '_');
+}
+
 export interface LaunchAppEventParams {
   source: SOURCE.HOT_START | SOURCE.COLD_START;
 }

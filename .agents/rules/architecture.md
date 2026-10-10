@@ -49,16 +49,16 @@ The app uses **React Navigation v7** with JS stack and bottom tabs:
 
 Screens and hooks must not import SDK packages directly except where noted.
 
-| Package                                                                 | Allowed import paths                                                                                                                                               |
-| :---------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@amplitude/analytics-react-native`, `@react-native-firebase/analytics` | `src/services/analytics/analytics.ts`                                                                                                                              |
-| `@react-native-firebase/remote-config`                                  | `src/services/remoteConfig/remoteConfig.ts`                                                                                                                        |
-| `@react-native-async-storage/async-storage`                             | `src/services/storage/storage.ts`                                                                                                                                  |
-| `react-native-keychain` (via abstraction)                               | `src/services/securedStorage/securedStorage.ts`                                                                                                                    |
-| `axios` / network                                                       | `src/services/networkClient/networkClient.ts`                                                                                                                      |
-| `react-native-adapty` runtime (`adapty.*`)                              | `src/hooks/useAdaptyInit.ts`, `src/hooks/usePaywallBootstrap.ts`, `src/hooks/useHandleCheckSubscription.ts`, `src/screens/PaywallModal/hooks/usePaywallActions.ts` |
-| `react-native-adapty` types only                                        | Paywall screens/hooks, `src/store/subscription/`, `RootNavigator.types.ts`                                                                                         |
-| `useRoute`, `useNavigation` from `@react-navigation/native`             | `src/navigation/hooks/useAppRoute.ts`, `useAppNavigation.ts` only                                                                                                  |
+| Package                                                     | Allowed import paths                                                                                                                                               |
+| :---------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mixpanel-react-native`, `@react-native-firebase/analytics` | `src/services/analytics/analytics.ts`                                                                                                                              |
+| `@react-native-firebase/remote-config`                      | `src/services/remoteConfig/remoteConfig.ts`                                                                                                                        |
+| `@react-native-async-storage/async-storage`                 | `src/services/storage/storage.ts`                                                                                                                                  |
+| `react-native-keychain` (via abstraction)                   | `src/services/securedStorage/securedStorage.ts`                                                                                                                    |
+| `axios` / network                                           | `src/services/networkClient/networkClient.ts`                                                                                                                      |
+| `react-native-adapty` runtime (`adapty.*`)                  | `src/hooks/useAdaptyInit.ts`, `src/hooks/usePaywallBootstrap.ts`, `src/hooks/useHandleCheckSubscription.ts`, `src/screens/PaywallModal/hooks/usePaywallActions.ts` |
+| `react-native-adapty` types only                            | Paywall screens/hooks, `src/hooks/navigation/useShowPaywallModal.ts`, `src/hooks/paywallBootstrap.utils.ts`, `src/store/subscription/`, `RootNavigator.types.ts`   |
+| `useRoute`, `useNavigation` from `@react-navigation/native` | `src/navigation/hooks/useAppRoute.ts`, `useAppNavigation.ts` only                                                                                                  |
 
 ## Paywall (`src/screens/PaywallModal/`)
 
@@ -80,7 +80,11 @@ Screens and hooks must not import SDK packages directly except where noted.
 ## Analytics
 
 - **Sole owner**: `AnalyticsService` in `src/services/analytics/analytics.ts`.
-- Screens may call `AnalyticsService` methods at event sites; never import Amplitude or Firebase analytics packages directly.
+- Screens may call `AnalyticsService` methods at event sites; never import Mixpanel or Firebase analytics packages directly.
+- Mixpanel (`mixpanel-react-native`, native mode, `trackAutomaticEvents`) is release-only: `AnalyticsService.init()` in `App.tsx` no-ops in `__DEV__`. Token is `MIXPANEL_TOKEN` in gitignored `src/constants/auth.ts`. Server is US (`MIXPANEL_SERVER_URL`).
+- Firebase keeps the existing event names and params. Mixpanel uses `object_verb` snake_case via `MIXPANEL_EVENT` and `toMixpanelTab` (`analytics.constants.ts` / `analytics.types.ts`). `segment` is still attached to every event. Optional Mixpanel props are omitted, never sent as null or `""`.
+- No login, so do not `identify`, `reset`, or create People profiles. Paid state is the Mixpanel super property `subscription_status` (`paid` / `free`) plus the existing Firebase user property `paid`.
+- After Adapty activation, `useAdaptyInit` calls `adapty.setIntegrationIdentifier('mixpanel_user_id', distinctId)` from `AnalyticsService.getMixpanelDistinctId()`. A missing id or a failure there must not fail activation.
 - Firebase JS v26 is modular: `getAnalytics` / `logEvent` / `setUserProperties` in `analytics.ts`; `getRemoteConfig` / `fetchAndActivate` / `onConfigUpdate` / `defaultConfig` in `remoteConfig.ts`. Do not use namespaced default exports.
 - Firebase Remote Config fetch: v26 `defaultConfig` / `settings` setters enqueue native work and discard the promise; `fetchAndActivate` is not on that queue. Await the instance `setDefaults` / `setConfigSettings` plus `ensureInitialized` in `remoteConfig.ts` before fetch. Call `AnalyticsService.warmUpNativeSdk()` first (`useRemoteConfigInit`) — iOS RC fetch waits on Analytics user properties and fails with `[remoteConfig/failure]` if Analytics is still initializing under SPM dynamic frameworks. Sync `__DEV__` `minimumFetchIntervalMillis: 0` after native settings land. Defaults still apply if fetch fails.
 - iOS native: Adapty 4 and RN Firebase 26 both resolve SDKs via SPM under `use_frameworks! :linkage => :dynamic`. Do not add CocoaPods `Firebase*` pods (or Firebase `modular_headers`) — they duplicate SPM and fail with `Multiple commands produce FirebaseCore.framework`.

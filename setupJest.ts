@@ -225,14 +225,14 @@ jest.mock('@react-native-firebase/remote-config', () => ({
   onConfigUpdate: jest.fn().mockReturnValue(jest.fn()),
 }));
 
-// Mock @amplitude/analytics-react-native
-jest.mock('@amplitude/analytics-react-native', () => ({
-  Identify: jest.fn().mockImplementation(() => ({
-    set: jest.fn(),
+// Mock mixpanel-react-native
+jest.mock('mixpanel-react-native', () => ({
+  Mixpanel: jest.fn().mockImplementation(() => ({
+    getDistinctId: jest.fn().mockResolvedValue('mixpanel-distinct-id'),
+    init: jest.fn().mockResolvedValue(undefined),
+    registerSuperProperties: jest.fn(),
+    track: jest.fn(),
   })),
-  identify: jest.fn(),
-  init: jest.fn(),
-  track: jest.fn(),
 }));
 
 // Mock @react-native-async-storage/async-storage
@@ -587,6 +587,8 @@ jest.mock('@/hooks/useHandleCheckSubscription', () => ({
 // Mock AnalyticsService
 jest.mock('@/services/analytics/analytics', () => ({
   AnalyticsService: {
+    getMixpanelDistinctId: jest.fn().mockResolvedValue(null),
+    init: jest.fn(),
     logHomeViewEvent: jest.fn(),
     logOnboardingEvent: jest.fn(),
     logPaywallClosedEvent: jest.fn(),
@@ -916,6 +918,7 @@ jest.mock('react-native-adapty', () => ({
     isActivated: jest.fn().mockResolvedValue(true),
     makePurchase: jest.fn().mockResolvedValue({ type: 'success' }),
     restorePurchases: jest.fn().mockResolvedValue({ accessLevels: {} }),
+    setIntegrationIdentifier: jest.fn().mockResolvedValue(undefined),
   },
 }));
 

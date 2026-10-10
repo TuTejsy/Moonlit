@@ -1,3 +1,21 @@
+export const MIXPANEL_SERVER_URL = 'https://api.mixpanel.com';
+
+export enum MIXPANEL_EVENT {
+  APP_LAUNCHED = 'app_launched',
+  ONBOARDING_SCREEN_VIEWED = 'onboarding_screen_viewed',
+  PAYWALL_CLOSED = 'paywall_closed',
+  PAYWALL_VIEWED = 'paywall_viewed',
+  SCREEN_VIEWED = 'screen_viewed',
+  SUBSCRIPTION_STARTED = 'subscription_started',
+  TALE_LIKED = 'tale_liked',
+  TALE_OPENED = 'tale_opened',
+  TALE_PAUSED = 'tale_paused',
+  TALE_PLAYED = 'tale_played',
+  TALE_REWOUND = 'tale_rewound',
+  VOICE_CHANGED = 'voice_changed',
+  VOICE_VIEWED = 'voice_viewed',
+}
+
 export enum SOURCE {
   ALL_VOICES = 'all_voices',
   COLD_START = 'cold_start',

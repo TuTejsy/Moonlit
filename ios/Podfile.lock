@@ -4,8 +4,6 @@ PODS:
   - Adjust/Adjust (5.6.2):
     - AdjustSignature (= 3.67.0)
   - AdjustSignature (3.67.0)
-  - amplitude-react-native (1.6.9):
-    - React-Core
   - AsyncStorage (3.1.1):
     - hermes-engine
     - RCTRequired
@@ -45,6 +43,20 @@ PODS:
   - hermes-engine (250829098.0.16):
     - hermes-engine/Pre-built (= 250829098.0.16)
   - hermes-engine/Pre-built (250829098.0.16)
+  - json-enum (1.2.3)
+  - jsonlogic (1.2.4):
+    - json-enum (~> 1.2.3)
+  - Mixpanel-swift (6.8.0):
+    - jsonlogic (~> 1.2.0)
+    - Mixpanel-swift/Complete (= 6.8.0)
+    - MixpanelSwiftCommon (~> 1.1.0)
+  - Mixpanel-swift/Complete (6.8.0):
+    - jsonlogic (~> 1.2.0)
+    - MixpanelSwiftCommon (~> 1.1.0)
+  - MixpanelReactNative (3.8.1):
+    - Mixpanel-swift (= 6.8.0)
+    - React-Core
+  - MixpanelSwiftCommon (1.1.0)
   - MMKVCore (2.4.0)
   - NitroMmkv (4.3.2):
     - hermes-engine
@@ -2279,7 +2291,6 @@ PODS:
     - React-Core-prebuilt
 
 DEPENDENCIES:
-  - "amplitude-react-native (from `../node_modules/@amplitude/analytics-react-native`)"
   - "AsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - boost (from `build/rndeps-facades/boost`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
@@ -2289,6 +2300,7 @@ DEPENDENCIES:
   - fmt (from `build/rndeps-facades/fmt`)
   - glog (from `build/rndeps-facades/glog`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - NitroMmkv (from `../node_modules/react-native-mmkv`)
   - NitroModules (from `../node_modules/react-native-nitro-modules`)
   - RCT-Folly (from `build/rndeps-facades/RCT-Folly`)
@@ -2396,11 +2408,13 @@ SPEC REPOS:
   trunk:
     - Adjust
     - AdjustSignature
+    - json-enum
+    - jsonlogic
+    - Mixpanel-swift
+    - MixpanelSwiftCommon
     - MMKVCore
 
 EXTERNAL SOURCES:
-  amplitude-react-native:
-    :path: "../node_modules/@amplitude/analytics-react-native"
   AsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   boost:
@@ -2420,6 +2434,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-v250829098.0.16
+  MixpanelReactNative:
+    :path: "../node_modules/mixpanel-react-native"
   NitroMmkv:
     :path: "../node_modules/react-native-mmkv"
   NitroModules:
@@ -2626,7 +2642,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Adjust: 62ea53a252534df416676e7ac2f1558d60e6e39e
   AdjustSignature: 9498705a4ac67b719e31828be4d74fbb8656950c
-  amplitude-react-native: 41d70126ed51c3b78c5a8437bdc863797e322495
   AsyncStorage: 6c7612b4ac492070984d347e647ed6484891fcea
   boost: 2a9d6e1d9873337543f08d9dbc007b288f4e113b
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
@@ -2636,6 +2651,11 @@ SPEC CHECKSUMS:
   fmt: c7776a2a4b1d7ce88b809a1e4d1f7add0f2369df
   glog: b4427c3119645da795ff09985ba9da909c940c96
   hermes-engine: 6a26e94b4a974cbadc751eed9caa12624c38f226
+  json-enum: 57ad746d2f0d7852796e9aa50267bd84a778222e
+  jsonlogic: 006f892470384401b8ca5b5d8d4cdadb3a0d5c9b
+  Mixpanel-swift: 2704715b3c57e4c1695e35265ea3fa0c96a79f43
+  MixpanelReactNative: df4dbd770d32294a6996bccbdaa795379a86e69f
+  MixpanelSwiftCommon: 558018032a946849b1277812b3f810bdeb22f654
   MMKVCore: 3d16ce9f7d411e135020915fde98a056859a1efa
   NitroMmkv: ac0d79be126940fdd5282c9f9a1cfba165034b2c
   NitroModules: a35ea81f6aa2cc1e1c57abfb9d978cf1fb6a0233

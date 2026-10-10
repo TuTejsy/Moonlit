@@ -119,7 +119,7 @@ Read [`.agents/skills/moonlit-paywall-screen/SKILL.md`](../../.agents/skills/moo
 - [ ] Load-failure shell: retry + skip → `onRejected`; loaded variant close (`paywall-close-button`) → `onRejected`; empty products → `displayError` (see skill)
 - [ ] `PaywallModalRoute`: if registry callback set, invoke only (no route dismiss after); fallback `dismissPaywall` when omitted. Modal call sites include dismiss in `onUnlocked`/`onSkipped` — no noop registry callbacks (skill § dismiss contract)
 - [ ] Variant-only UI/hooks/assets/utils under `variants/{Name}/` — promote to screen-level when 2+ variants or shell share code (see skill `reference.md`)
-- [ ] No `react-native-adapty` outside `subscriptionsService`
+- [ ] `react-native-adapty` runtime only in the hooks listed in architecture.md; type imports only on that types allowlist
 - [ ] Raster images via `require()` in constants — not ES `import` of `.png`
 - [ ] Terms/privacy links from `src/constants/legal.ts`
 

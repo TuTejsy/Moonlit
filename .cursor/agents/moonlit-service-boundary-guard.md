@@ -2,7 +2,7 @@
 name: moonlit-service-boundary-guard
 description: >-
   Moonlit read-only SDK and storage boundary auditor. Scans git-changed files under
-  src/screens/ and src/hooks/ for forbidden direct imports (adapty, firebase, amplitude,
+  src/screens/ and src/hooks/ for forbidden direct imports (adapty, firebase, mixpanel,
   async-storage, axios) and navigation hook misuse. Verifies sole-owner service patterns,
   useShowPaywallModal boundaries, and Realm hook usage. Returns PASS/FAIL with violation
   table. Invoke with /moonlit-service-boundary-guard. Read-only.
@@ -29,17 +29,17 @@ Review changed production code via `git diff`, `git diff --cached`, `git status 
 
 ## Forbidden import matrix
 
-| Package                                                                 | Allowed import paths only                                                                                                                       |
-| :---------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@amplitude/analytics-react-native`, `@react-native-firebase/analytics` | `src/services/analytics/analytics.ts`                                                                                                           |
-| `@react-native-firebase/remote-config`                                  | `src/services/remoteConfig/remoteConfig.ts`                                                                                                     |
-| `@react-native-async-storage/async-storage`                             | `src/services/storage/storage.ts`                                                                                                               |
-| `react-native-keychain`                                                 | `src/services/securedStorage/securedStorage.ts`                                                                                                 |
-| `axios`                                                                 | `src/services/networkClient/networkClient.ts`                                                                                                   |
-| `react-native-adapty` runtime (`adapty`)                                | `src/hooks/navigation/useShowPaywallModal.ts`, `src/hooks/useHandleCheckSubscription.ts`, `src/screens/PaywallModal/hooks/usePaywallActions.ts` |
-| `react-native-adapty` types only                                        | Paywall screens/hooks, `src/store/subscription/`, `RootNavigator.types.ts`                                                                      |
-| `useRoute`, `useNavigation` from `@react-navigation/native`             | `src/navigation/hooks/useAppRoute.ts`, `useAppNavigation.ts` only                                                                               |
-| Direct `Realm` queries                                                  | `src/hooks/database/` hooks only in screens/components                                                                                          |
+| Package                                                     | Allowed import paths only                                                                                                                                          |
+| :---------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mixpanel-react-native`, `@react-native-firebase/analytics` | `src/services/analytics/analytics.ts`                                                                                                                              |
+| `@react-native-firebase/remote-config`                      | `src/services/remoteConfig/remoteConfig.ts`                                                                                                                        |
+| `@react-native-async-storage/async-storage`                 | `src/services/storage/storage.ts`                                                                                                                                  |
+| `react-native-keychain`                                     | `src/services/securedStorage/securedStorage.ts`                                                                                                                    |
+| `axios`                                                     | `src/services/networkClient/networkClient.ts`                                                                                                                      |
+| `react-native-adapty` runtime (`adapty`)                    | `src/hooks/useAdaptyInit.ts`, `src/hooks/usePaywallBootstrap.ts`, `src/hooks/useHandleCheckSubscription.ts`, `src/screens/PaywallModal/hooks/usePaywallActions.ts` |
+| `react-native-adapty` types only                            | Paywall screens/hooks, `src/hooks/navigation/useShowPaywallModal.ts`, `src/hooks/paywallBootstrap.utils.ts`, `src/store/subscription/`, `RootNavigator.types.ts`   |
+| `useRoute`, `useNavigation` from `@react-navigation/native` | `src/navigation/hooks/useAppRoute.ts`, `useAppNavigation.ts` only                                                                                                  |
+| Direct `Realm` queries                                      | `src/hooks/database/` hooks only in screens/components                                                                                                             |
 
 ## Screen-level consumption rules
 
@@ -50,7 +50,7 @@ Review changed production code via `git diff`, `git diff --cached`, `git status 
 | Story data         | `useStory`, `useStories`              | Direct Realm queries                    |
 | Voice selection    | `useSelectedAudioRecording`           | Direct Realm writes for audio selection |
 | Favorites          | `useHandleStoryFavorite`              | Direct Realm favorite toggles           |
-| Analytics          | `AnalyticsService` methods            | Amplitude/Firebase packages             |
+| Analytics          | `AnalyticsService` methods            | Mixpanel/Firebase packages              |
 | Storage            | `storage` / `securedStorage` services | Direct AsyncStorage/Keychain            |
 
 ## Workflow

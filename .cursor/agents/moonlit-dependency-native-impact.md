@@ -35,7 +35,7 @@ Analyze native and Jest impact of dependency changes. Read-only unless parent au
 
 ## Known native-heavy dependencies (Moonlit baseline)
 
-`react-native`, `react-native-reanimated`, `react-native-worklets`, `react-native-gesture-handler`, `react-native-screens`, `react-native-safe-area-context`, `react-native-adapty`, `realm`, `@realm/react`, `@react-native-firebase/app`, `@react-native-firebase/analytics`, `@react-native-firebase/remote-config`, `@amplitude/analytics-react-native`, `react-native-fs`, `react-native-config`, `mnt-audioplayer`, `@aws-sdk/client-s3`, `@sbaiahmed1/react-native-blur`
+`react-native`, `react-native-reanimated`, `react-native-worklets`, `react-native-gesture-handler`, `react-native-screens`, `react-native-safe-area-context`, `react-native-adapty`, `realm`, `@realm/react`, `@react-native-firebase/app`, `@react-native-firebase/analytics`, `@react-native-firebase/remote-config`, `mixpanel-react-native`, `react-native-fs`, `react-native-config`, `mnt-audioplayer`, `@aws-sdk/client-s3`, `@sbaiahmed1/react-native-blur`
 
 ## Output format
 

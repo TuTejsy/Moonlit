@@ -83,6 +83,17 @@ Specialized agents for Moonlit workflows. Invoke by name (e.g. `/moonlit-screen-
 
 ---
 
+## Analytics
+
+Mixpanel (`mixpanel-react-native`, native mode) and Firebase Analytics are owned by `AnalyticsService` in `src/services/analytics/analytics.ts`. Do not import those SDKs elsewhere. Add events only through `AnalyticsService` methods.
+
+- Token: `MIXPANEL_TOKEN` in gitignored `src/constants/auth.ts`. `AnalyticsService.init()` runs from `App.tsx` and no-ops in `__DEV__` (release builds only).
+- Firebase keeps the current event names. Mixpanel names are `object_verb` snake_case (`MIXPANEL_EVENT`). There is no login, so do not call `identify` / `reset` or create People profiles.
+
+Detail: [.agents/rules/architecture.md](.agents/rules/architecture.md) (Analytics).
+
+---
+
 ## Universal Mandatory Rules
 
 1. **Strict Styling**: ALWAYS use the theme-aware `useMakeStyles` system and primitive components (`TextView`, `PressableView`).

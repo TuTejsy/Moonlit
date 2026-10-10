@@ -30,7 +30,8 @@
 -keep class io.invertase.firebase.** { *; }
 -dontwarn io.invertase.firebase.**
 
-# Realm, MMKV, Adapty
+# Realm, MMKV, Adapty, Mixpanel
 -keep class io.realm.** { *; }
 -keep class com.tencent.mmkv.** { *; }
 -keep class com.adapty.** { *; }
+-keep class com.mixpanel.** { *; }
