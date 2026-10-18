@@ -218,9 +218,15 @@ tasks.register("check16KbPageAlignment") {
             throw new GradleException("Missing ${apk}. Run ./gradlew assembleRelease first.")
         }
         def zipalign = "${android.sdkDirectory}/build-tools/${rootProject.ext.buildToolsVersion}/zipalign"
-        exec {
-            commandLine zipalign, "-c", "-P", "16", "-v", "4", apk.absolutePath
+        def process = new ProcessBuilder(zipalign, "-c", "-P", "16", "-v", "4", apk.absolutePath)
+                .redirectErrorStream(true)
+                .start()
+        def output = process.inputStream.getText("UTF-8")
+        def exitCode = process.waitFor()
+        if (exitCode != 0) {
+            throw new GradleException("16 KB alignment check failed:\n${output}")
         }
+        logger.lifecycle(output)
     }
 }
 
