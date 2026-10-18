@@ -5,7 +5,6 @@
 //  Created by VASILI HRYB on 02.03.25.
 //
 
-import Firebase
 import React
 import ReactAppDependencyProvider
 import React_RCTAppDelegate
@@ -23,8 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     didFinishLaunchingWithOptions launchOptions: [UIApplication
       .LaunchOptionsKey: Any]? = nil
   ) -> Bool {
-    FirebaseApp.configure()
-
     let delegate = ReactNativeDelegate()
     let factory = RCTReactNativeFactory(delegate: delegate)
     delegate.dependencyProvider = RCTAppDependencyProvider()

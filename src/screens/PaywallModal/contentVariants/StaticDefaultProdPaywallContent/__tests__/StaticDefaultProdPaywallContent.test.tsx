@@ -41,6 +41,13 @@ const yearlyProduct = createProduct({
   vendorProductId: 'yearly',
 });
 
+const defaultRemoteConfig = {
+  buyButtonTextNoTrial: 'Begin your adventure',
+  buyButtonTextTrial: 'Begin your adventure',
+  showBottomSkipButton: false,
+  toggleState: false,
+};
+
 const defaultProps = {
   isFreeTrialEnabled: false,
   isTrialEligible: false,
@@ -48,9 +55,7 @@ const defaultProps = {
   onSelectProduct: jest.fn(),
   onSkipPress: jest.fn(),
   onUnlockPress: jest.fn(),
-  remoteConfig: {
-    showBottomSkipButton: false,
-  },
+  remoteConfig: defaultRemoteConfig,
   selectedProduct: yearlyProduct,
   trialProduct: undefined,
   unlockButtonText: 'Begin your adventure',
@@ -78,8 +83,8 @@ describe('StaticDefaultProdPaywallContent', () => {
       <StaticDefaultProdPaywallContent
         {...defaultProps}
         remoteConfig={{
+          ...defaultRemoteConfig,
           buyButtonText: 'Custom CTA',
-          showBottomSkipButton: false,
           subtitleText: 'Custom subtitle',
           titleText: 'Custom title',
         }}
@@ -97,6 +102,7 @@ describe('StaticDefaultProdPaywallContent', () => {
       <StaticDefaultProdPaywallContent
         {...defaultProps}
         remoteConfig={{
+          ...defaultRemoteConfig,
           showBottomSkipButton: true,
         }}
       />,
@@ -113,6 +119,7 @@ describe('StaticDefaultProdPaywallContent', () => {
       <StaticDefaultProdPaywallContent
         {...defaultProps}
         remoteConfig={{
+          ...defaultRemoteConfig,
           showBottomSkipButton: true,
         }}
         onSkipPress={onSkipPress}
@@ -146,7 +153,7 @@ describe('StaticDefaultProdPaywallContent', () => {
       <StaticDefaultProdPaywallContent
         {...defaultProps}
         remoteConfig={{
-          showBottomSkipButton: false,
+          ...defaultRemoteConfig,
           subtitleText: 'Square subtitle',
           titleText: 'Square title',
         }}

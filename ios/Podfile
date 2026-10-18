@@ -9,9 +9,8 @@ platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
 # Adapty SDK 4 pulls native iOS SDKs via Swift Package Manager, which requires
-# dynamic frameworks. RN Firebase 26 also expects dynamic linkage on RN 0.75+.
-# RealmJS only auto-detects a bare `use_frameworks!` line; set this so it links
-# the React framework and JSI symbols under `:linkage => :dynamic`.
+# dynamic frameworks. RealmJS only auto-detects a bare `use_frameworks!` line;
+# set this so it links the React framework and JSI symbols under `:linkage => :dynamic`.
 ENV['REALM_USE_FRAMEWORKS'] = 'true'
 use_frameworks! :linkage => :dynamic
 
@@ -23,7 +22,7 @@ target 'AIVoice' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  # Keep Adapty/Firebase as dynamic frameworks. These pods must be static:
+  # Keep Adapty as a dynamic framework. These pods must be static:
   # - RealmJS 12 cannot resolve facebook::jsi::* as a dynamic framework against
   #   RN 0.87 prebuilt React.xcframework.
   # - react-native-config's +load / NSClassFromString("RNCConfigModule") never
@@ -50,11 +49,20 @@ target 'AIVoice' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+    # Xcode 27 only accepts iOS deployment targets from 15.0 upward. Several
+    # pods still declare 9–13 in their podspecs (Realm, Adjust, Mixpanel, SVG).
     installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |build_config|
+        deployment_target = build_config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+        next if deployment_target.nil? || deployment_target.to_f >= 15.0
+
+        build_config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.1'
+      end
+
       next unless static_pod_names.include?(target.name)
 
-      target.build_configurations.each do |config|
-        config.build_settings['MACH_O_TYPE'] = 'staticlib'
+      target.build_configurations.each do |build_config|
+        build_config.build_settings['MACH_O_TYPE'] = 'staticlib'
       end
     end
   end

@@ -4,7 +4,6 @@ import { ViewProps } from 'react-native';
 import { useStoriesUpdate } from '@/hooks/content/useStoriesUpdate';
 import { useAdaptyInit } from '@/hooks/useAdaptyInit';
 import { usePaywallBootstrap } from '@/hooks/usePaywallBootstrap';
-import { useRemoteConfigInit } from '@/hooks/useRemoteConfigInit';
 
 import { useCreateSandboxFolders } from './hooks/useDownloadStoriesPreviews/useCreateSandboxFolders';
 import { useDownloadStoriesPreviews } from './hooks/useDownloadStoriesPreviews/useDownloadStoriesPreviews';
@@ -15,7 +14,6 @@ export const AppLogicProvider = ({ children }: ViewProps) => {
   useDownloadStoriesPreviews(areFoldersCreated);
   useLogAppLaunch();
   useStoriesUpdate();
-  useRemoteConfigInit();
   useAdaptyInit();
   usePaywallBootstrap();
 

@@ -203,28 +203,6 @@ jest.mock('react-native-email-link', () => ({
   openComposer: jest.fn(),
 }));
 
-// Mock @react-native-firebase/analytics
-jest.mock('@react-native-firebase/analytics', () => ({
-  getAnalytics: jest.fn(() => ({})),
-  logEvent: jest.fn(),
-  setUserProperties: jest.fn(),
-}));
-
-// Mock @react-native-firebase/remote-config
-jest.mock('@react-native-firebase/remote-config', () => ({
-  activate: jest.fn().mockResolvedValue(true),
-  ensureInitialized: jest.fn().mockResolvedValue(undefined),
-  fetchAndActivate: jest.fn().mockResolvedValue(true),
-  getBoolean: jest.fn().mockReturnValue(false),
-  getRemoteConfig: jest.fn(() => ({
-    defaultConfig: {},
-    setConfigSettings: jest.fn().mockResolvedValue(undefined),
-    setDefaults: jest.fn().mockResolvedValue(null),
-  })),
-  getString: jest.fn().mockReturnValue(''),
-  onConfigUpdate: jest.fn().mockReturnValue(jest.fn()),
-}));
-
 // Mock mixpanel-react-native
 jest.mock('mixpanel-react-native', () => ({
   Mixpanel: jest.fn().mockImplementation(() => ({
@@ -406,6 +384,12 @@ jest.mock('@/localization/useAppLocalization', () => ({
     localization: {},
     localize: jest.fn((ns: string, key: string) => `${ns}.${key}`),
   }),
+}));
+
+jest.mock('@/localization/localization', () => ({
+  localization: {
+    translate: jest.fn((ns: string, key: string) => `${ns}.${key}`),
+  },
 }));
 
 // Mock react-i18next
@@ -603,7 +587,17 @@ jest.mock('@/services/analytics/analytics', () => ({
     logVoiceChangeEvent: jest.fn(),
     logVoiceViewEvent: jest.fn(),
     setIsUserPaid: jest.fn(),
-    warmUpNativeSdk: jest.fn(),
+  },
+  resolveAnalyticsSegment: (remoteConfig: { segment?: unknown } | null) => {
+    const value = remoteConfig?.segment;
+
+    if (typeof value !== 'string') {
+      return 'no segment';
+    }
+
+    const trimmed = value.trim();
+
+    return trimmed.length > 0 ? trimmed : 'no segment';
   },
 }));
 
@@ -616,19 +610,6 @@ jest.mock('@/services/storage/storage', () => ({
   }),
   storage: {
     set: jest.fn(),
-  },
-}));
-
-// Mock remote config service
-jest.mock('@/services/remoteConfig/remoteConfig', () => ({
-  remoteConfigService: {
-    buyButtonTextNoTrial: 'Unlock',
-    buyButtonTextTrial: 'Start Free Trial',
-    disableLiveUpdate: jest.fn(),
-    enableLiveUpdate: jest.fn(),
-    isLiveUpdateEnabled: false,
-    segment: 'test_segment',
-    toggleState: false,
   },
 }));
 

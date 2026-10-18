@@ -2,12 +2,15 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { AdaptyPaywallProduct } from 'react-native-adapty';
 
-import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
-
 import { PAYWALL_NAMES, resolvePaywallVariantName } from '../paywallVariantRegistry';
 import { resolvePaywallProducts } from '../utils/paywallProduct.utils';
+import { type PaywallRemoteConfig } from '../utils/paywallRemoteConfig.utils';
 
-export const usePaywallProducts = (products: AdaptyPaywallProduct[], paywallName: string) => {
+export const usePaywallProducts = (
+  products: AdaptyPaywallProduct[],
+  paywallName: string,
+  remoteConfig: PaywallRemoteConfig,
+) => {
   const { trialProduct, weeklyProduct, yearlyProduct } = useMemo(
     () => resolvePaywallProducts(products),
     [products],
@@ -18,11 +21,11 @@ export const usePaywallProducts = (products: AdaptyPaywallProduct[], paywallName
   const defaultSelectedProduct = useMemo(() => {
     const shouldDefaultToTrial =
       resolvePaywallVariantName(paywallName) === PAYWALL_NAMES.toggle &&
-      remoteConfigService.toggleState &&
+      remoteConfig.toggleState &&
       isTrialEligible;
 
     return shouldDefaultToTrial ? trialProduct : yearlyProduct;
-  }, [isTrialEligible, paywallName, trialProduct, yearlyProduct]);
+  }, [isTrialEligible, paywallName, remoteConfig.toggleState, trialProduct, yearlyProduct]);
 
   const [selectedProduct, setSelectedProduct] = useState<AdaptyPaywallProduct | undefined>(
     defaultSelectedProduct,
@@ -34,8 +37,8 @@ export const usePaywallProducts = (products: AdaptyPaywallProduct[], paywallName
 
   const isFreeTrialEnabled = selectedProduct === trialProduct;
   const unlockButtonText = isFreeTrialEnabled
-    ? remoteConfigService.buyButtonTextTrial
-    : remoteConfigService.buyButtonTextNoTrial;
+    ? remoteConfig.buyButtonTextTrial
+    : remoteConfig.buyButtonTextNoTrial;
 
   return {
     isFreeTrialEnabled,

@@ -51,7 +51,7 @@ src/screens/{ScreenName}Screen/
 - `const styles = useMakeStyles(makeStyles)` when styled
 - Logic in `use{ScreenName}Screen()` — not in TSX
 - **No** raw `useRoute` / `useNavigation`
-- **No** SDK imports (adapty, firebase, mixpanel, realm direct queries)
+- **No** SDK imports (adapty, mixpanel, realm direct queries)
 
 ## Localization
 

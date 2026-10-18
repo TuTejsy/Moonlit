@@ -2,7 +2,7 @@
 name: moonlit-service-boundary-guard
 description: >-
   Moonlit read-only SDK and storage boundary auditor. Scans git-changed files under
-  src/screens/ and src/hooks/ for forbidden direct imports (adapty, firebase, mixpanel,
+  src/screens/ and src/hooks/ for forbidden direct imports (adapty, mixpanel,
   async-storage, axios) and navigation hook misuse. Verifies sole-owner service patterns,
   useShowPaywallModal boundaries, and Realm hook usage. Returns PASS/FAIL with violation
   table. Invoke with /moonlit-service-boundary-guard. Read-only.
@@ -31,8 +31,7 @@ Review changed production code via `git diff`, `git diff --cached`, `git status 
 
 | Package                                                     | Allowed import paths only                                                                                                                                          |
 | :---------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mixpanel-react-native`, `@react-native-firebase/analytics` | `src/services/analytics/analytics.ts`                                                                                                                              |
-| `@react-native-firebase/remote-config`                      | `src/services/remoteConfig/remoteConfig.ts`                                                                                                                        |
+| `mixpanel-react-native`                                     | `src/services/analytics/analytics.ts`                                                                                                                              |
 | `@react-native-async-storage/async-storage`                 | `src/services/storage/storage.ts`                                                                                                                                  |
 | `react-native-keychain`                                     | `src/services/securedStorage/securedStorage.ts`                                                                                                                    |
 | `axios`                                                     | `src/services/networkClient/networkClient.ts`                                                                                                                      |
@@ -50,7 +49,7 @@ Review changed production code via `git diff`, `git diff --cached`, `git status 
 | Story data         | `useStory`, `useStories`              | Direct Realm queries                    |
 | Voice selection    | `useSelectedAudioRecording`           | Direct Realm writes for audio selection |
 | Favorites          | `useHandleStoryFavorite`              | Direct Realm favorite toggles           |
-| Analytics          | `AnalyticsService` methods            | Mixpanel/Firebase packages              |
+| Analytics          | `AnalyticsService` methods            | Mixpanel package                        |
 | Storage            | `storage` / `securedStorage` services | Direct AsyncStorage/Keychain            |
 
 ## Workflow

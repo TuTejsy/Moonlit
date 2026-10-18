@@ -63,7 +63,7 @@ export const PaywallModal = () => {
     unlockButtonText,
     weeklyProduct,
     yearlyProduct,
-  } = usePaywallProducts(products, paywallName);
+  } = usePaywallProducts(products, paywallName, remoteConfig);
 
   const { handleRestorePress, handleSkipPress, handleUnlockPress, isLoading } = usePaywallActions({
     contentName,

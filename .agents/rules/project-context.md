@@ -21,7 +21,7 @@ The application source code is located within the `src/` directory:
 - `src/native_modules/`: Custom native modules (`MNTAudioPlayer` / `mnt-audioplayer`).
 - `src/navigation/`: React Navigation stacks, tabs, routing logic.
 - `src/screens/`: Feature screens (`HomeScreen`, `StoryPlayerScreen`, `PaywallModal`, `SettingsScreen`, etc.).
-- `src/services/`: SDK integrations (`analytics`, `networkClient`, `remoteConfig`, `storage`, `securedStorage`).
+- `src/services/`: SDK integrations (`analytics`, `networkClient`, `storage`, `securedStorage`).
 - `src/store/`: Redux configuration and feature slices (`player/`, `user/`, `subscription/`).
 - `src/styles/`: Design system tokens and font definitions.
 - `src/types/`: Global TypeScript type definitions.

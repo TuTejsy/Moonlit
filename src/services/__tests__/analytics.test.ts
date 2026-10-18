@@ -1,22 +1,32 @@
-import { getAnalytics, logEvent, setUserProperties } from '@react-native-firebase/analytics';
 import { Mixpanel } from 'mixpanel-react-native';
 
 import { CATEGORY_KEYS } from '@/constants/stories';
+import { store } from '@/store/store';
 
-import { AnalyticsService } from '../analytics/analytics';
+import { AnalyticsService, resolveAnalyticsSegment } from '../analytics/analytics';
 import { MIXPANEL_SERVER_URL, PAYWALL_TYPE, SOURCE } from '../analytics/analytics.constants';
 import { getStorageData } from '../storage/storage';
 
 jest.unmock('@/services/analytics/analytics');
 
-jest.mock('@react-native-firebase/analytics', () => ({
-  getAnalytics: jest.fn(() => ({})),
-  logEvent: jest.fn(),
-  setUserProperties: jest.fn(),
-}));
-
 jest.mock('@/constants/auth', () => ({
   MIXPANEL_TOKEN: 'test-mixpanel-token',
+}));
+
+jest.mock('@/store/store', () => ({
+  store: {
+    getState: jest.fn(() => ({
+      subscription: {
+        paywallRemoteConfig: { segment: 'test-segment' },
+      },
+    })),
+  },
+}));
+
+jest.mock('@/store/subscription/subscription.selector', () => ({
+  selectPaywallRemoteConfig: (state: {
+    subscription: { paywallRemoteConfig: Record<string, unknown> | null };
+  }) => state.subscription.paywallRemoteConfig,
 }));
 
 jest.mock('../storage/storage', () => ({
@@ -24,12 +34,6 @@ jest.mock('../storage/storage', () => ({
     isAnaltyicsEnabled: true,
     isFirstLaunch: false,
   }),
-}));
-
-jest.mock('../remoteConfig/remoteConfig', () => ({
-  remoteConfigService: {
-    segment: 'test-segment',
-  },
 }));
 
 type MixpanelMockInstance = {
@@ -54,11 +58,32 @@ async function flushMixpanelQueue(): Promise<void> {
   await Promise.resolve();
 }
 
+function mockPaywallRemoteConfig(paywallRemoteConfig: Record<string, unknown> | null): void {
+  (store.getState as jest.Mock).mockReturnValue({
+    subscription: {
+      paywallRemoteConfig,
+    },
+  });
+}
+
+describe('resolveAnalyticsSegment', () => {
+  it('returns a trimmed segment', () => {
+    expect(resolveAnalyticsSegment({ segment: '  cohort-a  ' })).toBe('cohort-a');
+  });
+
+  it('falls back when the segment is missing or blank', () => {
+    expect(resolveAnalyticsSegment(null)).toBe('no segment');
+    expect(resolveAnalyticsSegment({ segment: '   ' })).toBe('no segment');
+    expect(resolveAnalyticsSegment({ segment: 1 })).toBe('no segment');
+  });
+});
+
 describe('AnalyticsService', () => {
   const originalDev = (globalThis as { __DEV__?: boolean }).__DEV__;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockPaywallRemoteConfig({ segment: 'test-segment' });
   });
 
   afterEach(() => {
@@ -102,34 +127,23 @@ describe('AnalyticsService', () => {
       AnalyticsService.logLaunchAppEvent({ source: SOURCE.COLD_START });
       await flushMixpanelQueue();
 
-      expect(logEvent).not.toHaveBeenCalled();
       expect(latestMixpanelInstance().track).not.toHaveBeenCalled();
     });
 
-    describe('warmUpNativeSdk', () => {
-      it('loads the native analytics module', () => {
-        AnalyticsService.warmUpNativeSdk();
-
-        expect(getAnalytics).toHaveBeenCalledTimes(1);
-      });
-    });
-
     describe('setIsUserPaid', () => {
-      it('sets user properties to "paid" when true', async () => {
+      it('registers subscription_status as paid', async () => {
         AnalyticsService.setIsUserPaid(true);
         await flushMixpanelQueue();
 
-        expect(setUserProperties).toHaveBeenCalledWith(expect.anything(), { paid: 'paid' });
         expect(latestMixpanelInstance().registerSuperProperties).toHaveBeenCalledWith({
           subscription_status: 'paid',
         });
       });
 
-      it('sets user properties to "free" when false', async () => {
+      it('registers subscription_status as free', async () => {
         AnalyticsService.setIsUserPaid(false);
         await flushMixpanelQueue();
 
-        expect(setUserProperties).toHaveBeenCalledWith(expect.anything(), { paid: 'free' });
         expect(latestMixpanelInstance().registerSuperProperties).toHaveBeenCalledWith({
           subscription_status: 'free',
         });
@@ -137,37 +151,36 @@ describe('AnalyticsService', () => {
     });
 
     describe('logLaunchAppEvent', () => {
-      it('logs launch_app event with source and first_launch', async () => {
+      it('tracks app_launched with the Adapty segment', async () => {
         AnalyticsService.logLaunchAppEvent({ source: SOURCE.COLD_START });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'launch_app',
-          expect.objectContaining({
-            first_launch: false,
-            segment: 'test-segment',
-            source: SOURCE.COLD_START,
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith('app_launched', {
           is_first_launch: false,
           launch_source: SOURCE.COLD_START,
           segment: 'test-segment',
         });
       });
+
+      it('uses the fallback segment before paywall remote config is loaded', async () => {
+        mockPaywallRemoteConfig(null);
+
+        AnalyticsService.logLaunchAppEvent({ source: SOURCE.COLD_START });
+        await flushMixpanelQueue();
+
+        expect(latestMixpanelInstance().track).toHaveBeenCalledWith('app_launched', {
+          is_first_launch: false,
+          launch_source: SOURCE.COLD_START,
+          segment: 'no segment',
+        });
+      });
     });
 
     describe('logOnboardingEvent', () => {
-      it('logs onboarding event with screen number', async () => {
+      it('tracks onboarding_screen_viewed with the screen number', async () => {
         AnalyticsService.logOnboardingEvent({ screen: 2 });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'onboarding',
-          expect.objectContaining({ screen: 2, segment: 'test-segment' }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith('onboarding_screen_viewed', {
           screen_number: 2,
           segment: 'test-segment',
@@ -176,21 +189,13 @@ describe('AnalyticsService', () => {
     });
 
     describe('logPaywallViewedEvent', () => {
-      it('logs ss_view event and omits empty Mixpanel props', async () => {
+      it('tracks paywall_viewed and omits empty props', async () => {
         AnalyticsService.logPaywallViewedEvent({
           source: SOURCE.HOME_VIEW,
           type: PAYWALL_TYPE.WITH_SWITCHER,
         });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'ss_view',
-          expect.objectContaining({
-            source: SOURCE.HOME_VIEW,
-            type: PAYWALL_TYPE.WITH_SWITCHER,
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith('paywall_viewed', {
           paywall_type: PAYWALL_TYPE.WITH_SWITCHER,
           segment: 'test-segment',
@@ -200,7 +205,7 @@ describe('AnalyticsService', () => {
     });
 
     describe('logPaywallClosedEvent', () => {
-      it('logs ss_close event', async () => {
+      it('tracks paywall_closed', async () => {
         AnalyticsService.logPaywallClosedEvent({
           contentName: 'Cinderella',
           source: SOURCE.SETTINGS,
@@ -209,15 +214,6 @@ describe('AnalyticsService', () => {
         });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'ss_close',
-          expect.objectContaining({
-            contentName: 'Cinderella',
-            source: SOURCE.SETTINGS,
-            tab: 'Featuring tales',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith('paywall_closed', {
           content_name: 'Cinderella',
           paywall_type: PAYWALL_TYPE.WITH_SWITCHER,
@@ -229,7 +225,7 @@ describe('AnalyticsService', () => {
     });
 
     describe('logStartSubscriptionEvent', () => {
-      it('logs start_subscription event', async () => {
+      it('tracks subscription_started', async () => {
         AnalyticsService.logStartSubscriptionEvent({
           hasTrial: true,
           productId: 'weekly_premium',
@@ -238,14 +234,6 @@ describe('AnalyticsService', () => {
         });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'start_subscription',
-          expect.objectContaining({
-            hasTrial: true,
-            productId: 'weekly_premium',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith('subscription_started', {
           has_trial: true,
           paywall_type: PAYWALL_TYPE.WITH_SWITCHER,
@@ -257,22 +245,15 @@ describe('AnalyticsService', () => {
     });
 
     describe('logSettingsViewEvent', () => {
-      it('logs page_view event with settings screen and increments count', async () => {
+      it('tracks screen_viewed for settings', async () => {
         AnalyticsService.logSettingsViewEvent();
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'page_view',
-          expect.objectContaining({
-            count: expect.any(Number),
-            screen: 'settings',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'screen_viewed',
           expect.objectContaining({
             screen_name: 'settings',
+            segment: 'test-segment',
             session_occurrence: expect.any(Number),
           }),
         );
@@ -280,60 +261,40 @@ describe('AnalyticsService', () => {
     });
 
     describe('logSavedViewEvent', () => {
-      it('logs page_view event with saved screen', async () => {
+      it('tracks screen_viewed for saved', async () => {
         AnalyticsService.logSavedViewEvent();
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'page_view',
-          expect.objectContaining({
-            screen: 'saved',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'screen_viewed',
           expect.objectContaining({
             screen_name: 'saved',
+            segment: 'test-segment',
           }),
         );
       });
     });
 
     describe('logHomeViewEvent', () => {
-      it('logs page_view event with home screen', async () => {
+      it('tracks screen_viewed for home', async () => {
         AnalyticsService.logHomeViewEvent();
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'page_view',
-          expect.objectContaining({
-            screen: 'home',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'screen_viewed',
           expect.objectContaining({
             screen_name: 'home',
+            segment: 'test-segment',
           }),
         );
       });
     });
 
     describe('logTaleOpenEvent', () => {
-      it('logs tale_open event', async () => {
+      it('tracks tale_opened', async () => {
         AnalyticsService.logTaleOpenEvent({ name: 'Cinderella', tab: 'All tales' });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'tale_open',
-          expect.objectContaining({
-            name: 'Cinderella',
-            tab: 'All tales',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith('tale_opened', {
           segment: 'test-segment',
           tab: 'all_tales',
@@ -343,18 +304,14 @@ describe('AnalyticsService', () => {
     });
 
     describe('logTalePlayEvent', () => {
-      it('logs tale_play event', async () => {
+      it('tracks tale_played', async () => {
         AnalyticsService.logTalePlayEvent({ name: 'Cinderella', tab: CATEGORY_KEYS.ANIMAL_TALES });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'tale_play',
-          expect.objectContaining({ name: 'Cinderella', tab: CATEGORY_KEYS.ANIMAL_TALES }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'tale_played',
           expect.objectContaining({
+            segment: 'test-segment',
             tab: 'animal_tales',
             tale_name: 'Cinderella',
           }),
@@ -363,24 +320,19 @@ describe('AnalyticsService', () => {
     });
 
     describe('logTalePauseEvent', () => {
-      it('logs tale_pause event', async () => {
+      it('tracks tale_paused', async () => {
         AnalyticsService.logTalePauseEvent({ name: 'Cinderella', tab: 'All tales' });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'tale_pause',
-          expect.objectContaining({ name: 'Cinderella' }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'tale_paused',
-          expect.objectContaining({ tale_name: 'Cinderella' }),
+          expect.objectContaining({ segment: 'test-segment', tale_name: 'Cinderella' }),
         );
       });
     });
 
     describe('logTaleRewindEvent', () => {
-      it('logs tale_rewind event', async () => {
+      it('tracks tale_rewound', async () => {
         AnalyticsService.logTaleRewindEvent({
           name: 'Cinderella',
           tab: 'All tales',
@@ -388,20 +340,19 @@ describe('AnalyticsService', () => {
         });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'tale_rewind',
-          expect.objectContaining({ name: 'Cinderella', value: '30s' }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'tale_rewound',
-          expect.objectContaining({ rewind_value: '30s', tale_name: 'Cinderella' }),
+          expect.objectContaining({
+            rewind_value: '30s',
+            segment: 'test-segment',
+            tale_name: 'Cinderella',
+          }),
         );
       });
     });
 
     describe('logTaleLikedEvent', () => {
-      it('logs tale_liked event with count', async () => {
+      it('tracks tale_liked with a session occurrence', async () => {
         AnalyticsService.logTaleLikedEvent({
           name: 'Cinderella',
           source: SOURCE.TALE_PLAYER,
@@ -409,17 +360,10 @@ describe('AnalyticsService', () => {
         });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'tale_liked',
-          expect.objectContaining({
-            count: expect.any(Number),
-            name: 'Cinderella',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'tale_liked',
           expect.objectContaining({
+            segment: 'test-segment',
             session_occurrence: expect.any(Number),
             source: SOURCE.TALE_PLAYER,
             tale_name: 'Cinderella',
@@ -429,7 +373,7 @@ describe('AnalyticsService', () => {
     });
 
     describe('logVoiceViewEvent', () => {
-      it('logs voice_view event with count', async () => {
+      it('tracks voice_viewed', async () => {
         AnalyticsService.logVoiceViewEvent({
           name: 'Standard',
           source: SOURCE.TALE_PLAYER,
@@ -437,17 +381,10 @@ describe('AnalyticsService', () => {
         });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'voice_view',
-          expect.objectContaining({
-            count: expect.any(Number),
-            name: 'Standard',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'voice_viewed',
           expect.objectContaining({
+            segment: 'test-segment',
             session_occurrence: expect.any(Number),
             voice_name: 'Standard',
           }),
@@ -456,7 +393,7 @@ describe('AnalyticsService', () => {
     });
 
     describe('logVoiceChangeEvent', () => {
-      it('logs voice_change event', async () => {
+      it('tracks voice_changed', async () => {
         AnalyticsService.logVoiceChangeEvent({
           from: 'Standard',
           name: 'Advanced',
@@ -466,18 +403,11 @@ describe('AnalyticsService', () => {
         });
         await flushMixpanelQueue();
 
-        expect(logEvent).toHaveBeenCalledWith(
-          expect.anything(),
-          'voice_change',
-          expect.objectContaining({
-            from: 'Standard',
-            to: 'Advanced',
-          }),
-        );
         expect(latestMixpanelInstance().track).toHaveBeenCalledWith(
           'voice_changed',
           expect.objectContaining({
             from_voice: 'Standard',
+            segment: 'test-segment',
             to_voice: 'Advanced',
             voice_name: 'Advanced',
           }),

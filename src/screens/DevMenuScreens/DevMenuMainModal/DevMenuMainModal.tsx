@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button, ScrollView, View } from 'react-native';
 
 import { ModalHeader } from '@/components/Headers/ModalHeader/ModalHeader';
@@ -10,11 +10,14 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { DevMenuRoutes } from '@/navigation/DebugNavigator/DevMenuNavigator.routes';
 import { useAppNavigation } from '@/navigation/hooks/useAppNavigation';
 import { RootRoutes } from '@/navigation/RootNavigator/RootNavigator.routes';
-import { remoteConfigService } from '@/services/remoteConfig/remoteConfig';
-import { REMOTE_CONFIG_FIELDS } from '@/services/remoteConfig/remoteConfig.constants';
+import { parsePaywallRemoteConfig } from '@/screens/PaywallModal/utils/paywallRemoteConfig.utils';
+import { resolveAnalyticsSegment } from '@/services/analytics/analytics';
 import { getStorageData, storage } from '@/services/storage/storage';
 import { StorageKeys } from '@/services/storage/storage.constants';
-import { selectPaywallName } from '@/store/subscription/subscription.selector';
+import {
+  selectPaywallName,
+  selectPaywallRemoteConfig,
+} from '@/store/subscription/subscription.selector';
 import { selectIsFullVersion } from '@/store/user/user.selector';
 import { lockFullVersion, unlockFullVersion } from '@/store/user/user.slice';
 
@@ -31,28 +34,21 @@ export const DevMenuMainModal = () => {
 
   const isFullAccess = useAppSelector(selectIsFullVersion);
   const paywallName = useAppSelector(selectPaywallName);
+  const paywallRemoteConfig = useAppSelector(selectPaywallRemoteConfig);
   const dispatch = useAppDispatch();
+
+  const parsedRemoteConfig = useMemo(
+    () => parsePaywallRemoteConfig(paywallRemoteConfig),
+    [paywallRemoteConfig],
+  );
 
   const [isAnalyticsEnabled, setIsAnalyticsEnabled] = useState(
     !!getStorageData().isAnaltyicsEnabled,
-  );
-  const [isRemoteConfigLiveUpdateEnabled, setIsRemoteConfigLiveUpdateEnabled] = useState(
-    !!remoteConfigService.isLiveUpdateEnabled,
   );
 
   const handleAnalyticsEnabledValueChanged = useCallback((value: boolean) => {
     setIsAnalyticsEnabled(value);
     storage.set(StorageKeys.isAnaltyticsEnabled, value);
-  }, []);
-
-  const handleisRemoteConfigLiveUpdateEnabledValueChanged = useCallback((value: boolean) => {
-    setIsRemoteConfigLiveUpdateEnabled(value);
-
-    if (value) {
-      remoteConfigService.enableLiveUpdate();
-    } else {
-      remoteConfigService.disableLiveUpdate();
-    }
   }, []);
 
   const handleFullAccessValueChanged = useCallback(
@@ -85,11 +81,6 @@ export const DevMenuMainModal = () => {
         </TextView>
 
         <DevMenuSwitchCell
-          title='Remote Config Live Update'
-          value={isRemoteConfigLiveUpdateEnabled}
-          onValueChange={handleisRemoteConfigLiveUpdateEnabledValueChanged}
-        />
-        <DevMenuSwitchCell
           title='Analytics enabled'
           value={isAnalyticsEnabled}
           onValueChange={handleAnalyticsEnabledValueChanged}
@@ -101,26 +92,22 @@ export const DevMenuMainModal = () => {
         />
 
         <TextView style={styles.title} type='medium'>
-          Remote Config Values
+          Paywall remote config
         </TextView>
 
-        <DebugMenuValueCell
-          title={REMOTE_CONFIG_FIELDS.SEGMENT}
-          value={remoteConfigService.segment}
-        />
+        <DebugMenuValueCell title='segment' value={resolveAnalyticsSegment(paywallRemoteConfig)} />
         <DebugMenuValueCell title='Paywall name (Adapty)' value={paywallName ?? 'not loaded'} />
         <DebugMenuValueCell
-          title={REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_NO_TRIAL}
-          value={remoteConfigService.buyButtonTextNoTrial}
+          title='buy_button_text_no_trial'
+          value={parsedRemoteConfig.buyButtonTextNoTrial}
         />
         <DebugMenuValueCell
-          title={REMOTE_CONFIG_FIELDS.BUY_BUTTON_TEXT_TRIAL}
-          value={remoteConfigService.buyButtonTextTrial}
+          title='buy_button_text_trial'
+          value={parsedRemoteConfig.buyButtonTextTrial}
         />
-
         <DebugMenuValueCell
-          title={REMOTE_CONFIG_FIELDS.TOGGLE_STATE}
-          value={remoteConfigService.toggleState ? 'true' : 'false'}
+          title='toggle_state'
+          value={parsedRemoteConfig.toggleState ? 'true' : 'false'}
         />
 
         <TextView style={styles.title} type='medium'>

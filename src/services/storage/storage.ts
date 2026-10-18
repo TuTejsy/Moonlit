@@ -25,10 +25,6 @@ export const getStorageData = (): StorageDataReturn => {
     ? storage.getBoolean(StorageKeys.isAnaltyticsEnabled) ?? false
     : true;
 
-  const isRemoteConfigLiveUpdateEnabled = devMode
-    ? storage.getBoolean(StorageKeys.isRemoteConfigLiveUpdateEnabled) ?? false
-    : false;
-
   const isOnboarded = storage.getBoolean(StorageKeys.isOnboarded);
   const isFirstLaunch = storage.getBoolean(StorageKeys.isFirstLaunch) ?? true;
   const isReviewAsked = storage.getBoolean(StorageKeys.isReviewAsked) ?? false;
@@ -39,7 +35,6 @@ export const getStorageData = (): StorageDataReturn => {
     [StorageKeys.isFirstLaunch]: isFirstLaunch,
     [StorageKeys.isReviewAsked]: isReviewAsked,
     [StorageKeys.isAnaltyticsEnabled]: isAnaltyticsEnabled,
-    [StorageKeys.isRemoteConfigLiveUpdateEnabled]: isRemoteConfigLiveUpdateEnabled,
   };
 };
 

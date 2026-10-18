@@ -44,18 +44,11 @@ describe('getStorageData', () => {
     expect(data).toHaveProperty(StorageKeys.isFirstLaunch);
     expect(data).toHaveProperty(StorageKeys.isReviewAsked);
     expect(data).toHaveProperty(StorageKeys.isAnaltyticsEnabled);
-    expect(data).toHaveProperty(StorageKeys.isRemoteConfigLiveUpdateEnabled);
   });
 
   it('returns isReviewAsked as false by default', () => {
     const data = getStorageData();
 
     expect(data[StorageKeys.isReviewAsked]).toBe(false);
-  });
-
-  it('returns isRemoteConfigLiveUpdateEnabled as false when devMode is not set', () => {
-    const data = getStorageData();
-
-    expect(data[StorageKeys.isRemoteConfigLiveUpdateEnabled]).toBe(false);
   });
 });

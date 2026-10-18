@@ -1908,74 +1908,6 @@ PODS:
     - Yoga
   - RNDominantColor (1.7.2):
     - React
-  - RNFBAnalytics (26.2.0):
-    - hermes-engine
-    - RCTRequired
-    - RCTTypeSafety
-    - React-bridging
-    - React-Core
-    - React-Core-prebuilt
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/core
-    - ReactNativeDependencies
-    - RNFBApp
-    - Yoga
-  - RNFBApp (26.2.0):
-    - hermes-engine
-    - RCTRequired
-    - RCTTypeSafety
-    - React-bridging
-    - React-Core
-    - React-Core-prebuilt
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/core
-    - ReactNativeDependencies
-    - Yoga
-  - RNFBRemoteConfig (26.2.0):
-    - hermes-engine
-    - RCTRequired
-    - RCTTypeSafety
-    - React-bridging
-    - React-Core
-    - React-Core-prebuilt
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/core
-    - ReactNativeDependencies
-    - RNFBApp
-    - Yoga
   - RNFS (2.20.0):
     - React-Core
   - RNGestureHandler (3.2.1):
@@ -2391,9 +2323,6 @@ DEPENDENCIES:
   - RealmJS (from `../node_modules/realm`)
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - RNDominantColor (from `../node_modules/rn-dominant-color`)
-  - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
-  - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
-  - "RNFBRemoteConfig (from `../node_modules/@react-native-firebase/remote-config`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
@@ -2614,12 +2543,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-masked-view/masked-view"
   RNDominantColor:
     :path: "../node_modules/rn-dominant-color"
-  RNFBAnalytics:
-    :path: "../node_modules/@react-native-firebase/analytics"
-  RNFBApp:
-    :path: "../node_modules/@react-native-firebase/app"
-  RNFBRemoteConfig:
-    :path: "../node_modules/@react-native-firebase/remote-config"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
@@ -2746,9 +2669,6 @@ SPEC CHECKSUMS:
   RealmJS: 3fcc4acdd1fe58c87d1e63732423421df02009e7
   RNCMaskedView: 00cc4359336f3a839485dc94c738918a69d3d8f3
   RNDominantColor: 7c17c31201566a592ba4b2fbe2bb7e00df468753
-  RNFBAnalytics: 574d5cf2f7c8049ac6acf15316332249ce5b103f
-  RNFBApp: 0ea2047a6d43df949a19164fe8c0531fcae3de04
-  RNFBRemoteConfig: 24aebf36a3c71f59362f561a448da4aabce0801c
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 973b26c336f23ec1f69f5718d80a060146f3734c
   RNKeychain: b530bf2790edeaf8ceb58279694ca25e4c947db5
@@ -2759,6 +2679,6 @@ SPEC CHECKSUMS:
   SocketRocket: d57b1af80c029e12a75cd9b218287c67381e4593
   Yoga: 58b502c52b14ad3c4468805d461fc37d275c2a42
 
-PODFILE CHECKSUM: d7ca96b0904ef6e4905a17cbb1a5e06054e369d8
+PODFILE CHECKSUM: 07cbe1eea781a250cbdb5a9410d66692cf236e8e
 
 COCOAPODS: 1.14.3
