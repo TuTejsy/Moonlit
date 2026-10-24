@@ -2,9 +2,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
-import { REQUEST_ID_HEADER, resolveRequestId } from './requestId';
-
 import { JWT_TOKEN } from '@/constants/auth';
+
+import { REQUEST_ID_HEADER, resolveRequestId } from './requestId';
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
