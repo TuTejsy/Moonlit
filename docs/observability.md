@@ -27,3 +27,11 @@ The tests cover generation, invalid input, explicit IDs, authorization, response
 ## Rollback
 
 Revert the client change and release the previous mobile code. The API generates an ID when a request does not supply one, so rollback requires no server configuration change.
+
+## Local and remote monitoring guides
+
+Follow the [local Docker guide](https://github.com/AsoTora/moonlit-crm/blob/andreishvedau/grafana-monitoring/docs/local-monitoring.md) to start Grafana, Loki, Prometheus, and Alloy with no Cloud credentials. The [remote guide](https://github.com/AsoTora/moonlit-crm/blob/andreishvedau/grafana-monitoring/docs/observability.md) covers Droplet installation, token scopes and rotation, data verification, external uptime checks, diagnosis, and rollback. These links point to the companion PR branch until it is merged.
+
+Run the mobile app through its existing simulator or device workflow, then point its development API configuration to your local API. The iOS simulator can normally use the host's loopback address; the standard Android emulator uses `10.0.2.2` to reach the host. A physical device needs a reachable development address, so the localhost-only Docker port example will not work without a deliberate network change. Keep production credentials out of the local setup.
+
+Generate a request from the app, inspect its outgoing request ID in the debugger, and search Local Loki with `{environment="local",service_name="server"} | json | request_id="THE_REQUEST_ID"`. Do not copy the complete request or authorization header into logs. Docker runs the backend and monitoring services; it does not replace the iOS or Android runtime. This PR provides correlation only, not mobile crash reporting or device metrics.
