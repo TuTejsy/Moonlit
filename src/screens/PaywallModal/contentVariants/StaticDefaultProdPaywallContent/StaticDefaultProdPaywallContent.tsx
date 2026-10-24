@@ -9,7 +9,6 @@ import { useAppLocalization } from '@/localization/useAppLocalization';
 import { FooterActions } from '../../components/FooterActions/FooterActions';
 // eslint-disable-next-line import/no-unresolved
 import voicesImage from '../../images/voices/voices.png';
-// eslint-disable-next-line import/no-unresolved
 import voicesLandscapeImage from '../../images/voicesLandscape/voicesLandscape.png';
 import type { PaywallVariantProps } from '../../paywallVariantRegistry.types';
 

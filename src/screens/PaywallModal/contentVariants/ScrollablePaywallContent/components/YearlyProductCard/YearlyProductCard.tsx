@@ -5,7 +5,6 @@ import { TextView } from '@/components/Primitives/TextView/TextView';
 import { useMakeStyles } from '@/hooks/theme/useMakeStyles';
 import { useAppLocalization } from '@/localization/useAppLocalization';
 
-// eslint-disable-next-line import/no-unresolved
 import yearlyProductBackgroundImage from '../../images/yearlyProductBackground/yearlyProductBackground.png';
 
 import { makeStyles } from './YearlyProductCard.styles';

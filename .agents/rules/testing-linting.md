@@ -28,7 +28,11 @@ When quality checks pass, `.agents/hooks/context-drift-check.sh` may suggest **`
 ## Linting
 
 - Fix all ESLint errors introduced by your changes.
-- TypeScript 6 requires `@typescript-eslint/parser` and `@typescript-eslint/eslint-plugin` **8.58+** (v5 cannot parse TS 6). Keep `eslint` on 8.57+ (AirBnB/react-app still target ESLint 8). Pin both packages in `package.json` `resolutions` so `eslint-config-react-app` does not load a second nested `@typescript-eslint` plugin (ESLint "couldn't determine the plugin uniquely"). Keep `patches/@typescript-eslint+eslint-plugin+8.67.0.patch` — upstream `no-unused-vars` crashes on TS 6 enums (`parent` is undefined; https://github.com/typescript-eslint/typescript-eslint/issues/12185). v8 `recommended` successors stay off to match prior config: `no-empty-object-type` (was `no-empty-interface`), `no-require-imports` (Jest `require()` mocks), and base `no-empty-function` (parameter-property constructors).
+- Use ESLint 10 with the flat configuration in `eslint.config.mjs`. `FlatCompat` preserves the existing project rules for plugins that still use the legacy format. Do not restore `eslint-config-airbnb` or `eslint-config-react-app`.
+- TypeScript 6 requires `@typescript-eslint/parser` and `@typescript-eslint/eslint-plugin` 8.58 or later. Keep both packages pinned to 8.67 until the enum fix in `patches/@typescript-eslint+eslint-plugin+8.67.0.patch` is verified upstream.
+- CI uses Node.js 24 and Yarn 4 with `nodeLinker: node-modules`. Use `yarn install --immutable`, `yarn tsc`, `yarn lint`, `yarn test --runInBand`, and `yarn format:check`.
+- CI copies `.github/fixtures/auth.ts` into the ignored local configuration file. These values are for tests. Release builds require the actual local configuration.
+- Native dependency changes also require a CocoaPods lockfile update and iOS and Android builds before merge. JavaScript CI does not verify native builds.
 
 ## Formatting
 

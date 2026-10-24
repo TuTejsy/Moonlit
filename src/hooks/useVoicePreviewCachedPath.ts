@@ -42,7 +42,6 @@ export const useVoicePreviewCachedPath = (voiceCoverUrl: string | undefined) => 
         });
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voicePreviewCachedPath, absoluteCoverPath]);
 
   return cachedURL;

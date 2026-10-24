@@ -88,6 +88,5 @@ export function useDownloadStoriesPreviews(areFoldersCreated: boolean) {
     return () => {
       storiesWithoutPreview.removeListener(previewsListener);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [areFoldersCreated]);
 }

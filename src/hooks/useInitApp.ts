@@ -6,7 +6,6 @@ import { getStorageData } from '@/services/storage/storage';
 export const useInitApp = () => {
   const initialRouteName = useMemo(() => {
     return getStorageData().isOnboarded ? RootRoutes.TAB : RootRoutes.GET_STARTED_SCREEN;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const initialNavigationState = useMemo(

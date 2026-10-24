@@ -17,7 +17,6 @@ export const useScrollOpacity = (activeOpacity = 1, inactiveOpacity = 0) => {
   const handleOpacityScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       opacityActivity.value = withTiming(event.nativeEvent.contentOffset.y > 0 ? 1 : 0);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
     [opacityActivity],
   );
@@ -26,7 +25,6 @@ export const useScrollOpacity = (activeOpacity = 1, inactiveOpacity = 0) => {
     const opacityAnimStyle = animatedStyle;
 
     return { handleOpacityScroll, opacityAnimStyle };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animatedStyle, handleOpacityScroll]);
 
   return values;

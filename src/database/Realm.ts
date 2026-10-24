@@ -7,7 +7,6 @@ export class RealmDB<ObjectType> {
 
   private realmPath: string;
 
-  // eslint-disable-next-line no-useless-constructor
   constructor(private realmConfig: ZRKRealmConfiguration, public objectName: string) {}
 
   get realm() {
@@ -102,7 +101,6 @@ export class RealmDB<ObjectType> {
     return null;
   };
 
-  // eslint-disable-next-line arrow-parens
   subObject = <SubObjectType>(subObjectName: string, id: number) => {
     if (id) {
       return this.instance.objectForPrimaryKey<SubObjectType>(subObjectName, id as never);

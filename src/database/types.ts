@@ -1,5 +1,5 @@
-import Realm, { BaseConfiguration } from 'realm';
+import Realm, { Configuration } from 'realm';
 
-export type ZRKRealmConfiguration = BaseConfiguration & {
+export type ZRKRealmConfiguration = Configuration & {
   deleteCache: (dbInstance: Realm) => void;
 };

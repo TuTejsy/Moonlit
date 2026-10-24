@@ -60,7 +60,6 @@ export function VoiceSettingsModal() {
 
   const [audioRecordings, auidioRecoridngsVersion] = useAudioRecordings(`story_id = '${storyId}'`);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const flatListData = useMemo(
     () => [...audioRecordings, MORE_VOICES_PLACEHOLDER],
     // eslint-disable-next-line react-hooks/exhaustive-deps

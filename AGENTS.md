@@ -11,7 +11,7 @@ Moonlit is a React Native mobile application featuring fairytales for children. 
 
 ## Core Technology Stack
 
-- **Package Manager**: ALWAYS use `yarn`. Run `yarn restart` after dependency changes.
+- **Package Manager**: Use Node.js 24 and Yarn 4 with `yarn install --immutable`. Use `yarn restart` to reset Metro after dependency changes.
 - **Framework**: Bare React Native (No Expo).
 - **Language**: Strict TypeScript. NEVER use `any` or `!`.
 - **Navigation**: `react-navigation` with JS stack and bottom tabs.

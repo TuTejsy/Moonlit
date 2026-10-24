@@ -18,11 +18,11 @@ interface VoiceWaveformPropTypes {
 }
 
 function VoiceWaveform({
-  numberOfFrames,
+  color = commonColors.white,
   maxHeight,
   minHeight,
+  numberOfFrames,
   voicePowerSharedValue,
-  color = commonColors.white,
 }: VoiceWaveformPropTypes) {
   const stylesContext = useMemo(() => ({ maxHeight }), [maxHeight]);
 
@@ -41,7 +41,6 @@ function VoiceWaveform({
 
         return (
           <WaveformFrame
-            // eslint-disable-next-line react/no-array-index-key
             key={index}
             color={color}
             delay={frameDelay}

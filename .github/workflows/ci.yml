@@ -1,0 +1,27 @@
+name: Check mobile application
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  javascript:
+    runs-on: ubuntu-24.04
+    env:
+      YARN_TASK_POOL_CONCURRENCY: 1
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version-file: .node-version
+      - run: corepack enable
+      - run: yarn install --immutable
+      - name: Use test configuration
+        run: cp .github/fixtures/auth.ts src/constants/auth.ts
+      - run: yarn tsc
+      - run: yarn lint
+      - run: yarn test --runInBand --no-cache
+      - run: yarn format:check

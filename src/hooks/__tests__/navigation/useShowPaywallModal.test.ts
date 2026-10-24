@@ -57,13 +57,13 @@ describe('useShowPaywallModal', () => {
   });
 
   const mockPaywallReadyState = ({
+    isFullVersion = false,
     isPaywallBootstrapFailed = false,
     isPaywallBootstrapSettled = true,
     isPaywallReady = true,
     paywallName = 'TOGGLE',
     paywallRemoteConfig = null,
     products = [{ id: 'prod_1' }],
-    isFullVersion = false,
   }: {
     isFullVersion?: boolean;
     isPaywallBootstrapFailed?: boolean;

@@ -3,9 +3,8 @@
 
 // Mock react-native-reanimated
 jest.mock('react-native-reanimated', () => {
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
   const React = require('react');
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+
   const RN = require('react-native');
   const AnimatedView = React.forwardRef((props: Record<string, unknown>, ref: unknown) =>
     React.createElement(RN.View, { ...props, ref }),
@@ -149,18 +148,6 @@ jest.mock('react-native-dialog', () => ({
   Container: 'Dialog.Container',
   Input: 'Dialog.Input',
   Title: 'Dialog.Title',
-}));
-
-// Mock @realm/react
-jest.mock('@realm/react', () => ({
-  createRealmContext: jest.fn().mockReturnValue({
-    RealmProvider: ({ children }: { children: React.ReactNode }) => children,
-    useObject: jest.fn(),
-    useQuery: jest.fn().mockReturnValue([]),
-    useRealm: jest.fn().mockReturnValue({
-      write: jest.fn((callback: () => void) => callback()),
-    }),
-  }),
 }));
 
 // Mock realm
@@ -936,10 +923,9 @@ jest.mock('@/components/Headers/ScreenHeader/ScreenHeader', () => ({
 
 // Mock list components from shared components
 jest.mock('@/components/Lists/LargeStoriesList/LargeStoriesList', () => {
-  /* eslint-disable global-require, @typescript-eslint/no-var-requires */
   const React = require('react');
   const { View } = require('react-native');
-  /* eslint-enable global-require, @typescript-eslint/no-var-requires */
+
   return {
     LargeStoriesList: ({ ListHeaderComponent, children }: any) =>
       React.createElement(View, null, ListHeaderComponent, children),
@@ -947,10 +933,9 @@ jest.mock('@/components/Lists/LargeStoriesList/LargeStoriesList', () => {
 });
 
 jest.mock('@/components/Lists/MediumStoriesList/MediumStoriesList', () => {
-  /* eslint-disable global-require, @typescript-eslint/no-var-requires */
   const React = require('react');
   const { View } = require('react-native');
-  /* eslint-enable global-require, @typescript-eslint/no-var-requires */
+
   return {
     MediumStoriesList: ({ ListHeaderComponent, children }: any) =>
       React.createElement(View, null, ListHeaderComponent, children),
@@ -958,10 +943,9 @@ jest.mock('@/components/Lists/MediumStoriesList/MediumStoriesList', () => {
 });
 
 jest.mock('@/components/Lists/SmallStoriesList/SmallStoriesList', () => {
-  /* eslint-disable global-require, @typescript-eslint/no-var-requires */
   const React = require('react');
   const { View } = require('react-native');
-  /* eslint-enable global-require, @typescript-eslint/no-var-requires */
+
   return {
     SmallStoriesList: ({ ListHeaderComponent, children }: any) =>
       React.createElement(View, null, ListHeaderComponent, children),
@@ -969,10 +953,9 @@ jest.mock('@/components/Lists/SmallStoriesList/SmallStoriesList', () => {
 });
 
 jest.mock('@/components/Lists/SmallStoriesPlainList/SmallStoriesPlainList', () => {
-  /* eslint-disable global-require, @typescript-eslint/no-var-requires */
   const React = require('react');
   const { View } = require('react-native');
-  /* eslint-enable global-require, @typescript-eslint/no-var-requires */
+
   return {
     SmallStoriesPlainList: ({ ListHeaderComponent, children }: any) =>
       React.createElement(View, null, ListHeaderComponent, children),
@@ -985,9 +968,8 @@ jest.mock('@/components/Lists/MoreTalesComingFooter/MoreTalesComingFooter', () =
 
 // Mock GradientButton
 jest.mock('@/components/GradientButton/GradientButton', () => {
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
   const React = require('react');
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
+
   const { Text, TouchableOpacity } = require('react-native');
   return {
     GradientButton: ({

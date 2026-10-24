@@ -8,7 +8,6 @@ import { Spinner } from '../Spinner/Spinner';
 // The Spinner uses Animated.View + Icons.Loader which is mocked as string.
 // We mock the Spinner's SVG icon to a simple component to avoid rendering issues.
 jest.mock('@/assets/icons/Icons', () => {
-  // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
   const { View: RNView } = require('react-native');
   return {
     Icons: {

@@ -401,7 +401,6 @@ export function useStoryPlayer({
         recording.played_time = playedTime;
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playedTime, audioRecordingId]);
 
   useFocusEffect(

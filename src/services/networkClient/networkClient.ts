@@ -1,4 +1,3 @@
-/* eslint-disable dot-notation */
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import qs from 'qs';
 
