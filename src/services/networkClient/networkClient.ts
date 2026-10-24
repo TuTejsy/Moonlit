@@ -1,6 +1,8 @@
 /* eslint-disable dot-notation */
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 import qs from 'qs';
+
+import { REQUEST_ID_HEADER, resolveRequestId } from './requestId';
 
 import { JWT_TOKEN } from '@/constants/auth';
 
@@ -11,6 +13,17 @@ axios.defaults.headers.common['pragma'] = 'no-cache';
 axios.defaults.headers.common['Authorization'] = JWT_TOKEN;
 axios.defaults.withCredentials = false;
 
+function applyRequestId(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
+  const current = config.headers.get(REQUEST_ID_HEADER);
+  const requestId = resolveRequestId(current);
+
+  if (current !== requestId) {
+    config.headers.set(REQUEST_ID_HEADER, requestId, true);
+  }
+
+  return config;
+}
+
 export class NetworkClient {
   instance: AxiosInstance;
 
@@ -19,5 +32,6 @@ export class NetworkClient {
       ...config,
       paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'comma', encode: false }),
     });
+    this.instance.interceptors.request.use(applyRequestId);
   }
 }

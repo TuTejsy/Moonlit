@@ -60,6 +60,10 @@ Screens and hooks must not import SDK packages directly except where noted.
 | `react-native-adapty` types only                                        | Paywall screens/hooks, `src/store/subscription/`, `RootNavigator.types.ts`                                                                                         |
 | `useRoute`, `useNavigation` from `@react-navigation/native`             | `src/navigation/hooks/useAppRoute.ts`, `useAppNavigation.ts` only                                                                                                  |
 
+## Request correlation
+
+`NetworkClient` sets `X-Request-ID` on each Axios request (`src/services/networkClient/requestId.ts`). A caller ID is kept only when it is 1–64 characters from `A–Z`, `a–z`, `0–9`, `.`, `_`, and `-`. Any other value is replaced with a new ID from `crypto.randomUUID` when the runtime provides it. The app stores no Grafana credentials and adds no telemetry client. Axios response bodies stay unchanged. Server IDs remain on `response.headers` and `error.response.headers`. This header correlates API calls with server logs. It does not monitor mobile crashes. See `docs/observability.md`.
+
 ## Paywall (`src/screens/PaywallModal/`)
 
 - **Entry**: `PaywallModal.tsx` shell with `paywallVariantRegistry` (`resolvePaywallVariantName` — prefix match on Adapty `AdaptyFlow.name`).
