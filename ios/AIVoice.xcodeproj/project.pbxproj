@@ -42,6 +42,7 @@
 		88E122D529E1C49200C30444 /* FileTypeChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122D429E1C49200C30444 /* FileTypeChecker.swift */; };
 		88E122D829E1C59000C30444 /* NSString+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 88E122D729E1C59000C30444 /* NSString+Helper.m */; };
 		88E122DA29E1C61500C30444 /* Extensions+optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E122D929E1C61500C30444 /* Extensions+optional.swift */; };
+		88F1A0022D88000100771F50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F1A0012D88000100771F50 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		88E122D629E1C59000C30444 /* NSString+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Helper.h"; sourceTree = "<group>"; };
 		88E122D729E1C59000C30444 /* NSString+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Helper.m"; sourceTree = "<group>"; };
 		88E122D929E1C61500C30444 /* Extensions+optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+optional.swift"; sourceTree = "<group>"; };
+		88F1A0012D88000100771F50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		AEFBC557120B4C09B8374F2A /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../src/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		E63E863DC9C74A1ABB097632 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../src/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -166,6 +168,7 @@
 				88E122C729E1C07E00C30444 /* AIVoice-Bridging-Header.h */,
 				883424AB2A93C37B00AED6E9 /* Colors.xcassets */,
 				88625AD92D7474F700771F50 /* AppDelegate.swift */,
+				88F1A0012D88000100771F50 /* SceneDelegate.swift */,
 			);
 			name = AIVoice;
 			sourceTree = "<group>";
@@ -481,9 +484,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AIVoice/Pods-AIVoice-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AIVoice/Pods-AIVoice-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -520,9 +527,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AIVoice/Pods-AIVoice-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AIVoice/Pods-AIVoice-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -565,6 +576,7 @@
 				88E122CA29E1C1BF00C30444 /* FileHelper.swift in Sources */,
 				8805A86D2B6A30F6009EDE6C /* MNTShareManager.mm in Sources */,
 				88625ADA2D7474F700771F50 /* AppDelegate.swift in Sources */,
+				88F1A0022D88000100771F50 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,7 +655,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 6PS5CBNN65;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AIVoice/Info.plist;
@@ -683,7 +695,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 6PS5CBNN65;
 				INFOPLIST_FILE = AIVoice/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Moonlit;
